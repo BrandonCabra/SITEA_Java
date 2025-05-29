@@ -1,0 +1,58 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/JSF/JSFManagedBean.java to edit this template
+ */
+package com.sena.sitea.controller;
+
+import javax.inject.Named;
+import javax.enterprise.context.SessionScoped;
+import java.io.Serializable;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
+
+/**
+ *
+ * @author bjcab
+ */
+@Named(value = "login")
+@SessionScoped
+public class Login implements Serializable {
+    
+    private String NUMERO_DOCUMENTO;
+    private String PASSWORD;
+
+    public String getNUMERO_DOCUMENTO() {
+        return NUMERO_DOCUMENTO;
+    }
+
+    public void setNUMERO_DOCUMENTO(String NUMERO_DOCUMENTO) {
+        this.NUMERO_DOCUMENTO = NUMERO_DOCUMENTO;
+    }
+
+    public String getPASSWORD() {
+        return PASSWORD;
+    }
+
+    public void setPASSWORD(String PASSWORD) {
+        this.PASSWORD = PASSWORD;
+    }
+    
+    public String iniciarSesion (){
+        if (NUMERO_DOCUMENTO.equals("1052395145")&& PASSWORD.equals("clave1234")){
+            return "modulos";
+        }else{
+            FacesContext fc = FacesContext.getCurrentInstance();
+            FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Numero de documento y/o Contraseña incorrectas", "MSG_INFO");
+            fc.addMessage(null, fm);
+            return null;
+        }
+        
+    }
+     
+   
+    public Login() {
+    }
+    
+    
+    
+}

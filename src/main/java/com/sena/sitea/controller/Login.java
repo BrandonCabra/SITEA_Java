@@ -9,6 +9,7 @@ import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -39,7 +40,9 @@ public class Login implements Serializable {
     
     public String iniciarSesion (){
         if (NUMERO_DOCUMENTO.equals("1052395145")&& PASSWORD.equals("clave1234")){
-            return "modulos";
+            HttpSession sesion = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(true);
+            sesion.setAttribute("NUMERO_DOCUMENTO", NUMERO_DOCUMENTO);
+            return "modulos.xhtml?faces-redirect=true";
         }else{
             FacesContext fc = FacesContext.getCurrentInstance();
             FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Numero de documento y/o Contraseña incorrectas", "MSG_INFO");

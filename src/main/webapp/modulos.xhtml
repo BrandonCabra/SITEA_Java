@@ -1,13 +1,112 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://xmlns.jcp.org/jsf/html">
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
         <title>Modulos</title>
     </h:head>
     <h:body>
         <h1>Bienvenido a los modulos de gestión de SI TEA</h1>
         <h2>Usuario: #{login.NUMERO_DOCUMENTO}</h2>
+        
+        
+        <f:view>
+
+
+            <h:form>
+                <h1><h:outputText value="Lista de estudiantes"/></h1>
+                <h:dataTable value="#{estudianteTeaController.obtenerEstudiantes()}" var="item">
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value="IdEstudiante"/>
+                        </f:facet>
+                        <h:outputText value="#{item.idEstudiante}"/>
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value="NumeroDocumentoEstudiante"/>
+                        </f:facet>
+                        <h:outputText value="#{item.numeroDocumentoEstudiante}"/>
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value="PrimerNombreEstudiante"/>
+                        </f:facet>
+                        <h:outputText value="#{item.primerNombreEstudiante}"/>
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value="SegundoNombreEstudiante"/>
+                        </f:facet>
+                        <h:outputText value="#{item.segundoNombreEstudiante}"/>
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value="PrimerApellidoEstudiante"/>
+                        </f:facet>
+                        <h:outputText value="#{item.primerApellidoEstudiante}"/>
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value="SegundoApellidoEstudiante"/>
+                        </f:facet>
+                        <h:outputText value="#{item.segundoApellidoEstudiante}"/>
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value="FechaNacimiento"/>
+                        </f:facet>
+                        <h:outputText value="#{item.fechaNacimiento}">
+                            <f:convertDateTime pattern="MM/dd/yyyy" />
+                        </h:outputText>
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value="TelefonoEstudiante"/>
+                        </f:facet>
+                        <h:outputText value="#{item.telefonoEstudiante}"/>
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value="DireccionEstudiante"/>
+                        </f:facet>
+                        <h:outputText value="#{item.direccionEstudiante}"/>
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value="CorreoInstitucionalEstudiante"/>
+                        </f:facet>
+                        <h:outputText value="#{item.correoInstitucionalEstudiante}"/>
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value="FotografiaEstudiante"/>
+                        </f:facet>
+                        <h:outputText value="#{item.fotografiaEstudiante}"/>
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value="NumeroDocumentoPadre"/>
+                        </f:facet>
+                        <h:outputText value="#{item.numeroDocumentoPadre}"/>
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value="GradoIdGrado"/>
+                        </f:facet>
+                        <h:outputText value="#{item.gradoIdGrado.idGrado}"/>
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value="TipoDocumentoIdTipoDocumento"/>
+                        </f:facet>
+                        <h:outputText value="#{item.tipoDocumentoIdTipoDocumento.nombreTipoDocumento}"/>
+                    </h:column>
+                </h:dataTable>
+            </h:form>
+        </f:view>
+
         
         
     </h:body>

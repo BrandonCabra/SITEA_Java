@@ -4,9 +4,12 @@
  */
 package com.sena.sitea.controller;
 
+import com.sena.sitea.entities.Usuarios;
+import com.sena.sitea.services.UsuariosFacadeLocal;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
+import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpSession;
@@ -21,6 +24,9 @@ public class Login implements Serializable {
     
     private String NUMERO_DOCUMENTO;
     private String PASSWORD;
+    private Usuarios usuario= new Usuarios();
+    @EJB
+    private UsuariosFacadeLocal ufl;
 
     public String getNUMERO_DOCUMENTO() {
         return NUMERO_DOCUMENTO;
@@ -39,7 +45,8 @@ public class Login implements Serializable {
     }
     
     public String iniciarSesion (){
-        if (NUMERO_DOCUMENTO.equals("1052395145")&& PASSWORD.equals("clave1234")){
+        this.usuario = this.ufl.iniciarSesion(NUMERO_DOCUMENTO, PASSWORD);
+        if (usuario.getNumeroDocumento()!=null){
             HttpSession sesion = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(true);
             sesion.setAttribute("NUMERO_DOCUMENTO", NUMERO_DOCUMENTO);
             return "modulos.xhtml?faces-redirect=true";

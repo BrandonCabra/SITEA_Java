@@ -49,7 +49,7 @@ public class Login implements Serializable {
         if (usuario.getNumeroDocumento()!=null){
             HttpSession sesion = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(true);
             sesion.setAttribute("NUMERO_DOCUMENTO", NUMERO_DOCUMENTO);
-            return "modulos.xhtml?faces-redirect=true";
+            return "views/index.xhtml?faces-redirect=true";
         }else{
             FacesContext fc = FacesContext.getCurrentInstance();
             FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Numero de documento y/o Contraseña incorrectas", "MSG_INFO");
@@ -61,6 +61,11 @@ public class Login implements Serializable {
      
    
     public Login() {
+    }
+    
+    public String cerrarSesion(){
+        FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
+        return "/login.xhtml?faces-redirect=true";
     }
     
     

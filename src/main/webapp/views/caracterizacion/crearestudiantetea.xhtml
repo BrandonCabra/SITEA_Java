@@ -1,0 +1,65 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <body>
+
+        <ui:composition template="./../TemplateSitio.xhtml">
+
+            <ui:define name="content">
+                <f:view>
+
+
+                    <h:form>
+                        <h1><h:outputText value="Create/Edit"/></h1>
+                        <h:panelGrid columns="2">
+                            <h:outputLabel value="IdEstudiante:" for="idEstudiante" />
+                            <h:inputText id="idEstudiante" value="#{estudianteTeaController.con.idEstudiante}" title="IdEstudiante" required="true" requiredMessage="The IdEstudiante field is required."/>
+                            <h:outputLabel value="Tipo Documento:" for="tipoDocumentoIdTipoDocumento" />
+                            <h:selectOneMenu id="tipoDocumentoIdTipoDocumento" value="#{estudianteTeaController.con.tipoDocumentoIdTipoDocumento.nombreTipoDocumento}" title="TipoDocumentoIdTipoDocumento" required="true" requiredMessage="The TipoDocumentoIdTipoDocumento field is required.">
+                                <!-- TODO: update below reference to list of available items-->
+                                <f:selectItems value="#{estudianteTeaController.listaTipoDocumento()}"/>
+                            </h:selectOneMenu>
+                            <h:outputLabel value="Numero Documento Estudiante:" for="numeroDocumentoEstudiante" />
+                            <h:inputText id="numeroDocumentoEstudiante" value="#{estudianteTeaController.con.numeroDocumentoEstudiante}" title="NumeroDocumentoEstudiante" required="true" requiredMessage="The NumeroDocumentoEstudiante field is required."/>
+                            <h:outputLabel value="Primer Nombre Estudiante:" for="primerNombreEstudiante" />
+                            <h:inputText id="primerNombreEstudiante" value="#{estudianteTeaController.con.primerNombreEstudiante}" title="PrimerNombreEstudiante" required="true" requiredMessage="The PrimerNombreEstudiante field is required."/>
+                            <h:outputLabel value="Segundo Nombre Estudiante:" for="segundoNombreEstudiante" />
+                            <h:inputText id="segundoNombreEstudiante" value="#{estudianteTeaController.con.segundoNombreEstudiante}" title="SegundoNombreEstudiante" />
+                            <h:outputLabel value="Primer Apellido Estudiante:" for="primerApellidoEstudiante" />
+                            <h:inputText id="primerApellidoEstudiante" value="#{estudianteTeaController.con.primerApellidoEstudiante}" title="PrimerApellidoEstudiante" required="true" requiredMessage="The PrimerApellidoEstudiante field is required."/>
+                            <h:outputLabel value="Segundo Apellido Estudiante:" for="segundoApellidoEstudiante" />
+                            <h:inputText id="segundoApellidoEstudiante" value="#{estudianteTeaController.con.segundoApellidoEstudiante}" title="SegundoApellidoEstudiante" />
+                            <h:outputLabel value="Fecha Nacimiento:" for="fechaNacimiento" />
+                            <h:inputText id="fechaNacimiento" value="#{estudianteTeaController.con.fechaNacimiento}" title="FechaNacimiento" required="true" requiredMessage="The FechaNacimiento field is required.">
+                                <f:convertDateTime pattern="MM/dd/yyyy" />
+                            </h:inputText>
+                            <h:outputLabel value="Telefono Estudiante:" for="telefonoEstudiante" />
+                            <h:inputText id="telefonoEstudiante" value="#{estudianteTeaController.con.telefonoEstudiante}" title="TelefonoEstudiante" />
+                            <h:outputLabel value="Dirección Estudiante:" for="direccionEstudiante" />
+                            <h:inputText id="direccionEstudiante" value="#{estudianteTeaController.con.direccionEstudiante}" title="DireccionEstudiante" required="true" requiredMessage="The DireccionEstudiante field is required."/>
+                            <h:outputLabel value="Correo Institucional Estudiante:" for="correoInstitucionalEstudiante" />
+                            <h:inputText id="correoInstitucionalEstudiante" value="#{estudianteTeaController.con.correoInstitucionalEstudiante}" title="CorreoInstitucionalEstudiante" required="true" requiredMessage="The CorreoInstitucionalEstudiante field is required."/>
+                            <h:outputLabel value="Fotografia Estudiante:" for="fotografiaEstudiante" />
+                            <h:inputText id="fotografiaEstudiante" value="#{estudianteTeaController.con.fotografiaEstudiante}" title="FotografiaEstudiante" />
+                            <h:outputLabel value="Numero Documento Padre:" for="numeroDocumentoPadre" />
+                            <h:inputText id="numeroDocumentoPadre" value="#{estudianteTeaController.con.numeroDocumentoPadre}" title="NumeroDocumentoPadre" />
+                            <h:outputLabel value="Grado:" for="gradoIdGrado" />
+                            <h:selectOneMenu id="gradoIdGrado" value="#{estudianteTeaController.con.gradoIdGrado}" title="GradoIdGrado" >
+                                <!-- TODO: update below reference to list of available items-->
+                                <f:selectItems value="#{estudianteTeaController.listaGrado()}"/>
+                            </h:selectOneMenu>
+                            
+                        </h:panelGrid>
+                    </h:form>
+                </f:view>
+
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

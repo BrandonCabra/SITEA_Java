@@ -16,10 +16,9 @@
                     <h:form>
                         <h1><h:outputText value="Create/Edit"/></h1>
                         <h:panelGrid columns="2">
-                            <h:outputLabel value="IdEstudiante:" for="idEstudiante" />
-                            <h:inputText id="idEstudiante" value="#{estudianteTeaController.con.idEstudiante}" title="IdEstudiante" required="true" requiredMessage="The IdEstudiante field is required."/>
+                            
                             <h:outputLabel value="Tipo Documento:" for="tipoDocumentoIdTipoDocumento" />
-                            <h:selectOneMenu id="tipoDocumentoIdTipoDocumento" value="#{estudianteTeaController.con.tipoDocumentoIdTipoDocumento.nombreTipoDocumento}" title="TipoDocumentoIdTipoDocumento" required="true" requiredMessage="The TipoDocumentoIdTipoDocumento field is required.">
+                            <h:selectOneMenu id="tipoDocumentoIdTipoDocumento" value="#{estudianteTeaController.td.idTipoDocumento}" title="TipoDocumentoIdTipoDocumento" required="true" requiredMessage="The TipoDocumentoIdTipoDocumento field is required.">
                                 <!-- TODO: update below reference to list of available items-->
                                 <f:selectItems value="#{estudianteTeaController.listaTipoDocumento()}"/>
                             </h:selectOneMenu>
@@ -48,12 +47,13 @@
                             <h:outputLabel value="Numero Documento Padre:" for="numeroDocumentoPadre" />
                             <h:inputText id="numeroDocumentoPadre" value="#{estudianteTeaController.con.numeroDocumentoPadre}" title="NumeroDocumentoPadre" />
                             <h:outputLabel value="Grado:" for="gradoIdGrado" />
-                            <h:selectOneMenu id="gradoIdGrado" value="#{estudianteTeaController.con.gradoIdGrado}" title="GradoIdGrado" >
+                            <h:selectOneMenu id="gradoIdGrado" value="#{estudianteTeaController.gra.idGrado}" title="GradoIdGrado" >
                                 <!-- TODO: update below reference to list of available items-->
                                 <f:selectItems value="#{estudianteTeaController.listaGrado()}"/>
                             </h:selectOneMenu>
                             
                         </h:panelGrid>
+                        <h:commandButton value="Registrar Estudiante" action="#{estudianteTeaController.crearEstudianteP2()}"/>
                     </h:form>
                 </f:view>
 
@@ -63,3 +63,4 @@
 
     </body>
 </html>
+

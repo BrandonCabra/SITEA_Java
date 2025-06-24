@@ -10,6 +10,7 @@
 
             <ui:define name="content">
                 <h1>Listado de estudiantes con TEA</h1>
+                <h:messages id="mensajes" globalOnly="true" infoStyle="color:green"/><!-- comment -->
                 <h:form><h:commandButton value="Crear Estudiante con TEA" action="#{estudianteTeaController.crearEstudianteP1()}"/><!-- comment -->
                 </h:form>
                 <table id="t-all" class="jsf-data-table display nowrap" width="100%">
@@ -21,6 +22,7 @@
                             <th>Nombres</th>
                             <th>Apellidos</th>
                             <th>Grado</th>
+                            <th>Acciones</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -32,6 +34,12 @@
                             <td>#{item.primerNombreEstudiante} #{item.segundoNombreEstudiante}</td>
                             <td>#{item.primerApellidoEstudiante} #{item.segundoApellidoEstudiante}</td>
                             <td>#{item.gradoIdGrado.idGrado}</td>
+                            <td>
+                                <h:form>
+                                    <h:commandButton value="Editar" action="#{estudianteTeaController.editarEstudianteP1(item)}"/>
+                                    <h:commandButton value="Eliminar" action="#{estudianteTeaController.eliminarEstudiante(item)}" onclick="return confirm('¿Desea eliminar el registro?')"/>
+                                </h:form>
+                            </td>
                         </tr>
                         
                         </ui:repeat>

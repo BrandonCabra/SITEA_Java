@@ -11,11 +11,13 @@ import com.sena.sitea.services.EstudianteFacadeLocal;
 import com.sena.sitea.services.GradoFacadeLocal;
 import com.sena.sitea.services.TipoDocumentoFacadeLocal;
 import javax.inject.Named;
-import javax.faces.view.ViewScoped;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.EJB;
+import javax.enterprise.context.SessionScoped;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 import javax.faces.model.SelectItem;
 
 /**
@@ -23,7 +25,7 @@ import javax.faces.model.SelectItem;
  * @author bjcab
  */
 @Named(value = "estudianteTeaController")
-@ViewScoped
+@SessionScoped
 public class EstudianteTeaController implements Serializable {
     
 
@@ -31,7 +33,7 @@ public class EstudianteTeaController implements Serializable {
     Grado gra = new Grado();
     List<SelectItem>listaGrado;
     
-    TipoDocumento td = new TipoDocumento ();
+    TipoDocumento td = new TipoDocumento();
     List<SelectItem>listaTipoDocumento;
     
     
@@ -113,6 +115,52 @@ public class EstudianteTeaController implements Serializable {
     public String crearEstudianteP1 (){
         con = new Estudiante ();
         return "/views/caracterizacion/crearestudiantetea.xhtml?faces-redirect?true";
+    }
+    
+    public void crearEstudianteP2 () {
+        con.setGradoIdGrado(gra);
+        con.setTipoDocumentoIdTipoDocumento(td);
+        
+        try {
+            this.efl.create(con);
+            FacesContext fc = FacesContext.getCurrentInstance();
+            FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_INFO, "Estudiante registrado correctamente", "MSG_INFO");
+            fc.addMessage(null, fm);
+            con = new Estudiante();
+        } catch (Exception e) {
+            
+        }
+        
+    }
+    
+    public String editarEstudianteP1 (Estudiante con2){
+        this.con = con2;
+        this.gra.setIdGrado(con.getGradoIdGrado().getIdGrado());
+        this.td.setIdTipoDocumento(con.getTipoDocumentoIdTipoDocumento().getIdTipoDocumento());
+        return "/views/caracterizacion/crearestudiantetea.xhtml?faces-redirect?true";    
+    }
+    
+    public void editarEstudianteP2 (){
+        try {
+            this.con.setGradoIdGrado(gra);
+            this.con.setTipoDocumentoIdTipoDocumento(td);
+            this.efl.edit(con);
+            FacesContext fc = FacesContext.getCurrentInstance();
+            FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_INFO, "Estudiante editado correctamente", "MSG_INFO");
+            fc.addMessage(null, fm);
+        } catch (Exception e) {
+            
+        }
+    }
+    
+    public void eliminarEstudiante(Estudiante con2){
+        try {
+            this.efl.remove(con2);
+            FacesContext fc = FacesContext.getCurrentInstance();
+            FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_INFO, "Estudiante eliminado correctamente", "MSG_INFO");
+            fc.addMessage(null, fm);
+        } catch (Exception e) {
+        }
     }
     
 }

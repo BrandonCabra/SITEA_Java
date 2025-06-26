@@ -232,5 +232,9 @@ public class Piar implements Serializable {
     public String toString() {
         return "com.sena.sitea.entities.Piar[ idPiar=" + idPiar + " ]";
     }
+
+    public void setIdEstudiante(Estudiante est) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
     
 }

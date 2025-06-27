@@ -6,48 +6,85 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core">
 
     <body>
-
         <ui:composition template="./../TemplateSitio.xhtml">
-
             <ui:define name="content">
                 <f:view>
-
-
                     <h:form>
-                        <h1><h:outputText value="Create/Edit"/></h1>
+                        <h1><h:outputText value="Crear / Editar PIAR" /></h1>
+
                         <h:panelGrid columns="2">
-                            <h:outputLabel value="Id Estudiante:" for="estudianteIdEstudiante" />
-                            <h:selectOneMenu id="estudianteIdEstudiante" value="#{piarController.est.idEstudiante}" title="Id Estudiante" required="true" requiredMessage="The EstudianteIdEstudiante field is required.">
-                                <!-- TODO: update below reference to list of available items-->
-                                <f:selectItems value="#{piarController.listarEstudiantes()}"/>
+                            <h:outputLabel for="estudianteIdEstudiante" value="Estudiante:" />
+                            <h:selectOneMenu id="estudianteIdEstudiante"
+                                             value="#{piarController.est.idEstudiante}"
+                                             required="true"
+                                             requiredMessage="Debes seleccionar un estudiante.">
+                                <f:selectItem itemLabel="Seleccione..." itemValue="" />
+                                <f:selectItems value="#{piarController.listaEstudiantes}" />
                             </h:selectOneMenu>
-                            <h:outputLabel value="IdPiar:" for="idPiar" />
-                            <h:inputText id="idPiar" value="#{piarController.pi.idPiar}" title="IdPiar" required="true" requiredMessage="The IdPiar field is required."/>
-                            <h:outputLabel value="Codigo Piar:" for="codigoPiar" />
-                            <h:inputText id="codigoPiar" value="#{piarController.pi.codigoPiar}" title="Codigo Piar" required="true" requiredMessage="The CodigoPiar field is required."/>
-                            <h:outputLabel value="Periodo:" for="periodo" />
-                            <h:inputText id="periodo" value="#{piarController.pi.periodo}" title="Periodo" required="true" requiredMessage="The Periodo field is required."/>
-                            <h:outputLabel value="Evaluacion:" for="evaluacion" />
-                            <h:inputText id="evaluacion" value="#{piarController.pi.evaluacion}" title="Evaluacion" required="true" requiredMessage="The Evaluacion field is required."/>
-                            <h:outputLabel value="Dba:" for="dba" />
-                            <h:inputText id="dba" value="#{piarController.pi.dba}" title="Dba" required="true" requiredMessage="The Dba field is required."/>
-                            <h:outputLabel value="Barrera De Aprendizaje:" for="barraDeAprendizaje" />
-                            <h:inputText id="barraDeAprendizaje" value="#{piarController.pi.barraDeAprendizaje}" title="Barra De Aprendizaje" required="true" requiredMessage="The BarraDeAprendizaje field is required."/>
-                            <h:outputLabel value="Flexibilizacion:" for="flexibilizacion" />
-                            <h:inputText id="flexibilizacion" value="#{piarController.pi.flexibilizacion}" title="Flexibilizacion" required="true" requiredMessage="The Flexibilizacion field is required."/>
-                            <h:outputLabel value="Seguimiento Evaluativo:" for="seguimientoEvaluativo" />
-                            <h:inputText id="seguimientoEvaluativo" value="#{piarController.pi.seguimientoEvaluativo}" title="SeguimientoEvaluativo" />
-                            
+
+                            <h:outputLabel for="idPiar" value="ID PIAR:" />
+                            <h:inputText id="idPiar"
+                                         value="#{piarController.pi.idPiar}"
+                                         required="true"
+                                         requiredMessage="Campo obligatorio" />
+
+                            <h:outputLabel for="codigoPiar" value="Código PIAR:" />
+                            <h:inputText id="codigoPiar"
+                                         value="#{piarController.pi.codigoPiar}"
+                                         required="true"
+                                         requiredMessage="Campo obligatorio" />
+
+                            <h:outputLabel for="periodo" value="Periodo:" />
+                            <h:inputText id="periodo"
+                                         value="#{piarController.pi.periodo}"
+                                         required="true"
+                                         requiredMessage="Campo obligatorio" />
+
+                            <h:outputLabel for="evaluacion" value="Evaluación:" />
+                            <h:inputText id="evaluacion"
+                                         value="#{piarController.pi.evaluacion}"
+                                         required="true"
+                                         requiredMessage="Campo obligatorio" />
+
+                            <h:outputLabel for="dba" value="DBA:" />
+                            <h:inputText id="dba"
+                                         value="#{piarController.pi.dba}"
+                                         required="true"
+                                         requiredMessage="Campo obligatorio" />
+
+                            <h:outputLabel for="barraDeAprendizaje" value="Barrera de Aprendizaje:" />
+                            <h:inputText id="barraDeAprendizaje"
+                                         value="#{piarController.pi.barraDeAprendizaje}"
+                                         required="true"
+                                         requiredMessage="Campo obligatorio" />
+
+                            <h:outputLabel for="flexibilizacion" value="Flexibilización:" />
+                            <h:inputText id="flexibilizacion"
+                                         value="#{piarController.pi.flexibilizacion}"
+                                         required="true"
+                                         requiredMessage="Campo obligatorio" />
+
+                            <h:outputLabel for="seguimientoEvaluativo" value="Seguimiento Evaluativo:" />
+                            <h:inputText id="seguimientoEvaluativo"
+                                         value="#{piarController.pi.seguimientoEvaluativo}" />
                         </h:panelGrid>
-                        <h:messages id="mensajes" globalOnly="true"/><!-- comment -->
-                        <h:commandButton value="Registrar PIAR" action="#{piarController.crearP2()}" rendered="#{piarController.pi.idEstudiante ==null}"/>
-                        <h:commandButton value="Editar Estudiante" action="#{piarController.editarPiarP2()}" rendered="#{piarController.pi.idEstudiante !=null}"/>
-                        <h:button value="volver" outcome="/views/Piar/index.xhtml" />
+
+                        <h:messages globalOnly="true" />
+
+                        <h:panelGrid columns="3" style="margin-top:20px;">
+                            <h:commandButton value="Registrar PIAR"
+                                             action="#{piarController.crearP2()}"
+                                             rendered="#{piarController.pi.estudianteIdEstudiante == null}" />
+
+                            <h:commandButton value="Editar PIAR"
+                                             action="#{piarController.editarPiarP2()}"
+                                             rendered="#{piarController.pi.estudianteIdEstudiante != null}" />
+
+                            <h:button value="Volver" outcome="/views/Piar/index.xhtml" />
+                        </h:panelGrid>
                     </h:form>
                 </f:view>
             </ui:define>
-
         </ui:composition>
-
     </body>
 </html>

@@ -58,4 +58,16 @@
   text-decoration : underline;
 }
 
+#left {
+    background-color: lightskyblue; /* si esa es la zona que quieres modificar */
+    width: 260px;
+    float: left;
+    padding: 10px;
+    height: 100%; /* o el alto que necesites */
+}
+
+#content {
+    margin-left: 290px; /* Igual al ancho de #left */
+}
+
 

@@ -5,6 +5,7 @@
 package com.sena.sitea.services;
 
 import com.sena.sitea.entities.Usuarios;
+import com.sena.sitea.security.PasswordUtil;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -31,11 +32,15 @@ public class UsuariosFacade extends AbstractFacade<Usuarios> implements Usuarios
 
     @Override
     public Usuarios iniciarSesion(String NUMERO_DOCUMENTO, String PASSWORD) {
-        Query query = em.createQuery("SELECT U FROM Usuarios U WHERE U.numeroDocumento=:NUMERO_DOCUMENTO AND U.password=:PASSWORD AND U.tipoDocumentoIdTipoDocumento.idTipoDocumento=1");
-        query.setParameter("NUMERO_DOCUMENTO", NUMERO_DOCUMENTO);
-        query.setParameter("PASSWORD", PASSWORD);
-           try {
-           return (Usuarios)query.getSingleResult();
+        Usuarios NUMERO_DOCUMENTOValidar = new Usuarios();
+        try {
+        Query query = em.createQuery("SELECT U FROM Usuarios U WHERE U.numeroDocumento=:NUMERO_DOCUMENTO AND U.tipoDocumentoIdTipoDocumento.idTipoDocumento=1");
+        query.setParameter("NUMERO_DOCUMENTO", NUMERO_DOCUMENTO);          
+        NUMERO_DOCUMENTOValidar = (Usuarios) query.getSingleResult();
+        if (PasswordUtil.checkPassword(PASSWORD, NUMERO_DOCUMENTOValidar.getPassword())){
+        return NUMERO_DOCUMENTOValidar;   
+        }
+        
         } catch (Exception e) {
         }
         Usuarios usuarioVacio = new Usuarios();

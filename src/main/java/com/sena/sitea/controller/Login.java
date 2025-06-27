@@ -5,6 +5,7 @@
 package com.sena.sitea.controller;
 
 import com.sena.sitea.entities.Usuarios;
+import com.sena.sitea.security.PasswordUtil;
 import com.sena.sitea.services.UsuariosFacadeLocal;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
@@ -45,11 +46,12 @@ public class Login implements Serializable {
     }
     
     public String iniciarSesion (){
+        System.out.print("Hash del password: " + PasswordUtil.hashPassword(PASSWORD));
         this.usuario = this.ufl.iniciarSesion(NUMERO_DOCUMENTO, PASSWORD);
         if (usuario.getNumeroDocumento()!=null){
             HttpSession sesion = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(true);
             sesion.setAttribute("NUMERO_DOCUMENTO", NUMERO_DOCUMENTO);
-            return "views/index.xhtml?faces-redirect=true";
+            return "/views/inicio.xhtml?faces-redirect=true";
         }else{
             FacesContext fc = FacesContext.getCurrentInstance();
             FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Numero de documento y/o Contraseña incorrectas", "MSG_INFO");

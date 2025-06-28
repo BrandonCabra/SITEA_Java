@@ -16,6 +16,8 @@
                 <table id="t-all" class="jsf-data-table display nowrap" width="100%">
                     <thead>
                         <tr>
+                            <th>Documento</th>
+                            <th>Nombre</th>
                             <th>Piar ID</th>
                             <th>Periodo</th>
                             <th>Evaluación</th>
@@ -25,14 +27,17 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <ui:repeat value="#{piarController.obtenerpiar()}" var= "item">
+                        <ui:repeat value="#{piarController.obtenerpiar()}" var="item">
                             <tr>
+                                <td>#{item.estudianteIdEstudiante.numero_documento_estudiante}</td>
+                                <td>#{item.estudianteIdEstudiante.primerNombreEstudiante}</td>
                                 <td>#{item.idPiar}</td>
                                 <td>#{item.periodo}</td>
                                 <td>#{item.evaluacion}</td>
                                 <td>#{item.barraDeAprendizaje}</td>
                                 <td>#{item.flexibilizacion}</td>
                                 <td>
+
                                     <h:form>
                                         <h:commandButton value="Editar" action="#{piarController.editarPiarP1(item)}"/>
                                         <h:commandButton value="Eliminar" action="#{piarController.eliminarPiar(item)}" onclick="return confirm('¿Desea eliminar el registro?')"/>

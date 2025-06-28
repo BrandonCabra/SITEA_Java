@@ -112,7 +112,7 @@ public class PiarController implements Serializable {
     public String editarPiarP1(Piar pi2) {
         this.pi = pi2;
         this.est.setIdEstudiante(pi2.getEstudianteIdEstudiante().getIdEstudiante());
-        return "/views/caracterizacion/crearestudiantetea.xhtml?faces-redirect=true";
+        return "/views/Piar/crearact.xhtml?faces-redirect=true";
     }
 
     public void editarPiarP2() {

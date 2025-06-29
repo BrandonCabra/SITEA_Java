@@ -9,64 +9,103 @@
         <ui:composition template="./../TemplateSitio.xhtml">
 
             <ui:define name="content">
-                <h1>Listado de estudiantes con TEA</h1>
-                <h:messages id="mensajes" globalOnly="true" infoStyle="color:green"/><!-- comment -->
-                <h:form><h:commandButton value="Crear Estudiante con TEA" action="#{estudianteTeaController.crearEstudianteP1()}"/><!-- comment -->
-                </h:form>
-                <table id="t-all" class="jsf-data-table display nowrap" width="100%">
-                    <thead>
-                        <tr>
-                            <th>Estudiante ID</th>
-                            <th>Tipo documento</th>
-                            <th>Numero Documento</th>
-                            <th>Nombres</th>
-                            <th>Apellidos</th>
-                            <th>Grado</th>
-                            <th>Acciones</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <ui:repeat value="#{estudianteTeaController.obtenerEstudiantes()}" var="item">
-                        <tr>
-                            <td>#{item.idEstudiante}</td>
-                            <td>#{item.tipoDocumentoIdTipoDocumento.nombreTipoDocumento}</td>
-                            <td>#{item.numeroDocumentoEstudiante}</td>
-                            <td>#{item.primerNombreEstudiante} #{item.segundoNombreEstudiante}</td>
-                            <td>#{item.primerApellidoEstudiante} #{item.segundoApellidoEstudiante}</td>
-                            <td>#{item.gradoIdGrado.idGrado}</td>
-                            <td>
-                                <h:form>
-                                    <h:commandButton value="Editar" action="#{estudianteTeaController.editarEstudianteP1(item)}"/>
-                                    <h:commandButton value="Eliminar" action="#{estudianteTeaController.eliminarEstudiante(item)}" onclick="return confirm('¿Desea eliminar el registro?')"/>
-                                </h:form>
-                            </td>
-                        </tr>
-                        
-                        </ui:repeat>
-                    </tbody>
-                </table>
-                
-                 <script>
-                    $(document).ready(function () {
-                        $('.jsf-data-table').DataTable({
-                            dom: 'Bfrtip',
-                            "language": {
-                                "url": "https://cdn.datatables.net/plug-ins/1.11.3/i18n/es_es.json"
-                            },
-                            "pageLength": 50,
-                            buttons: [
-                                'copy', 'csv', 'excel', 'pdf', 'print'
-                            ]
-                        });
+    <div class="container-fluid py-4">
+        <h1 class="text-primary mb-4" style="font-style:">Caracterización pedagógica y social</h1>
+      <div class="row">
 
-                    });
-                </script>
-                
+        <!-- Tarjeta A: Registro / Gestión Estudiante -->
+        <div class="row">
+          <div class="card bg-primary text-white h-100">
+            <div class="card-body d-flex">
+              <div class="flex-grow-1">
+                <h2 class="card-title">Caracterización Estudiante</h2>
+                <ul class="list-group list-group-flush mt-3">
+                  <li class="list-group-item bg-primary border-0 p-1">
+                    <h:link outcome="/views/caracterizacion/registroestudiante.xhtml?faces-redirect=true"
+                            styleClass="text-white text-decoration-none">
+                      <i class="fa-solid fa-user-plus me-2"></i>
+                      Pre-Registro Estudiante
+                    </h:link>
+                  </li>
+                  <li class="list-group-item bg-primary border-0 p-1">
+                    <h:link outcome="/views/caracterizacion/crearcaracterizacion.xhtml?faces-redirect=true"
+                            styleClass="text-white text-decoration-none">
+                      <i class="fa-solid fa-file-alt me-2"></i>
+                      Iniciar Caracterización
+                    </h:link>
+                  </li>
+                  <li class="list-group-item bg-primary border-0 p-1">
+                    <h:link outcome="/views/caracterizacion/crearcaracterizacion.xhtml?faces-redirect=true"
+                                   styleClass="text-white text-decoration-none">
+                      <i class="fa-solid fa-trash me-2"></i>
+                      Gestionar Caracterización
+                    </h:link>
+                  </li>
+                  <li class="list-group-item bg-primary border-0 p-1">
+                    <h:link outcome="/views/caracterizacion/crearestudiantetea.xhtml?faces-redirect=true"
+                            styleClass="text-white text-decoration-none">
+                      <i class="fa-solid fa-users me-2"></i>
+                      Valoración Pedagógica
+                    </h:link>
+                  </li>
+                </ul>
+              </div>
+              <div class="col-3">
+                <h:graphicImage library="images"
+                                name="/IMAGENES/FONDO14.jpeg"
+                                styleClass="img-fluid"
+                                alt="Estudiante"/>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div><br></br></div>
 
-                
-                
-                
-            </ui:define>
+
+        <!-- Tarjeta B: Reportes -->
+        <div class="row">
+          <div class="card bg-primary text-white h-100">
+            <div class="card-body d-flex">
+              <div class="flex-grow-1">
+                <h2 class="card-title">Reportes Caracterizaciones</h2>
+                <ul class="list-group list-group-flush mt-3">
+                  <li class="list-group-item bg-primary border-0 p-1">
+                    <h:link outcome="/views/caracterizacion/index.xhtml?faces-redirect=true"
+                            styleClass="text-white text-decoration-none">
+                      <i class="fa-solid fa-file-export me-2"></i>
+                      Informe de valoración
+                    </h:link>
+                  </li>
+                  <li class="list-group-item bg-primary border-0 p-1">
+                    <h:link outcome="/views/caracterizacion/index.xhtml?faces-redirect=true"
+                            styleClass="text-white text-decoration-none">
+                      <i class="fa-solid fa-chart-pie me-2"></i>
+                      Acta de Compromiso
+                    </h:link>
+                  </li>
+                </ul>
+              </div>
+              <div class="col-3">
+                <h:graphicImage library="images"
+                                name="/IMAGENES/FONDO13.jpeg"
+                                styleClass="card-img-top"
+                                alt="Reportes"/>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Botón Regresar -->
+      <div class="text-end mt-4">
+        <h:link outcome="/views/inicio.xhtml" styleClass="btn btn-outline-light">
+          <i class="fa-solid fa-arrow-left me-2"></i>
+          Regresar a Módulos
+        </h:link>
+      </div>
+    </div>
+  </ui:define>
+
 
         </ui:composition>
 

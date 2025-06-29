@@ -37,7 +37,7 @@
             <nav class="navbar navbar-expand-lg bg-body-tertiary">
                 <div class="container-fluid">
                     <a class="navbar-brand" href="#">
-                        <h:graphicImage library="images" name="logositeasf 3.png" alt="SI TEA" width="55" height="60"/>
+                        <h:graphicImage library="images" name="logositeasf 3.png" alt="SI-TEA" width="55" height="60"/>
                     </a>
                     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                         <span class="navbar-toggler-icon"></span>
@@ -105,48 +105,48 @@
 
             <ui:insert name="top"></ui:insert>
         </div>
-       
+
         <!-- Menu lateral -->
         <div>
             <div id="left">
                 <h:form>
                     <br/>
-                    <h:graphicImage library="images" name="IMAGENES/Sebas.png" styleClass="img-fluid mb-2" style="text-align: center" />
-                    <br/>
+                    <div style="text-align: center;">
+                        <h:graphicImage library="images" name="IMAGENES/Sebas.png" styleClass="img-fluid mb-2" style="text-align: center" class="imagen-redonda"/>
+                        <br/>
+                    </div>
 
                     <h5 class="text-center mt-4" >Usuario: #{login.NUMERO_DOCUMENTO}</h5>
                     <br/>
                     <ul class="list-group list-group-flush">
-                    <li class="list-group-item bg-primary">
-                         <h:link outcome="/views/caracterizacion/index.xhtml" value="CARACTERIZACIÓN"/> <br/><!-- comment -->
-                    </li>
-                    <li class="list-group-item bg-primary">
-                        <h:link outcome="/views/Piar/index.xhtml" value="PIAR"/> <br/><!-- comment -->
-                    </li>   
-                    <li class="list-group-item bg-primary">
-                        <h:commandLink value="ESTRATEGIAS EDUCATIVAS"/> <br/>
-                    </li>
-                    <li class="list-group-item bg-primary"><h:commandLink value="GESTIÓN DE ESTUDIANTES"/><br/>
-                    </li>
-                    <li class="list-group-item bg-primary"><h:commandLink value="PROTOCOLOS Y RUTAS DE ATENCIÓN"/> <br/>
-                    </li>
-                    <li class="list-group-item bg-primary"><h:commandLink value="REPORTE DE NOVEDADES"/><br/>
-                    </li>
-                    <br/>
+                        <li class="list-group-item bg-primary">
+                            <h:link outcome="/views/caracterizacion/index.xhtml" value="CARACTERIZACIÓN"/> <br/><!-- comment -->
+                        </li>
+                        <li class="list-group-item bg-primary">
+                            <h:link outcome="/views/Piar/index.xhtml" value="PIAR"/> <br/><!-- comment -->
+                        </li>   
+                        <li class="list-group-item bg-primary">
+                            <h:commandLink value="ESTRATEGIAS EDUCATIVAS"/> <br/>
+                        </li>
+                        <li class="list-group-item bg-primary"><h:commandLink value="GESTIÓN DE ESTUDIANTES"/><br/>
+                        </li>
+                        <li class="list-group-item bg-primary"><h:commandLink value="PROTOCOLOS Y RUTAS DE ATENCIÓN"/> <br/>
+                        </li>
+                        <li class="list-group-item bg-primary"><h:commandLink value="REPORTE DE NOVEDADES"/><br/>
+                        </li>
+                        <br/>
 
-                    <h:commandButton value="Cerrar Sesion" action="#{login.cerrarSesion()}" styleClass="btn btn-outline-danger btn-sm"/>
-                </ul>
+                        <h:commandButton value="Cerrar Sesion" action="#{login.cerrarSesion()}" styleClass="btn btn-outline-danger btn-sm"/>
+                    </ul>
                 </h:form>
-                
-
                 <ui:insert name="left"></ui:insert>
             </div>
+
+            <!-- Contenido -->
             <div id="content" class="left_content">
                 <ui:insert name="content">Content</ui:insert>
             </div>
         </div>
-
-
 
     </h:body>
 

@@ -8,50 +8,145 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <h:outputStylesheet name="/css/default.css"/>
         <h:outputStylesheet name="/css/cssLayout.css" />
-        <title>Facelets Template</title>
+
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet"/>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4Q6Gf2aSP4eDXB8Miphtr37CMZZQ5oXLH2yaXMJ2w8e2ZtHTl7GptT4jmndRuHDT" crossorigin="anonymous" />
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js"></script>
+        <link rel="icon" type="image/svg+xml" href="resources/images/IMAGENES/iconsitea.svg"/>
+        <script src="resources/js/iniciodesesion2.js" type="text/javascript"></script>
+
+        <title>Facelets Template SITEA</title>
         <link rel="stylesheet" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css"></link>
-<link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.2.3/css/buttons.dataTables.min.css"></link>
- <script type="text/javascript" src="https://code.jquery.com/jquery-3.5.1.js"></script>
-    <script type="text/javascript" src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
-    <script type="text/javascript" src="https://cdn.datatables.net/buttons/2.2.3/js/dataTables.buttons.min.js"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
-    <script type="text/javascript" src="https://cdn.datatables.net/buttons/2.2.3/js/buttons.html5.min.js"></script>
-    <script type="text/javascript" src="https://cdn.datatables.net/buttons/2.2.3/js/buttons.print.min.js"></script>  
-        
+        <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.2.3/css/buttons.dataTables.min.css"></link>
+        <script type="text/javascript" src="https://code.jquery.com/jquery-3.5.1.js"></script>
+        <script type="text/javascript" src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
+        <script type="text/javascript" src="https://cdn.datatables.net/buttons/2.2.3/js/dataTables.buttons.min.js"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+        <script type="text/javascript" src="https://cdn.datatables.net/buttons/2.2.3/js/buttons.html5.min.js"></script>
+        <script type="text/javascript" src="https://cdn.datatables.net/buttons/2.2.3/js/buttons.print.min.js"></script>  
+
     </h:head>
 
     <h:body>
 
+        <!-- Navbar superior -->
+
         <div id="top">
-            
-            <h2>Usuario: #{login.NUMERO_DOCUMENTO}</h2>
-            
-            <h:form><h:commandButton value="Cerrar Sesion" action="#{login.cerrarSesion()}" /> </h:form>
-            
+            <nav class="navbar navbar-expand-lg bg-body-tertiary">
+                <div class="container-fluid">
+                    <a class="navbar-brand" href="#">
+                        <h:graphicImage library="images" name="logositeasf 3.png" alt="SI TEA" width="55" height="60"/>
+                    </a>
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse justify-content-end" id="navbarContent">
+                        <form class="d-flex me-3" role="search">
+                            <input class="form-control me-2" type="search" placeholder="Buscar" aria-label="Search"/>
+                            <button class="btn btn-outline-success" type="submit">Buscar</button>
+                        </form>
+                        <ul class="navbar-nav mb-2 mb-lg-0 align-items-center">
+                            <li class="nav-item">
+                                <h:link styleClass="nav-link" outcome="/views/caracterizacion/index.xhtml">
+                                    <i class="fas fa-home fa-lg" style="color: black"></i>
+                                    <span class="visually-hidden">Inicio</span>
+                                </h:link>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">
+                                    <i class="fas fa-envelope fa-lg" style="color: black"></i>
+                                    <span class="visually-hidden">Mensajes</span>
+                                </a>
+                            </li>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle"
+                                   href="#"
+                                   id="settingsDropdown"
+                                   role="button"
+                                   data-bs-toggle="dropdown"
+                                   aria-expanded="false">
+                                    <i class="fas fa-cog fa-lg" style="color: black"></i>
+                                    <span class="visually-hidden">Configuración</span>
+                                </a>
+                                <ul class="dropdown-menu dropdown-menu-end"
+                                    aria-labelledby="settingsDropdown">
+                                    <li>
+                                        <a class="dropdown-item" href="#">
+                                            <i class="fas fa-user me-2" style="color: black"></i>Perfil
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item" href="#">
+                                            <i class="fas fa-paint-brush me-2" style="color: black"></i>Pantalla
+                                        </a>
+                                    </li>
+                                    <li><hr class="dropdown-divider"/></li>
+                                    <li>
+                                        <a class="dropdown-item" href="#">
+                                            <i class="fas fa-info-circle me-2" style="color: black" ></i>Otra opción
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">
+                                    <i class="fas fa-user-circle fa-lg" style="color: black"></i>
+                                    <span class="visually-hidden">Perfil</span>
+                                </a>
+                            </li>
+
+                        </ul>
+
+                    </div>
+                </div>
+            </nav>
+
             <ui:insert name="top"></ui:insert>
         </div>
+       
+        <!-- Menu lateral -->
         <div>
             <div id="left">
                 <h:form>
-                    <h:link outcome="/views/caracterizacion/index.xhtml" value="CARACTERIZACIÓN"/> <br/><!-- comment -->
-                    <h:link outcome="/views/Piar/index.xhtml" value="PIAR"/> <br/><!-- comment -->
-                    <h:commandLink value="ESTRATEGIAS EDUCATIVAS"/> <br/>
-                    <h:commandLink value="GESTION DE ESTUDIANTES"/><br/>
-                    <h:commandLink value="PROTOCOLOS Y RUTAS DE ATENCION"/> <br/>
-                    <h:commandLink value="RESPORTE DE NOVEDADES"/><br/>
                     <br/>
+                    <h:graphicImage library="images" name="IMAGENES/Sebas.png" styleClass="img-fluid mb-2" style="text-align: center" />
+                    <br/>
+
+                    <h5 class="text-center mt-4" >Usuario: #{login.NUMERO_DOCUMENTO}</h5>
+                    <br/>
+                    <ul class="list-group list-group-flush">
+                    <li class="list-group-item bg-primary">
+                         <h:link outcome="/views/caracterizacion/index.xhtml" value="CARACTERIZACIÓN"/> <br/><!-- comment -->
+                    </li>
+                    <li class="list-group-item bg-primary">
+                        <h:link outcome="/views/Piar/index.xhtml" value="PIAR"/> <br/><!-- comment -->
+                    </li>   
+                    <li class="list-group-item bg-primary">
+                        <h:commandLink value="ESTRATEGIAS EDUCATIVAS"/> <br/>
+                    </li>
+                    <li class="list-group-item bg-primary"><h:commandLink value="GESTIÓN DE ESTUDIANTES"/><br/>
+                    </li>
+                    <li class="list-group-item bg-primary"><h:commandLink value="PROTOCOLOS Y RUTAS DE ATENCIÓN"/> <br/>
+                    </li>
+                    <li class="list-group-item bg-primary"><h:commandLink value="REPORTE DE NOVEDADES"/><br/>
+                    </li>
+                    <br/>
+
+                    <h:commandButton value="Cerrar Sesion" action="#{login.cerrarSesion()}" styleClass="btn btn-outline-danger btn-sm"/>
+                </ul>
                 </h:form>
                 
+
                 <ui:insert name="left"></ui:insert>
             </div>
             <div id="content" class="left_content">
                 <ui:insert name="content">Content</ui:insert>
             </div>
         </div>
-        
-        
+
+
 
     </h:body>
 

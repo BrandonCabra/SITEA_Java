@@ -5,6 +5,7 @@
 package com.sena.sitea.services;
 
 import com.sena.sitea.entities.Caracterizacion;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -27,5 +28,14 @@ public class CaracterizacionFacade extends AbstractFacade<Caracterizacion> imple
     public CaracterizacionFacade() {
         super(Caracterizacion.class);
     }
+    
+    @SuppressWarnings("unchecked")
+    public List<Object[]> contarPorDiagnostico() {
+        String jpql = "SELECT c.diagnostico, COUNT(c) "
+                    + "FROM Caracterizacion c "
+                    + "GROUP BY c.diagnostico";
+        return em.createQuery(jpql).getResultList();
+    }
+
     
 }

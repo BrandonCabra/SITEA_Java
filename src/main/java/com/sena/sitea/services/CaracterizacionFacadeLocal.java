@@ -28,5 +28,7 @@ public interface CaracterizacionFacadeLocal {
     List<Caracterizacion> findRange(int[] range);
 
     int count();
+
+    public Iterable<Object[]> contarPorDiagnostico();
     
 }

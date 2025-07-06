@@ -22,7 +22,7 @@
                             <th>Numero Documento</th>
                             <th>Nombres</th>
                             <th>Apellidos</th>
-                            <th>Grado</th>
+                            <th>Curso</th>
                             <th>Acciones</th>
                         </tr>
                     </thead>
@@ -34,7 +34,7 @@
                             <td>#{item.numeroDocumentoEstudiante}</td>
                             <td>#{item.primerNombreEstudiante} #{item.segundoNombreEstudiante}</td>
                             <td>#{item.primerApellidoEstudiante} #{item.segundoApellidoEstudiante}</td>
-                            <td>#{item.gradoIdGrado.idGrado}</td>
+                            <td>#{item.cursoIdCurso.codigoCurso}</td>
                             <td>
                                 <h:form>
                                     <h:commandButton value="Editar" action="#{estudianteTeaController.editarEstudianteP1(item)}"/>

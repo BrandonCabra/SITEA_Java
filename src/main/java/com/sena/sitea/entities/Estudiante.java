@@ -102,22 +102,22 @@ public class Estudiante implements Serializable {
     @Size(max = 45)
     @Column(name = "numero_documento_padre")
     private String numeroDocumentoPadre;
-    @JoinColumn(name = "GRADO_ID_GRADO", referencedColumnName = "ID_GRADO")
+    @JoinColumn(name = "CURSO_ID_CURSO", referencedColumnName = "ID_CURSO")
     @ManyToOne(fetch = FetchType.LAZY)
-    private Grado gradoIdGrado;
+    private Curso cursoIdCurso;
     @JoinColumn(name = "TIPO_DOCUMENTO_ID_TIPO_DOCUMENTO", referencedColumnName = "ID_TIPO_DOCUMENTO")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private TipoDocumento tipoDocumentoIdTipoDocumento;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "estudianteIdEstudiante", fetch = FetchType.LAZY)
+    private List<EstudianteHasTrastorno> estudianteHasTrastornoList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "estudianteIdEstudiante", fetch = FetchType.LAZY)
+    private List<Piar> piarList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "estudianteIdEstudiante", fetch = FetchType.LAZY)
     private List<BoletinAcademico> boletinAcademicoList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "estudianteIdEstudiante", fetch = FetchType.LAZY)
     private List<Caracterizacion> caracterizacionList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "estudianteIdEstudiante", fetch = FetchType.LAZY)
-    private List<EstudianteHasTrastorno> estudianteHasTrastornoList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "estudianteIdEstudiante", fetch = FetchType.LAZY)
     private List<Matricula> matriculaList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "estudianteIdEstudiante", fetch = FetchType.LAZY)
-    private List<Piar> piarList;
 
     public Estudiante() {
     }
@@ -232,12 +232,12 @@ public class Estudiante implements Serializable {
         this.numeroDocumentoPadre = numeroDocumentoPadre;
     }
 
-    public Grado getGradoIdGrado() {
-        return gradoIdGrado;
+    public Curso getCursoIdCurso() {
+        return cursoIdCurso;
     }
 
-    public void setGradoIdGrado(Grado gradoIdGrado) {
-        this.gradoIdGrado = gradoIdGrado;
+    public void setCursoIdCurso(Curso cursoIdCurso) {
+        this.cursoIdCurso = cursoIdCurso;
     }
 
     public TipoDocumento getTipoDocumentoIdTipoDocumento() {
@@ -246,6 +246,24 @@ public class Estudiante implements Serializable {
 
     public void setTipoDocumentoIdTipoDocumento(TipoDocumento tipoDocumentoIdTipoDocumento) {
         this.tipoDocumentoIdTipoDocumento = tipoDocumentoIdTipoDocumento;
+    }
+
+    @XmlTransient
+    public List<EstudianteHasTrastorno> getEstudianteHasTrastornoList() {
+        return estudianteHasTrastornoList;
+    }
+
+    public void setEstudianteHasTrastornoList(List<EstudianteHasTrastorno> estudianteHasTrastornoList) {
+        this.estudianteHasTrastornoList = estudianteHasTrastornoList;
+    }
+
+    @XmlTransient
+    public List<Piar> getPiarList() {
+        return piarList;
+    }
+
+    public void setPiarList(List<Piar> piarList) {
+        this.piarList = piarList;
     }
 
     @XmlTransient
@@ -267,30 +285,12 @@ public class Estudiante implements Serializable {
     }
 
     @XmlTransient
-    public List<EstudianteHasTrastorno> getEstudianteHasTrastornoList() {
-        return estudianteHasTrastornoList;
-    }
-
-    public void setEstudianteHasTrastornoList(List<EstudianteHasTrastorno> estudianteHasTrastornoList) {
-        this.estudianteHasTrastornoList = estudianteHasTrastornoList;
-    }
-
-    @XmlTransient
     public List<Matricula> getMatriculaList() {
         return matriculaList;
     }
 
     public void setMatriculaList(List<Matricula> matriculaList) {
         this.matriculaList = matriculaList;
-    }
-
-    @XmlTransient
-    public List<Piar> getPiarList() {
-        return piarList;
-    }
-
-    public void setPiarList(List<Piar> piarList) {
-        this.piarList = piarList;
     }
 
     @Override
@@ -317,9 +317,9 @@ public class Estudiante implements Serializable {
     public String toString() {
         return "com.sena.sitea.entities.Estudiante[ idEstudiante=" + idEstudiante + " ]";
     }
-
+    
     public String getnumero_documento_estudiante() {
         return getNumeroDocumentoEstudiante();
-    }
+}
 
 }

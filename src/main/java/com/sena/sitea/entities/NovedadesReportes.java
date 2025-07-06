@@ -8,7 +8,6 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -89,7 +88,7 @@ public class NovedadesReportes implements Serializable {
     @JoinColumn(name = "USUARIOS_ID_USUARIO", referencedColumnName = "ID_USUARIO")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Usuarios usuariosIdUsuario;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "novedadesReportesIdNovedadesReportes", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "novedadesReportesIdNovedadesReportes", fetch = FetchType.LAZY)
     private List<ProtocolosRutas> protocolosRutasList;
 
     public NovedadesReportes() {

@@ -46,10 +46,10 @@
                             <h:inputText id="fotografiaEstudiante" value="#{estudianteTeaController.con.fotografiaEstudiante}" title="FotografiaEstudiante" />
                             <h:outputLabel value="Numero Documento Padre:" for="numeroDocumentoPadre" />
                             <h:inputText id="numeroDocumentoPadre" value="#{estudianteTeaController.con.numeroDocumentoPadre}" title="NumeroDocumentoPadre" />
-                            <h:outputLabel value="Grado:" for="gradoIdGrado" />
-                            <h:selectOneMenu id="gradoIdGrado" value="#{estudianteTeaController.gra.idGrado}" title="GradoIdGrado" >
+                            <h:outputLabel value="Curso:" for="cursoIdCurso" />
+                            <h:selectOneMenu id="cursoIdCurso" value="#{estudianteTeaController.cur.idCurso}" title="cursoIdCurso" >
                                 <!-- TODO: update below reference to list of available items-->
-                                <f:selectItems value="#{estudianteTeaController.listaGrado()}"/>
+                                <f:selectItems value="#{estudianteTeaController.listaCurso()}"/>
                             </h:selectOneMenu>
                             
                         </h:panelGrid>

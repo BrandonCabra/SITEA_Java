@@ -74,14 +74,14 @@ public class BoletinAcademico implements Serializable {
     @Size(max = 45)
     @Column(name = "RECOMENDACIONES")
     private String recomendaciones;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "boletinAcademicoIdBoletinAcademico", fetch = FetchType.LAZY)
+    private List<Evaluacion> evaluacionList;
     @JoinColumn(name = "NOVEDADES_REPORTES_ID_NOVEDADES_REPORTES", referencedColumnName = "ID_NOVEDADES_REPORTES")
     @ManyToOne(fetch = FetchType.LAZY)
     private NovedadesReportes novedadesReportesIdNovedadesReportes;
     @JoinColumn(name = "ESTUDIANTE_ID_ESTUDIANTE", referencedColumnName = "ID_ESTUDIANTE")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Estudiante estudianteIdEstudiante;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "boletinAcademicoIdBoletinAcademico", fetch = FetchType.LAZY)
-    private List<Evaluacion> evaluacionList;
 
     public BoletinAcademico() {
     }
@@ -152,6 +152,15 @@ public class BoletinAcademico implements Serializable {
         this.recomendaciones = recomendaciones;
     }
 
+    @XmlTransient
+    public List<Evaluacion> getEvaluacionList() {
+        return evaluacionList;
+    }
+
+    public void setEvaluacionList(List<Evaluacion> evaluacionList) {
+        this.evaluacionList = evaluacionList;
+    }
+
     public NovedadesReportes getNovedadesReportesIdNovedadesReportes() {
         return novedadesReportesIdNovedadesReportes;
     }
@@ -166,15 +175,6 @@ public class BoletinAcademico implements Serializable {
 
     public void setEstudianteIdEstudiante(Estudiante estudianteIdEstudiante) {
         this.estudianteIdEstudiante = estudianteIdEstudiante;
-    }
-
-    @XmlTransient
-    public List<Evaluacion> getEvaluacionList() {
-        return evaluacionList;
-    }
-
-    public void setEvaluacionList(List<Evaluacion> evaluacionList) {
-        this.evaluacionList = evaluacionList;
     }
 
     @Override

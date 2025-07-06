@@ -72,9 +72,9 @@ public class Institucion implements Serializable {
     @Column(name = "DIRECCION_INSTITUCION")
     private String direccionInstitucion;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "institucionIdInstitucion", fetch = FetchType.LAZY)
-    private List<Grado> gradoList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "institucionIdInstitucion", fetch = FetchType.LAZY)
     private List<RepresentanteLegal> representanteLegalList;
+    @OneToMany(mappedBy = "idInstitucionId", fetch = FetchType.LAZY)
+    private List<Curso> cursoList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "institucionIdInstitucion", fetch = FetchType.LAZY)
     private List<Matricula> matriculaList;
 
@@ -143,21 +143,21 @@ public class Institucion implements Serializable {
     }
 
     @XmlTransient
-    public List<Grado> getGradoList() {
-        return gradoList;
-    }
-
-    public void setGradoList(List<Grado> gradoList) {
-        this.gradoList = gradoList;
-    }
-
-    @XmlTransient
     public List<RepresentanteLegal> getRepresentanteLegalList() {
         return representanteLegalList;
     }
 
     public void setRepresentanteLegalList(List<RepresentanteLegal> representanteLegalList) {
         this.representanteLegalList = representanteLegalList;
+    }
+
+    @XmlTransient
+    public List<Curso> getCursoList() {
+        return cursoList;
+    }
+
+    public void setCursoList(List<Curso> cursoList) {
+        this.cursoList = cursoList;
     }
 
     @XmlTransient

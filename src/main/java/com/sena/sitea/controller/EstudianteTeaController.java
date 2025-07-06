@@ -4,11 +4,11 @@
  */
 package com.sena.sitea.controller;
 
+import com.sena.sitea.entities.Curso;
 import com.sena.sitea.entities.Estudiante;
-import com.sena.sitea.entities.Grado;
 import com.sena.sitea.entities.TipoDocumento;
+import com.sena.sitea.services.CursoFacadeLocal;
 import com.sena.sitea.services.EstudianteFacadeLocal;
-import com.sena.sitea.services.GradoFacadeLocal;
 import com.sena.sitea.services.TipoDocumentoFacadeLocal;
 import javax.inject.Named;
 import java.io.Serializable;
@@ -30,8 +30,8 @@ public class EstudianteTeaController implements Serializable {
     
 
     private Estudiante con = new Estudiante();
-    Grado gra = new Grado();
-    List<SelectItem>listaGrado;
+    Curso cur = new Curso();
+    List<SelectItem>listaCurso;
     
     TipoDocumento td = new TipoDocumento();
     List<SelectItem>listaTipoDocumento;
@@ -40,7 +40,7 @@ public class EstudianteTeaController implements Serializable {
     @EJB
     private EstudianteFacadeLocal efl;
     @EJB
-    GradoFacadeLocal gfl;
+    CursoFacadeLocal cfl;
     @EJB
     TipoDocumentoFacadeLocal tfl;
     
@@ -54,13 +54,14 @@ public class EstudianteTeaController implements Serializable {
         this.con = con;
     }
 
-    public Grado getGra() {
-        return gra;
+    public Curso getCur() {
+        return cur;
     }
 
-    public void setGra(Grado gra) {
-        this.gra = gra;
+    public void setCur(Curso cur) {
+        this.cur = cur;
     }
+    
 
     public TipoDocumento getTd() {
         return td;
@@ -69,9 +70,6 @@ public class EstudianteTeaController implements Serializable {
     public void setTd(TipoDocumento td) {
         this.td = td;
     }
-    
-    
-    
     
     
     public List<Estudiante> obtenerEstudiantes (){
@@ -86,14 +84,15 @@ public class EstudianteTeaController implements Serializable {
     public EstudianteTeaController() {
     }
     
-    public List<SelectItem> listaGrado (){
-        listaGrado = new ArrayList<>();
+    public List<SelectItem> listaCurso (){
+        listaCurso = new ArrayList<>();
         try {
-            for(Grado gra : this.gfl.findAll()){
-                SelectItem item = new SelectItem(gra.getIdGrado(), gra.getCodigoGrado());
-                listaGrado.add(item);
+            for(Curso cur : this.cfl.findAll()){
+                SelectItem item = new SelectItem(cur.getIdCurso() + "-" + cur.getCodigoCurso());
+                listaCurso.add(item);
+                
             }
-            return listaGrado;
+            return listaCurso;
         } catch (Exception e) {
             return null;
         }
@@ -118,7 +117,7 @@ public class EstudianteTeaController implements Serializable {
     }
     
     public void crearEstudianteP2 () {
-        con.setGradoIdGrado(gra);
+        con.setCursoIdCurso(cur);
         con.setTipoDocumentoIdTipoDocumento(td);
         
         try {
@@ -135,14 +134,14 @@ public class EstudianteTeaController implements Serializable {
     
     public String editarEstudianteP1 (Estudiante con2){
         this.con = con2;
-        this.gra.setIdGrado(con.getGradoIdGrado().getIdGrado());
+        this.cur.setIdCurso(con.getCursoIdCurso() .getIdCurso());
         this.td.setIdTipoDocumento(con.getTipoDocumentoIdTipoDocumento().getIdTipoDocumento());
         return "/views/caracterizacion/crearestudiantetea.xhtml?faces-redirect?true";    
     }
     
     public void editarEstudianteP2 (){
         try {
-            this.con.setGradoIdGrado(gra);
+            this.con.setCursoIdCurso(cur);
             this.con.setTipoDocumentoIdTipoDocumento(td);
             this.efl.edit(con);
             FacesContext fc = FacesContext.getCurrentInstance();

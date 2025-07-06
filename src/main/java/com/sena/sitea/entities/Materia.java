@@ -11,7 +11,11 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -39,8 +43,8 @@ public class Materia implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @NotNull
     @Column(name = "ID_MATERIA")
     private Integer idMateria;
     @Basic(optional = false)
@@ -67,6 +71,9 @@ public class Materia implements Serializable {
     private List<GradoMateria> gradoMateriaList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "materiaIdMateria", fetch = FetchType.LAZY)
     private List<UsuarioprofHasMateria> usuarioprofHasMateriaList;
+    @JoinColumn(name = "AREA_ID_AREA", referencedColumnName = "ID_AREA")
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Area areaIdArea;
 
     public Materia() {
     }
@@ -139,6 +146,14 @@ public class Materia implements Serializable {
 
     public void setUsuarioprofHasMateriaList(List<UsuarioprofHasMateria> usuarioprofHasMateriaList) {
         this.usuarioprofHasMateriaList = usuarioprofHasMateriaList;
+    }
+
+    public Area getAreaIdArea() {
+        return areaIdArea;
+    }
+
+    public void setAreaIdArea(Area areaIdArea) {
+        this.areaIdArea = areaIdArea;
     }
 
     @Override

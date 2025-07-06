@@ -14,8 +14,6 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -35,8 +33,8 @@ import javax.xml.bind.annotation.XmlTransient;
 @NamedQueries({
     @NamedQuery(name = "Grado.findAll", query = "SELECT g FROM Grado g"),
     @NamedQuery(name = "Grado.findByIdGrado", query = "SELECT g FROM Grado g WHERE g.idGrado = :idGrado"),
-    @NamedQuery(name = "Grado.findByCodigoGrado", query = "SELECT g FROM Grado g WHERE g.codigoGrado = :codigoGrado"),
-    @NamedQuery(name = "Grado.findByCantidadEstudiantes", query = "SELECT g FROM Grado g WHERE g.cantidadEstudiantes = :cantidadEstudiantes")})
+    @NamedQuery(name = "Grado.findByNivelGrado", query = "SELECT g FROM Grado g WHERE g.nivelGrado = :nivelGrado"),
+    @NamedQuery(name = "Grado.findByCicloGrado", query = "SELECT g FROM Grado g WHERE g.cicloGrado = :cicloGrado")})
 public class Grado implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -47,20 +45,20 @@ public class Grado implements Serializable {
     private Integer idGrado;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 10)
-    @Column(name = "CODIGO_GRADO")
-    private String codigoGrado;
+    @Size(min = 1, max = 45)
+    @Column(name = "NIVEL_GRADO")
+    private String nivelGrado;
     @Basic(optional = false)
     @NotNull
-    @Column(name = "CANTIDAD_ESTUDIANTES")
-    private int cantidadEstudiantes;
-    @OneToMany(mappedBy = "gradoIdGrado", fetch = FetchType.LAZY)
-    private List<Estudiante> estudianteList;
-    @JoinColumn(name = "INSTITUCION_ID_INSTITUCION", referencedColumnName = "ID_INSTITUCION")
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
-    private Institucion institucionIdInstitucion;
+    @Size(min = 1, max = 10)
+    @Column(name = "CICLO_GRADO")
+    private String cicloGrado;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "gradoIdGrado", fetch = FetchType.LAZY)
     private List<GradoMateria> gradoMateriaList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "grado", fetch = FetchType.LAZY)
+    private List<Dba> dbaList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "gradoIdGrado", fetch = FetchType.LAZY)
+    private List<Curso> cursoList;
 
     public Grado() {
     }
@@ -69,10 +67,10 @@ public class Grado implements Serializable {
         this.idGrado = idGrado;
     }
 
-    public Grado(Integer idGrado, String codigoGrado, int cantidadEstudiantes) {
+    public Grado(Integer idGrado, String nivelGrado, String cicloGrado) {
         this.idGrado = idGrado;
-        this.codigoGrado = codigoGrado;
-        this.cantidadEstudiantes = cantidadEstudiantes;
+        this.nivelGrado = nivelGrado;
+        this.cicloGrado = cicloGrado;
     }
 
     public Integer getIdGrado() {
@@ -83,37 +81,20 @@ public class Grado implements Serializable {
         this.idGrado = idGrado;
     }
 
-    public String getCodigoGrado() {
-        return codigoGrado;
+    public String getNivelGrado() {
+        return nivelGrado;
     }
 
-    public void setCodigoGrado(String codigoGrado) {
-        this.codigoGrado = codigoGrado;
+    public void setNivelGrado(String nivelGrado) {
+        this.nivelGrado = nivelGrado;
     }
 
-    public int getCantidadEstudiantes() {
-        return cantidadEstudiantes;
+    public String getCicloGrado() {
+        return cicloGrado;
     }
 
-    public void setCantidadEstudiantes(int cantidadEstudiantes) {
-        this.cantidadEstudiantes = cantidadEstudiantes;
-    }
-
-    @XmlTransient
-    public List<Estudiante> getEstudianteList() {
-        return estudianteList;
-    }
-
-    public void setEstudianteList(List<Estudiante> estudianteList) {
-        this.estudianteList = estudianteList;
-    }
-
-    public Institucion getInstitucionIdInstitucion() {
-        return institucionIdInstitucion;
-    }
-
-    public void setInstitucionIdInstitucion(Institucion institucionIdInstitucion) {
-        this.institucionIdInstitucion = institucionIdInstitucion;
+    public void setCicloGrado(String cicloGrado) {
+        this.cicloGrado = cicloGrado;
     }
 
     @XmlTransient
@@ -123,6 +104,24 @@ public class Grado implements Serializable {
 
     public void setGradoMateriaList(List<GradoMateria> gradoMateriaList) {
         this.gradoMateriaList = gradoMateriaList;
+    }
+
+    @XmlTransient
+    public List<Dba> getDbaList() {
+        return dbaList;
+    }
+
+    public void setDbaList(List<Dba> dbaList) {
+        this.dbaList = dbaList;
+    }
+
+    @XmlTransient
+    public List<Curso> getCursoList() {
+        return cursoList;
+    }
+
+    public void setCursoList(List<Curso> cursoList) {
+        this.cursoList = cursoList;
     }
 
     @Override

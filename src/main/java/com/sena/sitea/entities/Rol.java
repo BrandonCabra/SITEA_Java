@@ -49,8 +49,12 @@ public class Rol implements Serializable {
     private String nombreRol;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "rolIdRol", fetch = FetchType.LAZY)
     private List<Usuarios> usuariosList;
+    @OneToMany(mappedBy = "rolIdRol", fetch = FetchType.LAZY)
+    private List<RolPermiso> rolPermisoList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "usuariosRolIdRol", fetch = FetchType.LAZY)
     private List<UsuarioprofHasMateria> usuarioprofHasMateriaList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "rolIdRo", fetch = FetchType.LAZY)
+    private List<UsuarioRol> usuarioRolList;
 
     public Rol() {
     }
@@ -90,12 +94,30 @@ public class Rol implements Serializable {
     }
 
     @XmlTransient
+    public List<RolPermiso> getRolPermisoList() {
+        return rolPermisoList;
+    }
+
+    public void setRolPermisoList(List<RolPermiso> rolPermisoList) {
+        this.rolPermisoList = rolPermisoList;
+    }
+
+    @XmlTransient
     public List<UsuarioprofHasMateria> getUsuarioprofHasMateriaList() {
         return usuarioprofHasMateriaList;
     }
 
     public void setUsuarioprofHasMateriaList(List<UsuarioprofHasMateria> usuarioprofHasMateriaList) {
         this.usuarioprofHasMateriaList = usuarioprofHasMateriaList;
+    }
+
+    @XmlTransient
+    public List<UsuarioRol> getUsuarioRolList() {
+        return usuarioRolList;
+    }
+
+    public void setUsuarioRolList(List<UsuarioRol> usuarioRolList) {
+        this.usuarioRolList = usuarioRolList;
     }
 
     @Override

@@ -66,8 +66,11 @@ public class Caracterizacioncontroller implements Serializable {
         listaEstudiante = new ArrayList<>();
         try {
             for(Estudiante est : this.efl.findAll()){
-                SelectItem item = new SelectItem(est.getIdEstudiante(), est.getPrimerNombreEstudiante());
+                if(est.getCaracterizacionList().isEmpty()){
+                
+                SelectItem item = new SelectItem(est.getIdEstudiante(), est.getNumeroDocumentoEstudiante() + " " + est.getPrimerNombreEstudiante() + " " + est.getPrimerApellidoEstudiante());
                 listaEstudiante.add(item);
+                }
             }
             return listaEstudiante;
         } catch (Exception e) {

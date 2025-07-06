@@ -49,35 +49,25 @@ public class ProtocolosRutas implements Serializable {
     @Size(min = 1, max = 45)
     @Column(name = "NOMBRE_PROTOCOLOS_RUTAS")
     private String nombreProtocolosRutas;
-    @Basic(optional = false)
-    @NotNull
     @Lob
-    @Size(min = 1, max = 65535)
+    @Size(max = 65535)
     @Column(name = "DESCRIPCION_PROTOCOLOS_RUTAS")
     private String descripcionProtocolosRutas;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 11)
+    @Size(max = 11)
     @Column(name = "TIPO_PROTOCOLOS_RUTAS")
     private String tipoProtocolosRutas;
-    @Basic(optional = false)
-    @NotNull
     @Lob
-    @Size(min = 1, max = 65535)
+    @Size(max = 65535)
     @Column(name = "PASOS_PROTOCOLOS_RUTAS")
     private String pasosProtocolosRutas;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 100)
+    @Size(max = 100)
     @Column(name = "RESPONSABLE_PROTOCOLOS_RUTAS")
     private String responsableProtocolosRutas;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 10)
+    @Size(max = 10)
     @Column(name = "ESTADO_PROTOCOLOS_RUTAS")
     private String estadoProtocolosRutas;
     @JoinColumn(name = "NOVEDADES_REPORTES_ID_NOVEDADES_REPORTES", referencedColumnName = "ID_NOVEDADES_REPORTES")
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     private NovedadesReportes novedadesReportesIdNovedadesReportes;
 
     public ProtocolosRutas() {
@@ -87,14 +77,9 @@ public class ProtocolosRutas implements Serializable {
         this.idProtocolosRutas = idProtocolosRutas;
     }
 
-    public ProtocolosRutas(Integer idProtocolosRutas, String nombreProtocolosRutas, String descripcionProtocolosRutas, String tipoProtocolosRutas, String pasosProtocolosRutas, String responsableProtocolosRutas, String estadoProtocolosRutas) {
+    public ProtocolosRutas(Integer idProtocolosRutas, String nombreProtocolosRutas) {
         this.idProtocolosRutas = idProtocolosRutas;
         this.nombreProtocolosRutas = nombreProtocolosRutas;
-        this.descripcionProtocolosRutas = descripcionProtocolosRutas;
-        this.tipoProtocolosRutas = tipoProtocolosRutas;
-        this.pasosProtocolosRutas = pasosProtocolosRutas;
-        this.responsableProtocolosRutas = responsableProtocolosRutas;
-        this.estadoProtocolosRutas = estadoProtocolosRutas;
     }
 
     public Integer getIdProtocolosRutas() {

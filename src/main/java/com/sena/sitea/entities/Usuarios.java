@@ -92,8 +92,6 @@ public class Usuarios implements Serializable {
     @Column(name = "FECHA_REGISTRO_ID_FECHA_REGISTRO")
     @Temporal(TemporalType.DATE)
     private Date fechaRegistroIdFechaRegistro;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "usuariosIdUsuario", fetch = FetchType.LAZY)
-    private List<NovedadesReportes> novedadesReportesList;
     @JoinColumn(name = "TIPO_DOCUMENTO_ID_TIPO_DOCUMENTO", referencedColumnName = "ID_TIPO_DOCUMENTO")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private TipoDocumento tipoDocumentoIdTipoDocumento;
@@ -102,6 +100,10 @@ public class Usuarios implements Serializable {
     private Rol rolIdRol;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "usuariosIdUsuario", fetch = FetchType.LAZY)
     private List<UsuarioprofHasMateria> usuarioprofHasMateriaList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "usuariosIdUsuario", fetch = FetchType.LAZY)
+    private List<NovedadesReportes> novedadesReportesList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "usuarioIdUsuario", fetch = FetchType.LAZY)
+    private List<UsuarioRol> usuarioRolList;
 
     public Usuarios() {
     }
@@ -199,15 +201,6 @@ public class Usuarios implements Serializable {
         this.fechaRegistroIdFechaRegistro = fechaRegistroIdFechaRegistro;
     }
 
-    @XmlTransient
-    public List<NovedadesReportes> getNovedadesReportesList() {
-        return novedadesReportesList;
-    }
-
-    public void setNovedadesReportesList(List<NovedadesReportes> novedadesReportesList) {
-        this.novedadesReportesList = novedadesReportesList;
-    }
-
     public TipoDocumento getTipoDocumentoIdTipoDocumento() {
         return tipoDocumentoIdTipoDocumento;
     }
@@ -231,6 +224,24 @@ public class Usuarios implements Serializable {
 
     public void setUsuarioprofHasMateriaList(List<UsuarioprofHasMateria> usuarioprofHasMateriaList) {
         this.usuarioprofHasMateriaList = usuarioprofHasMateriaList;
+    }
+
+    @XmlTransient
+    public List<NovedadesReportes> getNovedadesReportesList() {
+        return novedadesReportesList;
+    }
+
+    public void setNovedadesReportesList(List<NovedadesReportes> novedadesReportesList) {
+        this.novedadesReportesList = novedadesReportesList;
+    }
+
+    @XmlTransient
+    public List<UsuarioRol> getUsuarioRolList() {
+        return usuarioRolList;
+    }
+
+    public void setUsuarioRolList(List<UsuarioRol> usuarioRolList) {
+        this.usuarioRolList = usuarioRolList;
     }
 
     @Override

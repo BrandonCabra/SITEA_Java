@@ -49,6 +49,10 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Usuarios.findByFechaRegistroIdFechaRegistro", query = "SELECT u FROM Usuarios u WHERE u.fechaRegistroIdFechaRegistro = :fechaRegistroIdFechaRegistro")})
 public class Usuarios implements Serializable {
 
+    @Size(max = 11)
+    @Column(name = "ESTATUS")
+    private String estatus;
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -95,9 +99,6 @@ public class Usuarios implements Serializable {
     @JoinColumn(name = "TIPO_DOCUMENTO_ID_TIPO_DOCUMENTO", referencedColumnName = "ID_TIPO_DOCUMENTO")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private TipoDocumento tipoDocumentoIdTipoDocumento;
-    @JoinColumn(name = "ROL_ID_ROL", referencedColumnName = "ID_ROL")
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
-    private Rol rolIdRol;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "usuariosIdUsuario", fetch = FetchType.LAZY)
     private List<UsuarioprofHasMateria> usuarioprofHasMateriaList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "usuariosIdUsuario", fetch = FetchType.LAZY)
@@ -209,14 +210,6 @@ public class Usuarios implements Serializable {
         this.tipoDocumentoIdTipoDocumento = tipoDocumentoIdTipoDocumento;
     }
 
-    public Rol getRolIdRol() {
-        return rolIdRol;
-    }
-
-    public void setRolIdRol(Rol rolIdRol) {
-        this.rolIdRol = rolIdRol;
-    }
-
     @XmlTransient
     public List<UsuarioprofHasMateria> getUsuarioprofHasMateriaList() {
         return usuarioprofHasMateriaList;
@@ -267,6 +260,14 @@ public class Usuarios implements Serializable {
     @Override
     public String toString() {
         return "com.sena.sitea.entities.Usuarios[ idUsuario=" + idUsuario + " ]";
+    }
+
+    public String getEstatus() {
+        return estatus;
+    }
+
+    public void setEstatus(String estatus) {
+        this.estatus = estatus;
     }
     
 }

@@ -39,6 +39,10 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Periodo.findByFechaCierre", query = "SELECT p FROM Periodo p WHERE p.fechaCierre = :fechaCierre")})
 public class Periodo implements Serializable {
 
+    @Column(name = "FECHA_CIERRA")
+    @Temporal(TemporalType.DATE)
+    private Date fechaCierra;
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -134,6 +138,14 @@ public class Periodo implements Serializable {
     @Override
     public String toString() {
         return "com.sena.sitea.entities.Periodo[ idPeriodo=" + idPeriodo + " ]";
+    }
+
+    public Date getFechaCierra() {
+        return fechaCierra;
+    }
+
+    public void setFechaCierra(Date fechaCierra) {
+        this.fechaCierra = fechaCierra;
     }
     
 }

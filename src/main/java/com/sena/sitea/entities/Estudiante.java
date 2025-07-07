@@ -51,6 +51,8 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Estudiante.findByNumeroDocumentoPadre", query = "SELECT e FROM Estudiante e WHERE e.numeroDocumentoPadre = :numeroDocumentoPadre")})
 public class Estudiante implements Serializable {
 
+    
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -320,6 +322,6 @@ public class Estudiante implements Serializable {
     
     public String getnumero_documento_estudiante() {
         return getNumeroDocumentoEstudiante();
-}
+    }
 
 }

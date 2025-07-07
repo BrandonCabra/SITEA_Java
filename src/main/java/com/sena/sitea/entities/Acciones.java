@@ -32,7 +32,7 @@ import javax.xml.bind.annotation.XmlTransient;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Acciones.findAll", query = "SELECT a FROM Acciones a"),
-    @NamedQuery(name = "Acciones.findByIdAccion", query = "SELECT a FROM Acciones a WHERE a.idAccion = :idAccion"),
+    @NamedQuery(name = "Acciones.findByIdAcciones", query = "SELECT a FROM Acciones a WHERE a.idAcciones = :idAcciones"),
     @NamedQuery(name = "Acciones.findByNombreAccion", query = "SELECT a FROM Acciones a WHERE a.nombreAccion = :nombreAccion")})
 public class Acciones implements Serializable {
 
@@ -40,11 +40,14 @@ public class Acciones implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @Column(name = "ID_ACCION")
-    private Integer idAccion;
+    @Column(name = "ID_ACCIONES")
+    private Integer idAcciones;
+
+    
+   
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 100)
+    @Size(min = 1, max = 45)
     @Column(name = "NOMBRE_ACCION")
     private String nombreAccion;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "accionIdAccion", fetch = FetchType.LAZY)
@@ -53,21 +56,21 @@ public class Acciones implements Serializable {
     public Acciones() {
     }
 
-    public Acciones(Integer idAccion) {
-        this.idAccion = idAccion;
+    public Acciones(Integer idAcciones) {
+        this.idAcciones = idAcciones;
     }
 
-    public Acciones(Integer idAccion, String nombreAccion) {
-        this.idAccion = idAccion;
+    public Acciones(Integer idAcciones, String nombreAccion) {
+        this.idAcciones = idAcciones;
         this.nombreAccion = nombreAccion;
     }
 
-    public Integer getIdAccion() {
-        return idAccion;
+    public Integer getIdAcciones() {
+        return idAcciones;
     }
 
-    public void setIdAccion(Integer idAccion) {
-        this.idAccion = idAccion;
+    public void setIdAcciones(Integer idAcciones) {
+        this.idAcciones = idAcciones;
     }
 
     public String getNombreAccion() {
@@ -90,7 +93,7 @@ public class Acciones implements Serializable {
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (idAccion != null ? idAccion.hashCode() : 0);
+        hash += (idAcciones != null ? idAcciones.hashCode() : 0);
         return hash;
     }
 
@@ -101,15 +104,17 @@ public class Acciones implements Serializable {
             return false;
         }
         Acciones other = (Acciones) object;
-        if ((this.idAccion == null && other.idAccion != null) || (this.idAccion != null && !this.idAccion.equals(other.idAccion))) {
+        if ((this.idAcciones == null && other.idAcciones != null) || (this.idAcciones != null && !this.idAcciones.equals(other.idAcciones))) {
             return false;
         }
         return true;
     }
-
+   
+    
     @Override
     public String toString() {
-        return "com.sena.sitea.entities.Acciones[ idAccion=" + idAccion + " ]";
+        return "com.sena.sitea.entities.Acciones[ idAccion=" + idAcciones + " ]";
     }
+    
     
 }

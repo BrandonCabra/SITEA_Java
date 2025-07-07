@@ -88,14 +88,17 @@ public class EstudianteTeaController implements Serializable {
         listaCurso = new ArrayList<>();
         try {
             for(Curso cur : this.cfl.findAll()){
-                SelectItem item = new SelectItem(cur.getIdCurso() + "-" + cur.getCodigoCurso());
+                String label = String.valueOf(cur.getCodigoCurso());
+
+                SelectItem item = new SelectItem(cur.getIdCurso(), label);
                 listaCurso.add(item);
                 
             }
             return listaCurso;
         } catch (Exception e) {
-            return null;
+            
         }
+        return null;
     }
     
     public List<SelectItem> listaTipoDocumento(){

@@ -31,6 +31,10 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "UsuarioRol.findByIdUsuarioRol", query = "SELECT u FROM UsuarioRol u WHERE u.idUsuarioRol = :idUsuarioRol")})
 public class UsuarioRol implements Serializable {
 
+    @JoinColumn(name = "ROL_ID_ROL", referencedColumnName = "ID_ROL")
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    private Rol rolIdRol;
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -98,6 +102,14 @@ public class UsuarioRol implements Serializable {
     @Override
     public String toString() {
         return "com.sena.sitea.entities.UsuarioRol[ idUsuarioRol=" + idUsuarioRol + " ]";
+    }
+
+    public Rol getRolIdRol() {
+        return rolIdRol;
+    }
+
+    public void setRolIdRol(Rol rolIdRol) {
+        this.rolIdRol = rolIdRol;
     }
     
 }

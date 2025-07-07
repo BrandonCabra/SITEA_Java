@@ -47,8 +47,7 @@ public class Rol implements Serializable {
     @Size(min = 1, max = 45)
     @Column(name = "NOMBRE_ROL")
     private String nombreRol;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "rolIdRol", fetch = FetchType.LAZY)
-    private List<Usuarios> usuariosList;
+    
     @OneToMany(mappedBy = "rolIdRol", fetch = FetchType.LAZY)
     private List<RolPermiso> rolPermisoList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "usuariosRolIdRol", fetch = FetchType.LAZY)
@@ -84,15 +83,7 @@ public class Rol implements Serializable {
         this.nombreRol = nombreRol;
     }
 
-    @XmlTransient
-    public List<Usuarios> getUsuariosList() {
-        return usuariosList;
-    }
-
-    public void setUsuariosList(List<Usuarios> usuariosList) {
-        this.usuariosList = usuariosList;
-    }
-
+    
     @XmlTransient
     public List<RolPermiso> getRolPermisoList() {
         return rolPermisoList;

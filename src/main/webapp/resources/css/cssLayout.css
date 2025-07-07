@@ -77,3 +77,26 @@
     border: 3px solid #333; /* Borde opcional */
 }
 
+
+
+
+
+
+html.zoom-pequeno {
+    font-size: 12px;
+}
+html.zoom-mediano {
+    font-size: 16px;
+}
+html.zoom-grande {
+    font-size: 20px;
+}
+
+body.alto-contraste {
+    background-color: #000 !important;
+    color: #fff !important;
+}
+
+body.alto-contraste a {
+    color: #00ffff !important;
+}

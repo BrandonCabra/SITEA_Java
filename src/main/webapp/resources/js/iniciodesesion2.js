@@ -56,3 +56,7 @@ function validarFormulario() {
 
     document.getElementById("loginForm").submit();
 }
+
+
+
+

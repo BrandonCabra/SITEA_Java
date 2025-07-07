@@ -14,7 +14,7 @@
 
 
                     <h:form>
-                        <h1><h:outputText value="Create"/></h1>
+                        <h1><h:outputText value="Crear Caracterización"/></h1>
                         <h:panelGrid columns="2">
                             <h:outputLabel value="Estudiante:" for="estudianteIdEstudiante" />
                             <h:selectOneMenu id="estudianteIdEstudiante" value="#{caracterizacioncontroller.car.estudianteIdEstudiante}" title="EstudianteIdEstudiante" required="true" requiredMessage="The EstudianteIdEstudiante field is required.">
@@ -46,8 +46,8 @@
                             
                         </h:panelGrid>
                         <h:messages id="mensajes" globalOnly="true"/><!-- comment -->
-                        <h:commandButton value="Registrar Caracterizació" action="#{estudianteTeaController.crearEstudianteP2()}" rendered="#{estudianteTeaController.con.idEstudiante ==null}"/>
-                        <h:commandButton value="Editar Caracterización" action="#{estudianteTeaController.editarEstudianteP2()}" rendered="#{estudianteTeaController.con.idEstudiante !=null}"/>
+                        <h:commandButton value="Registrar Caracterizació" action="#{caracterizacioncontroller.crearCaracterizacionP2()}" rendered="#{estudianteTeaController.con.idEstudiante ==null}"/>
+                        <h:commandButton value="Editar Caracterización" action="#{caracterizacioncontroller.editarCaracterizacionP2()}" rendered="#{estudianteTeaController.con.idEstudiante !=null}"/>
                         <h:button value="volver" outcome="/views/caracterizacion/index.xhtml" />
                     </h:form>
                 </f:view>

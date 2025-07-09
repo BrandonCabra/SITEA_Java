@@ -1,0 +1,90 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html">
+
+    <body>
+
+        <ui:composition template="./../TemplateSitio.xhtml">
+
+            <ui:define name="top">
+                
+            </ui:define>
+
+            <ui:define name="left">
+                
+            </ui:define>
+
+            <ui:define name="content">
+                <div class="container-fluid py-4">
+      <h1 class="text-primary mb-4">Reportes Caracterización</h1>
+
+      <!-- Métricas rápidas -->
+      <div class="row mb-4">
+        <div class="col-md-4">
+          <div class="card text-white bg-info">
+            <div class="card-body">
+              <h5 class="card-title">Total Estudiantes</h5>
+              <p class="card-text display-6">
+                #{reporteBean.totalEstudiantes}
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="card text-white bg-success">
+            <div class="card-body">
+              <h5 class="card-title">Total Caracterizaciones</h5>
+              <p class="card-text display-6">
+                #{reporteBean.totalCaracterizaciones}
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tabla diagnósticos -->
+      <div class="card">
+        <div class="card-header bg-primary text-white">
+          Cantidad por Diagnóstico
+        </div>
+        <div class="card-body p-0">
+          <table class="table table-striped mb-0">
+            <thead>
+              <tr>
+                <th>Diagnóstico</th>
+                <th class="text-end">Cantidad</th>
+              </tr>
+            </thead>
+            <tbody>
+              <ui:repeat var="d" value="#{reporteBean.diagnosticos}">
+                <tr>
+                  <td>#{d.diagnostico}</td>
+                  <td class="text-end">#{d.cantidad}</td>
+                </tr>
+              </ui:repeat>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Botones de exportación (opcional) -->
+      <div class="mt-3 text-end">
+          <h:form>
+        <h:commandLink value="Exportar a PDF"
+                       action="#{reportePdfBean.generarPdf()}"
+                       styleClass="btn btn-danger me-2" />
+        <h:commandLink value="Exportar a Excel"
+                       action="#{reporteExcelBean.generarExcel()}"
+                       styleClass="btn btn-success" />
+        </h:form>
+      </div>
+    </div>
+
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

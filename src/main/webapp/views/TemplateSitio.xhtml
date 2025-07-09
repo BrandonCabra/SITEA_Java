@@ -6,6 +6,7 @@
 
     <h:head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <!-- Estilos locales -->
         <h:outputStylesheet name="/css/default.css"/>
         <h:outputStylesheet name="/css/cssLayout.css" />
 
@@ -49,7 +50,7 @@
                         </form>
                         <ul class="navbar-nav mb-2 mb-lg-0 align-items-center">
                             <li class="nav-item">
-                                <h:link styleClass="nav-link" outcome="/views/caracterizacion/index.xhtml">
+                                <h:link styleClass="nav-link" outcome="/views/inicio.xhtml">
                                     <i class="fas fa-home fa-lg" style="color: black"></i>
                                     <span class="visually-hidden">Inicio</span>
                                 </h:link>
@@ -115,29 +116,149 @@
                         <h:graphicImage library="images" name="IMAGENES/Sebas.png" styleClass="img-fluid mb-2" style="text-align: center" class="imagen-redonda"/>
                         <br/>
                     </div>
+                    <br/>
 
-                    <h5 class="text-center mt-4" >Usuario: #{login.NUMERO_DOCUMENTO}</h5>
+                    <div style="text-align: center; color: white; font-weight: bold;">
+                        <i class="fa fa-user" style="margin-right: 6px;"></i> #{login.nombreUsuario}
+                        <br/>
+                         #{login.rolActual}
+
+                    </div>
+
                     <br/>
                     <ul class="list-group list-group-flush">
                         <li class="list-group-item bg-primary">
-                            <h:link outcome="/views/caracterizacion/index.xhtml" value="CARACTERIZACIÓN"/> <br/><!-- comment -->
+                            <ui:repeat value="#{login.listaPermisos}" var="permisos">
+                                <h:panelGroup rendered="#{permisos.descripcion eq 'dashboard'}">
+                                    <h:link outcome="/views/#{permisos.descripcion}/index.xhtml">
+                                        <i class="fas fa-tachometer-alt" style="color: white; margin-right: 8px;"> </i>
+                                        #{login.aplicarTildes(login.formatearDescripcion(permisos.descripcion)).toUpperCase()}
+                                    </h:link>
+                                    <br/>
+                                </h:panelGroup>
+                            </ui:repeat>
                         </li>
                         <li class="list-group-item bg-primary">
-                            <h:link outcome="/views/Piar/index.xhtml" value="PIAR"/> <br/><!-- comment -->
+                            <ui:repeat value="#{login.listaPermisos}" var="permisos">
+                                <h:panelGroup rendered="#{permisos.descripcion eq 'perfil'}">
+                                    <h:link outcome="/views/#{permisos.descripcion}/index.xhtml">
+                                        <i class="fas fa-address-card" style="color: white; margin-right: 8px;"> </i>
+                                        #{login.aplicarTildes(login.formatearDescripcion(permisos.descripcion)).toUpperCase()}
+                                    </h:link>
+                                    <br/>
+                                </h:panelGroup>
+                            </ui:repeat>
                         </li>   
                         <li class="list-group-item bg-primary">
-                            <h:link outcome="/views/estrategiasEducativas/index.xhtml" value="ESTRATEGIAS EDUCATIVAS"/> <br/>
+
+                            <ui:repeat value="#{login.listaPermisos}" var="permisos">
+                                <h:panelGroup rendered="#{permisos.descripcion eq 'caracterizacion'}">
+                                    <h:link outcome="/views/#{permisos.descripcion}/index.xhtml">
+                                        <i class="fas fa-clipboard-list" style="color: white; margin-right: 8px;"> </i>
+                                        #{login.aplicarTildes(login.formatearDescripcion(permisos.descripcion)).toUpperCase()}
+                                    </h:link>
+                                    <br/>
+                                </h:panelGroup>
+                            </ui:repeat>
                         </li>
                         <li class="list-group-item bg-primary">
-                            <h:link outcome="/views/institucional/index.xhtml" value="GESTIÓN DE ESTUDIANTES"/><br/>
+                            <ui:repeat value="#{login.listaPermisos}" var="permisos">
+                                <h:panelGroup rendered="#{permisos.descripcion eq 'Piar'}">
+                                    <h:link outcome="/views/#{permisos.descripcion}/index.xhtml">
+                                        <i class="fas fa-brain" style="color: white; margin-right: 8px;"> </i>
+                                        #{login.aplicarTildes(login.formatearDescripcion(permisos.descripcion)).toUpperCase()}
+                                    </h:link>
+                                    <br/>
+                                </h:panelGroup>
+                            </ui:repeat>
                         </li>
-                        <li class="list-group-item bg-primary"><h:commandLink value="PROTOCOLOS Y RUTAS DE ATENCIÓN"/> <br/>
+                        <li class="list-group-item bg-primary">
+                            <ui:repeat value="#{login.listaPermisos}" var="permisos">
+                                <h:panelGroup rendered="#{permisos.descripcion eq 'estrategiasEducativas'}">
+                                    <h:link outcome="/views/#{permisos.descripcion}/index.xhtml">
+                                        <i class="fas fa-book" style="color: white; margin-right: 8px;"> </i>
+                                        #{login.aplicarTildes(login.formatearDescripcion(permisos.descripcion)).toUpperCase()}
+                                    </h:link>
+                                    <br/>
+                                </h:panelGroup>
+                            </ui:repeat>
                         </li>
-                        <li class="list-group-item bg-primary"><h:commandLink value="REPORTE DE NOVEDADES"/><br/>
+                        <li class="list-group-item bg-primary">
+                            <ui:repeat value="#{login.listaPermisos}" var="permisos">
+                                <h:panelGroup rendered="#{permisos.descripcion eq 'reportesNovedades'}">
+                                    <h:link outcome="/views/#{permisos.descripcion}/index.xhtml">
+                                        <i class="fa fa-flag" style="color: white; margin-right: 8px;"> </i>
+                                        #{login.aplicarTildes(login.formatearDescripcion(permisos.descripcion)).toUpperCase()}
+                                    </h:link>
+                                    <br/>
+                                </h:panelGroup>
+                            </ui:repeat>
                         </li>
+                        <li class="list-group-item bg-primary">
+                            <ui:repeat value="#{login.listaPermisos}" var="permisos">
+                                <h:panelGroup rendered="#{permisos.descripcion eq 'protocolosRutas'}">
+                                    <h:link outcome="/views/#{permisos.descripcion}/index.xhtml">
+                                        <i class="fas fa-list-alt" style="color: white; margin-right: 8px;"> </i>
+                                        #{login.aplicarTildes(login.formatearDescripcion(permisos.descripcion)).toUpperCase()}
+                                    </h:link>
+                                    <br/>
+                                </h:panelGroup>
+                            </ui:repeat>
+                        </li>
+                        <li class="list-group-item bg-primary">
+                            <ui:repeat value="#{login.listaPermisos}" var="permisos">
+                                <h:panelGroup rendered="#{permisos.descripcion eq 'gestionPsicopedagogica' or 
+                                                          permisos.descripcion eq 'gestionDocente'or
+                                                          permisos.descripcion eq 'gestionFamilia'or
+                                                          permisos.descripcion eq 'gestionModulos'}">
+                                    <h:link outcome="/views/#{permisos.descripcion}/index.xhtml">
+                                        <i class="fas fa-pencil-alt" style="color: white; margin-right: 8px;"> </i>
+                                        #{login.aplicarTildes(login.formatearDescripcion(permisos.descripcion)).toUpperCase()}
+                                    </h:link>
+                                    <br/>
+                                </h:panelGroup>
+                            </ui:repeat>
+                        </li>
+                        <li class="list-group-item bg-primary">
+                            <ui:repeat value="#{login.listaPermisos}" var="permisos">
+                                <h:panelGroup rendered="#{permisos.descripcion eq 'gestionEstudiantil'or
+                                                          permisos.descripcion eq 'boletinEstudiantil'}">
+                                    <h:link outcome="/views/#{permisos.descripcion}/index.xhtml">
+                                        <i class="fas fa-user-graduate" style="color: white; margin-right: 8px;"> </i>
+                                        #{login.aplicarTildes(login.formatearDescripcion(permisos.descripcion)).toUpperCase()}
+                                    </h:link>
+                                    <br/>
+                                </h:panelGroup>
+                            </ui:repeat>
+                        </li>
+                        <li class="list-group-item bg-primary">
+                            <ui:repeat value="#{login.listaPermisos}" var="permisos">
+                                <h:panelGroup rendered="#{permisos.descripcion eq 'institucional'}">
+                                    <h:link outcome="/views/#{permisos.descripcion}/index.xhtml">
+                                        <i class="fa-solid fa-school" style="color: white; margin-right: 8px;"> </i>
+                                        #{login.aplicarTildes(login.formatearDescripcion(permisos.descripcion)).toUpperCase()}
+                                    </h:link>
+                                    <br/>
+                                </h:panelGroup>
+                            </ui:repeat>
+                        </li>
+                        <li class="list-group-item bg-primary">
+                            <ui:repeat value="#{login.listaPermisos}" var="permisos">
+                                <h:panelGroup rendered="#{permisos.descripcion eq 'incidencias'}">
+                                    <h:link outcome="/views/#{permisos.descripcion}/index.xhtml">
+                                        <i class="fas fa-user-graduate" style="color: white; margin-right: 8px;"> </i>
+                                        #{login.aplicarTildes(login.formatearDescripcion(permisos.descripcion)).toUpperCase()}
+                                    </h:link>
+                                    <br/>
+                                </h:panelGroup>
+                            </ui:repeat>
+                        </li>
+
                         <br/>
 
-                        <h:commandButton value="Cerrar Sesion" action="#{login.cerrarSesion()}" styleClass="btn btn-outline-danger btn-sm"/>
+                        <h:commandButton value="Cerrar Sesión" 
+                                         action="#{login.cerrarSesion()}" 
+                                         styleClass="btn btn-outline-danger btn-sm" /> 
                     </ul>
                 </h:form>
                 <ui:insert name="left"></ui:insert>

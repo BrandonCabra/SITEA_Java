@@ -52,7 +52,7 @@ public class Rol implements Serializable {
     private List<RolPermiso> rolPermisoList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "usuariosRolIdRol", fetch = FetchType.LAZY)
     private List<UsuarioprofHasMateria> usuarioprofHasMateriaList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "rolIdRo", fetch = FetchType.LAZY)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "rolIdRol", fetch = FetchType.LAZY)
     private List<UsuarioRol> usuarioRolList;
 
     public Rol() {

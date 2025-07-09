@@ -31,9 +31,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "UsuarioRol.findByIdUsuarioRol", query = "SELECT u FROM UsuarioRol u WHERE u.idUsuarioRol = :idUsuarioRol")})
 public class UsuarioRol implements Serializable {
 
-    @JoinColumn(name = "ROL_ID_ROL", referencedColumnName = "ID_ROL")
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
-    private Rol rolIdRol;
+    
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -44,9 +42,10 @@ public class UsuarioRol implements Serializable {
     @JoinColumn(name = "USUARIO_ID_USUARIO", referencedColumnName = "ID_USUARIO")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Usuarios usuarioIdUsuario;
-    @JoinColumn(name = "ROL_ID_RO", referencedColumnName = "ID_ROL")
+    
+    @JoinColumn(name = "ROL_ID_ROL", referencedColumnName = "ID_ROL")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
-    private Rol rolIdRo;
+    private Rol rolIdRol;
 
     public UsuarioRol() {
     }
@@ -71,13 +70,7 @@ public class UsuarioRol implements Serializable {
         this.usuarioIdUsuario = usuarioIdUsuario;
     }
 
-    public Rol getRolIdRo() {
-        return rolIdRo;
-    }
-
-    public void setRolIdRo(Rol rolIdRo) {
-        this.rolIdRo = rolIdRo;
-    }
+    
 
     @Override
     public int hashCode() {

@@ -121,7 +121,7 @@
                     <div style="text-align: center; color: white; font-weight: bold;">
                         <i class="fa fa-user" style="margin-right: 6px;"></i> #{login.nombreUsuario}
                         <br/>
-                         #{login.rolActual}
+                        #{login.rolActual}
 
                     </div>
 
@@ -231,28 +231,28 @@
                                 </h:panelGroup>
                             </ui:repeat>
                         </li>
-                        <li class="list-group-item bg-primary">
-                            <ui:repeat value="#{login.listaPermisos}" var="permisos">
-                                <h:panelGroup rendered="#{permisos.descripcion eq 'institucional'}">
-                                    <h:link outcome="/views/#{permisos.descripcion}/index.xhtml">
-                                        <i class="fa-solid fa-school" style="color: white; margin-right: 8px;"> </i>
-                                        #{login.aplicarTildes(login.formatearDescripcion(permisos.descripcion)).toUpperCase()}
+                        <ui:repeat value="#{login.listaPermisos}" var="permiso">
+                            <h:panelGroup layout="block" rendered="#{permiso.descripcion eq 'institucional'}">
+                                <li class="list-group-item bg-primary p-2">
+                                    <h:link outcome="/views/#{permiso.descripcion}/index.xhtml"
+                                            styleClass="text-white text-decoration-none">
+                                        <i class="fa-solid fa-school"></i>
+                                        #{login.aplicarTildes(login.formatearDescripcion(permiso.descripcion)).toUpperCase()}
                                     </h:link>
-                                    <br/>
-                                </h:panelGroup>
-                            </ui:repeat>
-                        </li>
-                        <li class="list-group-item bg-primary">
-                            <ui:repeat value="#{login.listaPermisos}" var="permisos">
-                                <h:panelGroup rendered="#{permisos.descripcion eq 'incidencias'}">
-                                    <h:link outcome="/views/#{permisos.descripcion}/index.xhtml">
-                                        <i class="fas fa-user-graduate" style="color: white; margin-right: 8px;"> </i>
-                                        #{login.aplicarTildes(login.formatearDescripcion(permisos.descripcion)).toUpperCase()}
+                                </li>
+                            </h:panelGroup>
+                        </ui:repeat>
+                        <ui:repeat value="#{login.listaPermisos}" var="permiso">
+                            <h:panelGroup layout="block" rendered="#{permiso.descripcion eq 'incidencias'}">
+                                <li class="list-group-item bg-primary p-2">
+                                    <h:link outcome="/views/#{permiso.descripcion}/index.xhtml"
+                                            styleClass="text-white text-decoration-none">
+                                        <i class="fas fa-exclamation-triangle"></i>
+                                        #{login.aplicarTildes(login.formatearDescripcion(permiso.descripcion)).toUpperCase()}
                                     </h:link>
-                                    <br/>
-                                </h:panelGroup>
-                            </ui:repeat>
-                        </li>
+                                </li>
+                            </h:panelGroup>
+                        </ui:repeat>
 
                         <br/>
 

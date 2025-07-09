@@ -20,14 +20,16 @@
                                     <div class="flex-grow-1">
                                         <h2 class="card-title">Caracterización Estudiante</h2>
                                         <ul class="list-group list-group-flush mt-3">
-                                            <li class="list-group-item bg-primary border-0 p-1"
-                                                rendered="#{loginlogin.rolActual eq 'ADMINISTRADOR' or login.rolActual eq 'PSICOORIENTADOR'}">
-                                                <h:link outcome="/views/caracterizacion/registroestudiante.xhtml?faces-redirect=true"
-                                                        styleClass="text-white text-decoration-none">
-                                                    <i class="fa-solid fa-user-plus me-2"></i>
-                                                    Pre-Registro Estudiante
-                                                </h:link>
-                                            </li>
+
+                                            <h:panelGroup rendered="#{login.rolActual eq 'ADMINISTRADOR' or login.rolActual eq 'PSICOORIENTADOR'}">
+                                                <li class="list-group-item bg-primary border-0 p-1">
+                                                    <h:link outcome="/views/caracterizacion/registroestudiante.xhtml?faces-redirect=true"
+                                                            styleClass="text-white text-decoration-none">
+                                                        <i class="fa-solid fa-user-plus me-2"></i>
+                                                        Pre-Registro Estudiante
+                                                    </h:link>
+                                                </li>
+                                            </h:panelGroup>
                                             <li class="list-group-item bg-primary border-0 p-1">
                                                 <h:link outcome="/views/caracterizacion/crearcaracterizacion.xhtml?faces-redirect=true"
                                                         styleClass="text-white text-decoration-none">

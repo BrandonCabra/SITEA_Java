@@ -34,8 +34,9 @@
                             <td>#{item.barraDeAprendizaje}</td>
                             <td>
                                 <h:form>
-                                    <h:commandButton value="Editar" action="#{caracterizacioncontroller.editarCaracteriacionP1(item)}"/>
-                                    <h:commandButton value="Eliminar" action="#{caracterizacioncontroller.eliminarCaracterizacion(item)}" onclick="return confirm('¿Desea eliminar el registro?')"/>
+                                    <h:commandButton value="Editar" action="#{caracterizacioncontroller.editarCaracteriacionP1(item)}" rendered="#{login.rolActual eq 'ADMINISTRADOR' or login.rolActual eq 'PSICOORIENTADOR'}"/>
+                                    <h:commandButton value="Eliminar" action="#{caracterizacioncontroller.eliminarCaracterizacion(item)}" onclick="return confirm('¿Desea eliminar el registro?')" rendered="#{login.rolActual eq 'ADMINISTRADOR' or login.rolActual eq 'PSICOORIENTADOR'}"/>
+                                    <h:commandButton value="Recomendar actualizaciones" action="#{caracterizacioncontroller.eliminarCaracterizacion(item)}" onclick="return confirm('¿Desea eliminar el registro?')" rendered="#{login.rolActual eq 'PROFESOR' or login.rolActual eq 'PADRE DE FAMILIA'}"/>
                                 </h:form>
                             </td>
                         </tr>

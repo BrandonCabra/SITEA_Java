@@ -34,7 +34,7 @@ public class Login implements Serializable {
     private List<Permisos> listaPermisos;
     
     private String nombreUsuario;
-    private String rolActual;
+    String rolActual;
     
     
 
@@ -98,6 +98,7 @@ public class Login implements Serializable {
             if (!usuario.getUsuarioRolList().isEmpty()){
                 this.rolActual = usuario.getUsuarioRolList().get(0).getRolIdRol().getNombreRol();
             }
+            System.out.println("Rol asignado: " + this.rolActual);
          
             return "/views/inicio.xhtml?faces-redirect=true";
         } else {

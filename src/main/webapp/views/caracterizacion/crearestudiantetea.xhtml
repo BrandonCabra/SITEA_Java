@@ -15,6 +15,8 @@
 
                     <h:form>
                         <h1><h:outputText value="preregistro Estudiante"/></h1>
+                        <br></br>
+                        <br></br>
                         <h:panelGrid columns="3">
 
                             <h:outputLabel value="Tipo Documento:" for="tipoDocumentoIdTipoDocumento" />
@@ -71,6 +73,8 @@
                             </h:selectOneMenu>
                             <h:message for="cursoIdCurso" style="color: red" />
                         </h:panelGrid>
+                        <br></br>
+                        
                         <h:messages id="mensajes" globalOnly="true" infoStyle="color: green" errorStyle="color: red" /><!-- comment -->
 
                         <h:commandButton value="Registrar Estudiante" action="#{estudianteTeaController.crearEstudianteP2()}" rendered="#{estudianteTeaController.con.idEstudiante ==null}"/>

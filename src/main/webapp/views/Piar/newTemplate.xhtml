@@ -1,58 +1,330 @@
-<?xml version='1.0' encoding='UTF-8' ?> 
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:h="http://xmlns.jcp.org/jsf/html">
 
     <h:head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <!-- Estilos locales -->
         <h:outputStylesheet name="/css/default.css"/>
         <h:outputStylesheet name="/css/cssLayout.css" />
-        <title>Facelets Template</title>
+
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet"/>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4Q6Gf2aSP4eDXB8Miphtr37CMZZQ5oXLH2yaXMJ2w8e2ZtHTl7GptT4jmndRuHDT" crossorigin="anonymous" />
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js"></script>
+        <link rel="icon" type="image/svg+xml" href="resources/images/IMAGENES/iconsitea.svg"/>
+        <script src="resources/js/iniciodesesion2.js" type="text/javascript"></script>
+
+        <title>Facelets Template SITEA</title>
         <link rel="stylesheet" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css"></link>
-<link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.2.3/css/buttons.dataTables.min.css"></link>
- <script type="text/javascript" src="https://code.jquery.com/jquery-3.5.1.js"></script>
-    <script type="text/javascript" src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
-    <script type="text/javascript" src="https://cdn.datatables.net/buttons/2.2.3/js/dataTables.buttons.min.js"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
-    <script type="text/javascript" src="https://cdn.datatables.net/buttons/2.2.3/js/buttons.html5.min.js"></script>
-    <script type="text/javascript" src="https://cdn.datatables.net/buttons/2.2.3/js/buttons.print.min.js"></script>  
-        
+        <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.2.3/css/buttons.dataTables.min.css"></link>
+        <script type="text/javascript" src="https://code.jquery.com/jquery-3.5.1.js"></script>
+        <script type="text/javascript" src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
+        <script type="text/javascript" src="https://cdn.datatables.net/buttons/2.2.3/js/dataTables.buttons.min.js"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+        <script type="text/javascript" src="https://cdn.datatables.net/buttons/2.2.3/js/buttons.html5.min.js"></script>
+        <script type="text/javascript" src="https://cdn.datatables.net/buttons/2.2.3/js/buttons.print.min.js"></script>  
+
     </h:head>
 
     <h:body>
 
+        <!-- Navbar superior -->
+
         <div id="top">
-            
-            <h2>Usuario: #{login.NUMERO_DOCUMENTO}</h2>
-            
-            <h:form><h:commandButton value="Cerrar Sesion" action="#{login.cerrarSesion()}" /> </h:form>
-            
+            <nav class="navbar navbar-expand-lg bg-body-tertiary">
+                <div class="container-fluid">
+                    <a class="navbar-brand" href="#">
+                        <h:graphicImage library="images" name="logositeasf 3.png" alt="SI-TEA" width="55" height="60"/>
+                    </a>
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse justify-content-end" id="navbarContent">
+                        <form class="d-flex me-3" role="search">
+                            <input class="form-control me-2" type="search" placeholder="Buscar" aria-label="Search"/>
+                            <button class="btn btn-outline-success" type="submit">Buscar</button>
+                        </form>
+                        <ul class="navbar-nav mb-2 mb-lg-0 align-items-center">
+                            <li class="nav-item">
+                                <h:link styleClass="nav-link" outcome="/views/inicio.xhtml">
+                                    <i class="fas fa-home fa-lg" style="color: black"></i>
+                                    <span class="visually-hidden">Inicio</span>
+                                </h:link>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">
+                                    <i class="fas fa-envelope fa-lg" style="color: black"></i>
+                                    <span class="visually-hidden">Mensajes</span>
+                                </a>
+                            </li>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle"
+                                   href="#"
+                                   id="settingsDropdown"
+                                   role="button"
+                                   data-bs-toggle="dropdown"
+                                   aria-expanded="false">
+                                    <i class="fas fa-cog fa-lg" style="color: black"></i>
+                                    <span class="visually-hidden">Configuración</span>
+                                </a>
+                                <ul class="dropdown-menu dropdown-menu-end"
+                                    aria-labelledby="settingsDropdown">
+                                    <li>
+                                        <a class="dropdown-item" href="#">
+                                            <i class="fas fa-user me-2" style="color: black"></i>Perfil
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item" href="#">
+                                            <i class="fas fa-paint-brush me-2" style="color: black"></i>Pantalla
+                                        </a>
+                                    </li>
+                                    <li><hr class="dropdown-divider"/></li>
+                                    <li>
+                                        <a class="dropdown-item" href="#">
+                                            <i class="fas fa-info-circle me-2" style="color: black" ></i>Otra opción
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">
+                                    <i class="fas fa-user-circle fa-lg" style="color: black"></i>
+                                    <span class="visually-hidden">Perfil</span>
+                                </a>
+                            </li>
+
+                        </ul>
+
+                    </div>
+                </div>
+            </nav>
+
             <ui:insert name="top"></ui:insert>
         </div>
+
+        <!-- Menu lateral -->
         <div>
             <div id="left">
                 <h:form>
-                    <h:link outcome="/views/caracterizacion/index.xhtml" value="CARACTERIZACIÓN"/> <br/><!-- comment -->
-                    <h:link outcome="/views/Piar/index.xhtml" value="PIAR"/> <br/><!-- comment -->
-                    <h:commandLink value="ESTRATEGIAS EDUCATIVAS"/> <br/>
-                    <h:commandLink value="GESTION DE ESTUDIANTES"/><br/>
-                    <h:commandLink value="PROTOCOLOS Y RUTAS DE ATENCION"/> <br/>
-                    <h:commandLink value="RESPORTE DE NOVEDADES"/><br/>
                     <br/>
+                    <div style="text-align: center;">
+                        <h:graphicImage library="images" name="IMAGENES/Sebas.png" styleClass="img-fluid mb-2" style="text-align: center" class="imagen-redonda"/>
+                        <br/>
+                    </div>
+                    <br/>
+
+                    <div style="text-align: center; color: white; font-weight: bold;">
+                        <i class="fa fa-user" style="margin-right: 6px;"></i> #{login.nombreUsuario}
+                        <br/>
+                         #{login.rolActual}
+
+                    </div>
+
+                    <br/>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item bg-primary">
+                            <ui:repeat value="#{login.listaPermisos}" var="permisos">
+                                <h:panelGroup rendered="#{permisos.descripcion eq 'dashboard'}">
+                                    <h:link outcome="/views/#{permisos.descripcion}/index.xhtml">
+                                        <i class="fas fa-tachometer-alt" style="color: white; margin-right: 8px;"> </i>
+                                        #{login.aplicarTildes(login.formatearDescripcion(permisos.descripcion)).toUpperCase()}
+                                    </h:link>
+                                    <br/>
+                                </h:panelGroup>
+                            </ui:repeat>
+                        </li>
+                        <li class="list-group-item bg-primary">
+                            <ui:repeat value="#{login.listaPermisos}" var="permisos">
+                                <h:panelGroup rendered="#{permisos.descripcion eq 'perfil'}">
+                                    <h:link outcome="/views/#{permisos.descripcion}/index.xhtml">
+                                        <i class="fas fa-address-card" style="color: white; margin-right: 8px;"> </i>
+                                        #{login.aplicarTildes(login.formatearDescripcion(permisos.descripcion)).toUpperCase()}
+                                    </h:link>
+                                    <br/>
+                                </h:panelGroup>
+                            </ui:repeat>
+                        </li>   
+                        <li class="list-group-item bg-primary">
+
+                            <ui:repeat value="#{login.listaPermisos}" var="permisos">
+                                <h:panelGroup rendered="#{permisos.descripcion eq 'caracterizacion'}">
+                                    <h:link outcome="/views/#{permisos.descripcion}/index.xhtml">
+                                        <i class="fas fa-clipboard-list" style="color: white; margin-right: 8px;"> </i>
+                                        #{login.aplicarTildes(login.formatearDescripcion(permisos.descripcion)).toUpperCase()}
+                                    </h:link>
+                                    <br/>
+                                </h:panelGroup>
+                            </ui:repeat>
+                        </li>
+                        <li class="list-group-item bg-primary">
+                            <ui:repeat value="#{login.listaPermisos}" var="permisos">
+                                <h:panelGroup rendered="#{permisos.descripcion eq 'Piar'}">
+                                    <h:link outcome="/views/#{permisos.descripcion}/index.xhtml">
+                                        <i class="fas fa-brain" style="color: white; margin-right: 8px;"> </i>
+                                        #{login.aplicarTildes(login.formatearDescripcion(permisos.descripcion)).toUpperCase()}
+                                    </h:link>
+                                    <br/>
+                                </h:panelGroup>
+                            </ui:repeat>
+                        </li>
+                        <li class="list-group-item bg-primary">
+                            <ui:repeat value="#{login.listaPermisos}" var="permisos">
+                                <h:panelGroup rendered="#{permisos.descripcion eq 'estrategiasEducativas'}">
+                                    <h:link outcome="/views/#{permisos.descripcion}/index.xhtml">
+                                        <i class="fas fa-book" style="color: white; margin-right: 8px;"> </i>
+                                        #{login.aplicarTildes(login.formatearDescripcion(permisos.descripcion)).toUpperCase()}
+                                    </h:link>
+                                    <br/>
+                                </h:panelGroup>
+                            </ui:repeat>
+                        </li>
+                        <li class="list-group-item bg-primary">
+                            <ui:repeat value="#{login.listaPermisos}" var="permisos">
+                                <h:panelGroup rendered="#{permisos.descripcion eq 'reportesNovedades'}">
+                                    <h:link outcome="/views/#{permisos.descripcion}/index.xhtml">
+                                        <i class="fa fa-flag" style="color: white; margin-right: 8px;"> </i>
+                                        #{login.aplicarTildes(login.formatearDescripcion(permisos.descripcion)).toUpperCase()}
+                                    </h:link>
+                                    <br/>
+                                </h:panelGroup>
+                            </ui:repeat>
+                        </li>
+                        <li class="list-group-item bg-primary">
+                            <ui:repeat value="#{login.listaPermisos}" var="permisos">
+                                <h:panelGroup rendered="#{permisos.descripcion eq 'protocolosRutas'}">
+                                    <h:link outcome="/views/#{permisos.descripcion}/index.xhtml">
+                                        <i class="fas fa-list-alt" style="color: white; margin-right: 8px;"> </i>
+                                        #{login.aplicarTildes(login.formatearDescripcion(permisos.descripcion)).toUpperCase()}
+                                    </h:link>
+                                    <br/>
+                                </h:panelGroup>
+                            </ui:repeat>
+                        </li>
+                        <li class="list-group-item bg-primary">
+                            <ui:repeat value="#{login.listaPermisos}" var="permisos">
+                                <h:panelGroup rendered="#{permisos.descripcion eq 'gestionPsicopedagogica' or 
+                                                          permisos.descripcion eq 'gestionDocente'or
+                                                          permisos.descripcion eq 'gestionFamilia'or
+                                                          permisos.descripcion eq 'gestionModulos'}">
+                                    <h:link outcome="/views/#{permisos.descripcion}/index.xhtml">
+                                        <i class="fas fa-pencil-alt" style="color: white; margin-right: 8px;"> </i>
+                                        #{login.aplicarTildes(login.formatearDescripcion(permisos.descripcion)).toUpperCase()}
+                                    </h:link>
+                                    <br/>
+                                </h:panelGroup>
+                            </ui:repeat>
+                        </li>
+                        <li class="list-group-item bg-primary">
+                            <ui:repeat value="#{login.listaPermisos}" var="permisos">
+                                <h:panelGroup rendered="#{permisos.descripcion eq 'gestionEstudiantil'or
+                                                          permisos.descripcion eq 'boletinEstudiantil'}">
+                                    <h:link outcome="/views/#{permisos.descripcion}/index.xhtml">
+                                        <i class="fas fa-user-graduate" style="color: white; margin-right: 8px;"> </i>
+                                        #{login.aplicarTildes(login.formatearDescripcion(permisos.descripcion)).toUpperCase()}
+                                    </h:link>
+                                    <br/>
+                                </h:panelGroup>
+                            </ui:repeat>
+                        </li>
+                        <li class="list-group-item bg-primary">
+                            <ui:repeat value="#{login.listaPermisos}" var="permisos">
+                                <h:panelGroup rendered="#{permisos.descripcion eq 'institucional'}">
+                                    <h:link outcome="/views/#{permisos.descripcion}/index.xhtml">
+                                        <i class="fa-solid fa-school" style="color: white; margin-right: 8px;"> </i>
+                                        #{login.aplicarTildes(login.formatearDescripcion(permisos.descripcion)).toUpperCase()}
+                                    </h:link>
+                                    <br/>
+                                </h:panelGroup>
+                            </ui:repeat>
+                        </li>
+                        <li class="list-group-item bg-primary">
+                            <ui:repeat value="#{login.listaPermisos}" var="permisos">
+                                <h:panelGroup rendered="#{permisos.descripcion eq 'incidencias'}">
+                                    <h:link outcome="/views/#{permisos.descripcion}/index.xhtml">
+                                        <i class="fas fa-user-graduate" style="color: white; margin-right: 8px;"> </i>
+                                        #{login.aplicarTildes(login.formatearDescripcion(permisos.descripcion)).toUpperCase()}
+                                    </h:link>
+                                    <br/>
+                                </h:panelGroup>
+                            </ui:repeat>
+                        </li>
+
+                        <br/>
+
+                        <h:commandButton value="Cerrar Sesión" 
+                                         action="#{login.cerrarSesion()}" 
+                                         styleClass="btn btn-outline-danger btn-sm" /> 
+                    </ul>
                 </h:form>
-                
                 <ui:insert name="left"></ui:insert>
             </div>
+
+
+
+
+
+            <!-- Contenido -->
             <div id="content" class="left_content">
                 <ui:insert name="content">Content</ui:insert>
             </div>
         </div>
-        
-        
+
+        <!-- Botón flotante para abrir la barra -->
+        <div id="accesibilidadToggle" onclick="abrirAccesibilidad()" 
+             style="position: fixed; top: 120px; right: 20px; width: 50px; height: 50px; background: #007BFF; color: white; border-radius: 50%; text-align: center; line-height: 50px; cursor: pointer; z-index: 9999;" 
+             title="Opciones de accesibilidad">
+            <span style="font-size: 22px;">⚙️</span>
+        </div>
+
+        <!-- Contenedor de la barra fuera de lienzo -->
+        <div id="barraAccesibilidad" 
+             style="position: fixed; top: 0; right: -300px; width: 280px; height: 100%; background: #f5f5f5; border-left: 2px solid #007BFF; box-shadow: -2px 0 8px rgba(0,0,0,0.1); padding: 20px; transition: right 0.4s ease-in-out; z-index: 9998;">
+
+            <h2 style="color: #007BFF; font-size: 18px;">♿ Accesibilidad</h2>
+            <hr/>
+
+            <p>
+                <a href="#" onclick="cambiarZoom('grande')" style="color:#007BFF;">🔠 Aumentar texto</a><br/>
+                <a href="#" onclick="cambiarZoom('pequeno')" style="color:#007BFF;">🔡 Reducir texto</a><br/>
+                <a href="#" onclick="cambiarZoom('mediano')" style="color:#007BFF;">🔁 Texto normal</a>
+            </p>
+            <p>
+                <a href="#" onclick="aplicarContraste()" style="color:#007BFF;">🌓 Contraste alto</a><br/>
+                <a href="#" onclick="restablecerVista()" style="color:#007BFF;">🔄 Restablecer</a>
+            </p>
+
+            <button onclick="cerrarAccesibilidad()" 
+                    style="position: absolute; top: 10px; right: 10px; border: none; background: none; font-size: 18px; cursor: pointer;" 
+                    title="Cerrar">✖️</button>
+        </div>
 
     </h:body>
+    <script>
+        function abrirAccesibilidad() {
+            document.getElementById("barraAccesibilidad").style.right = "0";
+        }
 
+        function cerrarAccesibilidad() {
+            document.getElementById("barraAccesibilidad").style.right = "-300px";
+        }
+
+        function cambiarZoom(nivel) {
+            document.documentElement.classList.remove('zoom-pequeno', 'zoom-mediano', 'zoom-grande');
+            document.documentElement.classList.add('zoom-' + nivel);
+        }
+
+        function aplicarContraste() {
+            document.body.classList.toggle("alto-contraste");
+        }
+
+        function restablecerVista() {
+            document.body.classList.remove("alto-contraste");
+            document.documentElement.classList.remove("zoom-pequeno", "zoom-mediano", "zoom-grande");
+        }
+    </script>
 </html>

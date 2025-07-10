@@ -1,0 +1,44 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html">
+
+    <body>
+
+        <ui:composition template="./../TemplateSitio.xhtml">
+
+            <ui:define name="top">
+               
+            </ui:define>
+
+            <ui:define name="left">
+                
+            </ui:define>
+
+            <ui:define name="content">
+                <!-- error404.xhtml -->
+
+
+    
+        <div class="container text-center mt-5">
+            <h1 class="text-danger">404 - Página no encontrada</h1>
+            <h:graphicImage value="/resources/images/IMAGENES/404.png"
+                alt="Página no encontrada"
+                styleClass="img-fluid"
+                style="max-width: 400px; margin: 20px auto; display: block;" />
+            <p class="lead">Lo sentimos, la dirección solicitada no existe o ha sido movida.</p>
+            <i class="fas fa-exclamation-triangle fa-4x text-warning"></i>
+            <br/><br/>
+            <h:link outcome="/views/inicio.xhtml" styleClass="btn btn-primary">
+                Volver al inicio
+            </h:link>
+        </div>
+ 
+
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

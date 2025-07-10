@@ -1,0 +1,50 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <body>
+
+        <ui:composition template="./../TemplateSitio.xhtml">
+
+            <ui:define name="content">
+                <h:form>
+    <h:panelGrid columns="2" style="width:100%;">
+
+        <!-- 🔍 Selección de usuario -->
+        <h:outputLabel value="Seleccione usuario:" for="usuario" />
+        <h:selectOneMenu id="usuario" value="#{adminBean.usuarioSeleccionado}">
+            <f:selectItems value="#{adminBean.listaUsuarios}" var="u" itemLabel="#{u.primerNombre} #{u.primerApellido}" itemValue="#{u}" />
+        </h:selectOneMenu>
+
+        <!-- 🧑‍💼 Selección de nuevo rol -->
+        <h:outputLabel value="Rol a asignar:" for="rol" />
+        <h:selectOneMenu id="rol" value="#{adminBean.rolSeleccionado}">
+            <f:selectItems value="#{adminBean.listaRoles}" var="r" itemLabel="#{r.nombreRol}" itemValue="#{r}" />
+        </h:selectOneMenu>
+
+        <!-- ✅ Lista de permisos -->
+        <h:outputLabel value="Permisos a asignar:" />
+        <h:panelGroup>
+            <ui:repeat value="#{adminBean.listaPermisos}" var="permiso">
+                <h:selectBooleanCheckbox value="#{permiso.seleccionado}" />
+                <h:outputText value="#{permiso.descripcion}" />
+                <br/>
+            </ui:repeat>
+        </h:panelGroup>
+
+        <!-- 💾 Botón de guardar cambios -->
+        <h:commandButton value="Actualizar Usuario"
+                         action="#{adminBean.actualizarUsuario}"
+                         styleClass="btn btn-success" />
+    </h:panelGrid>
+</h:form>
+
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

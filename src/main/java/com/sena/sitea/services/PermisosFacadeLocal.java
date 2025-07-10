@@ -5,6 +5,7 @@
 package com.sena.sitea.services;
 
 import com.sena.sitea.entities.Permisos;
+import com.sena.sitea.entities.Usuarios;
 import java.util.List;
 import javax.ejb.Local;
 
@@ -28,5 +29,8 @@ public interface PermisosFacadeLocal {
     List<Permisos> findRange(int[] range);
 
     int count();
-    
+
+    List<Permisos> PermisosByUsuario(Usuarios NUMERO_DOCUMENTO);
+
+
 }

@@ -1,25 +1,118 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous"></link>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     <body>
 
         <ui:composition template="./../TemplateSitio.xhtml">
 
             <ui:define name="top">
-                top
+                
             </ui:define>
 
             <ui:define name="left">
-                left
+                
             </ui:define>
 
             <ui:define name="content">
-                content
+                <div class="col-12 col-md-8 col-lg-9">
+                    <div class="row">
+                        <div class="col-12 col-md-4 col-lg-6">
+                            <h1 class="text-primary text-xl-start">Dashboard</h1>
+                            <br> </br>
+                            <h5 class="align-items-center justify-content-center">Bienvendo Usuario 1</h5>
+                        </div>
+                        <div class="col-12 col-md-4 col-lg-3">
+                            <div class="login-form1">
+                                <h5 class="text-center mb-3"><img src="IMAGENES/descarga.png" alt="" class="img-fluid me-2"
+                                                                  style="width: 20px; height: auto;"></img>Generar Reporte </h5>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-4 col-lg-3">
+                            <div class="login-form">
+                                <h5 class="text-center mb-3"><img src="IMAGENES/calendario2.png" alt=""
+                                                                  class="img-fluid me-2" style="width: 20px; height: auto;"></img>Filtrar Periodo</h5>
+                                <p>17 abril 2025-17 mayo 2025 <img src="IMAGENES/abajo.png" alt="" class="img-fluid me-2"
+                                                                   style="width: 20px; height: auto;"></img></p>
+                            </div>
+                        </div>
+                        <br></br>
+                        <br></br>
+                        <h:link styleClass="nav-link" outcome="/views/institucional/gestionUsuarios.xhtml">
+                                    <i class="fas fa-home fa-lg" style="color: black"></i>
+                                    <span class="visually-hidden">Gestion Usuario</span>
+                                    <h1>Gestión de Usuarios</h1>
+                                </h:link>
+                        <br></br>
+                        <br></br>
+                        <br></br>
+                        <hr>
+                            <div class="col-12 col-md-4 col-lg-6">
+                                <div class="card" >
+                                    <div class="card-body">
+                                        <h5 class="card-title">Estudiantes con EcTEA</h5>
+                                        <canvas id="chartEstudiantesEcTEA"></canvas>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-4 col-lg-3">
+                                <div class="card" style="width: 20rem; height: 390px">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Caracterización</h5>
+                                        <canvas id="chartTotalPIAR"></canvas>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-4 col-lg-3 mb-4">
+                                <div class="card" style="width: 20rem; height: 390px">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Tipos de TEA</h5>
+                                        <canvas id="chartTiposTEA"></canvas>
+                                    </div>
+                                </div>
+                            </div>
+                            <br></br>
+                            <br></br><br></br><br></br>
+                            <div class="col-12 col-md-4 col-lg-6">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Estudiantes con Bajo Desempeño</h5>
+                                        <canvas id="chartEstudiantesTEA"></canvas>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-4 col-lg-6">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Impacto del Proyecto PIAR</h5>
+                                        <canvas id="chartBajoDesempeño"></canvas>
+                                    </div>
+                                </div>
+                            </div>
+                        </hr>
+                    </div>
+                </div>
             </ui:define>
-
         </ui:composition>
-
     </body>
-</html>
+    <script>
+        const ctxEstudiantesEcTEA = document.getElementById('chartEstudiantesEcTEA').getContext('2d'); const chartEstudiantesEcTEA = new Chart(ctxEstudiantesEcTEA, { type: 'bar', data: { labels: ['Primero', 'Segundo', 'Tercero', 'Cuarto', 'Quinto', 'Sexto', 'Septimo'], datasets: [{ label: 'Estudiantes con EcTEA', data: [16, 18, 14, 17, 16, 13, 16], backgroundColor: 'rgba(54, 162, 235, 0.2)', borderColor: 'rgba(54, 162, 235, 1)', borderWidth: 1 }] }, options: { scales: { y: { beginAtZero: true } } } });
+        const ctxTotalPIAR = document.getElementById('chartTotalPIAR').getContext('2d'); const chartTotalPIAR = new Chart(ctxTotalPIAR, { type: 'doughnut', data: { labels: ['Completas', 'En Proceso', 'Pendiente'], datasets: [{ label: 'Total PIAR', data: [200, 70, 30], backgroundColor: ['rgba(75, 192, 192, 0.2)', 'rgba(153, 102, 255, 0.2)', 'rgba(255, 159, 64, 0.2)'], borderColor: ['rgba(75, 192, 192, 1)', 'rgba(153, 102, 255, 1)', 'rgba(255, 159, 64, 1)'], borderWidth: 1 }] }, });
+        const ctxTiposTEA = document.getElementById('chartTiposTEA').getContext('2d'); const chartTiposTEA = new Chart(ctxTiposTEA, { type: 'pie', data: { labels: ['Dislexia', 'Discalculia', 'TDAH'], datasets: [{ label: 'Tipos de TEA', data: [60, 40, 20], backgroundColor: ['rgba(255, 99, 132, 0.2)', 'rgba(54, 162, 235, 0.2)', 'rgba(255, 206, 86, 0.2)'], borderColor: ['rgba(255, 99, 132, 1)', 'rgba(54, 162, 235, 1)', 'rgba(255, 206, 86, 1)'], borderWidth: 1 }] }, });
+        const ctxEstudiantesTEA = document.getElementById('chartEstudiantesTEA').getContext('2d'); const chartEstudiantesTEA = new Chart(ctxEstudiantesTEA, { type: 'bar', data: { labels: ['2021', '2021', '2023', '2024'], datasets: [{ label: 'Estudiantes con Bajo Desempeño', data: [50, 68, 78, 80], backgroundColor: 'rgba(54, 162, 235, 0.2)', borderColor: 'rgba(54, 162, 235, 1)', borderWidth: 1 }] }, options: { scales: { y: { beginAtZero: true } } } });
+        const ctxBajoDesempeño = document.getElementById('chartBajoDesempeño').getContext('2d'); const chartBajoDesempeño = new Chart(ctxBajoDesempeño, { type: 'line', data: { labels: ['2025', '2026', '2027', '2028', '2029', '2030'], datasets: [{ label: 'Estudiantes con Bajo Desempeño', data: [78, 62, 55, 42, 30, 10], backgroundColor: 'rgba(255, 99, 132, 0.2)', borderColor: 'rgba(255, 99, 132, 1)', borderWidth: 1, fill: true }] }, options: { scales: { y: { beginAtZero: true } } } });</script>
+    </html>
+    
+
+
+
+
+
+
+
+

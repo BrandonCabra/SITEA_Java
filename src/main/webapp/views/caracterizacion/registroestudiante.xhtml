@@ -1,76 +1,83 @@
 <?xml version='1.0' encoding='UTF-8' ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+                      "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:h="http://xmlns.jcp.org/jsf/html">
 
-
     <body>
-
         <ui:composition template="./../TemplateSitio.xhtml">
-
             <ui:define name="content">
-                <h1>Listado de estudiantes con TEA</h1>
-                <h:messages id="mensajes" globalOnly="true" infoStyle="color:green"/><!-- comment -->
                 <h:form styleClass="container-fluid px-3" style="background-color: #e3f2fd; padding: 20px; border-radius: 8px;">
-                    <div class="card shadow-sm" >
+                    <div class="card shadow-sm p-4">
+                        <h2 class="text-primary fw-bold mb-3">Listado de estudiantes con TEA</h2>
 
+                        <h:messages id="mensajes" globalOnly="true" infoStyle="color:green" />
 
-                        <h:commandButton value="Crear Estudiante con TEA" action="#{estudianteTeaController.crearEstudianteP1()}"/><!-- comment -->
+                        <div class="mb-4">
+                            <h:commandButton value="Crear Estudiante con TEA"
+                                             action="#{estudianteTeaController.crearEstudianteP1()}"
+                                             styleClass="btn btn-primary" />
+                        </div>
 
-                        <table id="t-all" class="jsf-data-table display nowrap" width="100%">
-                            <thead>
-                                <tr>
-                                    <th>Estudiante ID</th>
-                                    <th>Tipo documento</th>
-                                    <th>Numero Documento</th>
-                                    <th>Nombres</th>
-                                    <th>Apellidos</th>
-                                    <th>Curso</th>
-                                    <th>Acciones</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <ui:repeat value="#{estudianteTeaController.obtenerEstudiantes()}" var="item">
+                        <div class="table-responsive">
+                            <table id="t-all" class="table table-bordered table-hover jsf-data-table display nowrap" width="100%">
+                                <thead class="table-primary text-center">
                                     <tr>
-                                        <td>#{item.idEstudiante}</td>
-                                        <td>#{item.tipoDocumentoIdTipoDocumento.nombreTipoDocumento}</td>
-                                        <td>#{item.numeroDocumentoEstudiante}</td>
-                                        <td>#{item.primerNombreEstudiante} #{item.segundoNombreEstudiante}</td>
-                                        <td>#{item.primerApellidoEstudiante} #{item.segundoApellidoEstudiante}</td>
-                                        <td>#{item.cursoIdCurso.codigoCurso}</td>
-                                        <td>
-                                            <h:form>
-                                                <h:commandButton value="Editar" action="#{estudianteTeaController.editarEstudianteP1(item)}"/>
-                                                <h:commandButton value="Eliminar" action="#{estudianteTeaController.eliminarEstudiante(item)}" onclick="return confirm('¿Desea eliminar el registro?')"/>
-                                            </h:form>
-                                        </td>
+                                        <th>Estudiante ID</th>
+                                        <th>Tipo documento</th>
+                                        <th>Numero Documento</th>
+                                        <th>Nombres</th>
+                                        <th>Apellidos</th>
+                                        <th>Curso</th>
+                                        <th>Acciones</th>
                                     </tr>
-
-                                </ui:repeat>
-                            </tbody>
-                        </table>
+                                </thead>
+                                <tbody>
+                                    <ui:repeat value="#{estudianteTeaController.obtenerEstudiantes()}" var="item">
+                                        <tr>
+                                            <td>#{item.idEstudiante}</td>
+                                            <td>#{item.tipoDocumentoIdTipoDocumento.nombreTipoDocumento}</td>
+                                            <td>#{item.numeroDocumentoEstudiante}</td>
+                                            <td>#{item.primerNombreEstudiante} #{item.segundoNombreEstudiante}</td>
+                                            <td>#{item.primerApellidoEstudiante} #{item.segundoApellidoEstudiante}</td>
+                                            <td>#{item.cursoIdCurso.codigoCurso}</td>
+                                            <td class="text-center">
+                                                <h:form styleClass="d-inline">
+                                                    <h:commandButton value="Editar"
+                                                                     action="#{estudianteTeaController.editarEstudianteP1(item)}"
+                                                                     styleClass="btn btn-info btn-sm me-1"
+                                                                     style="background-color: #a7d8ff; border-color: #91caff; color: #003f5c;" />
+                                                </h:form>
+                                                <h:form styleClass="d-inline">
+                                                    <h:commandButton value="Eliminar"
+                                                                     action="#{estudianteTeaController.eliminarEstudiante(item)}"
+                                                                     onclick="return confirm('¿Desea eliminar el registro?')"
+                                                                     styleClass="btn btn-danger btn-sm"
+                                                                     style="background-color: #ffc5c5; border-color: #ffaaaa; color: #8b0000;" />
+                                                </h:form>
+                                            </td>
+                                        </tr>
+                                    </ui:repeat>
+                                </tbody>
+                            </table>
+                        </div>
 
                         <script>
                             $(document).ready(function () {
                                 $('.jsf-data-table').DataTable({
                                     dom: 'Bfrtip',
-                                    "language": {
-                                        "url": "https://cdn.datatables.net/plug-ins/1.11.3/i18n/es_es.json"
+                                    language: {
+                                        url: 'https://cdn.datatables.net/plug-ins/1.11.3/i18n/es_es.json'
                                     },
-                                    "pageLength": 50,
-                                    buttons: [
-                                        'copy', 'csv', 'excel', 'pdf', 'print'
-                                    ]
+                                    pageLength: 50,
+                                    buttons: ['copy', 'csv', 'excel', 'pdf', 'print']
                                 });
-
                             });
                         </script>
                     </div>
                 </h:form>
             </ui:define>
-
         </ui:composition>
-
     </body>
 </html>

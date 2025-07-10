@@ -5,6 +5,8 @@
 package com.sena.sitea.services;
 
 import com.sena.sitea.entities.Permisos;
+import com.sena.sitea.entities.Usuarios;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -26,6 +28,22 @@ public class PermisosFacade extends AbstractFacade<Permisos> implements Permisos
 
     public PermisosFacade() {
         super(Permisos.class);
+    }
+
+    @Override
+    public List<Permisos> PermisosByUsuario(Usuarios usuario) {
+        try {
+            return em.createQuery("SELECT p FROM Usuarios u "
+                    + "JOIN u.usuarioRolList ur "
+                    + "JOIN ur.rolIdRol r "
+                    + "JOIN r.rolPermisoList rp "
+                    + "JOIN rp.permisoIdPermiso p "
+                    + "WHERE u.numeroDocumento=:numeroDocumento", Permisos.class).setParameter("numeroDocumento", 
+                            usuario.getNumeroDocumento()).getResultList();
+            
+        } catch (Exception e) {
+        }
+        return null;
     }
     
 }

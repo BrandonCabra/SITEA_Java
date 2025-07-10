@@ -51,7 +51,10 @@ public class Registro implements Serializable {
     }
 
     public List<Rol> getListaRoles() {
-        return rolFacade.findAll();
+        List<Rol> roles = rolFacade.findAll();
+        return roles.stream()
+                .filter(rol -> !rol.getNombreRol().equalsIgnoreCase("ADMINISTRADOR"))
+                .collect(java.util.stream.Collectors.toList());
     }
 
     public String crearP1() {
@@ -98,7 +101,7 @@ public class Registro implements Serializable {
         } catch (Exception e) {
             e.printStackTrace();
             FacesContext.getCurrentInstance().addMessage(null,
-                    new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error en el sistema", "No se pudo registrar el usuario."));
+                    new FacesMessage(FacesMessage.SEVERITY_ERROR, "Ya existe un usuario con ese número de documento.", "No se pudo registrar el usuario."));
             return null;
         }
     }

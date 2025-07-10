@@ -1,73 +1,88 @@
 <?xml version='1.0' encoding='UTF-8' ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+                      "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:h="http://xmlns.jcp.org/jsf/html">
 
-    <body>
-
-        <ui:composition template="./newTemplate.xhtml">
-
+    <body style="background-color: white; margin: 0;">
+        <ui:composition template="./../TemplateSitio.xhtml">
             <ui:define name="content">
-                <h1>Listado de estudiantes con PIAR</h1>
-                <h:form>
-                    <h:commandButton action="#{piarController.crearP1()}" value="Ir a Crear PIAR" />
-                </h:form>
-                <table id="t-all" class="jsf-data-table display nowrap" width="100%">
-                    <thead>
-                        <tr>
-                            <th>Documento</th>
-                            <th>Nombre</th>
-                            <th>Piar ID</th>
-                            <th>Periodo</th>
-                            <th>Evaluación</th>
-                            <th>Barra de Aprendizaje</th>
-                            <th>Flexibilización</th>
-                            <th>Acciones</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <ui:repeat value="#{piarController.obtenerpiar()}" var="item">
-                            <tr>
-                                <td>#{item.estudianteIdEstudiante.numero_documento_estudiante}</td>
-                                <td>#{item.estudianteIdEstudiante.primerNombreEstudiante}</td>
-                                <td>#{item.idPiar}</td>
-                                <td>#{item.periodo}</td>
-                                <td>#{item.evaluacion}</td>
-                                <td>#{item.barraDeAprendizaje}</td>
-                                <td>#{item.flexibilizacion}</td>
-                                <td>
 
-                                    <h:form>
-                                        <h:commandButton value="Editar" action="#{piarController.editarPiarP1(item)}"/>
-                                        <h:commandButton value="Eliminar" action="#{piarController.eliminarPiar(item)}" onclick="return confirm('¿Desea eliminar el registro?')"/>
-                                    </h:form>
-                                </td>
-                            </tr>
-                        </ui:repeat>
-                    </tbody>
-                </table>
+                <h:form styleClass="container-fluid px-0">
+                    <div class="card shadow-sm bg-white rounded border-0 w-100">
+                        <div class="p-4">
+                            <h2 class="mb-4 text-primary fw-bold text-center">Listado de Estudiantes con PIAR</h2>
+
+                            <div class="table-responsive">
+                                <table id="t-all" class="table table-bordered table-hover table-sm jsf-data-table w-100">
+                                    <thead class="bg-primary text-white text-center">
+                                        <tr>
+                                            <th>Documento</th>
+                                            <th>Nombre</th>
+                                            <th>PIAR ID</th>
+                                            <th>Periodo</th>
+                                            <th>Evaluación</th>
+                                            <th>Barrera de Aprendizaje</th>
+                                            <th>Flexibilización</th>
+                                            <th>Acciones</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <ui:repeat value="#{piarController.obtenerpiar()}" var="item">
+                                            <tr>
+                                                <td>#{item.estudianteIdEstudiante.numero_documento_estudiante}</td>
+                                                <td>#{item.estudianteIdEstudiante.primerNombreEstudiante}</td>
+                                                <td>#{item.idPiar}</td>
+                                                <td>#{item.periodo}</td>
+                                                <td>#{item.evaluacion}</td>
+                                                <td>#{item.barraDeAprendizaje}</td>
+                                                <td>#{item.flexibilizacion}</td>
+                                                <td class="text-center">
+                                                    <div class="d-flex justify-content-center gap-2 flex-wrap">
+                                                        <h:form styleClass="d-inline">
+                                                            <h:commandButton value="✏️ Editar"
+                                                                             action="#{piarController.editarPiarP1(item)}"
+                                                                             styleClass="btn btn-outline-success btn-sm rounded-pill" />
+                                                        </h:form>
+                                                        <h:form styleClass="d-inline">
+                                                            <h:commandButton value="🗑 Eliminar"
+                                                                             action="#{piarController.eliminarPiar(item)}"
+                                                                             onclick="return confirm('¿Desea eliminar el registro?')"
+                                                                             styleClass="btn btn-outline-danger btn-sm rounded-pill" />
+                                                        </h:form>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </ui:repeat>
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            <!-- Botón Crear PIAR abajo, centrado -->
+                            <div class="text-center mt-4">
+                                <h:commandButton value="➕ Crear PIAR"
+                                                 action="#{piarController.crearP1()}"
+                                                 styleClass="btn btn-outline-primary btn-lg rounded-pill" />
+                            </div>
+                        </div>
+                    </div>
+                </h:form>
+
                 <script>
                     $(document).ready(function () {
                         $('.jsf-data-table').DataTable({
                             dom: 'Bfrtip',
-                            "language": {
-                                "url": "https://cdn.datatables.net/plug-ins/1.11.3/i18n/es_es.json"
+                            language: {
+                                url: 'https://cdn.datatables.net/plug-ins/1.11.3/i18n/es_es.json'
                             },
-                            "pageLength": 50,
-                            buttons: [
-                                'copy', 'csv', 'excel', 'pdf', 'print'
-                            ]
+                            pageLength: 50,
+                            buttons: ['copy', 'csv', 'excel', 'pdf', 'print']
                         });
-
                     });
                 </script>
 
-
             </ui:define>
-
-
         </ui:composition>
-
     </body>
 </html>

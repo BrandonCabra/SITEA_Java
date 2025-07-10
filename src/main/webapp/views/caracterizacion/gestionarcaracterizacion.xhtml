@@ -1,67 +1,84 @@
 <?xml version='1.0' encoding='UTF-8' ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+                      "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:h="http://xmlns.jcp.org/jsf/html">
 
     <body>
-
         <ui:composition template="./../TemplateSitio.xhtml">
-
             <ui:define name="content">
-                <h1>Listado de Caracterizaciones</h1>
-                <h:messages id="mensajes" globalOnly="true" infoStyle="color:green"/><!-- comment -->
-                <table id="t-all" class="jsf-data-table display nowrap" width="100%">
-                    <thead>
-                        <tr>
-                            <th>Caracterización</th>
-                            <th>Estudiante</th>
-                            <th>Documento</th>
-                            <th>Diagnostico</th>
-                            <th>Valoración Pedagógica</th>
-                            <th>Barrera de aprendizaje</th>
-                            <th>Acciones</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <ui:repeat value="#{caracterizacioncontroller.obtenerCaracterizaciones()}" var="item">
-                        <tr>
-                            <td>#{item.codigoCaracterizacion}</td>
-                            <td>#{item.estudianteIdEstudiante.primerNombreEstudiante} #{item.estudianteIdEstudiante.segundoNombreEstudiante}#{item.estudianteIdEstudiante.primerApellidoEstudiante}</td>
-                            <td>#{item.estudianteIdEstudiante.numeroDocumentoEstudiante}</td>
-                            <td>#{item.diagnostico}</td>
-                            <td>#{item.valoracionPedagogica}</td>
-                            <td>#{item.barraDeAprendizaje}</td>
-                            <td>
-                                <h:form>
-                                    <h:commandButton value="Editar" action="#{caracterizacioncontroller.editarCaracteriacionP1(item)}"/>
-                                    <h:commandButton value="Eliminar" action="#{caracterizacioncontroller.eliminarCaracterizacion(item)}" onclick="return confirm('¿Desea eliminar el registro?')"/>
-                                </h:form>
-                            </td>
-                        </tr>
-                        
-                        </ui:repeat>
-                    </tbody>
-                </table>
-                
-                 <script>
+
+                <div class="container-fluid px-3">
+                    <div class="card shadow-sm p-4" style="background-color: #ffffff;">
+                        <h1 class="mb-3 text-primary">Listado de Caracterizaciones</h1>
+
+                        <h:messages id="mensajes" globalOnly="true"
+                                    infoStyle="color: green;"
+                                    errorStyle="color: red;" />
+
+                        <table id="t-all" class="jsf-data-table display nowrap table table-bordered table-hover" width="100%">
+                            <thead class="bg-primary text-white">
+                                <tr>
+                                    <th>Caracterización</th>
+                                    <th>Estudiante</th>
+                                    <th>Documento</th>
+                                    <th>Diagnóstico</th>
+                                    <th>Valoración Pedagógica</th>
+                                    <th>Barrera de Aprendizaje</th>
+                                    <th>Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <ui:repeat value="#{caracterizacioncontroller.obtenerCaracterizaciones()}" var="item">
+                                    <tr>
+                                        <td>#{item.codigoCaracterizacion}</td>
+                                        <td>#{item.estudianteIdEstudiante.primerNombreEstudiante} #{item.estudianteIdEstudiante.segundoNombreEstudiante} #{item.estudianteIdEstudiante.primerApellidoEstudiante}</td>
+                                        <td>#{item.estudianteIdEstudiante.numeroDocumentoEstudiante}</td>
+                                        <td>#{item.diagnostico}</td>
+                                        <td>#{item.valoracionPedagogica}</td>
+                                        <td>#{item.barraDeAprendizaje}</td>
+                                        <td>
+                                            <h:form styleClass="d-flex flex-wrap gap-1">
+                                                <h:commandButton value="Editar"
+                                                                 action="#{caracterizacioncontroller.editarCaracteriacionP1(item)}"
+                                                                 rendered="#{login.rolActual eq 'ADMINISTRADOR' or login.rolActual eq 'PSICOORIENTADOR'}"
+                                                                 styleClass="btn btn-outline-primary btn-sm" />
+
+                                                <h:commandButton value="Eliminar"
+                                                                 action="#{caracterizacioncontroller.eliminarCaracterizacion(item)}"
+                                                                 onclick="return confirm('¿Desea eliminar el registro?')"
+                                                                 rendered="#{login.rolActual eq 'ADMINISTRADOR' or login.rolActual eq 'PSICOORIENTADOR'}"
+                                                                 styleClass="btn btn-outline-danger btn-sm" />
+
+                                                <h:commandButton value="Recomendar actualizaciones"
+                                                                 action="#{caracterizacioncontroller.eliminarCaracterizacion(item)}"
+                                                                 onclick="return confirm('¿Desea eliminar el registro?')"
+                                                                 rendered="#{login.rolActual eq 'PROFESOR' or login.rolActual eq 'PADRE DE FAMILIA'}"
+                                                                 styleClass="btn btn-outline-success btn-sm" />
+                                            </h:form>
+                                        </td>
+                                    </tr>
+                                </ui:repeat>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <script>
                     $(document).ready(function () {
                         $('.jsf-data-table').DataTable({
                             dom: 'Bfrtip',
-                            "language": {
-                                "url": "https://cdn.datatables.net/plug-ins/1.11.3/i18n/es_es.json"
+                            language: {
+                                url: "https://cdn.datatables.net/plug-ins/1.11.3/i18n/es_es.json"
                             },
-                            "pageLength": 50,
-                            buttons: [
-                                'copy', 'csv', 'excel', 'pdf', 'print'
-                            ]
+                            pageLength: 50,
+                            buttons: ['copy', 'csv', 'excel', 'pdf', 'print']
                         });
-
                     });
                 </script>
+
             </ui:define>
-
         </ui:composition>
-
     </body>
 </html>

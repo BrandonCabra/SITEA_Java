@@ -6,83 +6,94 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core">
 
     <body>
-
         <ui:composition template="./../TemplateSitio.xhtml">
-
             <ui:define name="content">
                 <f:view>
+                    <h:form styleClass="container-fluid px-3" style="background-color: #e3f2fd; padding: 20px; border-radius: 8px;">
+                        <div class="card shadow-sm p-4">
+                            <h2 class="text-primary fw-bold mb-3">Preregistro Estudiante</h2>
 
+                            <h:panelGrid columns="3" styleClass="table table-borderless align-middle">
+                                <h:outputLabel value="Tipo Documento:" for="tipoDocumentoIdTipoDocumento" />
+                                <h:selectOneMenu id="tipoDocumentoIdTipoDocumento" value="#{estudianteTeaController.td.idTipoDocumento}" required="true" requiredMessage="Tipo Documento es obligatorio." styleClass="form-select">
+                                    <f:selectItem itemLabel="Seleccione..." itemValue="#{null}" />
+                                    <f:selectItems value="#{estudianteTeaController.listaTipoDocumento()}" />
+                                </h:selectOneMenu>
+                                <h:message for="tipoDocumentoIdTipoDocumento" style="color: red" />
 
-                    <h:form>
-                        <h1><h:outputText value="preregistro Estudiante"/></h1>
-                        <h:panelGrid columns="3">
+                                <h:outputLabel value="Numero Documento Estudiante:" for="numeroDocumentoEstudiante" />
+                                <h:inputText id="numeroDocumentoEstudiante" value="#{estudianteTeaController.con.numeroDocumentoEstudiante}" required="true" requiredMessage="Campo obligatorio." styleClass="form-control" />
+                                <h:message for="numeroDocumentoEstudiante" style="color: red" />
 
-                            <h:outputLabel value="Tipo Documento:" for="tipoDocumentoIdTipoDocumento" />
-                            <h:selectOneMenu id="tipoDocumentoIdTipoDocumento" value="#{estudianteTeaController.td.idTipoDocumento}" title="TipoDocumentoIdTipoDocumento" required="true" requiredMessage="The Tipo Documento es obligatorio.">
-                                <!-- TODO: update below reference to list of available items-->
-                                <f:selectItem itemLabel="Seleccione..." itemValue="#{null}" />
-                                <f:selectItems value="#{estudianteTeaController.listaTipoDocumento()}"/>
-                            </h:selectOneMenu>
-                            <h:message for="tipoDocumentoIdTipoDocumento" style="color: red" />
+                                <h:outputLabel value="Primer Nombre Estudiante:" for="primerNombreEstudiante" />
+                                <h:inputText id="primerNombreEstudiante" value="#{estudianteTeaController.con.primerNombreEstudiante}" required="true" requiredMessage="Campo obligatorio." styleClass="form-control" />
+                                <h:message for="primerNombreEstudiante" style="color: red" />
 
-                            <h:outputLabel value="Numero Documento Estudiante:" for="numeroDocumentoEstudiante" />
-                            <h:inputText id="numeroDocumentoEstudiante" value="#{estudianteTeaController.con.numeroDocumentoEstudiante}" title="NumeroDocumentoEstudiante" required="true" requiredMessage="The Numero Documento Estudiante es obligatorio."/>
-                            <h:message for="numeroDocumentoEstudiante" style="color: red" />
-                            <h:outputLabel value="Primer Nombre Estudiante:" for="primerNombreEstudiante" />
-                            <h:inputText id="primerNombreEstudiante" value="#{estudianteTeaController.con.primerNombreEstudiante}" title="PrimerNombreEstudiante" required="true" requiredMessage="The Primer Nombre Estudiante es obligatorio."/>
-                            <h:message for="primerNombreEstudiante" style="color: red" />
-                            <h:outputLabel value="Segundo Nombre Estudiante:" for="segundoNombreEstudiante" />
-                            <h:inputText id="segundoNombreEstudiante" value="#{estudianteTeaController.con.segundoNombreEstudiante}" title="SegundoNombreEstudiante" />
-                            <h:message for="segundoNombreEstudiante" style="color: red" />
-                            <h:outputLabel value="Primer Apellido Estudiante:" for="primerApellidoEstudiante" />
-                            <h:inputText id="primerApellidoEstudiante" value="#{estudianteTeaController.con.primerApellidoEstudiante}" title="PrimerApellidoEstudiante" required="true" requiredMessage="The Primer Apellido Estudiante es obligatorio."/>
-                            <h:message for="primerApellidoEstudiante" style="color: red" />
-                            <h:outputLabel value="Segundo Apellido Estudiante:" for="segundoApellidoEstudiante" />
-                            <h:inputText id="segundoApellidoEstudiante" value="#{estudianteTeaController.con.segundoApellidoEstudiante}" title="SegundoApellidoEstudiante" />
-                            <h:message for="segundoApellidoEstudiante" style="color: red" />
-                            <h:outputLabel value="Fecha Nacimiento:" for="fechaNacimiento" />
-                            <h:inputText id="fechaNacimiento" value="#{estudianteTeaController.con.fechaNacimiento}" title="FechaNacimiento" required="true" requiredMessage="The Fecha Nacimiento field es obligatorio.">
-                                <f:passThroughAttribute name="type" value="date" />
-                                <f:convertDateTime pattern="yyyy-MM-dd" />
+                                <h:outputLabel value="Segundo Nombre Estudiante:" for="segundoNombreEstudiante" />
+                                <h:inputText id="segundoNombreEstudiante" value="#{estudianteTeaController.con.segundoNombreEstudiante}" styleClass="form-control" />
+                                <h:message for="segundoNombreEstudiante" style="color: red" />
 
+                                <h:outputLabel value="Primer Apellido Estudiante:" for="primerApellidoEstudiante" />
+                                <h:inputText id="primerApellidoEstudiante" value="#{estudianteTeaController.con.primerApellidoEstudiante}" required="true" requiredMessage="Campo obligatorio." styleClass="form-control" />
+                                <h:message for="primerApellidoEstudiante" style="color: red" />
 
+                                <h:outputLabel value="Segundo Apellido Estudiante:" for="segundoApellidoEstudiante" />
+                                <h:inputText id="segundoApellidoEstudiante" value="#{estudianteTeaController.con.segundoApellidoEstudiante}" styleClass="form-control" />
+                                <h:message for="segundoApellidoEstudiante" style="color: red" />
 
-                            </h:inputText>
-                            <h:message for="fechaNacimiento" style="color: red" />
-                            <h:outputLabel value="Telefono Estudiante:" for="telefonoEstudiante" />
-                            <h:inputText id="telefonoEstudiante" value="#{estudianteTeaController.con.telefonoEstudiante}" title="TelefonoEstudiante" />
-                            <h:message for="telefonoEstudiante" style="color: red" />
-                            <h:outputLabel value="Dirección Estudiante:" for="direccionEstudiante" />
-                            <h:inputText id="direccionEstudiante" value="#{estudianteTeaController.con.direccionEstudiante}" title="DireccionEstudiante" required="true" requiredMessage="The Direccion Estudiante es obligatorio."/>
-                            <h:message for="direccionEstudiante" style="color: red" />
-                            <h:outputLabel value="Correo Institucional Estudiante:" for="correoInstitucionalEstudiante" />
-                            <h:inputText id="correoInstitucionalEstudiante" value="#{estudianteTeaController.con.correoInstitucionalEstudiante}" title="CorreoInstitucionalEstudiante" required="true" requiredMessage="The Correo Institucional Estudiante es obligatorio."/>
-                            <h:message for="correoInstitucionalEstudiante" style="color: red" />
-                            <h:outputLabel value="Fotografia Estudiante:" for="fotografiaEstudiante" />
-                            <h:inputText id="fotografiaEstudiante" value="#{estudianteTeaController.con.fotografiaEstudiante}" title="FotografiaEstudiante" />
-                            <h:message for="fotografiaEstudiante" style="color: red" />
-                            <h:outputLabel value="Numero Documento Padre:" for="numeroDocumentoPadre" />
-                            <h:inputText id="numeroDocumentoPadre" value="#{estudianteTeaController.con.numeroDocumentoPadre}" title="NumeroDocumentoPadre" />
-                            <h:message for="numeroDocumentoPadre" style="color: red" />
-                            <h:outputLabel value="Curso:" for="cursoIdCurso" />
-                            <h:selectOneMenu id="cursoIdCurso" value="#{estudianteTeaController.cur.idCurso}" title="cursoIdCurso" >
-                                <!-- TODO: update below reference to list of available items-->
-                                <f:selectItems value="#{estudianteTeaController.listaCurso()}"/>
-                            </h:selectOneMenu>
-                            <h:message for="cursoIdCurso" style="color: red" />
-                        </h:panelGrid>
-                        <h:messages id="mensajes" globalOnly="true" infoStyle="color: green" errorStyle="color: red" /><!-- comment -->
+                                <h:outputLabel value="Fecha Nacimiento:" for="fechaNacimiento" />
+                                <h:inputText id="fechaNacimiento" value="#{estudianteTeaController.con.fechaNacimiento}" required="true" requiredMessage="Campo obligatorio." styleClass="form-control">
+                                    <f:passThroughAttribute name="type" value="date" />
+                                    <f:convertDateTime pattern="yyyy-MM-dd" />
+                                </h:inputText>
+                                <h:message for="fechaNacimiento" style="color: red" />
 
-                        <h:commandButton value="Registrar Estudiante" action="#{estudianteTeaController.crearEstudianteP2()}" rendered="#{estudianteTeaController.con.idEstudiante ==null}"/>
-                        <h:commandButton value="Editar Estudiante" action="#{estudianteTeaController.editarEstudianteP2()}" rendered="#{estudianteTeaController.con.idEstudiante !=null}"/>
-                        <h:button value="volver" outcome="/views/caracterizacion/registroestudiante.xhtml?faces-redirect?true" />
+                                <h:outputLabel value="Telefono Estudiante:" for="telefonoEstudiante" />
+                                <h:inputText id="telefonoEstudiante" value="#{estudianteTeaController.con.telefonoEstudiante}" styleClass="form-control" />
+                                <h:message for="telefonoEstudiante" style="color: red" />
+
+                                <h:outputLabel value="Dirección Estudiante:" for="direccionEstudiante" />
+                                <h:inputText id="direccionEstudiante" value="#{estudianteTeaController.con.direccionEstudiante}" required="true" requiredMessage="Campo obligatorio." styleClass="form-control" />
+                                <h:message for="direccionEstudiante" style="color: red" />
+
+                                <h:outputLabel value="Correo Institucional Estudiante:" for="correoInstitucionalEstudiante" />
+                                <h:inputText id="correoInstitucionalEstudiante" value="#{estudianteTeaController.con.correoInstitucionalEstudiante}" required="true" requiredMessage="Campo obligatorio." styleClass="form-control" />
+                                <h:message for="correoInstitucionalEstudiante" style="color: red" />
+
+                                <h:outputLabel value="Fotografia Estudiante:" for="fotografiaEstudiante" />
+                                <h:inputText id="fotografiaEstudiante" value="#{estudianteTeaController.con.fotografiaEstudiante}" styleClass="form-control" />
+                                <h:message for="fotografiaEstudiante" style="color: red" />
+
+                                <h:outputLabel value="Numero Documento Padre:" for="numeroDocumentoPadre" />
+                                <h:inputText id="numeroDocumentoPadre" value="#{estudianteTeaController.con.numeroDocumentoPadre}" styleClass="form-control" />
+                                <h:message for="numeroDocumentoPadre" style="color: red" />
+
+                                <h:outputLabel value="Curso:" for="cursoIdCurso" />
+                                <h:selectOneMenu id="cursoIdCurso" value="#{estudianteTeaController.cur.idCurso}" styleClass="form-select">
+                                    <f:selectItems value="#{estudianteTeaController.listaCurso()}" />
+                                </h:selectOneMenu>
+                                <h:message for="cursoIdCurso" style="color: red" />
+                            </h:panelGrid>
+
+                            <h:messages id="mensajes" globalOnly="true" infoStyle="color: green" errorStyle="color: red" />
+
+                            <div class="mt-4 d-flex gap-2">
+                                <h:commandButton value="Registrar Estudiante" 
+                                                 action="#{estudianteTeaController.crearEstudianteP2()}" 
+                                                 rendered="#{estudianteTeaController.con.idEstudiante == null}"
+                                                 styleClass="btn btn-success" />
+
+                                <h:commandButton value="Editar Estudiante" 
+                                                 action="#{estudianteTeaController.editarEstudianteP2()}" 
+                                                 rendered="#{estudianteTeaController.con.idEstudiante != null}"
+                                                 styleClass="btn btn-info" />
+
+                                <h:button value="Volver" outcome="/views/caracterizacion/registroestudiante.xhtml?faces-redirect=true" styleClass="btn btn-secondary" />
+                            </div>
+                        </div>
                     </h:form>
                 </f:view>
-
             </ui:define>
-
         </ui:composition>
-
     </body>
 </html>
-

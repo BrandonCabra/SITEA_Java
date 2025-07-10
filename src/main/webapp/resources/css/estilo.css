@@ -1,0 +1,323 @@
+/*
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css to edit this template
+*/
+/* 
+    Created on : 23/05/2025, 11:20:24 p. m.
+    Author     : bjcab
+*/
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+}
+
+header {
+    background-color: #F4F9FF;
+    padding: 0px 20px;
+    text-align: center;
+}
+
+.header-container {
+    display: flex;
+    align-items: center;
+}
+
+.header-logo {
+    max-width: 60px;
+    margin-right: 45px;
+}
+
+nav ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+nav ul li {
+    display: inline;
+    margin: 0 35px;
+}
+
+nav ul li a {
+    color: #007AFF;
+    margin: 50px;
+    text-decoration: none;
+}
+
+main {
+    display: flex;
+    height: calc(100vh - 100px);
+}
+
+.imagen-container {
+    flex: 1;
+    background-image: url(IMAGENES/FONDO8.PNG);
+    background-size: cover;
+    background-position: center;
+}
+
+.login-container {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: #f4f4f4;
+    padding: 20px;
+}
+
+.login-image {
+    max-width: 100px;
+}
+
+.login-form {
+    padding: 20px;
+    border-radius: 20px;
+    background-color: #f9f9f9;
+    box-shadow: 0 10px 10px rgba(0, 0, 0, 0.1);
+    max-width: 400px;
+    /* Ancho máximo */
+    margin: auto;
+    /* Centrar la caja */
+    width: 100%;
+    max-width: 300px;
+}
+
+.input-group {
+    margin: 10px 10px;
+}
+
+input[type="number"],
+input[type="password"],
+input[type="email"],
+input[type="text"],
+select {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 2px solid #ccc;
+    border-radius: 2px;
+}
+
+button {
+    background-color: #0047A3;
+    color: white;
+    border: none;
+    padding: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #0047A3;
+}
+
+.boton {
+    display: inline-block;
+    background-color: #0047A3;
+    margin: 0 auto;
+    color: white;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    list-style-type: none;
+}
+
+.boton1 {
+    display: inline-block;
+    background-color: #dae5f0;
+    margin: 0 auto;
+    color: #0047A3;
+    padding: 10px 20px;
+    text-align: center;
+    border-radius: 5px;
+}
+
+.boton:hover {
+    background-color: #4DA3F1;
+    /* Color de fondo al pasar el ratón */
+}
+
+h6 {
+    background-color: #4DA3F1;
+}
+
+body h1 {
+    text-align: center;
+}
+
+body h4 {
+    text-align: center;
+}
+
+.centrar {
+    text-align: center;
+}
+
+.Historia {
+    margin: 10%;
+    padding: 10%;
+    height: 100%;
+    text-align: justify;
+    justify-content: center;
+    margin-left: 0px;
+    margin-right: 0px;
+    color: #faf8f8;
+    background-color: #0000008a;
+}
+
+.Fondo {
+    background-image: url(IMAGENES/fondo16.jpeg);
+    background-size: cover;
+    align-items: center;
+    justify-content: center;
+    background-repeat: no-repeat;
+}
+
+.fondorecuperacion {
+    background-image: url(IMAGENES/FONDO6.PNG);
+    background-size: cover;
+    align-items: center;
+    justify-content: center;
+    background-repeat: no-repeat;
+}
+
+.Fondoservicios {
+    background-image: url(IMAGENES/FONDO4.PNG);
+    background-size: cover;
+    align-items: center;
+    justify-content: center;
+    background-repeat: no-repeat;
+}
+
+.Contacto {
+    background-color: #F4F9FF;
+    display: flex;
+    /* Usamos flexbox para la disposición */
+    height: 100vh;
+    /* Altura completa de la ventana */
+}
+
+.contactocaja {
+    flex: 1;
+    flex-direction: column;
+    background-color: #007AFF;
+    margin: 10%;
+    max-width: 400px;
+    height: 450px;
+    padding: 50px 50px;
+    border-radius: 30px;
+    box-sizing: border-box;
+}
+
+.mensaje {
+    height: 100px;
+}
+
+.contacto {
+    flex: 1;
+    margin: 10%;
+    max-width: 400px;
+    height: 450px;
+    padding: 50px 50px;
+    border-radius: 30px;
+    box-sizing: border-box;
+}
+
+.nomcontacto {
+    background-color: #F4F9FF;
+    color:#007AFF;
+}
+
+.pagequipo {
+    background-color: #F4F9FF;
+    display: flex;
+    /* Usamos flexbox para la disposición */
+    height: 40vh;
+    /* Altura completa de la ventana */
+}
+
+.fondoequipo {
+    flex: 1 1 50%;
+    background-image: url(IMAGENES/equipo.jpeg);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    height: 100%;
+
+}
+
+.equipo {
+    flex: 1 1 50%;
+    padding: 100px 20px;
+    box-sizing: border-box;
+    text-align: center;
+    color: #007AFF;
+}
+
+.nuestroequipo {
+    width: 100%;
+    display: flex;
+    max-width: wrap;
+    margin: 0 auto;
+}
+
+.foto {
+    flex: 1 0 calc(17% - 40px);
+    margin: 40px;
+    border-radius: 20px;
+    overflow: hidden;
+    background: #F4F9FF;
+    box-shadow: 0px 1px 10px rgba(0, 0, 0, 0.2);
+    cursor: default;
+    transition: all 400ms ease;
+}
+
+.foto:hover {
+    box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.4);
+    transform: translateY(-3%);
+}
+
+.foto img {
+    width: 100%;
+    height: 200px;
+}
+
+.contenido {
+    padding: 15px;
+    text-align: center;
+    color: #007AFF;
+}
+
+.fondomanual {
+    flex: 1 1 50%;
+    background-image: url(IMAGENES/manuel.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    height: 100%;
+}
+
+.login-form1 {
+    padding: 40px;
+    border-radius: 20px;
+    background-color: #f9f9f9;
+    box-shadow: 0 10px 10px rgba(0, 0, 0, 0.1);
+    max-width: 400px;
+    /* Ancho máximo */
+    margin: auto;
+    /* Centrar la caja */
+    width: 100%;
+    max-width: 300px;
+}
+
+.list-group-item{
+    border: none;
+}
+
+
+ 
+  
+  

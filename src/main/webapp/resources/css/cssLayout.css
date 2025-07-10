@@ -1,0 +1,102 @@
+
+#top {
+    position: relative;
+    background-color: #036fab;
+    color: white;
+    padding: 5px;
+    margin: 0px 0px 10px 0px;
+}
+
+#bottom {
+    position: relative;
+    background-color: #c2dfef;
+    padding: 5px;
+    margin: 10px 0px 0px 0px;
+}
+
+#left {
+    float: left;
+    background-color: #ece3a5;
+    padding: 5px;
+    width: 150px;
+}
+
+#right {
+    float: right;
+    background-color: #0047a3;
+    padding: 5px;
+    width: 150px;
+}
+
+.center_content {
+    position: relative;
+    background-color: #dddddd;
+    padding: 5px;
+}
+
+.left_content {
+    background-color: #dddddd;
+    padding: 5px;
+    margin-left: 170px;
+}
+
+.right_content {
+    background-color: #dddddd;
+    padding: 5px;
+    margin: 0px 170px 0px 170px;
+}
+
+#top a:link, #top a:visited {
+    color: white;
+    font-weight : bold;
+    text-decoration: none;
+}
+
+#top a:link:hover, #top a:visited:hover  {
+    color: black;
+    font-weight : bold;
+    text-decoration : underline;
+}
+
+#left {
+    background-color: #608EFF; /* si esa es la zona que quieres modificar */
+    width: 260px;
+    float: left;
+    padding: 10px;
+    height: 100%; /* o el alto que necesites */
+}
+
+#content {
+    margin-left: 290px; /* Igual al ancho de #left */
+}
+.imagen-redonda{
+    width: 100px; /* Ajusta el tamaño según lo necesites */
+    height: 100px;
+    border-radius: 50%; /* Hace la imagen redonda */
+    object-fit: cover; /* Asegura que la imagen se ajuste bien */
+    border: 3px solid #333; /* Borde opcional */
+}
+
+
+
+
+
+
+html.zoom-pequeno {
+    font-size: 12px;
+}
+html.zoom-mediano {
+    font-size: 16px;
+}
+html.zoom-grande {
+    font-size: 20px;
+}
+
+body.alto-contraste {
+    background-color: #000 !important;
+    color: #fff !important;
+}
+
+body.alto-contraste a {
+    color: #00ffff !important;
+}

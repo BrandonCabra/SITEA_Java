@@ -1,0 +1,156 @@
+/*
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css to edit this template
+*/
+/* 
+    Created on : 26/05/2025, 12:39:51 p. m.
+    Author     : bjcab
+*/
+
+/* Estilo general */
+body {
+  font-family: Arial, sans-serif;
+  line-height: 1.6;
+  margin: 0;
+  padding: 0;
+  color: #333;
+  background-color: #f8f9fa; /* Fondo claro sin imagen */
+}
+
+/* Estilo del header */
+.header-logo {
+  max-width: 70px; /* Reducido el tamaño un poco más */
+  height: auto;
+  margin-right: 10px;
+}
+
+.navbar {
+  background-color: #ffffff; /* Color de fondo blanco para la barra de navegación */
+}
+
+.navbar-nav {
+  gap: 20px; /* Espacio entre los elementos de la navegación */
+}
+
+.nav-link {
+  color: #0047A2; /* Azul oscuro para los enlaces de navegación */
+}
+
+.nav-link:hover {
+  color: #1e68c9; /* Azul más claro en hover */
+}
+
+.boton {
+  background-color: #0047A2;
+  color: white;
+  padding: 8px 16px;
+  border-radius: 5px;
+}
+
+.boton:hover {
+  background-color: #1fa4f6; /* Cambiar color de fondo al pasar el cursor */
+  color: #ffffff; /* Cambiar color de texto al pasar el cursor */
+}
+
+/* Estilo del main */
+main {
+  padding: 20px;
+  border-radius: 10px;
+  margin: 20px auto;
+  max-width: 1200px; /* Limitar el ancho máximo para mejor presentación */
+  flex-grow: 1; /* Asegurar que el main crezca para llenar el espacio disponible */
+  display: flex;
+  justify-content: center;
+  align-items: center; /* Centrando verticalmente */
+}
+
+.card {
+  background-color: #ffffff; /* Fondo blanco para el formulario */
+  border: none;
+  border-radius: 10px;
+  margin-top: 20px; /* Reducido el margen superior */
+}
+
+.img-reducida {
+  max-width: 100px; /* Reducir el tamaño de la imagen del formulario */
+  height: auto;
+  display: block;
+  margin: 0 auto; /* Centrar la imagen */
+}
+
+h1 {
+  color: #0047A2;
+}
+
+h2 {
+  color: #0047A2;
+}
+
+h3 {
+  color: #ffffff;
+  text-align: justify;
+}
+
+/* Estilo del footer */
+footer {
+  background-color: #f8f9fa; /* Fondo claro para el footer */
+  border-radius: 10px; /* Añadir bordes redondeados */
+  margin: 20px auto;
+  max-width: 1200px; /* Limitar el ancho máximo para mejor presentación */
+  padding: 20px; /* Asegurar el relleno del contenido */
+  flex-shrink: 0; /* Asegurar que el footer no se encoja */
+}
+
+footer p {
+  margin: 0;
+  color: #000000;
+}
+
+.breadcrumb {
+  display: flex;
+  justify-content: center;
+  list-style: none;
+  padding: 0;
+}
+
+.breadcrumb-item {
+  margin: 0 10px;
+}
+
+.breadcrumb-item a {
+  color: #007bff;
+  text-decoration: none;
+}
+
+.breadcrumb-item a:hover {
+  text-decoration: underline;
+}
+
+form {
+  margin-top: 30px;
+}
+
+.link-primary {
+  color: #0047A2;
+}
+
+.link-primary:hover {
+  color: #1e68c9;
+}
+
+.btn-azul-claro {
+  background-color: #64b5f6; /* Azul claro */
+  color: white;
+  font-size: 0.9rem;
+  font-weight: 600;
+  padding: 0.4rem 0.8rem;
+  border-radius: 10px;
+  border: none;
+  width: auto;
+  max-width: 220px;
+  transition: background-color 0.2s ease;
+}
+
+.btn-azul-claro:hover {
+  background-color: #42a5f5; /* Tono más intenso al pasar el cursor */
+}

@@ -1,0 +1,123 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+<h:head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>Facelets Template SI-TEA</title>
+
+    <!-- Estilos locales -->
+    <h:outputStylesheet library="css" name="default.css" />
+    <h:outputStylesheet library="css" name="cssLayout.css" />
+
+    <!-- Bootstrap + DataTables -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css" />
+    <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.2.3/css/buttons.dataTables.min.css" />
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.2.3/js/dataTables.buttons.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.2.3/js/buttons.html5.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.2.3/js/buttons.print.min.js"></script>
+</h:head>
+
+<h:body>
+
+    <!-- Encabezado -->
+    <div id="top">
+            
+            <h2>Usuario: #{login.NUMERO_DOCUMENTO}</h2>
+            
+            <h:form><h:commandButton value="Cerrar Sesion" action="#{login.cerrarSesion()}" /> </h:form>
+            
+            <ui:insert name="top"></ui:insert>
+        </div>
+
+    <!-- Tarjetas -->
+    <div class="container">
+        <div class="row g-4">
+
+            <!-- Tarjeta 1 -->
+            <div class="col-12 col-md-6 col-lg-4">
+                <div class="card h-100">
+                    <h:graphicImage library="images" name="Caracterización.png" styleClass="card-img-top" alt="Caracterización" />
+                    <div class="card-body">
+                        <h5 class="card-title text-primary">Caracterización</h5>
+                        <p class="card-text">Caracterización pedagógica y social de los EcTEA.</p>
+                        <h:link outcome="/views/caracterizacion/index.xhtml" value="Ir" styleClass="btn btn-primary" />
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tarjeta 2 -->
+            <div class="col-12 col-md-6 col-lg-4">
+                <div class="card h-100">
+                    <h:graphicImage library="images" name="Protocolos.png" styleClass="card-img-top" alt="Protocolos" />
+                    <div class="card-body">
+                        <h5 class="card-title text-primary">Protocolos y Rutas de Atención</h5>
+                        <p class="card-text">Protocolos, rutas de atención y su gestión.</p>
+                        <h:link outcome="/views/Piar/index.xhtml" value="Ir" styleClass="btn btn-primary" />                       
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tarjeta 3 -->
+            <div class="col-12 col-md-6 col-lg-4">
+                <div class="card h-100">
+                    <h:graphicImage library="images" name="Estrategias.png" styleClass="card-img-top" alt="Estrategias" />
+                    <div class="card-body">
+                        <h5 class="card-title text-primary">Estrategias Educativas</h5>
+                        <p class="card-text">Estrategias para estudiantes con Trastornos Específicos de Aprendizaje.</p>
+                        <h:link outcome="/views/Piar/index.xhtml" value="Ir" styleClass="btn btn-primary" />
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tarjeta 4 -->
+            <div class="col-12 col-md-6 col-lg-4">
+                <div class="card h-100">
+                    <h:graphicImage library="images" name="PIAR.png" styleClass="card-img-top" alt="PIAR" />
+                    <div class="card-body">
+                        <h5 class="card-title text-primary">PIAR</h5>
+                        <p class="card-text">Gestión y visualización del Plan Individual de Ajustes Razonables.</p>
+                        <h:link outcome="/views/Piar/index.xhtml" value="Ir" styleClass="btn btn-primary" />
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tarjeta 5 -->
+            <div class="col-12 col-md-6 col-lg-4">
+                <div class="card h-100">
+                    <h:graphicImage library="images" name="Gestion.png" styleClass="card-img-top" alt="Gestión de estudiantes" />
+                    <div class="card-body">
+                        <h5 class="card-title text-primary">Gestión de estudiantes</h5>
+                        <p class="card-text">Reportes e informes de Estudiantes registrados.</p>
+                        <h:link outcome="/views/Piar/index.xhtml" value="Ir" styleClass="btn btn-primary" />
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tarjeta 6 -->
+            <div class="col-12 col-md-6 col-lg-4">
+                <div class="card h-100">
+                    <h:graphicImage library="images" name="Reportes.png" styleClass="card-img-top" alt="Reporte de Novedades" />
+                    <div class="card-body">
+                        <h5 class="card-title text-primary">Reporte de Novedades</h5>
+                        <p class="card-text">Reportes y gestión de novedades de EcTEA.</p>
+                        <h:link outcome="/views/Piar/index.xhtml" value="Ir" styleClass="btn btn-primary" />
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</h:body>
+</html>

@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/XHtml.xhtml to edit this template
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      lang="es">
+
+    <h:head>
+        <title>Inicio de Sesión - SITEA</title>
+        <meta charset="utf-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+        <link href="resources/css/iniciodesesion.css" rel="stylesheet" type="text/css"/>
+        <h:outputStylesheet name="/css/iniciodesesion.css" />
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4Q6Gf2aSP4eDXB8Miphtr37CMZZQ5oXLH2yaXMJ2w8e2ZtHTl7GptT4jmndRuHDT" crossorigin="anonymous" />
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js"></script>
+        <link rel="icon" type="image/svg+xml" href="resources/images/IMAGENES/iconsitea.svg"/>
+        <script src="resources/js/iniciodesesion2.js" type="text/javascript"></script>
+    </h:head>
+
+    <h:body styleClass="d-flex flex-column min-vh-100">
+
+        <!-- Header -->
+        <header>
+            <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                <div class="container-fluid">
+                    <a class="navbar-brand" href="#">
+                        <img src="#{request.contextPath}/resources/images/IMAGENES/logositeasf 3.png" alt="logo" class="header-logo" /> 
+                    </a>
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#navbarNav" aria-controls="navbarNav"
+                            aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
+                        <ul class="navbar-nav">
+                            <li class="nav-item"><a class="nav-link" href="index2.xhtml">Inicio</a></li>
+                            <li class="nav-item"><a class="nav-link" href="sobrenosotros2.xhtml">Acerca de SI TEA</a></li>
+                            <li class="nav-item"><a class="nav-link" href="servicios2.xhtml">Servicios</a></li>
+                            <li class="nav-item"><a class="nav-link" href="manuales2.xhtml">Manuales</a></li>
+                            <li class="nav-item"><a class="nav-link" href="equipo2.xhtml">Equipo</a></li>
+                            <li class="nav-item"><a class="nav-link" href="contacto2.xhtml">Contacto</a></li>
+                            <li class="nav-item">
+                                <a class="nav-link boton" href="#{request.contextPath}/login.xhtml">Ingresar</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+            <div class="container mt-4 text-center">
+                <h1>¡Bienvenido! Registrate</h1>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="container mt-4 d-flex align-items-center justify-content-center flex-grow-1">
+            <div class="row w-100">
+                <div class="col-md-6 d-flex justify-content-center align-items-center">
+                    <img src="#{request.contextPath}/resources/images/IMAGENES/FONDO8.PNG" alt="Imagen de Registro" class="img-fluid" />
+                </div>
+                <div class="col-md-6">
+                    <div class="card p-4 shadow-sm">
+                        <h:form id="registroForm">
+
+                            <div class="mb-3">
+                                <label for="nombres" class="form-label">Nombres</label>
+                                <h:inputText id="nombres" value="#{registro.con.primerNombre}" required="true"
+                                             styleClass="form-control">
+                                    <f:passThroughAttribute name="placeholder" value="Ingrese sus nombres" />
+                                </h:inputText>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="apellidos" class="form-label">Apellidos</label>
+                                <h:inputText id="apellidos" value="#{registro.con.primerApellido}" required="true"
+                                             styleClass="form-control">
+                                    <f:passThroughAttribute name="placeholder" value="Ingrese sus apellidos" />
+                                </h:inputText>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="tipoDocumento" class="form-label">Tipo de Documento</label>
+                                <h:selectOneMenu id="tipoDocumento"
+                                                 value="#{registro.con.tipoDocumentoIdTipoDocumento}"
+                                                 converter="#{tipoDocumentoConverter}"
+                                                 required="true"
+                                                 styleClass="form-select">
+                                    <f:selectItem itemLabel="Seleccione..." itemValue="#{null}" />
+                                    <f:selectItems value="#{registro.listaTipoDocumentos}"
+                                                   var="td"
+                                                   itemValue="#{td}"
+                                                   itemLabel="#{td.nombreTipoDocumento}" />
+                                </h:selectOneMenu>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="numeroDocumento" class="form-label">Número de Documento</label>
+                                <h:inputText id="numeroDocumento" value="#{registro.con.numeroDocumento}" required="true"
+                                             styleClass="form-control">
+                                    <f:passThroughAttribute name="placeholder" value="Ingrese su número de documento" />
+                                </h:inputText>
+                            </div>
+                            <div class="mb-3">
+                                <label for="direccion" class="form-label">Dirección</label>
+                                <h:inputText id="direccion"
+                                             value="#{registro.con.direccionUsuario}"
+                                             required="true"
+                                             styleClass="form-control">
+                                    <f:passThroughAttribute name="placeholder" value="Ingrese su dirección" />
+                                </h:inputText>
+                                <h:message for="direccion" styleClass="text-danger small" />
+                            </div>
+
+                            <h:selectOneMenu id="rol"
+                                             value="#{registro.con.rolIdRol}"
+                                             converter="#{rolConverter}"
+                                             required="true"
+                                             styleClass="form-select">
+                                <f:selectItem itemLabel="Seleccione..." itemValue="#{null}" />
+                                <f:selectItems value="#{registro.listaRoles}"
+                                               var="r"
+                                               itemValue="#{r}"
+                                               itemLabel="#{r.nombreRol}" />
+                            </h:selectOneMenu>
+
+
+                            <div class="mb-3">
+                                <label for="password" class="form-label">Contraseña</label>
+                                <h:inputSecret id="password" value="#{registro.con.password}" required="true"
+                                               styleClass="form-control">
+                                    <f:passThroughAttribute name="placeholder" value="Ingrese su contraseña" />
+                                </h:inputSecret>
+                            </div>
+
+                            <div class="col-12 text-center">
+                                <h:messages id="mensajes" globalOnly="true" style="display:none;" />
+                                <h:commandButton id="registrarBtn"
+                                                 value="Registrar Usuario"
+                                                 action="#{registro.crearP2()}"
+                                                 onclick="return validarFormulario();"
+                                                 immediate="false"
+                                                 styleClass="btn btn-primary px-4 me-2" />
+                            </div>
+                            <h:messages globalOnly="true" layout="list" styleClass="alert alert-info mt-3" />
+
+                        </h:form>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Footer -->
+        <footer class="container text-center mt-4 py-4 bg-light rounded">
+            <p>Todos los derechos reservados. Ninguna reproducción externa copia o transmisión digital de esta publicación puede ser hecha sin permiso escrito.</p>
+            <nav aria-label="breadcrumb">
+                <ul class="breadcrumb justify-content-center mb-0">
+                    <li class="breadcrumb-item"><a href="#">&#169; 2024 SITEA. Todos los derechos reservados.</a></li>
+                    <li class="breadcrumb-item"><a href="#">Política de Privacidad</a></li>
+                    <li class="breadcrumb-item"><a href="#">Términos de Servicio</a></li>
+                    <li class="breadcrumb-item"><a href="#">Configuración de Cookies</a></li>
+                </ul>
+            </nav>
+        </footer>
+        <h:outputScript target="body">
+            function validarFormulario() {
+            const nombres = document.getElementById("registroForm:nombres").value.trim();
+            const apellidos = document.getElementById("registroForm:apellidos").value.trim();
+            const tipoDocumento = document.getElementById("registroForm:tipoDocumento").value;
+            const numeroDocumento = document.getElementById("registroForm:numeroDocumento").value.trim();
+            const direccion = document.getElementById("registroForm:direccion").value.trim();
+            const rol = document.getElementById("registroForm:rol").value;
+            const password = document.getElementById("registroForm:password").value.trim();
+
+            if (!nombres || !apellidos || !tipoDocumento || !numeroDocumento || !direccion || !rol || !password) {
+            alert("⚠️ Por favor, completa todos los campos obligatorios.");
+            return false; // Detiene el envío del formulario
+            }
+
+            return true; // Todo bien, continúa con el submit
+            }
+        </h:outputScript>
+
+    </h:body>
+</html>

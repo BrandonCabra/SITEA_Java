@@ -1,9 +1,14 @@
-<ui:composition template="./../TemplateSitio.xhtml"
-                xmlns="http://www.w3.org/1999/xhtml"
-                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-                xmlns:h="http://xmlns.jcp.org/jsf/html">
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html">
 
-    <ui:define name="head">
+    <body>
+
+        <ui:composition template="./../TemplateSitio.xhtml">
+
+            <ui:define name="head">
         <title>Caracterización Pedagógica y Social</title>
         <h:outputStylesheet library="css" name="custom.css" />
         <h:outputStylesheet library="css" name="iniciodesesion.css" />
@@ -20,27 +25,35 @@
             </h1>
 
             <!-- 🔹 Tarjeta A -->
-            <div class="card mb-5 shadow-sm border-50" style="background-color: #b5e2ff;">
+            <div class="card mb-5 shadow-sm border-50" style="background-color: #304878;">
                 <div class="card-body row align-items-center">
                     <div class="col-md-8">
                         <h2 class="text-primary fs-4 fw-semibold mb-4">Caracterización Estudiante</h2>
                         <div class="d-grid gap-3">
+                            <h:panelGroup rendered="#{login.rolActual eq 'ADMINISTRADOR' or login.rolActual eq 'PSICOORIENTADOR'}">
+                            
                             <h:link outcome="/views/caracterizacion/registroestudiante.xhtml?faces-redirect=true"
                                     styleClass="btn btn-outline-primary text-start">
                                 <i class="fa-solid fa-user-plus me-2"></i> Pre-Registro Estudiante
                             </h:link>
+                                </h:panelGroup>
+                            
+                            <h:panelGroup rendered="#{login.rolActual eq 'ADMINISTRADOR' or login.rolActual eq 'PSICOORIENTADOR'}">
                             <h:link outcome="/views/caracterizacion/crearcaracterizacion.xhtml?faces-redirect=true"
                                     styleClass="btn btn-outline-primary text-start">
                                 <i class="fa-solid fa-file-alt me-2"></i> Iniciar Caracterización
                             </h:link>
+                                </h:panelGroup>
+                            
+                            
                             <h:link outcome="/views/caracterizacion/gestionarcaracterizacion.xhtml?faces-redirect=true"
                                     styleClass="btn btn-outline-primary text-start">
                                 <i class="fa-solid fa-trash me-2"></i> Gestionar Caracterización
                             </h:link>
-                            <h:link outcome="/views/caracterizacion/crearestudiantetea.xhtml?faces-redirect=true"
+                            <h:outputLink value="https://www.colombiaaprende.edu.co/"                                 
                                     styleClass="btn btn-outline-primary text-start">
                                 <i class="fa-solid fa-users me-2"></i> Valoración Pedagógica
-                            </h:link>
+                            </h:outputLink>
                         </div>
                     </div>
                     <div class="col-md-4 d-none d-md-block text-center">
@@ -54,7 +67,7 @@
             </div>
 
             <!-- 🔹 Tarjeta B -->
-            <div class="card mb-6 shadow-sm border-10" style="background-color: #8fd3fe;">
+            <div class="card mb-6 shadow-sm border-10" style="background-color: #304878;">
                 <div class="card-body row align-items-center">
                     <div class="col-md-8">
                         <h2 class="text-primary fs-4 fw-semibold mb-4">Reportes Caracterizaciones</h2>
@@ -67,10 +80,13 @@
                                     styleClass="btn btn-outline-primary text-start">
                                 <i class="fa-solid fa-chart-pie me-2"></i> Acta de Compromiso
                             </h:link>
+                            
+                            <h:panelGroup rendered="#{login.rolActual eq 'ADMINISTRADOR' or login.rolActual eq 'PSICOORIENTADOR'or login.rolActual eq 'PROFESOR'}">
                             <h:link outcome="/views/caracterizacion/reporte.xhtml?faces-redirect=true"
                                     styleClass="btn btn-outline-primary text-start">
                                 <i class="fa-solid fa-chart-pie me-2"></i> Reporte Caracterización Institución
                             </h:link>
+                            </h:panelGroup>
                         </div>
                     </div>
                     <div class="col-md-4 d-none d-md-block text-center">
@@ -94,4 +110,8 @@
         </div>
     </ui:define>
 
-</ui:composition>
+
+        </ui:composition>
+
+    </body>
+</html>

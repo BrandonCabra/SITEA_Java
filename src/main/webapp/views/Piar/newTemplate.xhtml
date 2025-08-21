@@ -6,7 +6,6 @@
 
     <h:head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-        <!-- Estilos locales -->
         <h:outputStylesheet name="/css/default.css"/>
         <h:outputStylesheet name="/css/cssLayout.css" />
 
@@ -109,23 +108,25 @@
 
         <!-- Menu lateral -->
         <div>
-            <div id="left">
+            <div id="left" style="background-color: #8fd3fe;">
                 <h:form>
                     <br/>
-                    <div style="text-align: center;">
+                    <div style="text-align: center;" >
                         <h:graphicImage library="images" name="IMAGENES/Sebas.png" styleClass="img-fluid mb-2" style="text-align: center" class="imagen-redonda"/>
                         <br/>
                     </div>
+
                     <br/>
 
                     <div style="text-align: center; color: white; font-weight: bold;">
                         <i class="fa fa-user" style="margin-right: 6px;"></i> #{login.nombreUsuario}
                         <br/>
-                         #{login.rolActual}
+                        #{login.rolActual}
 
                     </div>
 
                     <br/>
+                    
                     <ul class="list-group list-group-flush">
                         <li class="list-group-item bg-primary">
                             <ui:repeat value="#{login.listaPermisos}" var="permisos">
@@ -231,40 +232,38 @@
                                 </h:panelGroup>
                             </ui:repeat>
                         </li>
-                        <li class="list-group-item bg-primary">
-                            <ui:repeat value="#{login.listaPermisos}" var="permisos">
-                                <h:panelGroup rendered="#{permisos.descripcion eq 'institucional'}">
-                                    <h:link outcome="/views/#{permisos.descripcion}/index.xhtml">
-                                        <i class="fa-solid fa-school" style="color: white; margin-right: 8px;"> </i>
-                                        #{login.aplicarTildes(login.formatearDescripcion(permisos.descripcion)).toUpperCase()}
+                        <ui:repeat value="#{login.listaPermisos}" var="permiso">
+                            <h:panelGroup layout="block" rendered="#{permiso.descripcion eq 'institucional'}">
+                                <li class="list-group-item bg-primary p-2">
+                                    <h:link outcome="/views/#{permiso.descripcion}/index.xhtml"
+                                            styleClass="text-white text-decoration-none">
+                                        <i class="fa-solid fa-school"></i>
+                                        #{login.aplicarTildes(login.formatearDescripcion(permiso.descripcion)).toUpperCase()}
                                     </h:link>
-                                    <br/>
-                                </h:panelGroup>
-                            </ui:repeat>
-                        </li>
-                        <li class="list-group-item bg-primary">
-                            <ui:repeat value="#{login.listaPermisos}" var="permisos">
-                                <h:panelGroup rendered="#{permisos.descripcion eq 'incidencias'}">
-                                    <h:link outcome="/views/#{permisos.descripcion}/index.xhtml">
-                                        <i class="fas fa-user-graduate" style="color: white; margin-right: 8px;"> </i>
-                                        #{login.aplicarTildes(login.formatearDescripcion(permisos.descripcion)).toUpperCase()}
+                                </li>
+                            </h:panelGroup>
+                        </ui:repeat>
+                        <ui:repeat value="#{login.listaPermisos}" var="permiso">
+                            <h:panelGroup layout="block" rendered="#{permiso.descripcion eq 'incidencias'}">
+                                <li class="list-group-item bg-primary p-2">
+                                    <h:link outcome="/views/#{permiso.descripcion}/index.xhtml"
+                                            styleClass="text-white text-decoration-none">
+                                        <i class="fas fa-exclamation-triangle"></i>
+                                        #{login.aplicarTildes(login.formatearDescripcion(permiso.descripcion)).toUpperCase()}
                                     </h:link>
-                                    <br/>
-                                </h:panelGroup>
-                            </ui:repeat>
-                        </li>
+                                </li>
+                            </h:panelGroup>
+                        </ui:repeat>
 
                         <br/>
 
                         <h:commandButton value="Cerrar Sesión" 
                                          action="#{login.cerrarSesion()}" 
-                                         styleClass="btn btn-outline-danger btn-sm" /> 
+                                         styleClass="btn btn-outline-primary btn-sm"/>
                     </ul>
                 </h:form>
                 <ui:insert name="left"></ui:insert>
             </div>
-
-
 
 
 

@@ -19,20 +19,101 @@
 
             <ui:define name="content">
                 <h:form>
-                    
-    <ui:repeat value="#{estrategiaBean.lista}" var="e">
+                    <ul>
+    <li><h:outputLink value="https://www.colombiaaprende.edu.co/" target="_blank">Portal Colombia Aprende</h:outputLink></li>
+    <li><h:outputLink value="https://sl.bing.net/jI3u9g2hpm0">Guía PIAR</h:outputLink></li>
+    <li><h:outputLink value="https://drive.google.com/drive/folders/1sKCviKKvbUuH3Af71ZuzxB2tRKjfNmx5" target="_blank">Repositorio Estrategias</h:outputLink></li>
+</ul>
+    
     <div class="card mb-3">
         <div class="card-body">
-            <h5 class="card-title">#{e.titulo}</h5>
-            <p class="card-text">#{e.descripcion}</p>
-            <p><strong>Categoría:</strong> #{e.categoria}</p>
-            <h:link outcome="/views/estrategias/ver.xhtml">
-                <f:param name="id" value="#{e.id}" />
-                Ver Estrategia
+            <h5 class="card-title">TITULO</h5>
+            <p class="card-text">DESCRIPCION</p>
+            <p><strong>Categoría:</strong> CATEGORIA</p>
+            <h:link outcome="">
+                <f:param name="id" value="ID" />
+                Compartir Estrategia
             </h:link>
         </div>
     </div>
-</ui:repeat>
+
+           <h:form>
+    <div class="container mt-4">
+        <div class="row row-cols-1 row-cols-md-3 g-4">
+
+            <!-- Tarjeta 1 -->
+            <div class="col">
+                <div class="card h-100 shadow-sm border-0">
+                    <img src="https://www.gobernaciondeboyaca.gov.co/educacion/card1.jpg"
+                         class="card-img-top" alt="Imagen estrategia 1"
+                         style="height: 180px; object-fit: cover;" />
+
+                    <div class="card-body">
+                        <h5 class="card-title text-primary">Motivación lectora</h5>
+                        <span class="badge bg-info text-dark">Lenguaje</span>
+                        <p class="card-text mt-2 text-muted">
+                            Estrategia para fomentar el gusto por la lectura en estudiantes con necesidades específicas.
+                        </p>
+                    </div>
+
+                    <div class="card-footer bg-light text-end">
+                        <small class="text-muted">Autor: Docente Ana Pérez</small><br/>
+                        <a href="https://educacion.gobboyaca.gov.co/estrategia1" target="_blank"
+                           class="btn btn-sm btn-outline-primary mt-2">Ver más</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tarjeta 2 -->
+            <div class="col">
+                <div class="card h-100 shadow-sm border-0">
+                    <img src="https://www.gobernaciondeboyaca.gov.co/educacion/card2.jpg"
+                         class="card-img-top" alt="Imagen estrategia 2"
+                         style="height: 180px; object-fit: cover;" />
+
+                    <div class="card-body">
+                        <h5 class="card-title text-primary">Matemáticas inclusivas</h5>
+                        <span class="badge bg-success text-light">Inclusión</span>
+                        <p class="card-text mt-2 text-muted">
+                            Enfoque lúdico y adaptado para niños con discapacidad cognitiva en procesos de cálculo.
+                        </p>
+                    </div>
+
+                    <div class="card-footer bg-light text-end">
+                        <small class="text-muted">Autor: Prof. Julio Martínez</small><br/>
+                        <a href="https://educacion.gobboyaca.gov.co/estrategia2" target="_blank"
+                           class="btn btn-sm btn-outline-primary mt-2">Ver más</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tarjeta 3 -->
+            <div class="col">
+                <div class="card h-100 shadow-sm border-0">
+                    <img src="https://www.gobernaciondeboyaca.gov.co/educacion/card3.jpg"
+                         class="card-img-top" alt="Imagen estrategia 3"
+                         style="height: 180px; object-fit: cover;" />
+
+                    <div class="card-body">
+                        <h5 class="card-title text-primary">Ambientes sensoriales</h5>
+                        <span class="badge bg-warning text-dark">Motricidad</span>
+                        <p class="card-text mt-2 text-muted">
+                            Actividades adaptadas para fortalecer la coordinación y percepción en primaria.
+                        </p>
+                    </div>
+
+                    <div class="card-footer bg-light text-end">
+                        <small class="text-muted">Autor: Esp. Paula Gómez</small><br/>
+                        <a href="https://educacion.gobboyaca.gov.co/estrategia3" target="_blank"
+                           class="btn btn-sm btn-outline-primary mt-2">Ver más</a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</h:form>         
+                    
     
 </h:form>
             </ui:define>

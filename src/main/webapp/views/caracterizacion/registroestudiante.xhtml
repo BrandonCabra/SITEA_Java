@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+                      "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:h="http://xmlns.jcp.org/jsf/html">
@@ -33,29 +33,16 @@
                                         <th>Acciones</th>
                                     </tr>
                                 </thead>
-                                <h:form>
-                                    <table class="table table-striped">
-                                        <thead>
-                                            <tr>
-                                                <th>ID</th>
-                                                <th>Tipo Documento</th>
-                                                <th>Número Documento</th>
-                                                <th>Nombres</th>
-                                                <th>Apellidos</th>
-                                                <th>Curso</th>
-                                                <th class="text-center">Acciones</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <ui:repeat value="#{estudianteTeaController.obtenerEstudiantes()}" var="item">
-                                                <tr>
-                                                    <td>#{item.idEstudiante}</td>
-                                                    <td>#{item.tipoDocumentoIdTipoDocumento.nombreTipoDocumento}</td>
-                                                    <td>#{item.numeroDocumentoEstudiante}</td>
-                                                    <td>#{item.primerNombreEstudiante} #{item.segundoNombreEstudiante}</td>
-                                                    <td>#{item.primerApellidoEstudiante} #{item.segundoApellidoEstudiante}</td>
-                                                    <td>#{item.cursoIdCurso.codigoCurso}</td>
-                                                    <td class="text-center">
+                                <tbody>
+                                    <ui:repeat value="#{estudianteTeaController.obtenerEstudiantes()}" var="item">
+                                        <tr>
+                                            <td>#{item.idEstudiante}</td>
+                                            <td>#{item.tipoDocumentoIdTipoDocumento.nombreTipoDocumento}</td>
+                                            <td>#{item.numeroDocumentoEstudiante}</td>
+                                            <td>#{item.primerNombreEstudiante} #{item.segundoNombreEstudiante}</td>
+                                            <td>#{item.primerApellidoEstudiante} #{item.segundoApellidoEstudiante}</td>
+                                            <td>#{item.cursoIdCurso.codigoCurso}</td>
+                                            <td class="text-center">
                                                         <h:commandButton value="Editar"
                                                                          action="#{estudianteTeaController.editarEstudianteP1(item)}"
                                                                          styleClass="btn btn-info btn-sm me-1"
@@ -66,11 +53,9 @@
                                                                          styleClass="btn btn-danger btn-sm"
                                                                          style="background-color: #ffc5c5; border-color: #ffaaaa; color: #8b0000;" />
                                                     </td>
-                                                </tr>
-                                            </ui:repeat>
-                                        </tbody>
-                                    </table>
-                                </h:form>
+                                        </tr>
+                                    </ui:repeat>
+                                </tbody>
                             </table>
                         </div>
 

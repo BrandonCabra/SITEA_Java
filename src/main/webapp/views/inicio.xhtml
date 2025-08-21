@@ -107,16 +107,16 @@
 
         <!-- Menu lateral -->
         <div>
-            <div id="left" style="background-color: #b5e2ff;">
+            <div id="left" style="background-color: #304878;">
                 <h:form>
                     <br/>
-                    <div style="text-align: center; background-color: #b5e2ff;">
+                    <div style="text-align: center;">
                         <h:graphicImage library="images" name="IMAGENES/Sebas.png" styleClass="img-fluid mb-2" style="text-align: center" class="imagen-redonda"/>
                         <br/>
                     </div>
                     <br/>
 
-                    <div style="text-align: center; color: white; font-weight: bold; background-color: #b5e2ff;">
+                    <div style="text-align: center; color: white; font-weight: bold; background-color: #304878;">
                         <i class="fa fa-user" style="margin-right: 6px;"></i> #{login.nombreUsuario}
                         <br/>
                          #{login.rolActual}
@@ -125,7 +125,7 @@
 
                     <br/>
                     <ul class="list-group list-group-flush">
-                        <li class="list-group-item" style="background-color: #b5e2ff;">
+                        <li class="list-group-item" style="background-color: #304878;">
                             <ui:repeat value="#{login.listaPermisos}" var="permisos">
                                 <h:panelGroup rendered="#{permisos.descripcion eq 'dashboard'}">
                                     <h:link outcome="/views/#{permisos.descripcion}/index.xhtml">
@@ -136,7 +136,7 @@
                                 </h:panelGroup>
                             </ui:repeat>
                         </li>
-                        <li class="list-group-item" style="background-color: #b5e2ff;">
+                        <li class="list-group-item" style="background-color: #304878;">
                             <ui:repeat value="#{login.listaPermisos}" var="permisos">
                                 <h:panelGroup rendered="#{permisos.descripcion eq 'perfil'}">
                                     <h:link outcome="/views/#{permisos.descripcion}/index.xhtml">
@@ -147,7 +147,7 @@
                                 </h:panelGroup>
                             </ui:repeat>
                         </li>   
-                        <li class="list-group-item" style="background-color: #b5e2ff;">
+                        <li class="list-group-item" style="background-color: #304878;">
 
                             <ui:repeat value="#{login.listaPermisos}" var="permisos">
                                 <h:panelGroup rendered="#{permisos.descripcion eq 'caracterizacion'}">
@@ -159,7 +159,7 @@
                                 </h:panelGroup>
                             </ui:repeat>
                         </li>
-                        <li class="list-group-item" style="background-color: #b5e2ff;">
+                        <li class="list-group-item" style="background-color: #304878;">
                             <ui:repeat value="#{login.listaPermisos}" var="permisos">
                                 <h:panelGroup rendered="#{permisos.descripcion eq 'Piar'}">
                                     <h:link outcome="/views/#{permisos.descripcion}/index.xhtml">
@@ -170,7 +170,7 @@
                                 </h:panelGroup>
                             </ui:repeat>
                         </li>
-                        <li class="list-group-item" style="background-color: #b5e2ff;">
+                        <li class="list-group-item" style="background-color: #304878;">
                             <ui:repeat value="#{login.listaPermisos}" var="permisos">
                                 <h:panelGroup rendered="#{permisos.descripcion eq 'estrategiasEducativas'}">
                                     <h:link outcome="/views/#{permisos.descripcion}/index.xhtml">
@@ -181,7 +181,7 @@
                                 </h:panelGroup>
                             </ui:repeat>
                         </li>
-                        <li class="list-group-item" style="background-color: #b5e2ff;">
+                        <li class="list-group-item" style="background-color: #304878;">
                             <ui:repeat value="#{login.listaPermisos}" var="permisos">
                                 <h:panelGroup rendered="#{permisos.descripcion eq 'reportesNovedades'}">
                                     <h:link outcome="/views/#{permisos.descripcion}/index.xhtml">
@@ -192,7 +192,7 @@
                                 </h:panelGroup>
                             </ui:repeat>
                         </li>
-                        <li class="list-group-item" style="background-color: #b5e2ff;">
+                        <li class="list-group-item" style="background-color: #304878;">
                             <ui:repeat value="#{login.listaPermisos}" var="permisos">
                                 <h:panelGroup rendered="#{permisos.descripcion eq 'protocolosRutas'}">
                                     <h:link outcome="/views/#{permisos.descripcion}/index.xhtml">
@@ -203,7 +203,7 @@
                                 </h:panelGroup>
                             </ui:repeat>
                         </li>
-                        <li class="list-group-item" style="background-color: #b5e2ff;">
+                        <li class="list-group-item" style="background-color: #304878;">
                             <ui:repeat value="#{login.listaPermisos}" var="permisos">
                                 <h:panelGroup rendered="#{permisos.descripcion eq 'gestionPsicopedagogica' or 
                                                           permisos.descripcion eq 'gestionDocente'or
@@ -217,7 +217,7 @@
                                 </h:panelGroup>
                             </ui:repeat>
                         </li>
-                        <li class="list-group-item" style="background-color: #b5e2ff;">
+                        <li class="list-group-item" style="background-color: #304878;">
                             <ui:repeat value="#{login.listaPermisos}" var="permisos">
                                 <h:panelGroup rendered="#{permisos.descripcion eq 'gestionEstudiantil'or
                                                           permisos.descripcion eq 'boletinEstudiantil'}">
@@ -229,7 +229,7 @@
                                 </h:panelGroup>
                             </ui:repeat>
                         </li>
-                        <li class="list-group-item" style="background-color: #b5e2ff;">
+                        <li class="list-group-item" style="background-color: #304878;">
                             <ui:repeat value="#{login.listaPermisos}" var="permisos">
                                 <h:panelGroup rendered="#{permisos.descripcion eq 'institucional'}">
                                     <h:link outcome="/views/#{permisos.descripcion}/index.xhtml">
@@ -240,7 +240,7 @@
                                 </h:panelGroup>
                             </ui:repeat>
                         </li>
-                        <li class="list-group-item" style="background-color: #b5e2ff;">
+                        <li class="list-group-item" style="background-color: #304878;">
                             <ui:repeat value="#{login.listaPermisos}" var="permisos">
                                 <h:panelGroup rendered="#{permisos.descripcion eq 'incidencias'}">
                                     <h:link outcome="/views/#{permisos.descripcion}/index.xhtml">
@@ -252,7 +252,7 @@
                             </ui:repeat>
                         </li>
 
-                        <br/>
+                        <br/><br/>
 
                         <h:commandButton value="Cerrar Sesión" 
                                          action="#{login.cerrarSesion()}" 

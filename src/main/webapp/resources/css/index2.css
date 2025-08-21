@@ -1,0 +1,341 @@
+/*
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css to edit this template
+/* Estilo general */
+body {
+  font-family: Arial, sans-serif;
+  line-height: 1.6;
+  margin: 0;
+  padding: 0;
+  color: #333;
+  background-color: #f8f9fa; /* Fondo claro sin imagen */
+}
+
+/* Estilo del header */
+.header-logo {
+  max-width: 70px; 
+  height: auto;
+  margin-right: 10px;
+}
+
+.navbar {
+  background-color: #ffffff; /* Color de fondo blanco para la barra de navegación */
+}
+
+.navbar-nav {
+  gap: 20px; /* Espacio entre los elementos de la navegación */
+}
+
+.nav-link {
+  color: #0047A2; /* Azul oscuro para los enlaces de navegación */
+}
+
+.nav-link:hover {
+  color: #1e68c9; /* Azul más claro en hover */
+}
+
+.boton {
+  background-color: #0047A2;
+  color: white;
+  padding: 8px 16px;
+  border-radius: 5px;
+  text-decoration: none; /* Quitar el subrayado */
+  display: inline-block; /* Hacer que el enlace se comporte como un botón */
+  margin-top: 10px; /* Añadir margen superior */
+}
+
+.boton:hover {
+  background-color: #1fa4f6; /* Cambiar color de fondo al pasar el cursor */
+  color: #ffffff; /* Cambiar color de texto al pasar el cursor */
+}
+
+.boton1 {
+  background-color: #1e68c9;
+  color: white;
+  padding: 8px 16px;
+  border-radius: 5px;
+  text-decoration: none; /* Quitar el subrayado */
+  display: inline-block; /* Hacer que el enlace se comporte como un botón */
+  margin-top: 10px; /* Añadir margen superior */
+}
+
+.boton1:hover {
+  background-color: #1fa4f6; /* Cambiar color de fondo al pasar el cursor */
+  color: #ffffff; /* Cambiar color de texto al pasar el cursor */
+}
+
+.boton-ingresar {
+  background-color: #28a745; /* Color verde para el botón de ingresar */
+  color: white;
+  padding: 8px 16px;
+  border-radius: 5px;
+  text-decoration: none;
+  display: inline-block;
+  margin-top: 10px;
+}
+
+.boton-ingresar:hover {
+  background-color: #030bf5; /* Cambiar color de fondo al pasar el cursor */
+  color: #ffffff;
+}
+
+.button-container {
+  display: flex; /* Utilizar flexbox para alinear los botones en línea */
+  gap: 10px; /* Espacio entre los botones */
+}
+
+/* Estilo del main */
+main {
+  padding: 20px;
+  border-radius: 10px;
+  margin: 20px auto;
+  max-width: 1400px; /* Limitar el ancho máximo para mejor presentación */
+  flex-grow: 1; /* Asegurar que el main crezca para llenar el espacio disponible */
+}
+
+.text-center {
+  text-align: center; /* Centrar el texto */
+}
+
+.col-md-6.text-center {
+  margin-top: 60px;
+}
+
+.col-md-6.text-center p {
+  font-size: 1.2rem;
+  margin-top: 50px;
+}
+
+.texto-centrado {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.col-md-6.text-center h1 {
+  color: #006eff;
+}
+
+/* Ajuste de las tarjetas para que tengan el mismo tamaño y más espacio entre ellas */
+.row.mt-4 {
+  display: flex;
+  flex-wrap: wrap; /* Asegurarse de que los cuadros se ajusten en una fila */
+  justify-content: space-between; /* Distribuir los cuadros uniformemente */
+  margin-top: 80px; /* Aumentar el margen superior para bajar los cuadros */
+}
+
+.col-md-2 {
+  flex: 0 0 15%; 
+  max-width: 15%;
+  margin-top: 40px;
+}
+
+.card {
+  background-color: #ffffff; 
+  border: none;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; 
+  align-items: center;
+  padding: 0; 
+  text-align: center; 
+  height: 100%; 
+}
+
+.card-img-top {
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  width: 100%;
+  height: 150px; 
+  object-fit: cover; 
+  object-position: center; 
+}
+
+.card-body {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; 
+  align-items: center;
+  padding: 10px;
+  text-align: center;
+  flex-grow: 1; 
+}
+
+.card-body h5 {
+  font-size: 1.1rem; 
+  margin-bottom: 10px;
+  min-height: 50px; /* Asegurar que todos los títulos tengan el mismo tamaño */
+  color: #0047A2; /* Cambiar color de los títulos a azul */
+}
+
+.card-body p {
+  font-size: 1rem; 
+  flex-grow: 1; 
+  margin-bottom: 10px; 
+  min-height: 60px; /* Asegurar que todos los párrafos tengan el mismo tamaño */
+}
+
+.card button {
+  background-color: #0047A2;
+  color: white;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 5px;
+}
+
+.card button:hover {
+  background-color: #1fa4f6; 
+  color: #ffffff; 
+}
+
+/* Estilo del footer */
+footer {
+  background-color: #f8f9fa; 
+  border-radius: 10px;
+  margin: 20px auto;
+  max-width: 1200px; 
+  padding: 20px; 
+  flex-shrink: 0;
+}
+
+footer p {
+  margin: 0;
+  color: #000000;
+}
+
+.breadcrumb {
+  display: flex;
+  justify-content: center;
+  list-style: none;
+  padding: 0;
+}
+
+.breadcrumb-item {
+  margin: 0 10px;
+}
+
+.breadcrumb-item a {
+  color: #007bff;
+  text-decoration: none;
+}
+
+.breadcrumb-item a:hover {
+  text-decoration: underline;
+}
+
+form {
+  margin-top: 60px;
+}
+
+.link-primary {
+  color: #0047A2;
+}
+
+.link-primary:hover {
+  color: #1e68c9;
+}
+
+/* Estilo del formulario de contacto */
+form {
+  background: #006eff; /* Fondo azul #006eff para el formulario */
+  padding: 10px; /* Reducir el padding para hacer el formulario más pequeño */
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  color: white; /* Cambiar color del texto a blanco */
+  width: 50%; /* Reducir el ancho del formulario a la mitad */
+  margin: 0 auto; /* Centrar el formulario horizontalmente */
+}
+
+form .form-label {
+  font-weight: bold;
+}
+
+  form .form-control {
+    background: #f8f9fa; /* Fondo claro para los campos del formulario */
+    color: #333; /* Color del texto */
+    height: 30px; /* Hacer los campos más pequeños */
+    font-size: 0.9rem; /* Ajustar el tamaño de la fuente */
+    padding: 5px; /* Reducir el padding */
+  }
+  
+  form textarea.form-control {
+    height: 80px; /* Ajustar la altura del campo de mensaje para hacerlo más pequeño */
+    font-size: 0.9rem; /* Ajustar el tamaño de la fuente */
+    padding: 5px; /* Reducir el padding */
+  }
+  
+  form .btn-primary {
+    background-color: #1e68c9; /* Color azul claro para el botón */
+    border: none;
+  }
+  
+  form .btn-primary:hover {
+    background-color: #1fa4f6;
+  }
+  
+  /* Estilo del contenido de contacto */
+  .contact-info {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center; /* Centrar horizontalmente el contenido */
+    height: 100%;
+    text-align: center; /* Centrar el texto */
+  }
+  
+  .contact-info h1,
+  .contact-info p,
+  .contact-info strong {
+    color: #006eff; /* Cambiar color del texto a azul #006eff */
+  }
+  
+  .contacto {
+    margin-top: 90px;
+    margin-left: 180px;
+  }
+  
+  .azul {
+    color: #006eff;
+  }
+
+  form {
+    margin-top: 80px;
+    padding: 40px;
+}
+
+
+.menu {
+  text-decoration: none; /* Elimina la linea de los links */
+  color: #0047A2; /*color de los links*/
+}
+
+.color:hover {
+  color: #1ea3f6;
+}
+
+/* link de ingresar dentro del menu de la barra de navegación */
+.cambio {
+  background-color: #0047A2;
+  color: white;
+  padding: 8px;
+  border-radius: 5px;
+
+}
+
+.cambio:hover {
+  background-color: #1ea3f6;
+}
+
+ul {
+  list-style-type: none;
+  padding: 0; /* Elimina los márgenes internos del contenedor */
+  margin: 0; /* Elimina los márgenes externos del contenedor */
+}
+
+body {
+  font-family: Arial, sans-serif;
+  line-height: 1.6;
+}

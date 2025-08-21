@@ -7,7 +7,7 @@
         <property name="databaseName" value="sitea4"/>
         <property name="User" value="root"/>
         <property name="Password" value=""/>
-        <property name="URL" value="jdbc:mysql://localhost:3306/sitea4?allowPublicKeyRetrieval=true&amp;useSSL=false&amp;zeroDateTimeBehavior=CONVERT_TO_NULL"/>
+        <property name="URL" value="jdbc:mysql://localhost:3306/sitea4?zeroDateTimeBehavior=CONVERT_TO_NULL&amp;useSSL=false"/>
         <property name="driverClass" value="com.mysql.cj.jdbc.Driver"/>
     </jdbc-connection-pool>
     <jdbc-resource enabled="true" jndi-name="java:app/jndi_sitea4" object-type="user" pool-name="mysql_sitea4_rootPool"/>

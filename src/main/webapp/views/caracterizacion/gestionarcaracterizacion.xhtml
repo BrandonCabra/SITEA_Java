@@ -16,6 +16,8 @@
                         <h:messages id="mensajes" globalOnly="true"
                                     infoStyle="color: green;"
                                     errorStyle="color: red;" />
+                        
+                    <div class="table-responsive">
 
                         <table id="t-all" class="jsf-data-table display nowrap table table-bordered table-hover" width="100%">
                             <thead class="bg-primary text-white">
@@ -51,7 +53,7 @@
                                                                  rendered="#{login.rolActual eq 'ADMINISTRADOR' or login.rolActual eq 'PSICOORIENTADOR'}"
                                                                  styleClass="btn btn-outline-danger btn-sm" />
 
-                                                <h:commandButton value="Recomendar actualizaciones"
+                                                <h:commandButton value="Recomendar/Solicitar"
                                                                  action="#{caracterizacioncontroller.eliminarCaracterizacion(item)}"
                                                                  onclick="return confirm('¿Desea eliminar el registro?')"
                                                                  rendered="#{login.rolActual eq 'PROFESOR' or login.rolActual eq 'PADRE DE FAMILIA'}"
@@ -62,6 +64,7 @@
                                 </ui:repeat>
                             </tbody>
                         </table>
+                    </div>
                     </div>
                 </div>
 

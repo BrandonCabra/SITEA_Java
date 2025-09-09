@@ -18,7 +18,7 @@
 
             <ui:define name="content">
             
-                
+                <h:outputStylesheet name="/css/preregistro.css" /> 
                 <style>
         * {
             margin: 0;
@@ -246,6 +246,24 @@
             border: 1px solid #fecaca;
         }
     </style>
+    
+      
+            <div class="back-btn">
+                <h:form>
+                        
+                        <h:commandButton value="← Volver al Dashboard"
+                                             action= "index.xhtml?faces-redirect=true"
+                                            type="submit" class="btn btn-outline"
+                    /> 
+                        </h:form>
+                
+                   
+            </div>
+           
+        
+               
+                
+                
 
     <div class="container">
         <div id="alertContainer"></div>
@@ -436,8 +454,7 @@
     </div>
 
     
-    
-                
+   
                 
             </ui:define>
 

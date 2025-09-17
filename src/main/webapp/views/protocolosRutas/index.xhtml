@@ -19,17 +19,21 @@
 
             <ui:define name="content">
                 
-                <h:form>
-    <h:outputLabel for="email" value="Email:" />
-    <h:inputText id="email" value="#{contactoBean.email}" required="true" />
-    
-    <h:outputLabel for="mensaje" value="Mensaje:" />
-    <h:inputTextarea id="mensaje" value="#{contactoBean.mensaje}" />
-    
-    <h:commandButton value="Enviar" action="#{contactoBean.enviarContacto}" />
-    
-    <h:messages />
-</h:form>
+              <h1>Prueba SendGrid Email</h1>
+    <h:form>
+        <h:panelGrid columns="2">
+            <h:outputLabel value="Destinatario:" />
+            <h:inputText value="#{emailTestBean.destinatario}" />
+            
+            <h:outputLabel value="Asunto:" />
+            <h:inputText value="#{emailTestBean.asunto}" />
+            
+            <h:outputLabel value="Mensaje:" />
+            <h:inputTextarea value="#{emailTestBean.mensaje}" rows="4" cols="50" />
+            
+            <h:commandButton value="Enviar Email" action="#{emailTestBean.enviarEmailPrueba}" />
+        </h:panelGrid>
+    </h:form> 
                
             </ui:define>
 

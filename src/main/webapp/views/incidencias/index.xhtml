@@ -19,22 +19,85 @@
 
             <ui:define name="content">
                 
-                <h1>Lista de Tareas</h1>
-     <h:dataTable value="#{webServiceBean2.tareaList}" var="tarea">
-        <h:column>
-            <f:facet name="header">ID</f:facet>
-            #{tarea.id}
-        </h:column>
-        <h:column>
-            <f:facet name="header">Título</f:facet>
-            #{tarea.title}
-        </h:column>
-        <h:column>
-            <f:facet name="header">Completada</f:facet>
-            #{tarea.completed ? 'Sí' : 'No'}
-        </h:column>
-    </h:dataTable>
-                
+               <title>Consumo Web Services - SITEA</title>
+    <style>
+        table { border-collapse: collapse; width: 100%; margin: 10px 0; }
+        th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+        th { background-color: #f2f2f2; }
+        .status { margin: 10px 0; padding: 10px; background-color: #e7f3ff; }
+        .button { padding: 10px 20px; margin: 5px; }
+    </style>
+    
+    
+    <h1>Consumo de Web Services - SITEA</h1>
+    
+    <!-- Sección de Trastornos desde datos.gov.co -->
+    <h2>Trastornos Específicos (datos.gov.co)</h2>
+    <h:form>
+        <div class="status">
+            <strong>Estado:</strong> #{webServiceMenBean.mensajeEstado}<br/>
+            <strong>Registros:</strong> #{webServiceMenBean.cantidadRegistros}
+        </div>
+        
+        <h:commandButton value="Refrescar Datos" 
+                         action="#{webServiceMenBean.refrescar}" 
+                         styleClass="button" />
+                         
+        <h:dataTable value="#{webServiceMenBean.trastornos}" var="t" 
+             rendered="#{not empty webServiceMenBean.trastornos}"
+             border="1" cellpadding="5">
+    <h:column>
+        <f:facet name="header">Institución/Tipo</f:facet>
+        #{t.institucionTipo}
+    </h:column>
+    <h:column>
+        <f:facet name="header">Trast. Específicos</f:facet>
+        #{t.trastEspecificosDe}
+    </h:column>
+    <h:column>
+        <f:facet name="header">Trast. Específicos (1)</f:facet>
+        #{t.trastEspecificosDe1}
+    </h:column>
+    <h:column>
+        <f:facet name="header">Total</f:facet>
+        #{t.total}
+    </h:column>
+    <h:column>
+        <f:facet name="header">Déficit Atención</f:facet>
+        #{t.trastDeficitAtencion}
+    </h:column>
+    <h:column>
+        <f:facet name="header">Total General</f:facet>
+        #{t.totalGeneral}
+    </h:column>
+</h:dataTable>
+
+        
+        <h:outputText value="No hay datos disponibles" 
+                      rendered="#{empty webServiceMenBean.trastornos and webServiceMenBean.cantidadRegistros == 0}"
+                      style="font-style: italic; color: #666;"/>
+    </h:form>
+    
+    <hr/>
+    
+    <!-- Sección existente de WebServiceBean (si la tienes) -->
+    <h2>Tareas de Ejemplo (JSONPlaceholder)</h2>
+    <h:form rendered="#{not empty webServiceBean2.tareaList}">
+        <h:dataTable value="#{webServiceBean2.tareaList}" var="tarea" border="1" cellpadding="5">
+            <h:column>
+                <f:facet name="header">ID</f:facet>
+                #{tarea.id}
+            </h:column>
+            <h:column>
+                <f:facet name="header">Título</f:facet>
+                #{tarea.title}
+            </h:column>
+            <h:column>
+                <f:facet name="header">Completada</f:facet>
+                #{tarea.completed ? 'Sí' : 'No'}
+            </h:column>
+        </h:dataTable>
+    </h:form>
                 
 
             </ui:define>

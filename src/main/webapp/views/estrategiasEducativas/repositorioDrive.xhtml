@@ -1,0 +1,47 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <body>
+
+        <ui:composition template="./../TemplateSitio.xhtml">
+
+            <ui:define name="top">
+                
+            </ui:define>
+
+            <ui:define name="left">
+                
+            </ui:define>
+
+            <ui:define name="content">
+                
+                <h1>Archivos de la carpeta pública</h1>
+
+  <h:panelGroup rendered="#{empty listaDriveApiKeyBean.archivos}">
+    <p>No se encontraron archivos. Verifica que la carpeta sea pública y que el ID/API key sean correctos.</p>
+  </h:panelGroup>
+
+  <h:panelGroup rendered="#{not empty listaDriveApiKeyBean.archivos}">
+    <ul>
+      <ui:repeat value="#{listaDriveApiKeyBean.archivos}" var="f">
+        <li>
+          <h:outputText value="#{f.name} (#{f.mimeType})"/>
+          <h:panelGroup rendered="#{not empty f.webViewLink}">
+            — <a target="_blank" href="#{f.webViewLink}">Abrir</a>
+          </h:panelGroup>
+        </li>
+      </ui:repeat>
+    </ul>
+  </h:panelGroup>
+
+   
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

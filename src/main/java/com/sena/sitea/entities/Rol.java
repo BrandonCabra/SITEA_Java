@@ -135,4 +135,5 @@ public class Rol implements Serializable {
     public String toString() {
         return "com.sena.sitea.entities.Rol[ idRol=" + idRol + " ]";
     }
+    
 }

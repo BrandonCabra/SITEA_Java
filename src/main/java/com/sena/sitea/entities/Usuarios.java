@@ -50,6 +50,10 @@ import javax.xml.bind.annotation.XmlTransient;
 
 public class Usuarios implements Serializable {
 
+    @Size(max = 555)
+    @Column(name = "FOTO_PERFIL")
+    private String fotoPerfil;
+
     @Size(max = 11)
     @Column(name = "ESTATUS")
     private String estatus;
@@ -280,6 +284,16 @@ public class Usuarios implements Serializable {
 
     public void setEstatus(String estatus) {
         this.estatus = estatus;
+    }
+
+   
+
+    public String getFotoPerfil() {
+        return fotoPerfil;
+    }
+
+    public void setFotoPerfil(String fotoPerfil) {
+        this.fotoPerfil = fotoPerfil;
     }
 
 }

@@ -16,6 +16,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -30,7 +31,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author bjcab
+ * @author brandon
  */
 @Entity
 @Table(name = "estudiante")
@@ -48,10 +49,26 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Estudiante.findByDireccionEstudiante", query = "SELECT e FROM Estudiante e WHERE e.direccionEstudiante = :direccionEstudiante"),
     @NamedQuery(name = "Estudiante.findByCorreoInstitucionalEstudiante", query = "SELECT e FROM Estudiante e WHERE e.correoInstitucionalEstudiante = :correoInstitucionalEstudiante"),
     @NamedQuery(name = "Estudiante.findByFotografiaEstudiante", query = "SELECT e FROM Estudiante e WHERE e.fotografiaEstudiante = :fotografiaEstudiante"),
-    @NamedQuery(name = "Estudiante.findByNumeroDocumentoPadre", query = "SELECT e FROM Estudiante e WHERE e.numeroDocumentoPadre = :numeroDocumentoPadre")})
-public class Estudiante implements Serializable {
+    @NamedQuery(name = "Estudiante.findByAlerta", query = "SELECT e FROM Estudiante e WHERE e.alerta = :alerta"),
+    @NamedQuery(name = "Estudiante.findByExpedienteId", query = "SELECT e FROM Estudiante e WHERE e.expedienteId = :expedienteId"),
+    @NamedQuery(name = "Estudiante.findByDiagnosticoCertificado", query = "SELECT e FROM Estudiante e WHERE e.diagnosticoCertificado = :diagnosticoCertificado"),
+    @NamedQuery(name = "Estudiante.findByTipoTea", query = "SELECT e FROM Estudiante e WHERE e.tipoTea = :tipoTea"),
+    @NamedQuery(name = "Estudiante.findByFechaDiagnostico", query = "SELECT e FROM Estudiante e WHERE e.fechaDiagnostico = :fechaDiagnostico"),
+    @NamedQuery(name = "Estudiante.findByProfesionalDiagnostico", query = "SELECT e FROM Estudiante e WHERE e.profesionalDiagnostico = :profesionalDiagnostico"),
+    @NamedQuery(name = "Estudiante.findByAcudientePrincipal", query = "SELECT e FROM Estudiante e WHERE e.acudientePrincipal = :acudientePrincipal"),
+    @NamedQuery(name = "Estudiante.findByRelacionAcudiente", query = "SELECT e FROM Estudiante e WHERE e.relacionAcudiente = :relacionAcudiente"),
+    @NamedQuery(name = "Estudiante.findByTelefonoAlternativo", query = "SELECT e FROM Estudiante e WHERE e.telefonoAlternativo = :telefonoAlternativo"),
+    @NamedQuery(name = "Estudiante.findByCorreoContacto", query = "SELECT e FROM Estudiante e WHERE e.correoContacto = :correoContacto"),
+    @NamedQuery(name = "Estudiante.findByInstitucionProcedencia", query = "SELECT e FROM Estudiante e WHERE e.institucionProcedencia = :institucionProcedencia"),
+    @NamedQuery(name = "Estudiante.findByEstadoRegistro", query = "SELECT e FROM Estudiante e WHERE e.estadoRegistro = :estadoRegistro"),
+    @NamedQuery(name = "Estudiante.findByFechaRegistro", query = "SELECT e FROM Estudiante e WHERE e.fechaRegistro = :fechaRegistro"),
+    @NamedQuery(name = "Estudiante.findByCreatedAt", query = "SELECT e FROM Estudiante e WHERE e.createdAt = :createdAt"),
+    @NamedQuery(name = "Estudiante.findByUpdatedAt", query = "SELECT e FROM Estudiante e WHERE e.updatedAt = :updatedAt"),
+    @NamedQuery(name = "Estudiante.findByCreatedBy", query = "SELECT e FROM Estudiante e WHERE e.createdBy = :createdBy"),
+    @NamedQuery(name = "Estudiante.findByDocumento", query = "SELECT e FROM Estudiante e WHERE e.tipoDocumentoIdTipoDocumento.idTipoDocumento = :idTipoDocumento AND e.numeroDocumentoEstudiante = :numeroDocumento"),
 
-    
+    @NamedQuery(name = "Estudiante.findByUpdatedBy", query = "SELECT e FROM Estudiante e WHERE e.updatedBy = :updatedBy")})
+public class Estudiante implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -101,21 +118,84 @@ public class Estudiante implements Serializable {
     @Size(max = 300)
     @Column(name = "FOTOGRAFIA_ESTUDIANTE")
     private String fotografiaEstudiante;
-    @Size(max = 45)
-    @Column(name = "numero_documento_padre")
-    private String numeroDocumentoPadre;
+    @Size(max = 1000)
+    @Column(name = "alerta")
+    private String alerta;
+    @Size(max = 30)
+    @Column(name = "expediente_id")
+    private String expedienteId;
+    @Column(name = "diagnostico_certificado")
+    private Boolean diagnosticoCertificado;
+    @Size(max = 30)
+    @Column(name = "tipo_tea")
+    private String tipoTea;
+    @Column(name = "fecha_diagnostico")
+    @Temporal(TemporalType.DATE)
+    private Date fechaDiagnostico;
+    @Size(max = 150)
+    @Column(name = "profesional_diagnostico")
+    private String profesionalDiagnostico;
+    @Lob
+    @Size(max = 65535)
+    @Column(name = "observaciones_diagnostico")
+    private String observacionesDiagnostico;
+    @Lob
+    @Size(max = 65535)
+    @Column(name = "contexto_observacion")
+    private String contextoObservacion;
+    @Size(max = 120)
+    @Column(name = "acudiente_principal")
+    private String acudientePrincipal;
+    @Size(max = 20)
+    @Column(name = "relacion_acudiente")
+    private String relacionAcudiente;
+    @Size(max = 15)
+    @Column(name = "telefono_alternativo")
+    private String telefonoAlternativo;
+    @Size(max = 120)
+    @Column(name = "correo_contacto")
+    private String correoContacto;
+    @Size(max = 150)
+    @Column(name = "institucion_procedencia")
+    private String institucionProcedencia;
+    @Size(max = 20)
+    @Column(name = "estado_registro")
+    private String estadoRegistro;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "fecha_registro")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date fechaRegistro;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "created_at")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date createdAt;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "updated_at")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date updatedAt;
+    @Column(name = "created_by")
+    private Integer createdBy;
+    @Column(name = "updated_by")
+    private Integer updatedBy;
     @JoinColumn(name = "CURSO_ID_CURSO", referencedColumnName = "ID_CURSO")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Curso cursoIdCurso;
     @JoinColumn(name = "TIPO_DOCUMENTO_ID_TIPO_DOCUMENTO", referencedColumnName = "ID_TIPO_DOCUMENTO")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private TipoDocumento tipoDocumentoIdTipoDocumento;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "estudianteId", fetch = FetchType.LAZY)
+    private List<EstudianteSenalAlerta> estudianteSenalAlertaList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "estudianteIdEstudiante", fetch = FetchType.LAZY)
     private List<EstudianteHasTrastorno> estudianteHasTrastornoList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "estudianteIdEstudiante", fetch = FetchType.LAZY)
     private List<Piar> piarList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "estudianteIdEstudiante", fetch = FetchType.LAZY)
     private List<BoletinAcademico> boletinAcademicoList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "estudianteId", fetch = FetchType.LAZY)
+    private List<EstudianteContacto> estudianteContactoList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "estudianteIdEstudiante", fetch = FetchType.LAZY)
     private List<Caracterizacion> caracterizacionList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "estudianteIdEstudiante", fetch = FetchType.LAZY)
@@ -128,7 +208,7 @@ public class Estudiante implements Serializable {
         this.idEstudiante = idEstudiante;
     }
 
-    public Estudiante(Integer idEstudiante, String numeroDocumentoEstudiante, String primerNombreEstudiante, String primerApellidoEstudiante, Date fechaNacimiento, String direccionEstudiante, String correoInstitucionalEstudiante) {
+    public Estudiante(Integer idEstudiante, String numeroDocumentoEstudiante, String primerNombreEstudiante, String primerApellidoEstudiante, Date fechaNacimiento, String direccionEstudiante, String correoInstitucionalEstudiante, Date fechaRegistro, Date createdAt, Date updatedAt) {
         this.idEstudiante = idEstudiante;
         this.numeroDocumentoEstudiante = numeroDocumentoEstudiante;
         this.primerNombreEstudiante = primerNombreEstudiante;
@@ -136,6 +216,9 @@ public class Estudiante implements Serializable {
         this.fechaNacimiento = fechaNacimiento;
         this.direccionEstudiante = direccionEstudiante;
         this.correoInstitucionalEstudiante = correoInstitucionalEstudiante;
+        this.fechaRegistro = fechaRegistro;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
     }
 
     public Integer getIdEstudiante() {
@@ -226,12 +309,156 @@ public class Estudiante implements Serializable {
         this.fotografiaEstudiante = fotografiaEstudiante;
     }
 
-    public String getNumeroDocumentoPadre() {
-        return numeroDocumentoPadre;
+    public String getAlerta() {
+        return alerta;
     }
 
-    public void setNumeroDocumentoPadre(String numeroDocumentoPadre) {
-        this.numeroDocumentoPadre = numeroDocumentoPadre;
+    public void setAlerta(String alerta) {
+        this.alerta = alerta;
+    }
+
+    public String getExpedienteId() {
+        return expedienteId;
+    }
+
+    public void setExpedienteId(String expedienteId) {
+        this.expedienteId = expedienteId;
+    }
+
+    public Boolean getDiagnosticoCertificado() {
+        return diagnosticoCertificado;
+    }
+
+    public void setDiagnosticoCertificado(Boolean diagnosticoCertificado) {
+        this.diagnosticoCertificado = diagnosticoCertificado;
+    }
+
+    public String getTipoTea() {
+        return tipoTea;
+    }
+
+    public void setTipoTea(String tipoTea) {
+        this.tipoTea = tipoTea;
+    }
+
+    public Date getFechaDiagnostico() {
+        return fechaDiagnostico;
+    }
+
+    public void setFechaDiagnostico(Date fechaDiagnostico) {
+        this.fechaDiagnostico = fechaDiagnostico;
+    }
+
+    public String getProfesionalDiagnostico() {
+        return profesionalDiagnostico;
+    }
+
+    public void setProfesionalDiagnostico(String profesionalDiagnostico) {
+        this.profesionalDiagnostico = profesionalDiagnostico;
+    }
+
+    public String getObservacionesDiagnostico() {
+        return observacionesDiagnostico;
+    }
+
+    public void setObservacionesDiagnostico(String observacionesDiagnostico) {
+        this.observacionesDiagnostico = observacionesDiagnostico;
+    }
+
+    public String getContextoObservacion() {
+        return contextoObservacion;
+    }
+
+    public void setContextoObservacion(String contextoObservacion) {
+        this.contextoObservacion = contextoObservacion;
+    }
+
+    public String getAcudientePrincipal() {
+        return acudientePrincipal;
+    }
+
+    public void setAcudientePrincipal(String acudientePrincipal) {
+        this.acudientePrincipal = acudientePrincipal;
+    }
+
+    public String getRelacionAcudiente() {
+        return relacionAcudiente;
+    }
+
+    public void setRelacionAcudiente(String relacionAcudiente) {
+        this.relacionAcudiente = relacionAcudiente;
+    }
+
+    public String getTelefonoAlternativo() {
+        return telefonoAlternativo;
+    }
+
+    public void setTelefonoAlternativo(String telefonoAlternativo) {
+        this.telefonoAlternativo = telefonoAlternativo;
+    }
+
+    public String getCorreoContacto() {
+        return correoContacto;
+    }
+
+    public void setCorreoContacto(String correoContacto) {
+        this.correoContacto = correoContacto;
+    }
+
+    public String getInstitucionProcedencia() {
+        return institucionProcedencia;
+    }
+
+    public void setInstitucionProcedencia(String institucionProcedencia) {
+        this.institucionProcedencia = institucionProcedencia;
+    }
+
+    public String getEstadoRegistro() {
+        return estadoRegistro;
+    }
+
+    public void setEstadoRegistro(String estadoRegistro) {
+        this.estadoRegistro = estadoRegistro;
+    }
+
+    public Date getFechaRegistro() {
+        return fechaRegistro;
+    }
+
+    public void setFechaRegistro(Date fechaRegistro) {
+        this.fechaRegistro = fechaRegistro;
+    }
+
+    public Date getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(Date createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public Date getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(Date updatedAt) {
+        this.updatedAt = updatedAt;
+    }
+
+    public Integer getCreatedBy() {
+        return createdBy;
+    }
+
+    public void setCreatedBy(Integer createdBy) {
+        this.createdBy = createdBy;
+    }
+
+    public Integer getUpdatedBy() {
+        return updatedBy;
+    }
+
+    public void setUpdatedBy(Integer updatedBy) {
+        this.updatedBy = updatedBy;
     }
 
     public Curso getCursoIdCurso() {
@@ -248,6 +475,15 @@ public class Estudiante implements Serializable {
 
     public void setTipoDocumentoIdTipoDocumento(TipoDocumento tipoDocumentoIdTipoDocumento) {
         this.tipoDocumentoIdTipoDocumento = tipoDocumentoIdTipoDocumento;
+    }
+
+    @XmlTransient
+    public List<EstudianteSenalAlerta> getEstudianteSenalAlertaList() {
+        return estudianteSenalAlertaList;
+    }
+
+    public void setEstudianteSenalAlertaList(List<EstudianteSenalAlerta> estudianteSenalAlertaList) {
+        this.estudianteSenalAlertaList = estudianteSenalAlertaList;
     }
 
     @XmlTransient
@@ -275,6 +511,15 @@ public class Estudiante implements Serializable {
 
     public void setBoletinAcademicoList(List<BoletinAcademico> boletinAcademicoList) {
         this.boletinAcademicoList = boletinAcademicoList;
+    }
+
+    @XmlTransient
+    public List<EstudianteContacto> getEstudianteContactoList() {
+        return estudianteContactoList;
+    }
+
+    public void setEstudianteContactoList(List<EstudianteContacto> estudianteContactoList) {
+        this.estudianteContactoList = estudianteContactoList;
     }
 
     @XmlTransient
@@ -317,11 +562,7 @@ public class Estudiante implements Serializable {
 
     @Override
     public String toString() {
-        return "com.sena.sitea.entities.Estudiante[ idEstudiante=" + idEstudiante + " ]";
+        return "com.sena.sitea.entity.Estudiante[ idEstudiante=" + idEstudiante + " ]";
     }
     
-    public String getnumero_documento_estudiante() {
-        return getNumeroDocumentoEstudiante();
-    }
-
 }

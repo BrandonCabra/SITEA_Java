@@ -13,23 +13,28 @@ import javax.ejb.EJB;
 import javax.inject.Named;
 import javax.enterprise.context.RequestScoped;
 
-/**
- *
- * @author bjcab
- */
+import java.util.List;
+
+import java.util.ArrayList;
+
 @Named(value = "reporteBean")
 @RequestScoped
 public class ReporteBean implements Serializable {
     
-    @EJB private EstudianteFacadeLocal estudianteFacade;
-    @EJB private CaracterizacionFacadeLocal caracterizacionFacade;
+    @EJB 
+    private EstudianteFacadeLocal estudianteFacade;
+    
+    @EJB 
+    private CaracterizacionFacadeLocal caracterizacionFacade;
 
     private List<DiagnosticoDTO> diagnosticos;
-    
+
+    // Total de estudiantes
     public long getTotalEstudiantes() {
         return estudianteFacade.count();
     }
 
+    // Total de caracterizaciones
     public long getTotalCaracterizaciones() {
         return caracterizacionFacade.count();
     }
@@ -46,16 +51,38 @@ public class ReporteBean implements Serializable {
         }
         return diagnosticos;
     }
-    
+
+    // 📌 Devuelve etiquetas como cadena JS válida: "Diag1","Diag2","Diag3"
+    public String getEtiquetasDiagnosticosJS() {
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < getDiagnosticos().size(); i++) {
+            if (i > 0) sb.append(",");
+            sb.append("\"").append(getDiagnosticos().get(i).getDiagnostico()).append("\"");
+        }
+        return sb.toString();
+    }
+
+    // 📌 Devuelve valores como cadena JS válida: 10,20,30
+    public String getValoresDiagnosticosJS() {
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < getDiagnosticos().size(); i++) {
+            if (i > 0) sb.append(",");
+            sb.append(getDiagnosticos().get(i).getCantidad());
+        }
+        return sb.toString();
+    }
+
     // DTO anidado
     public static class DiagnosticoDTO {
         private String diagnostico;
         private Long cantidad;
-        public DiagnosticoDTO(String d, Long c) {
-            diagnostico = d; cantidad = c;
+
+        public DiagnosticoDTO(String diagnostico, Long cantidad) {
+            this.diagnostico = diagnostico;
+            this.cantidad = cantidad;
         }
+
         public String getDiagnostico() { return diagnostico; }
         public Long getCantidad() { return cantidad; }
     }
 }
-

@@ -1,9 +1,11 @@
-package com.sena.sitea.controller;
+ package com.sena.sitea.controller;
 
 import com.sena.sitea.services.EmailService;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import java.io.IOException;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 
 @ManagedBean
 @ViewScoped
@@ -18,10 +20,24 @@ public class EmailTestBean {
             EmailService emailService = new EmailService();
             emailService.enviarEmailPrueba(destinatario, asunto, mensaje);
             System.out.println("Proceso completado, revisa logs");
+            
+            // Agregar mensaje de éxito
+        FacesContext.getCurrentInstance().addMessage(null, 
+            new FacesMessage(FacesMessage.SEVERITY_INFO, 
+            "Éxito", "Correo enviado correctamente"));
+        
+        /*return null; // Permanecer en la misma página*/
+            
         } catch (IOException e) {
             System.err.println("Error: " + e.getMessage());
         } catch (Exception e) {
             System.err.println("Error general: " + e.getMessage());
+            
+            // Mensaje de error
+        FacesContext.getCurrentInstance().addMessage(null, 
+            new FacesMessage(FacesMessage.SEVERITY_ERROR, 
+            "Error", "No se pudo enviar el correo: " + e.getMessage()));
+        
         }
     }
     

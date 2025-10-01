@@ -104,4 +104,5 @@ public class UsuarioRol implements Serializable {
     public void setRolIdRol(Rol rolIdRol) {
         this.rolIdRol = rolIdRol;
     }
+    
 }

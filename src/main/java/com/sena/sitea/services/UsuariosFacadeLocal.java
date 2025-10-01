@@ -30,6 +30,5 @@ public interface UsuariosFacadeLocal {
     int count();
     
     Usuarios iniciarSesion(String NUMERO_DOCUMENTO, String PASSWORD);
-
     
 }

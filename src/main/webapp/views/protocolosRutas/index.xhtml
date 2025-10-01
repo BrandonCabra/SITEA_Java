@@ -32,8 +32,32 @@
             <h:inputTextarea value="#{emailTestBean.mensaje}" rows="4" cols="50" />
             
             <h:commandButton value="Enviar Email" action="#{emailTestBean.enviarEmailPrueba}" />
+            <h:messages globalOnly="true" />
+
         </h:panelGrid>
     </h:form> 
+              
+              <h:form>
+    <h3>Envio Masivo de Correo</h3>
+    
+    <h:outputLabel value="Asunto:" for="asunto" />
+    <h:inputText id="asunto" value="#{emailMasivoBean.asunto}" style="width:350px;" /><br/><br/>
+    
+    <h:outputLabel value="Mensaje:" for="mensaje" /><br/>
+    <h:inputTextarea id="mensaje" value="#{emailMasivoBean.mensaje}" rows="5" cols="60" /><br/><br/>
+    
+    <h:outputLabel value="Destinatarios (una dirección por línea):" /><br/>
+    <h:inputTextarea value="#{emailMasivoBean.destinatariosTexto}" rows="5" cols="60" /><br/><br/>
+    
+    <h:commandButton value="Enviar a Todos" action="#{emailMasivoBean.enviarEmailMasivo}" />
+    
+    <h:messages globalOnly="true"/>
+    
+    <h:panelGroup rendered="#{not empty emailMasivoBean.resultadoEnvio}">
+        <h:outputText value="#{emailMasivoBean.resultadoEnvio}" style="color:green"/>
+    </h:panelGroup>
+</h:form>
+
                
             </ui:define>
 

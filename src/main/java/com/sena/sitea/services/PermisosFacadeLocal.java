@@ -29,8 +29,7 @@ public interface PermisosFacadeLocal {
     List<Permisos> findRange(int[] range);
 
     int count();
-
+    
     List<Permisos> PermisosByUsuario(Usuarios NUMERO_DOCUMENTO);
-
-
+    
 }

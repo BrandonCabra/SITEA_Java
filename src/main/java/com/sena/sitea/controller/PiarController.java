@@ -50,10 +50,10 @@ public class PiarController implements Serializable {
 
                 for (Estudiante e : estudiantes) {
                     System.out.println("👤 Agregando estudiante: " +
-                        e.getIdEstudiante() + " - " + e.getnumero_documento_estudiante());
+                        e.getIdEstudiante() + " - " + e.getNumeroDocumentoEstudiante());
                     listaEstudiantes.add(new SelectItem(
                         e.getIdEstudiante(),
-                        e.getnumero_documento_estudiante() + " - " + e.getPrimerNombreEstudiante()
+                        e.getNumeroDocumentoEstudiante()+ " - " + e.getPrimerNombreEstudiante()
                     ));
                 }
             }

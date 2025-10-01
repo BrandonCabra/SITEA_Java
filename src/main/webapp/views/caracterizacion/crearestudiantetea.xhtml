@@ -1,99 +1,648 @@
 <?xml version='1.0' encoding='UTF-8' ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
-
+    
     <body>
         <ui:composition template="./../TemplateSitio.xhtml">
             <ui:define name="content">
+                
                 <f:view>
-                    <h:form styleClass="container-fluid px-3" style="background-color: #e3f2fd; padding: 20px; border-radius: 8px;">
+                    <script src="../../resources/js/tipoRegistro.js" type="text/javascript"></script>
+                     <div class="back-btn">
+                        <h:form>
+                            <h:commandButton value="← Volver al Dashboard"
+                                             action= "index.xhtml?faces-redirect=true"
+                                            type="submit" class="btn btn-primary btn-full mb-3"/> 
+                        </h:form>
+                    </div>
+                         
+                    <!-- Panel de éxito (mostrar solo cuando el proceso esté completado) -->
+                    <h:panelGroup rendered="#{estudianteTeaController.procesoCompletado}">
+                        <div class="card shadow-sm p-4 mb-4" style="background-color: #d4edda; border-color: #c3e6cb;">
+                            <h2 class="text-success fw-bold mb-3">
+                                <i class="fas fa-check-circle me-2"></i>¡Registro Completado Exitosamente!
+                            </h2>
+                            <div class="alert alert-success" role="alert">
+    <h:outputText value="#{estudianteTeaController.mensajeExito}" />
+    <br/>
+    <strong>Expediente asignado:</strong> 
+    <code>#{estudianteTeaController.con.expedienteId}</code>
+</div>
+
+                            
+                            <div class="d-flex gap-2 justify-content-center mt-4">
+                                <h:form>
+                                    <h:commandButton value="Iniciar Caracterización" 
+                                                   action="#{estudianteTeaController.irACaracterizacion}"
+                                                   styleClass="btn btn-success btn-lg"
+                                                   rendered="#{estudianteTeaController.tipoRegistroSeleccionado eq 'sospecha'}">
+                                        <i class="fas fa-arrow-right me-1"></i>
+                                    </h:commandButton>
+                                                   
+                                    <h:commandButton value="Iniciar Ruta de Diagnóstico"
+                                                   action="#{estudianteTeaController.irARutaDiagnostico}" 
+                                                   styleClass="btn btn-info btn-lg"
+                                                   rendered="#{estudianteTeaController.tipoRegistroSeleccionado eq 'diagnostico'}">
+                                        <i class="fas fa-stethoscope me-1"></i>
+                                    </h:commandButton>
+                                                   
+                                    <h:commandButton value="Nuevo Registro"
+                                                   action="#{estudianteTeaController.nuevoRegistro}"
+                                                   styleClass="btn btn-secondary btn-lg">
+                                        <i class="fas fa-plus me-1"></i>
+                                        <f:ajax execute="@this" render="@all" />
+                                    </h:commandButton>
+                                </h:form>
+                            </div>
+                        </div>
+                    </h:panelGroup>
+
+                 <!-- Formulario principal -->
+                    <h:form id="preRegistroForm" styleClass="container-fluid px-3" 
+                           style="background-color: #e3f2fd; padding: 20px; border-radius: 8px;"
+                           rendered="#{!estudianteTeaController.procesoCompletado}">
+                        
                         <div class="card shadow-sm p-4">
-                            <h2 class="text-primary fw-bold mb-3">Preregistro Estudiante</h2>
+                            <h2 class="text-primary fw-bold mb-4">
+                                <i class="fas fa-user-plus me-2"></i>Pre-registro de Estudiante TEA
+                            </h2>
+                            <p class="card-description">Complete el formulario para registrar un estudiante con diagnóstico confirmado o sospecha fundada de TEA</p>
 
-                            <h:panelGrid columns="3" styleClass="table table-borderless align-middle">
-                                <h:outputLabel value="Tipo Documento:" for="tipoDocumentoIdTipoDocumento" />
-                                <h:selectOneMenu id="tipoDocumentoIdTipoDocumento" value="#{estudianteTeaController.td.idTipoDocumento}" required="true" requiredMessage="Tipo Documento es obligatorio." styleClass="form-select">
-                                    <f:selectItem itemLabel="Seleccione..." itemValue="#{null}" />
-                                    <f:selectItems value="#{estudianteTeaController.listaTipoDocumento()}" />
-                                </h:selectOneMenu>
-                                <h:message for="tipoDocumentoIdTipoDocumento" style="color: red" />
+                            <!-- Mensajes globales -->
+                            <h:messages id="mensajes" globalOnly="true" 
+                                       infoClass="alert alert-info"
+                                       errorClass="alert alert-danger"
+                                       warnClass="alert alert-warning" />
+                  
+                            <!-- Sección 1: Datos Básicos del Estudiante -->
+                            <div class="card mb-4">
+                                <div class="card-header bg-primary text-white">
+                                    <h5 class="mb-0"><i class="fas fa-user me-2"></i>Datos Básicos del Estudiante</h5>
+                                </div>
+                                <div class="card-body">
+                                    <h:panelGrid columns="3" styleClass="table table-borderless align-middle">
+                                        
+                                        <h:outputLabel value="Tipo Documento:" for="tipoDocumento" />
+                                        <h:selectOneMenu id="tipoDocumento" 
+                                                        value="#{estudianteTeaController.td.idTipoDocumento}" 
+                                                        required="true" 
+                                                        requiredMessage="Tipo Documento es obligatorio." 
+                                                        styleClass="form-select">
+                                            <f:selectItem itemLabel="Seleccione..." itemValue="#{null}" />
+                                            <f:selectItems value="#{estudianteTeaController.listaTipoDocumento()}" />
+                                        </h:selectOneMenu>
+                                        <h:message for="tipoDocumento" style="color: red" />
 
-                                <h:outputLabel value="Numero Documento Estudiante:" for="numeroDocumentoEstudiante" />
-                                <h:inputText id="numeroDocumentoEstudiante" value="#{estudianteTeaController.con.numeroDocumentoEstudiante}" required="true" requiredMessage="Campo obligatorio." styleClass="form-control" />
-                                <h:message for="numeroDocumentoEstudiante" style="color: red" />
+                                        <h:outputLabel value="Número Documento:" for="numeroDocumentoEstudiante" />
+                                        <h:inputText id="numeroDocumentoEstudiante" 
+                                                    value="#{estudianteTeaController.con.numeroDocumentoEstudiante}" 
+                                                    required="true" 
+                                                    requiredMessage="Campo obligatorio." 
+                                                    styleClass="form-control">
+                                            <f:validateRegex pattern="[0-9]{6,15}" />
+                                            <f:ajax event="blur" 
+                                                   execute="@this tipoDocumento"
+                                                   render="@form mensajes"
+                                                   listener="#{estudianteTeaController.validarDocumentoExistente}" />
+                                        </h:inputText>
+                                        <h:message for="numeroDocumentoEstudiante" style="color: red" />
 
-                                <h:outputLabel value="Primer Nombre Estudiante:" for="primerNombreEstudiante" />
-                                <h:inputText id="primerNombreEstudiante" value="#{estudianteTeaController.con.primerNombreEstudiante}" required="true" requiredMessage="Campo obligatorio." styleClass="form-control" />
-                                <h:message for="primerNombreEstudiante" style="color: red" />
+                                        <h:outputLabel value="Primer Nombre:" for="primerNombreEstudiante" />
+                                        <h:inputText id="primerNombreEstudiante" 
+                                                    value="#{estudianteTeaController.con.primerNombreEstudiante}" 
+                                                    required="true" 
+                                                    requiredMessage="Campo obligatorio." 
+                                                    styleClass="form-control" />
+                                        <h:message for="primerNombreEstudiante" style="color: red" />
 
-                                <h:outputLabel value="Segundo Nombre Estudiante:" for="segundoNombreEstudiante" />
-                                <h:inputText id="segundoNombreEstudiante" value="#{estudianteTeaController.con.segundoNombreEstudiante}" styleClass="form-control" />
-                                <h:message for="segundoNombreEstudiante" style="color: red" />
+                                        <h:outputLabel value="Segundo Nombre:" for="segundoNombreEstudiante" />
+                                        <h:inputText id="segundoNombreEstudiante" 
+                                                    value="#{estudianteTeaController.con.segundoNombreEstudiante}" 
+                                                    styleClass="form-control" />
+                                        <h:message for="segundoNombreEstudiante" style="color: red" />
 
-                                <h:outputLabel value="Primer Apellido Estudiante:" for="primerApellidoEstudiante" />
-                                <h:inputText id="primerApellidoEstudiante" value="#{estudianteTeaController.con.primerApellidoEstudiante}" required="true" requiredMessage="Campo obligatorio." styleClass="form-control" />
-                                <h:message for="primerApellidoEstudiante" style="color: red" />
+                                        <h:outputLabel value="Primer Apellido:" for="primerApellidoEstudiante" />
+                                        <h:inputText id="primerApellidoEstudiante" 
+                                                    value="#{estudianteTeaController.con.primerApellidoEstudiante}" 
+                                                    required="true" 
+                                                    requiredMessage="Campo obligatorio." 
+                                                    styleClass="form-control" />
+                                        <h:message for="primerApellidoEstudiante" style="color: red" />
 
-                                <h:outputLabel value="Segundo Apellido Estudiante:" for="segundoApellidoEstudiante" />
-                                <h:inputText id="segundoApellidoEstudiante" value="#{estudianteTeaController.con.segundoApellidoEstudiante}" styleClass="form-control" />
-                                <h:message for="segundoApellidoEstudiante" style="color: red" />
+                                        <h:outputLabel value="Segundo Apellido:" for="segundoApellidoEstudiante" />
+                                        <h:inputText id="segundoApellidoEstudiante" 
+                                                    value="#{estudianteTeaController.con.segundoApellidoEstudiante}" 
+                                                    styleClass="form-control" />
+                                        <h:message for="segundoApellidoEstudiante" style="color: red" />
 
-                                <h:outputLabel value="Fecha Nacimiento:" for="fechaNacimiento" />
-                                <h:inputText id="fechaNacimiento" value="#{estudianteTeaController.con.fechaNacimiento}" required="true" requiredMessage="Campo obligatorio." styleClass="form-control">
-                                    <f:passThroughAttribute name="type" value="date" />
-                                    <f:convertDateTime pattern="yyyy-MM-dd" />
-                                </h:inputText>
-                                <h:message for="fechaNacimiento" style="color: red" />
+                                        <h:outputLabel value="Fecha Nacimiento:" for="fechaNacimiento" />
+                                        <h:inputText id="fechaNacimiento" 
+                                                    value="#{estudianteTeaController.con.fechaNacimiento}" 
+                                                    required="true" 
+                                                    requiredMessage="Campo obligatorio." 
+                                                    styleClass="form-control">
+                                            <f:passThroughAttribute name="type" value="date" />
+                                            <f:convertDateTime pattern="yyyy-MM-dd" />
+                                        </h:inputText>
+                                        <h:message for="fechaNacimiento" style="color: red" />
 
-                                <h:outputLabel value="Telefono Estudiante:" for="telefonoEstudiante" />
-                                <h:inputText id="telefonoEstudiante" value="#{estudianteTeaController.con.telefonoEstudiante}" styleClass="form-control" />
-                                <h:message for="telefonoEstudiante" style="color: red" />
+                                        <h:outputLabel value="Grado/Curso:" for="cursoIdCurso" />
+                                        <h:selectOneMenu id="cursoIdCurso" 
+                                                        value="#{estudianteTeaController.cur.idCurso}" 
+                                                        required="true"
+                                                        requiredMessage="Debe seleccionar un grado"
+                                                        styleClass="form-select">
+                                            <f:selectItem itemLabel="Seleccione..." itemValue="#{null}" />
+                                            <f:selectItems value="#{estudianteTeaController.listaCurso()}" />
+                                        </h:selectOneMenu>
+                                        <h:message for="cursoIdCurso" style="color: red" />
+                                        
+                                        <h:outputLabel value="Correo Institucional:" for="correoInstitucionalEstudiante" />
+                                        <h:inputText id="correoInstitucionalEstudiante" 
+                                                    value="#{estudianteTeaController.con.correoInstitucionalEstudiante}" 
+                                                    required="true"
+                                                    requiredMessage="Campo obligatorio."
+                                                    styleClass="form-control" />
+                                        <h:message for="correoInstitucionalEstudiante" style="color: red" />
+                                        
+                                        <h:outputLabel value="Teléfono Estudiante:" for="telefonoEstudiante" />
+                                        <h:inputText id="telefonoEstudiante" 
+                                                    value="#{estudianteTeaController.con.telefonoEstudiante}"
+                                                    styleClass="form-control"/>
+                                        <h:message for="telefonoEstudiante" style="color: red" />
+                                        
+                                        <h:outputLabel value="Dirección Estudiante:" for="direccionEstudiante" />
+                                        <h:inputText id="direccionEstudiante" 
+                                                    value="#{estudianteTeaController.con.direccionEstudiante}" 
+                                                    required="true" 
+                                                    requiredMessage="Campo obligatorio." 
+                                                    styleClass="form-control" />
+                                        <h:message for="direccionEstudiante" style="color: red" />
+                                        
+                                        <h:outputLabel value="Fotografia Estudiante:" for="fotografiaEstudiante" />
+                                        <h:inputText id="fotografiaEstudiante" 
+                                                    value="#{estudianteTeaController.con.fotografiaEstudiante}" 
+                                                    styleClass="form-control" />
+                                        <h:message for="fotografiaEstudiante" style="color: red" />
 
-                                <h:outputLabel value="Dirección Estudiante:" for="direccionEstudiante" />
-                                <h:inputText id="direccionEstudiante" value="#{estudianteTeaController.con.direccionEstudiante}" required="true" requiredMessage="Campo obligatorio." styleClass="form-control" />
-                                <h:message for="direccionEstudiante" style="color: red" />
+                                    </h:panelGrid>
+                                </div>
+                            </div>
+                        
+                        <!-- Sección 2: Información de Diagnóstico TEA -->
+                            <div class="card mb-4">
+                                <div class="card-header text-white" style="background-color: #18c8f6;">
+                                    <h5 class="mb-0"><i class="fas fa-stethoscope me-2"></i>Información de Diagnóstico</h5>
+                                </div>
+                                <div class="card-body">
 
-                                <h:outputLabel value="Correo Institucional Estudiante:" for="correoInstitucionalEstudiante" />
-                                <h:inputText id="correoInstitucionalEstudiante" value="#{estudianteTeaController.con.correoInstitucionalEstudiante}" required="true" requiredMessage="Campo obligatorio." styleClass="form-control" />
-                                <h:message for="correoInstitucionalEstudiante" style="color: red" />
+                                    <!-- Desplegable tipo de registro -->
+                                    <div class="row mb-4">
+                                        <label for="tipoRegistro" class="col-sm-3 col-form-label fw-bold">Tipo de Registro *</label>
+                                        <div class="col-sm-9">
+                                            <h:selectOneMenu id="tipoRegistro" 
+                                                           value="#{estudianteTeaController.tipoRegistroSeleccionado}"
+                                                           required="true"
+                                                           requiredMessage="Debe seleccionar un tipo de registro"
+                                                           styleClass="form-select"
+                                                           >
+                                                <f:selectItem itemLabel="Seleccione tipo de registro" itemValue="" />
+                                                <f:selectItem itemLabel="Diagnóstico Médico Confirmado" itemValue="diagnostico" />
+                                                <f:selectItem itemLabel="Sospecha Fundada - Requiere Evaluación" itemValue="sospecha" />
+                                                  <f:ajax render="@form" execute="@this" />
+                                            </h:selectOneMenu>
+                                            <h:message for="tipoRegistro" style="color: red" />
+                                        </div>
+                                    </div>
 
-                                <h:outputLabel value="Fotografia Estudiante:" for="fotografiaEstudiante" />
-                                <h:inputText id="fotografiaEstudiante" value="#{estudianteTeaController.con.fotografiaEstudiante}" styleClass="form-control" />
-                                <h:message for="fotografiaEstudiante" style="color: red" />
+                                    <!-- Panel Diagnóstico Médico -->
+                                    <h:panelGroup id="panelDiagnostico" rendered="#{estudianteTeaController.tipoRegistroSeleccionado eq 'diagnostico'}">
+                                        <div class="alert alert-success">
+                                        <h6 class="alert-heading">
+                                            <i class="fas fa-clipboard-check me-2"></i>Información del Diagnóstico Médico
+                                        </h6>
 
-                                <h:outputLabel value="Numero Documento Padre:" for="numeroDocumentoPadre" />
-                                <h:inputText id="numeroDocumentoPadre" value="#{estudianteTeaController.con.numeroDocumentoPadre}" styleClass="form-control" />
-                                <h:message for="numeroDocumentoPadre" style="color: red" />
+                                        <div class="row mb-3">
+                                            <label class="col-sm-3 col-form-label">Tipo de TEA *</label>
+                                            <div class="col-sm-9">
+                                                <h:inputText id="tipoTEA" 
+                                                           value="#{estudianteTeaController.tipoTEA}" 
+                                                           styleClass="form-control"
+                                                           required="#{estudianteTeaController.tipoRegistroSeleccionado eq 'diagnostico'}"
+                                                           requiredMessage="El tipo de TEA es obligatorio">
+                                                           <f:passThroughAttribute name="placeholder" value="Ej: Síndrome de Asperger, Dislexia, Discalculia" />
+                                                </h:inputText>
+                                                <h:message for="tipoTEA" style="color: red" />
+                                            </div>
+                                        </div>
 
-                                <h:outputLabel value="Curso:" for="cursoIdCurso" />
-                                <h:selectOneMenu id="cursoIdCurso" value="#{estudianteTeaController.cur.idCurso}" styleClass="form-select">
-                                    <f:selectItems value="#{estudianteTeaController.listaCurso()}" />
-                                </h:selectOneMenu>
-                                <h:message for="cursoIdCurso" style="color: red" />
-                            </h:panelGrid>
+                                        <div class="row mb-3">
+                                            <label class="col-sm-3 col-form-label">Fecha de Diagnóstico *</label>
+                                            <div class="col-sm-9">
+                                                <h:inputText id="fechaDiagnostico" 
+                                                           value="#{estudianteTeaController.fechaDiagnostico}" 
+                                                           styleClass="form-control"
+                                                           required="#{estudianteTeaController.tipoRegistroSeleccionado eq 'diagnostico'}"
+                                                           requiredMessage="La fecha de diagnóstico es obligatoria">
+                                                    <f:passThroughAttribute name="type" value="date" />
+                                                    <f:convertDateTime pattern="yyyy-MM-dd" />
+                                                </h:inputText>
+                                                <h:message for="fechaDiagnostico" style="color: red" />
+                                            </div>
+                                        </div>
 
-                            <h:messages id="mensajes" globalOnly="true" infoStyle="color: green" errorStyle="color: red" />
+                                        <div class="row mb-3">
+                                            <label class="col-sm-3 col-form-label">Profesional que Diagnosticó</label>
+                                            <div class="col-sm-9">
+                                                <h:inputText id="profesionalDiagnostico"
+                                                           value="#{estudianteTeaController.profesionalDiagnostico}"
+                                                           styleClass="form-control">
+                                                           <f:passThroughAttribute name="placeholder" value="Nombre del profesional y especialidad" />
+                                                </h:inputText>
+                                            </div>
+                                        </div>
 
-                            <div class="mt-4 d-flex gap-2">
-                                <h:commandButton value="Registrar Estudiante" 
-                                                 action="#{estudianteTeaController.crearEstudianteP2()}" 
-                                                 rendered="#{estudianteTeaController.con.idEstudiante == null}"
-                                                 styleClass="btn btn-success" />
+                                        <div class="row mb-3">
+                                            <div class="col-sm-12">
+                                                <label class="form-label">Observaciones del Diagnóstico:</label>
+                                                <h:inputTextarea id="observacionesDiagnostico"
+                                                               value="#{estudianteTeaController.observacionesDiagnostico}"
+                                                               rows="3"
+                                                               styleClass="form-control">
+                                                               <f:passThroughAttribute name="placeholder" value="Observaciones relevantes del diagnóstico médico" />
+                                                </h:inputTextarea>
+                                            </div>
+                                        </div>
 
-                                <h:commandButton value="Editar Estudiante" 
-                                                 action="#{estudianteTeaController.editarEstudianteP2()}" 
-                                                 rendered="#{estudianteTeaController.con.idEstudiante != null}"
-                                                 styleClass="btn btn-info" />
+                                        <!-- Sección de documentación médica (PROTOTIPO SIN SUBIDA) -->
+                                        <div class="row mb-3">
+                                            <div class="col-sm-12">
+                                                <div class="card bg-light">
+                                                    <div class="card-body">
+                                                        <h6 class="card-title">
+                                                            <i class="fas fa-file-medical me-2"></i>Documentación Médica
+                                                        </h6>
 
-                                <h:button value="Volver" outcome="/views/caracterizacion/registroestudiante.xhtml?faces-redirect=true" styleClass="btn btn-secondary" />
+                                                        <!-- Checkbox para documentación disponible -->
+                                                        <div class="form-check mb-3">
+                                                            <h:selectBooleanCheckbox id="documentacionDisponible"
+                                                                                   value="#{estudianteTeaController.documentacionDisponible}"
+                                                                                   styleClass="form-check-input"
+                                                                                   onchange="toggleUploadCertificadoPrototipo()">
+                                                            </h:selectBooleanCheckbox>
+                                                            <h:outputLabel value="El psicoorientador tiene documentación médica que confirma el diagnóstico TEA" 
+                                                                         for="documentacionDisponible"
+                                                                         styleClass="form-check-label fw-bold" />
+                                                        </div>
+
+                                                        <!-- Sección de upload (SIMULADA PARA PROTOTIPO) -->
+                                                        <div id="uploadCertificadoPrototipo" class="upload-section" style="display: none;">
+                                                            <div class="mb-3">
+                                                                <label class="form-label">
+                                                                    <i class="fas fa-upload me-1"></i>Certificado Médico (PDF) - PROTOTIPO
+                                                                </label>
+
+                                                                <!-- Input file HTML5 simulado -->
+                                                                <input type="file" 
+                                                                       id="certificadoFilePrototipo"
+                                                                       class="form-control" 
+                                                                       accept=".pdf"
+                                                                       onchange="simularSubidaArchivo(this)"
+                                                                       style="border: 2px dashed #28a745; background-color: #f8f9fa;" />
+
+                                                                <div class="form-text text-muted">
+                                                                    <i class="fas fa-info-circle me-1"></i>
+                                                                    PROTOTIPO: Solo archivos PDF. Tamaño máximo: 5MB (simulado)
+                                                                </div>
+
+                                                                <!-- Indicador de archivo seleccionado -->
+                                                                <div id="archivoSeleccionadoPrototipo" style="display: none;" class="mt-2">
+                                                                    <div class="alert alert-info d-flex align-items-center">
+                                                                        <i class="fas fa-file-pdf text-danger me-2"></i>
+                                                                        <span id="nombreArchivoSeleccionadoPrototipo"></span>
+                                                                        <button type="button" class="btn-close ms-auto" onclick="limpiarArchivoPrototipo()"></button>
+                                                                    </div>
+                                                                    <div class="alert alert-warning">
+                                                                        <i class="fas fa-info-circle me-1"></i>
+                                                                        <strong>PROTOTIPO:</strong> El archivo no se sube realmente, solo se simula la funcionalidad.
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        </div>
+                                    </h:panelGroup>
+
+                                    <!-- Panel Sospecha Fundada -->
+                                    <h:panelGroup id="panelSospecha" rendered="#{estudianteTeaController.tipoRegistroSeleccionado eq 'sospecha'}">
+                                        <div class="alert alert-warning">
+                                            <h6 class="alert-heading">
+                                                <i class="fas fa-exclamation-triangle me-2"></i>Sospecha Fundada - Señales de Alerta
+                                            </h6>
+
+                                            <!-- Reemplazar los checkboxes HTML por h:selectManyCheckbox -->
+<div class="mb-3">
+    <label class="fw-bold mb-2">Señales de Alerta Observadas *</label>
+    <h:selectManyCheckbox id="senalesAlerta" 
+                          value="#{estudianteTeaController.senalesAlertaSeleccionadas}"
+                          layout="pageDirection"
+                          styleClass="form-check">
+        <f:selectItem itemValue="Dificultades para leer palabras simples" itemLabel="Dificultades para leer palabras simples" />
+        <f:selectItem itemValue="Problemas con operaciones matemáticas básicas" itemLabel="Problemas con operaciones matemáticas básicas" />
+        <f:selectItem itemValue="Escritura ilegible o con muchos errores" itemLabel="Escritura ilegible o con muchos errores" />
+        <f:selectItem itemValue="Dificultad para seguir instrucciones secuenciales" itemLabel="Dificultad para seguir instrucciones secuenciales" />
+        <f:selectItem itemValue="Problemas de atención y concentración" itemLabel="Problemas de atención y concentración" />
+        <f:selectItem itemValue="Evita actividades que requieren lectura" itemLabel="Evita actividades que requieren lectura" />
+        <f:selectItem itemValue="Confunde letras o números similares" itemLabel="Confunde letras o números similares" />
+        <f:selectItem itemValue="Dificultad para expresarse oralmente" itemLabel="Dificultad para expresarse oralmente" />
+        <f:selectItem itemValue="Lentitud excesiva en tareas académicas" itemLabel="Lentitud excesiva en tareas académicas" />
+        <f:selectItem itemValue="Olvida instrucciones o pierde materiales frecuentemente" itemLabel="Olvida instrucciones o pierde materiales frecuentemente" />
+    </h:selectManyCheckbox>
+    <h:message for="senalesAlerta" style="color: red" />
+</div>
+
+
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <label class="form-label">Otra señal de alerta:</label>
+                                                    <h:inputTextarea id="senalPersonalizada"
+                                                                     value="#{estudianteTeaController.otraSenalAlerta}"
+                                                                   rows="3"
+                                                                   styleClass="form-control"
+                                                                    />
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <label class="form-label">Contexto de Observación:</label>
+                                                    <h:inputTextarea id="contextoObservacion"
+                                                                     value="#{estudianteTeaController.contextoObservacion}"
+                                                                   rows="3"
+                                                                   styleClass="form-control"
+                                                                    />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </h:panelGroup>
+                                </div>
+                            </div>
+                        
+                        
+                        
+                         <!-- Sección 3: Información de Contactos familiares -->
+                            <div class="card mb-4 position-relative">
+                                <div class="card-header bg-success text-white">
+                                    <h5 class="mb-0"><i class="fas fa-address-book me-2"></i>Datos de Contactos Familiares</h5>
+                                </div>
+                                 <div class="card-body pb-5" id="contactos-container">
+                                    <h:panelGrid columns="3" styleClass="table table-borderless align-middle">
+
+                                        <h:outputLabel value="Acudiente Principal:" for="acudientePrincipal" />
+                                        <h:inputText id="acudientePrincipal" 
+                                                     value="#{estudianteTeaController.con.acudientePrincipal}" 
+                                                    required="true" 
+                                                    requiredMessage="El nombre del acudiente principal es obligatorio." 
+                                                    styleClass="form-control"
+                                                    maxlength="120">
+                                                    <f:passThroughAttribute name="placeholder" value="Nombre completo del acudiente principal" />
+                                        </h:inputText>
+                                                    <h:message for="acudientePrincipal" style="color: red" />
+
+                                        <h:outputLabel value="Relación con el Estudiante:" for="relacionAcudiente" />
+                                        <h:selectOneMenu id="relacionAcudiente"
+                                                        value="#{estudianteTeaController.con.relacionAcudiente}"
+                                                        required="true"
+                                                        requiredMessage="Debe especificar la relación con el estudiante." 
+                                                        styleClass="form-select">
+                                            <f:selectItem itemLabel="-- Seleccione --" itemValue="" />
+                                            <f:selectItem itemLabel="Madre" itemValue="MADRE" />
+                                            <f:selectItem itemLabel="Padre" itemValue="PADRE" />
+                                            <f:selectItem itemLabel="Tutor Legal" itemValue="TUTOR" />
+                                            <f:selectItem itemLabel="Abuelo/a" itemValue="ABUELO" />
+                                            <f:selectItem itemLabel="Tío/a" itemValue="TIO" />
+                                            <f:selectItem itemLabel="Otro" itemValue="OTRO" />
+                                        </h:selectOneMenu>
+                                        <h:message for="relacionAcudiente" style="color: red" />
+
+                                        <h:outputLabel value="Teléfono Contacto:" for="telefonoAlternativo" />
+                                        <h:inputText id="telefonoAlternativo" 
+                                                    value="#{estudianteTeaController.con.telefonoAlternativo}"
+                                                    required="true"
+                                                    requiredMessage="El teléfono de contacto es obligatorio." 
+                                                    styleClass="form-control"
+                                                    maxlength="15">
+                                            <f:validateRegex pattern="[0-9+\-\s()]{7,15}" />
+                                            <f:passThroughAttribute name="placeholder" value="Ej: 321-456-7890" />
+                                        </h:inputText>
+                                        <h:message for="telefonoAlternativo" style="color: red" />
+
+                                        <h:outputLabel value="Correo de Contacto:" for="correoContacto" />
+                                        <h:inputText id="correoContacto" 
+                                                    value="#{estudianteTeaController.con.correoContacto}"
+                                                    required="true" 
+                                                    requiredMessage="El correo de contacto es obligatorio."  
+                                                    styleClass="form-control"
+                                                    maxlength="120">
+                                            <f:validateRegex pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}" />
+                                            <f:passThroughAttribute name="placeholder" value="ejemplo@correo.com" />
+                                        </h:inputText>
+                                        <h:message for="correoContacto" style="color: red" />
+
+                                        
+                          <!-- Botón para agregar nuevo contacto -->              
+                                        
+                                        <div class="card-content">
+                                            <div id="familyContactsContainer">
+                                        <!-- Contacts will be generated by JavaScript -->
+                                        </div>
+                                            <h:commandButton value="+ Agregar Contacto Adicional"
+                                                styleClass="btn btn-outline-primary mb-3"
+                                                style="position:absolute;right:50px;z-index:50;width:250px;height:40px;">
+       
+                                            </h:commandButton>
+                                        </div>
+                                      </h:panelGrid>
+                                </div>
+                            </div>
+                         
+                         
+                          <!-- Información adicional de contactos -->
+                            <div class="row mt-3">
+                                <div class="col-12">
+                                    <div class="alert alert-info">
+                                        <h6 class="alert-heading">
+                                            <i class="fas fa-info-circle me-2"></i>Información Importante
+                                        </h6>
+                                        <p class="mb-0">
+                                            <strong>Acudiente Principal:</strong> Persona responsable legal del estudiante y contacto principal para comunicaciones institucionales.
+                                            <br/>
+                                            <strong>Contacto de Emergencia:</strong> Esta información será utilizada en caso de emergencias académicas o médicas del estudiante.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                         
+                         
+                                                    
+                             <!-- Sección 4: Información Adicional -->
+                            
+                           <div class="card mb-4">
+                                <div class="card-header text-white" style="background-color: #5A7694;">
+                                    <h5 class="mb-0"><i class="fas fa-info-circle me-2"></i>Información Adicional</h5>
+                                </div>
+                                <div class="card-body">
+                                    <div class="mb-3 row align-items-center">
+                                        <label for="institucionProcedencia" class="col-sm-4 col-form-label">
+                                            Institución Educativa de Procedencia:
+                                        </label>
+                                        <div class="col-sm-8">
+                                            <h:inputText id="institucionProcedenciaAdicional" 
+                                                value="#{estudianteTeaController.con.institucionProcedencia}" 
+                                                styleClass="form-control"
+                                                maxlength="150">
+                                                <f:passThroughAttribute name="placeholder" value="Nombre de la institución anterior (si aplica)"/>
+                                            </h:inputText>
+                                            <h:message for="institucionProcedenciaAdicional" style="color: red" />
+                                        </div>
+                                    </div>
+
+                                    <div class="mb-3 row align-items-center">
+                                        <label for="observacionesAdicionales" class="col-sm-4 col-form-label">
+                                            Observaciones Adicionales:
+                                        </label>
+                                        <div class="col-sm-8">
+                                            <h:inputTextarea id="observacionesAdicionales"
+                                                             rows="3"
+                                                             styleClass="form-control">
+                                                <f:passThroughAttribute name="placeholder" value="Información adicional relevante sobre el estudiante"/>
+                                            </h:inputTextarea>
+                                            
+                                            <h:outputLabel value="Usuario que Registra:" for="usuarioRegistra" />
+            <h:inputText id="usuarioRegistra" 
+                        value="" 
+                        styleClass="form-control"
+                        readonly="true">
+                <f:passThroughAttribute name="placeholder" value="ID del usuario que registra (automático)" />
+            </h:inputText>
+            <h:message for="usuarioRegistra" style="color: red" />
+                                            
+                                            
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                             
+                             <!-- Estado del registro -->
+        <div class="row mt-3">
+            <div class="col-12">
+                <div class="card bg-light">
+                    <div class="card-body">
+                        <h6 class="card-title">
+                            <i class="fas fa-check-circle text-success me-2"></i>Estado del Registro
+                        </h6>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <p class="mb-1"><strong>Estado:</strong> 
+                                    <span class="badge bg-success">Activo</span>
+                                </p>
+                                <p class="mb-1"><strong>Fecha de Registro:</strong> 
+                                    <span class="text-muted">#{estudianteTeaController.fechaActual}</span>
+                                </p>
+                            </div>
+                            <div class="col-md-6">
+                                <p class="mb-1"><strong>Tipo de Registro:</strong> 
+                                    <span class="badge" 
+                                          style="background-color: #{estudianteTeaController.tipoRegistroSeleccionado eq 'diagnostico' ? '#28a745' : '#ffc107'};">
+                                        #{estudianteTeaController.tipoRegistroSeleccionado eq 'diagnostico' ? 'Diagnóstico Confirmado' : 'Sospecha Fundada'}
+                                    </span>
+                                </p>
+                                <p class="mb-1"><strong>Requiere Seguimiento:</strong> 
+                                    <span class="text-primary">Sí</span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+                        
+            <h:outputLabel value="ID de Expediente:" for="expedienteId" />
+<h:inputText id="expedienteId" 
+            value="#{estudianteTeaController.con.expedienteId}" 
+            styleClass="form-control"
+            readonly="true"
+            style="background-color: #f8f9fa; font-weight: bold; color: #0d6efd;">
+    <f:passThroughAttribute name="placeholder" value="Se generará automáticamente al registrar" />
+</h:inputText>
+<h:message for="expedienteId" style="color: red" />
+
+<!-- Información sobre generación de expediente -->
+<div class="row mt-3">
+    <div class="col-12">
+        <div class="alert alert-info">
+            <h6 class="alert-heading">
+                <i class="fas fa-info-circle me-2"></i>Generación Automática de Expediente
+            </h6>
+            <div class="row">
+                <div class="col-md-6">
+                    <p class="mb-1"><strong>Diagnóstico Confirmado:</strong></p>
+                    <code>EXP-TEA-2025-0001</code>
+                    <small class="text-muted d-block">Expediente permanente</small>
+                </div>
+                <div class="col-md-6">
+                    <p class="mb-1"><strong>Sospecha Fundada:</strong></p>
+                    <code>TEMP-TEA-2025-0001</code>
+                    <small class="text-muted d-block">Expediente temporal (cambia al confirmar diagnóstico)</small>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+            
+                        
+
+                             <!-- Botones de acción -->
+                            <div class="mt-4 d-flex gap-2 justify-content-center">
+                                <h:commandButton value="Registrar Estudiante TEA" 
+                                                 action="#{estudianteTeaController.crearEstudianteP2}" 
+                                               rendered="#{estudianteTeaController.con.idEstudiante == null}"
+                                               styleClass="btn btn-primary btn-full">
+                                    <f:ajax execute="@form" render="@all" />
+                                </h:commandButton>
+
+                                <h:commandButton value="Actualizar Estudiante TEA" 
+                                                 action="#{estudianteTeaController.editarEstudianteP2}" 
+                                               rendered="#{estudianteTeaController.con.idEstudiante != null}"
+                                               styleClass="btn btn-info btn-lg">
+                                    <f:ajax execute="@form" render="@all" />
+                                </h:commandButton>
+
+                                <h:commandButton value="Limpiar Formulario" 
+                                               action="#{estudianteTeaController.limpiarFormulario}"
+                                               styleClass="btn btn-secondary btn-full"
+                                               immediate="true">
+                                    <f:ajax execute="@this" render="@form" />
+                                </h:commandButton>
+
+                                <h:button value="Volver al Listado" 
+                                         outcome="/views/caracterizacion/registroestudiante.xhtml?faces-redirect=true" 
+                                         styleClass="btn btn-success btn-full" />
                             </div>
                         </div>
                     </h:form>
                 </f:view>
+                
+              <script src="../../resources/js/tipoRegistro.js" type="text/javascript"></script>
             </ui:define>
         </ui:composition>
+
     </body>
+
 </html>

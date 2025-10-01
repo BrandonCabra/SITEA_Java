@@ -29,4 +29,12 @@ public interface EstudianteFacadeLocal {
 
     int count();
     
+    // ========== NUEVOS MÉTODOS TEA ==========
+    Estudiante findByDocumento(Integer tipoDocumentoId, String numeroDocumento);
+    int countByYear(int year);
+    List<Estudiante> findByEstadoRegistro(String estado);
+    List<Estudiante> findByExpedienteId(String expedienteId);
+
+    public void updateExpedienteId(Integer estudianteId, String nuevoExpediente);
+    
 }

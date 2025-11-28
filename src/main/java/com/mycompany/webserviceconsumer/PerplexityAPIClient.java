@@ -11,7 +11,7 @@ import java.net.URL;
 public class PerplexityAPIClient {
 
     private static final String API_URL = "https://api.perplexity.ai/chat/completions";
-    private static final String API_KEY = "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";
+    private static final String API_KEY = System.getenv("PERPLEXITY_API_KEY");
 
     public String obtenerRecomendacion(String fichaEstudiante) throws Exception {
         URL url = new URL(API_URL);

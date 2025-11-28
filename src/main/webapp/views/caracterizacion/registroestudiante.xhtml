@@ -3,33 +3,46 @@
                       "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-      xmlns:h="http://xmlns.jcp.org/jsf/html">
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
 
     <body>
         <ui:composition template="./../TemplateSitio.xhtml">
             <ui:define name="content">
                 <h:form styleClass="container-fluid px-3" style="background-color: #e3f2fd; padding: 20px; border-radius: 8px;">
                     <div class="card shadow-sm p-4">
-                        <h2 class="text-primary fw-bold mb-3">Listado de estudiantes con TEA</h2>
+                        <h2 class="text-primary fw-bold mb-3">
+                            <i class="fas fa-users me-2"></i>Listado de Estudiantes con TEA
+                        </h2>
 
-                        <h:messages id="mensajes" globalOnly="true" infoStyle="color:green" />
+                        <h:messages id="mensajes" globalOnly="true" 
+                                   infoClass="alert alert-info"
+                                   errorClass="alert alert-danger"
+                                   warnClass="alert alert-warning" />
 
                         <div class="mb-4">
-                            <h:commandButton value="Crear Estudiante con TEA"
+                            <h:commandButton value="Nuevo Pre-registro TEA"
                                              action="#{estudianteTeaController.crearEstudianteP1()}"
-                                             styleClass="btn btn-primary" />
+                                             styleClass="btn btn-primary btn-lg">
+                                <i class="fas fa-plus me-2"></i>
+                            </h:commandButton>
                         </div>
 
                         <div class="table-responsive">
                             <table id="t-all" class="table table-bordered table-hover jsf-data-table display nowrap" width="100%">
                                 <thead class="table-primary text-center">
                                     <tr>
-                                        <th>Estudiante ID</th>
-                                        <th>Tipo documento</th>
-                                        <th>Numero Documento</th>
+                                        <th>ID</th>
+                                        <th>Expediente</th>
+                                        <th>Tipo Doc</th>
+                                        <th>Número Doc</th>
                                         <th>Nombres</th>
                                         <th>Apellidos</th>
                                         <th>Curso</th>
+                                        <th>Estado TEA</th>
+                                        <th>Tipo TEA</th>
+                                        <th>Estado Registro</th>
+                                        <th>Fecha Registro</th>
                                         <th>Acciones</th>
                                     </tr>
                                 </thead>
@@ -37,26 +50,140 @@
                                     <ui:repeat value="#{estudianteTeaController.obtenerEstudiantes()}" var="item">
                                         <tr>
                                             <td>#{item.idEstudiante}</td>
+                                            <td>
+                                                <span class="badge bg-info text-dark">
+                                                    #{item.expedienteId != null ? item.expedienteId : 'Sin expediente'}
+                                                </span>
+                                            </td>
                                             <td>#{item.tipoDocumentoIdTipoDocumento.nombreTipoDocumento}</td>
                                             <td>#{item.numeroDocumentoEstudiante}</td>
                                             <td>#{item.primerNombreEstudiante} #{item.segundoNombreEstudiante}</td>
                                             <td>#{item.primerApellidoEstudiante} #{item.segundoApellidoEstudiante}</td>
                                             <td>#{item.cursoIdCurso.codigoCurso}</td>
                                             <td class="text-center">
-                                                        <h:commandButton value="Editar"
-                                                                         action="#{estudianteTeaController.editarEstudianteP1(item)}"
-                                                                         styleClass="btn btn-info btn-sm me-1"
-                                                                         style="background-color: #a7d8ff; border-color: #91caff; color: #003f5c;" />
-                                                        <h:commandButton value="Eliminar"
-                                                                         action="#{estudianteTeaController.eliminarEstudiante(item)}"
-                                                                         onclick="return confirm('¿Desea eliminar el registro?')"
-                                                                         styleClass="btn btn-danger btn-sm"
-                                                                         style="background-color: #ffc5c5; border-color: #ffaaaa; color: #8b0000;" />
-                                                    </td>
+                                                <h:panelGroup rendered="#{item.diagnosticoCertificado}">
+                                                    <span class="badge bg-success">
+                                                        <i class="fas fa-check-circle me-1"></i>Diagnóstico Confirmado
+                                                    </span>
+                                                </h:panelGroup>
+                                                <h:panelGroup rendered="#{not item.diagnosticoCertificado}">
+                                                    <span class="badge bg-warning text-dark">
+                                                        <i class="fas fa-exclamation-triangle me-1"></i>Sospecha Fundada
+                                                    </span>
+                                                </h:panelGroup>
+                                            </td>
+                                            <td>
+                                                <h:panelGroup rendered="#{item.tipoTea != null}">
+                                                    <small class="text-muted">#{item.tipoTea}</small>
+                                                </h:panelGroup>
+                                                <h:panelGroup rendered="#{item.tipoTea == null}">
+                                                    <small class="text-muted">N/A</small>
+                                                </h:panelGroup>
+                                            </td>
+                                            <td class="text-center">
+                                                <h:panelGroup rendered="#{item.estadoRegistro == 'CONFIRMADO'}">
+                                                    <span class="badge bg-success">#{item.estadoRegistro}</span>
+                                                </h:panelGroup>
+                                                <h:panelGroup rendered="#{item.estadoRegistro == 'TEMPORAL'}">
+                                                    <span class="badge bg-secondary">#{item.estadoRegistro}</span>
+                                                </h:panelGroup>
+                                                <h:panelGroup rendered="#{item.estadoRegistro != 'CONFIRMADO' and item.estadoRegistro != 'TEMPORAL'}">
+                                                    <span class="badge bg-light text-dark">
+                                                        #{item.estadoRegistro != null ? item.estadoRegistro : 'Sin estado'}
+                                                    </span>
+                                                </h:panelGroup>
+                                            </td>
+                                            <td>
+                                                <h:outputText value="#{item.fechaRegistro != null ? item.fechaRegistro : item.createdAt}">
+                                                    <f:convertDateTime pattern="dd/MM/yyyy HH:mm" />
+                                                </h:outputText>
+                                            </td>
+                                            <td class="text-center">
+                                                <div class="btn-group" role="group">
+                                                    <h:commandButton value="Editar"
+                                                                     action="#{estudianteTeaController.editarEstudianteP1(item)}"
+                                                                     styleClass="btn btn-info btn-sm"
+                                                                     title="Editar información del estudiante">
+                                                        <i class="fas fa-edit"></i>
+                                                    </h:commandButton>
+                                                    
+                                                    <h:panelGroup rendered="#{item.diagnosticoCertificado}">
+                                                        <h:button value="Caracterizar"
+                                                                 outcome="/views/caracterizacion/iniciarcaracterizacion.xhtml"
+                                                                 styleClass="btn btn-success btn-sm"
+                                                                 title="Iniciar caracterización pedagógica">
+                                                            <i class="fas fa-clipboard-list"></i>
+                                                            <f:param name="expedienteId" value="#{item.expedienteId}" />
+                                                        </h:button>
+                                                    </h:panelGroup>
+                                                    
+                                                    <h:panelGroup rendered="#{not item.diagnosticoCertificado}">
+                                                        <h:button value="Diagnóstico"
+                                                                 outcome="/views/caracterizacion/rutadiagnostico.xhtml"
+                                                                 styleClass="btn btn-warning btn-sm"
+                                                                 title="Iniciar ruta de diagnóstico">
+                                                            <i class="fas fa-stethoscope"></i>
+                                                            <f:param name="expedienteId" value="#{item.expedienteId}" />
+                                                        </h:button>
+                                                    </h:panelGroup>
+                                                    
+                                                    <h:commandButton value="Eliminar"
+                                                                     action="#{estudianteTeaController.eliminarEstudiante(item)}"
+                                                                     onclick="return confirm('¿Está seguro que desea eliminar este registro? Esta acción no se puede deshacer.')"
+                                                                     styleClass="btn btn-danger btn-sm"
+                                                                     title="Eliminar estudiante">
+                                                        <i class="fas fa-trash"></i>
+                                                    </h:commandButton>
+                                                </div>
+                                            </td>
                                         </tr>
                                     </ui:repeat>
                                 </tbody>
                             </table>
+                        </div>
+
+                        <!-- Estadísticas rápidas -->
+                        <div class="row mt-4">
+                            <div class="col-md-3">
+                                <div class="card bg-primary text-white">
+                                    <div class="card-body text-center">
+                                        <h5>Total Estudiantes</h5>
+                                        <h3>#{estudianteTeaController.obtenerEstudiantes().size()}</h3>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="card bg-success text-white">
+                                    <div class="card-body text-center">
+                                        <h5>Con Diagnóstico</h5>
+                                        <h3>
+                                            <ui:repeat value="#{estudianteTeaController.obtenerEstudiantes()}" var="est">
+                                                #{est.diagnosticoCertificado ? '1' : '0'}
+                                            </ui:repeat>
+                                        </h3>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="card bg-warning text-dark">
+                                    <div class="card-body text-center">
+                                        <h5>Sospecha Fundada</h5>
+                                        <h3>
+                                            <ui:repeat value="#{estudianteTeaController.obtenerEstudiantes()}" var="est">
+                                                #{not est.diagnosticoCertificado ? '1' : '0'}
+                                            </ui:repeat>
+                                        </h3>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="card bg-info text-white">
+                                    <div class="card-body text-center">
+                                        <h5>Este Mes</h5>
+                                        <h3>0</h3> <!-- TODO: Implementar filtro por mes -->
+                                    </div>
+                                </div>
+                            </div>
                         </div>
 
                         <script>
@@ -66,8 +193,39 @@
                                     language: {
                                         url: 'https://cdn.datatables.net/plug-ins/1.11.3/i18n/es_es.json'
                                     },
-                                    pageLength: 50,
-                                    buttons: ['copy', 'csv', 'excel', 'pdf', 'print']
+                                    pageLength: 25,
+                                    order: [[ 0, "desc" ]], // Ordenar por ID descendente
+                                    columnDefs: [
+                                        { "width": "5%", "targets": 0 },   // ID
+                                        { "width": "12%", "targets": 1 },  // Expediente
+                                        { "width": "8%", "targets": 2 },   // Tipo Doc
+                                        { "width": "10%", "targets": 3 },  // Número Doc
+                                        { "width": "15%", "targets": 4 },  // Nombres
+                                        { "width": "15%", "targets": 5 },  // Apellidos
+                                        { "width": "8%", "targets": 6 },   // Curso
+                                        { "width": "12%", "targets": 7 },  // Estado TEA
+                                        { "width": "10%", "targets": 8 },  // Tipo TEA
+                                        { "width": "8%", "targets": 9 },   // Estado Registro
+                                        { "width": "10%", "targets": 10 }, // Fecha
+                                        { "width": "15%", "targets": 11, "orderable": false } // Acciones
+                                    ],
+                                    buttons: [
+                                        {
+                                            extend: 'excel',
+                                            text: '<i class="fas fa-file-excel"></i> Excel',
+                                            className: 'btn btn-success btn-sm'
+                                        },
+                                        {
+                                            extend: 'pdf',
+                                            text: '<i class="fas fa-file-pdf"></i> PDF',
+                                            className: 'btn btn-danger btn-sm'
+                                        },
+                                        {
+                                            extend: 'print',
+                                            text: '<i class="fas fa-print"></i> Imprimir',
+                                            className: 'btn btn-info btn-sm'
+                                        }
+                                    ]
                                 });
                             });
                         </script>

@@ -10,6 +10,7 @@ import com.sena.sitea.services.EstudianteFacadeLocal;
 import com.sena.sitea.services.ObservacionSistematicaFacadeLocal;
 import javax.inject.Named;
 import java.io.Serializable;
+import javax.annotation.PostConstruct;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -67,6 +68,13 @@ public class CaracterizacionControllerMejorado implements Serializable {
 
     public CaracterizacionControllerMejorado() {
     }
+    @PostConstruct
+    public void init() {
+        if (this.filtroEstado == null || this.filtroEstado.isEmpty()) {
+            this.filtroEstado = "TODOS";
+        }
+    }
+
 
     /**
      * RF-001: Crear pre-registro de estudiante

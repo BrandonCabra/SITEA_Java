@@ -2,7 +2,8 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-      xmlns:h="http://xmlns.jcp.org/jsf/html">
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
 
     <body>
 
@@ -52,6 +53,89 @@
                 </div>
             </div>
         </div>
+                
+                <div class="profile-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                    <div style="display: flex; gap: 20px; align-items: center;">
+                        <h:graphicImage value="#{empty perfilBean.usuario.fotoPerfil ? '/resources/images/default-avatar.png' : perfilBean.usuario.fotoPerfil}"
+                                        style="width: 100px; height: 100px; border-radius: 50%; border: 4px solid #ddd; object-fit: cover;" />
+
+                        <div>
+                            <h1 style="margin: 0;">#{perfilBean.usuario.primerNombre} #{perfilBean.usuario.primerApellido}</h1>
+                            <h:outputText value="#{perfilBean.usuario.correoUsuario}" style="color: gray;" /> <br/>
+                            <span class="badge badge-primary">#{perfilBean.usuario.rolIdRol.nombreRol}</span>
+                        </div>
+                    </div>
+
+                    <div class="actions">
+                        <h:button value="✎ Editar Perfil" outcome="perfilEditar" styleClass="btn btn-outline" />
+                        <h:button value="🛡️ Seguridad" outcome="cambiarPassword" styleClass="btn btn-outline" style="margin-left: 10px;" />
+                    </div>
+                </div>
+
+                <div style="margin-top:8px;">
+                    <h:form id="uploadForm" enctype="multipart/form-data">
+                        <div style="display:flex; gap:8px; align-items:center;">
+                            <h:inputFile value="#{perfilBean.uploadedPhoto}" />
+                            <h:commandButton value="Subir foto" action="#{perfilBean.subirFoto}" styleClass="btn btn-primary btn-sm" />
+                        </div>
+                    </h:form>
+                </div>
+
+                <h:panelGrid columns="2" columnClasses="col-top, col-top" style="width: 100%; gap: 20px;">
+                    
+                    <h:panelGroup layout="block" styleClass="card">
+                        <div class="card-header">
+                            <h3>Información Personal</h3>
+                            <p>Datos básicos y de contacto</p>
+                        </div>
+                        <div class="card-body">
+                            <h:panelGrid columns="2" styleClass="info-table" cellpadding="5">
+                                <h:outputLabel value="Documento:" style="font-weight: bold;" />
+                                <h:outputText value="#{perfilBean.usuario.dni}" />
+
+                                <h:outputLabel value="Teléfono:" style="font-weight: bold;" />
+                                <h:outputText value="#{perfilBean.usuario.telefono}" />
+
+                                <h:outputLabel value="Estado:" style="font-weight: bold;" />
+                                <h:outputText value="#{perfilBean.usuario.estado}" 
+                                              style="color: #{perfilBean.usuario.estado == 'activo' ? 'green' : 'red'}" />
+                                              
+                                <h:outputLabel value="Último Acceso:" style="font-weight: bold;" />
+                                <h:outputText value="#{perfilBean.usuario.ultimo_acceso_at}">
+                                    <f:convertDateTime pattern="dd/MM/yyyy HH:mm" />
+                                </h:outputText>
+                            </h:panelGrid>
+                        </div>
+                    </h:panelGroup>
+
+                    <h:panelGroup layout="block" styleClass="card">
+                        <div class="card-header">
+                            <h3>Actividad Reciente</h3>
+                            <p>Últimas acciones en el sistema</p>
+                        </div>
+                        <div class="card-body">
+                            <h:form id="actividadForm">
+                                <div style="display:flex; gap:8px; align-items:center; margin-bottom:8px;">
+                                    <h:outputLabel value="Desde:" />
+                                    <h:inputText value="#{perfilBean.filterFrom}"><f:convertDateTime pattern="yyyy-MM-dd"/></h:inputText>
+                                    <h:outputLabel value="Hasta:" />
+                                    <h:inputText value="#{perfilBean.filterTo}"><f:convertDateTime pattern="yyyy-MM-dd"/></h:inputText>
+                                    <h:commandButton value="Filtrar" action="#{perfilBean.filtrarActividades}" styleClass="btn btn-outline-primary btn-sm" />
+                                    <h:commandButton value="Limpiar" action="#{perfilBean.cargarActividades}" styleClass="btn btn-outline-secondary btn-sm" />
+                                </div>
+                            </h:form>
+
+                            <ui:repeat value="#{perfilBean.actividadesFiltradas}" var="act">
+                                <div style="margin-bottom:10px; border-left:3px solid #eee; padding-left:10px;">
+                                    <strong>Tipo:</strong> #{act.operationType} — <small style="color:gray;">#{act.changedAt}</small>
+                                    <div style="color: #444;">Recurso: #{act.newExpedienteId}</div>
+                                </div>
+                            </ui:repeat>
+
+                        </div>
+                    </h:panelGroup>
+
+                </h:panelGrid>
 
             </ui:define>
 

@@ -60,7 +60,13 @@ public class Login implements Serializable {
         this.rolActual = rolActual;
     }
 
-    
+    public Usuarios getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(Usuarios usuario) {
+        this.usuario = usuario;
+    }
     
     public List<Permisos> getListaPermisos() {
         return listaPermisos;

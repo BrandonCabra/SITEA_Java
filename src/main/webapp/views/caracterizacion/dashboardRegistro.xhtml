@@ -21,87 +21,131 @@
                <h:outputStylesheet name="/css/preregistro.css" />            
              
     <div class="container">
-        <!-- Vista: Buscar y listar estudiantes para iniciar caracterización -->
-        <div class="search-section mb-4">
-            <h2>Buscar Estudiante</h2>
-            <p>Ingrese el nombre o número de documento del estudiante para iniciar o continuar su proceso de caracterización.</p>
-            <h:form>
-                <div class="row g-2 align-items-center">
-                    <div class="col-md-6">
-                        <h:inputText value="#{caracterizacionControllerMejorado.filtroBusqueda}" styleClass="form-control" placeholder="Buscar por nombre o número de documento..." />
-                    </div>
-                    <div class="col-md-3">
-                        <h:selectOneMenu value="#{caracterizacionControllerMejorado.filtroEstado}" styleClass="form-select">
-                            <f:selectItem itemLabel="Todos" itemValue="TODOS" />
-                            <f:selectItem itemLabel="Sin Iniciar" itemValue="INICIADA" />
-                            <f:selectItem itemLabel="En Proceso" itemValue="EN_PROCESO" />
-                            <f:selectItem itemLabel="Completada" itemValue="COMPLETADA" />
-                        </h:selectOneMenu>
-                    </div>
-                    <div class="col-md-3">
-                        <h:commandButton value="Buscar" styleClass="btn btn-primary" />
+        <!-- Dashboard vista estudiante registrado -->
+        <div id="dashboardView">
+            <div class="header">
+                <h2>Dashboard Registro Estudiantes</h2>
+                <p>Gestión de estudiantes con TEA - Casos confirmados y sospechosos</p>
+            </div>
+
+            <!-- Statistics Cards -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 mb-8">
+                <div class="card stat-card success">
+                    <div class="card-header">
+                        <div class="card-title text-muted" style="font-size: 0.875rem; font-weight: 500;">
+                            Casos Confirmados
+                        </div>
+                        <div class="stat-value">
+                            <svg class="icon icon-sm text-success" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                            </svg>
+                            <span class="stat-number text-success">12</span>
+                        </div>
                     </div>
                 </div>
-            </h:form>
-        </div>
 
-        <!-- Resultados de búsqueda: caracterizaciones existentes -->
-        <div class="results-section mb-4">
-            <h3>Resultados de Búsqueda (#{caracterizacionControllerMejorado.obtenerCaracterizacionesFiltradas().size()})</h3>
-            <div class="row">
-                <ui:repeat var="car" value="#{caracterizacionControllerMejorado.obtenerCaracterizacionesFiltradas()}">
-                    <div class="col-md-4 mb-3">
-                        <div class="card h-100 shadow-sm">
-                            <div class="card-body">
-                                <h5 class="card-title">#{car.estudianteIdEstudiante.primerNombreEstudiante} #{car.estudianteIdEstudiante.primerApellidoEstudiante}</h5>
-                                <p class="card-text">Documento: #{car.estudianteIdEstudiante.numeroDocumentoEstudiante}</p>
-                                <p class="card-text">Expediente: #{car.expedienteCaracterizacion}</p>
-                                <p>
-                                    <span class="badge #{car.estadoCaracterizacion == 'COMPLETADA' ? 'bg-success' : car.estadoCaracterizacion == 'EN_PROCESO' ? 'bg-warning text-dark' : 'bg-primary'}">#{car.estadoCaracterizacion}</span>
-                                </p>
-                                <p class="small text-muted">Última actualización: #{car.updatedAt}</p>
-                                <div class="d-flex gap-2 mt-2">
-                                    <h:commandButton value="Continuar Caracterización" action="#{caracterizacionControllerMejorado.seleccionarCaracterizacion(car.idCaracterizacion)}" styleClass="btn btn-outline-primary btn-sm" rendered="#{car.estadoCaracterizacion == 'EN_PROCESO' or car.estadoCaracterizacion == 'INICIADA'}" />
-                                    <h:link outcome="/views/caracterizacion/ver_caracterizacion.xhtml?faces-redirect=true" styleClass="btn btn-light btn-sm" rendered="#{car.estadoCaracterizacion == 'COMPLETADA'}">
-                                        <f:param name="id" value="#{car.idCaracterizacion}" />
-                                        Ver Anterior
-                                    </h:link>
-                                    <h:commandButton value="Nueva Caracterización" action="#{caracterizacionControllerMejorado.seleccionarCaracterizacion(car.idCaracterizacion)}" styleClass="btn btn-primary btn-sm" rendered="#{car.estadoCaracterizacion == 'COMPLETADA'}" />
-                                </div>
-                            </div>
+                <div class="card stat-card warning">
+                    <div class="card-header">
+                        <div class="card-title text-muted" style="font-size: 0.875rem; font-weight: 500;">
+                            Sospecha Fundada
+                        </div>
+                        <div class="stat-value">
+                            <svg class="icon icon-sm text-warning" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16.5c-.77.833.192 2.5 1.732 2.5z"></path>
+                            </svg>
+                            <span class="stat-number text-warning">8</span>
                         </div>
                     </div>
-                </ui:repeat>
+                </div>
+
+                <div class="card stat-card info">
+                    <div class="card-header">
+                        <div class="card-title text-muted" style="font-size: 0.875rem; font-weight: 500;">
+                            Pendiente Evaluación
+                        </div>
+                        <div class="stat-value">
+                            <svg class="icon icon-sm text-info" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                            </svg>
+                            <span class="stat-number text-info">5</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card stat-card primary">
+                    <div class="card-header">
+                        <div class="card-title text-muted" style="font-size: 0.875rem; font-weight: 500;">
+                            Total Estudiantes
+                        </div>
+                        <div class="stat-value">
+                            <svg class="icon icon-sm text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197m13.5-9a2.5 2.5 0 11-5 0 2.5 2.5 0 015 0z"></path>
+                            </svg>
+                            <span class="stat-number text-primary">25</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quick Actions -->
+            <div class="grid grid-cols-1 md:grid-cols-2">
+                <div class="card action-card">
+                    <div class="action-icon text-primary">
+                        <svg class="icon" style="width:2.5rem;height:2.5rem;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+                        </svg>
+                    </div>
+                    <div class="action-content">
+                        <div class="action-title text-primary">
+                            Registrar Nuevo Estudiante
+                        </div>
+                        <div class="action-desc">
+                            Registra un estudiante con diagnóstico confirmado o sospecha fundada de TEA
+                        </div>
+                        <h:form>
+                        
+                        <h:commandButton value="Iniciar Registro"
+                                             action= "crearestudiantetea.xhtml?faces-redirect=true"
+                                            
+                                             class="btn btn-primary btn-full" /> 
+                        </h:form>
+                        
+                    </div>
+                </div>
+                <div class="card action-card">
+                    <div class="action-icon text-secondary">
+                        <svg class="icon" style="width:2.5rem;height:2.5rem;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197m13.5-9a2.5 2.5 0 11-5 0 2.5 2.5 0 015 0z"></path>
+                        </svg>
+                    </div>
+                    <div class="action-content">
+                        <div class="action-title text-secondary">
+                            Gestionar Estudiantes
+                        </div>
+                        <div class="action-desc">
+                            Ver, editar y gestionar expedientes existentes de estudiantes
+                        </div>
+                        <h:form>
+                        
+                        <h:commandButton value="Gestionar Registro"
+                                             action= "/views/caracterizacion/registroestudiante.xhtml?faces-redirect=true"
+                                            
+                                             class="btn btn-secondary btn-full" /> 
+                        </h:form>
+                        
+                        
+                        
+                    </div>
+                    
+                    
+                </div>
             </div>
         </div>
 
-        <!-- Pre-Registro: Estudiantes sin caracterización activa -->
-        <div class="preregistro-section mb-4">
-            <h3>Pre-Registro / Estudiantes sin caracterización activa</h3>
-            <div class="row">
-                <ui:repeat var="est" value="#{caracterizacionControllerMejorado.listaEstudiantesParaIniciar()}">
-                    <div class="col-md-4 mb-3">
-                        <div class="card h-100 shadow-sm">
-                            <div class="card-body">
-                                <h5 class="card-title">#{est.primerNombreEstudiante} #{est.primerApellidoEstudiante}</h5>
-                                <p class="card-text">Documento: #{est.numeroDocumentoEstudiante}</p>
-                                <p class="card-text">Expediente: #{est.expedienteId}</p>
-                                <p class="small text-muted">Estado registro: #{est.estadoRegistro}</p>
-                                <div class="d-flex gap-2 mt-2">
-                                    <h:commandButton value="Crear/Iniciar Caracterización" action="#{caracterizacionControllerMejorado.iniciarCaracterizacionPorId(est.idEstudiante)}" styleClass="btn btn-primary btn-sm" />
-                                    <h:link outcome="/views/caracterizacion/registroestudiante.xhtml?faces-redirect=true" styleClass="btn btn-outline-secondary btn-sm">
-                                        <f:param name="id" value="#{est.idEstudiante}" />
-                                        Editar
-                                    </h:link>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </ui:repeat>
-            </div>
-        </div>
-
+        
     </div>
+
+        
 
             </ui:define>
 

@@ -1,0 +1,190 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+    <h:head>
+        <meta charset="UTF-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <title>Valoración por Dimensiones - SITEA</title>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css"/>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+        <style>
+            body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f5f7fa; }
+            .page-header { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 30px 0; margin-bottom: 40px; }
+            .dimension-card { background: white; border-radius: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); padding: 20px; margin-bottom: 20px; transition: transform 0.3s, box-shadow 0.3s; }
+            .dimension-card:hover { transform: translateY(-5px); box-shadow: 0 8px 12px rgba(0,0,0,0.15); }
+            .dimension-card.completada { border-left: 5px solid #28a745; }
+            .dimension-card.pendiente { border-left: 5px solid #ffc107; }
+            .dimension-card.en-proceso { border-left: 5px solid #007bff; }
+            .dimension-title { font-size: 18px; font-weight: 600; margin-bottom: 10px; color: #333; }
+            .dimension-description { font-size: 14px; color: #666; margin-bottom: 15px; }
+            .progress-bar-dimension { height: 25px; background-color: #e9ecef; border-radius: 5px; margin-bottom: 10px; }
+            .estado-badge { display: inline-block; padding: 5px 12px; border-radius: 20px; font-size: 12px; font-weight: 600; }
+            .estado-badge.pendiente { background-color: #fff3cd; color: #856404; }
+            .estado-badge.en-proceso { background-color: #cfe2ff; color: #084298; }
+            .estado-badge.completada { background-color: #d1e7dd; color: #0f5132; }
+            .btn-valorar { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border: none; color: white; }
+            .btn-valorar:hover { background: linear-gradient(135deg, #5568d3 0%, #673a91 100%); color: white; }
+            .progress-valoracion { font-size: 12px; color: #666; margin-top: 5px; }
+            .container-dimensiones { max-width: 1000px; }
+        </style>
+    </h:head>
+
+    <h:body>
+        <ui:composition template="./../TemplateSitio.xhtml">
+            <ui:define name="content">
+                <!-- Header -->
+                <div class="page-header">
+                    <div class="container">
+                        <h1><i class="fas fa-chart-bar me-3"></i>Valoración por Dimensiones</h1>
+                        <p class="mb-0">Evalúa al estudiante según las 8 dimensiones MEN</p>
+                    </div>
+                </div>
+
+                <div class="container container-dimensiones">
+                    <!-- Información del estudiante y caracterización -->
+                    <div class="alert alert-info mb-4">
+                        <h5>
+                            <i class="fas fa-info-circle me-2"></i>
+                            Estudiante: <strong>#{caracterizacionControllerMejorado.caracterizacion.estudianteIdEstudiante.primerNombreEstudiante} #{caracterizacionControllerMejorado.caracterizacion.estudianteIdEstudiante.primerApellidoEstudiante}</strong>
+                        </h5>
+                        <p class="mb-0">
+                            Expediente: <strong>#{caracterizacionControllerMejorado.caracterizacion.estudianteIdEstudiante.expedienteId}</strong> | 
+                            Estado: <strong>#{caracterizacionControllerMejorado.caracterizacion.estadoCaracterizacion}</strong>
+                        </p>
+                    </div>
+
+                    <!-- Botón para inicializar dimensiones -->
+                    <h:form rendered="#{empty caracterizacionControllerMejorado.dimensionesActuales}">
+                        <div class="alert alert-warning">
+                            <h5><i class="fas fa-exclamation-triangle me-2"></i>No hay dimensiones inicializadas</h5>
+                            <p>Debes inicializar las 8 dimensiones MEN antes de comenzar la valoración.</p>
+                            <h:commandButton value="Inicializar Dimensiones" 
+                                           action="#{caracterizacionControllerMejorado.inicializarDimensionesFormulario}"
+                                           styleClass="btn btn-warning mt-2">
+                                <f:ajax execute="@this" render="@form :dimensionesPanel"/>
+                            </h:commandButton>
+                        </div>
+                    </h:form>
+
+                    <!-- Grid de dimensiones -->
+                    <h:panelGroup id="dimensionesPanel" layout="block">
+                        <div class="row">
+                            <ui:repeat var="dimension" value="#{caracterizacionControllerMejorado.dimensionesActuales}">
+                                <div class="col-md-6 col-lg-6">
+                                    <div class="dimension-card #{dimension.estado}">
+                                        <!-- Encabezado -->
+                                        <div class="d-flex justify-content-between align-items-start mb-3">
+                                            <div>
+                                                <h5 class="dimension-title">#{dimension.nombreDimension}</h5>
+                                                <p class="dimension-description">#{dimension.descripcion}</p>
+                                            </div>
+                                            <span class="estado-badge #{dimension.estado}">#{dimension.estado}</span>
+                                        </div>
+
+                                        <!-- Puntuación si está completada -->
+                                        <h:panelGroup rendered="#{dimension.puntuacion != null}">
+                                            <div class="progress-valoracion mb-2">
+                                                Puntuación: <strong>#{dimension.puntuacion}/5</strong>
+                                            </div>
+                                            <div class="progress" style="height: 8px;">
+                                                <div class="progress-bar bg-success" role="progressbar" 
+                                                     style="width: #{dimension.puntuacion * 20}%;"></div>
+                                            </div>
+                                        </h:panelGroup>
+
+                                        <!-- Fortalezas y áreas de apoyo (si están registradas) -->
+                                        <h:panelGroup rendered="#{dimension.fortalezas != null and not empty dimension.fortalezas}">
+                                            <div class="mt-3 p-2 bg-light rounded">
+                                                <small class="text-muted d-block mb-1">Fortalezas</small>
+                                                <p class="mb-0" style="font-size: 13px;">#{dimension.fortalezas}</p>
+                                            </div>
+                                        </h:panelGroup>
+
+                                        <h:panelGroup rendered="#{dimension.areasApoyo != null and not empty dimension.areasApoyo}">
+                                            <div class="mt-2 p-2 bg-light rounded">
+                                                <small class="text-muted d-block mb-1">Áreas de apoyo</small>
+                                                <p class="mb-0" style="font-size: 13px;">#{dimension.areasApoyo}</p>
+                                            </div>
+                                        </h:panelGroup>
+
+                                        <!-- Botones de acción -->
+                                        <!-- Botón especial para Habilidades Intelectuales -->
+                                        <h:form styleClass="mt-3" rendered="#{dimension.nombreDimension eq 'Habilidades intelectuales' or dimension.nombreDimension eq 'Habilidades intelectuales o cognitivas'}">
+                                            <h:commandButton 
+                                                value="#{dimension.estado == 'COMPLETADA' ? '✓ Editar Valoración' : 'Valorar Ahora'}"
+                                                action="#{caracterizacionControllerMejorado.iniciarValoracionHabilidades(dimension.idDimension)}"
+                                                styleClass="btn btn-valorar btn-sm w-100">
+                                                <f:param name="dimensionId" value="#{dimension.idDimension}"/>
+                                            </h:commandButton>
+                                        </h:form>
+                                        <!-- Botón estándar para las demás dimensiones -->
+                                        <h:form styleClass="mt-3" rendered="#{!(dimension.nombreDimension eq 'Habilidades intelectuales' or dimension.nombreDimension eq 'Habilidades intelectuales o cognitivas')}">
+                                            <h:commandButton 
+                                                value="#{dimension.estado == 'COMPLETADA' ? '✓ Editar Valoración' : 'Valorar Ahora'}"
+                                                action="#{caracterizacionControllerMejorado.irAValoracionDimension(dimension.idDimension)}"
+                                                styleClass="btn btn-valorar btn-sm w-100">
+                                                <f:param name="dimensionId" value="#{dimension.idDimension}"/>
+                                            </h:commandButton>
+                                        </h:form>
+
+                                        <!-- Fecha de valoración si existe -->
+                                        <h:panelGroup rendered="#{dimension.fechaValoracion != null}">
+                                            <small class="text-muted d-block mt-2">
+                                                <i class="fas fa-clock me-1"></i>
+                                                Última valoración: 
+                                                <h:outputText value="#{dimension.fechaValoracion}">
+                                                    <f:convertDateTime pattern="dd/MM/yyyy HH:mm"/>
+                                                </h:outputText>
+                                            </small>
+                                        </h:panelGroup>
+                                    </div>
+                                </div>
+                            </ui:repeat>
+                        </div>
+                    </h:panelGroup>
+
+                    <!-- Resumen de progreso -->
+                    <div class="card mt-5 mb-4" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white;">
+                        <div class="card-body">
+                            <h5 class="card-title mb-3">Progreso de Valoración</h5>
+                            <div class="row text-center">
+                                <div class="col-md-4">
+                                    <h3>#{caracterizacionControllerMejorado.contarDimensiones('COMPLETADA')}</h3>
+                                    <p class="mb-0">Completadas</p>
+                                </div>
+                                <div class="col-md-4">
+                                    <h3>#{caracterizacionControllerMejorado.contarDimensiones('EN_PROCESO')}</h3>
+                                    <p class="mb-0">En Proceso</p>
+                                </div>
+                                <div class="col-md-4">
+                                    <h3>#{caracterizacionControllerMejorado.contarDimensiones('PENDIENTE')}</h3>
+                                    <p class="mb-0">Pendientes</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Botones de navegación -->
+                    <h:form styleClass="mb-5">
+                        <div class="d-flex justify-content-between">
+                            <h:commandButton value="← Volver a Caracterización" 
+                                           action="/views/caracterizacion/dashboardRegistro.xhtml?faces-redirect=true"
+                                           styleClass="btn btn-secondary"/>
+                            <h:commandButton value="Generar Informe de Valoración →" 
+                                           action="#{caracterizacionControllerMejorado.generarInformeValoracion}"
+                                           rendered="#{caracterizacionControllerMejorado.contarDimensiones('COMPLETADA') == 8}"
+                                           styleClass="btn btn-success"/>
+                        </div>
+                    </h:form>
+                </div>
+
+                <!-- Scripts -->
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>

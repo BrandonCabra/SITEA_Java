@@ -52,6 +52,12 @@ public class EstudianteTeaController implements Serializable {
     CursoFacadeLocal cfl;
     @EJB
     TipoDocumentoFacadeLocal tfl;
+    @EJB
+    private com.sena.sitea.services.ExpedienteService expedienteService;
+    @EJB
+    private com.sena.sitea.services.PadreAccuClienteService padreAccuClienteService;
+    @EJB
+    private com.sena.sitea.services.PadreEmailService padreEmailService;
     
    /** Aqui van las otras tablas que van a ser creadas y llamadas la de señales y la de contacto
      * @return o*/
@@ -164,8 +170,15 @@ public class EstudianteTeaController implements Serializable {
         con.setCreatedAt(ahora);
         con.setUpdatedAt(ahora);
         
-        // Establecer información adicional
-        con.setExpedienteId(expedienteIdTemp);
+        // Establecer información adicional: generar expediente según tipo de registro
+        boolean tempExpediente = "sospecha".equals(tipoRegistroSeleccionado);
+        try {
+            String nuevoExp = expedienteService.generateExpediente(tempExpediente);
+            con.setExpedienteId(nuevoExp);
+        } catch (Exception ex) {
+            // Fallback a valor temporal proporcionado en el formulario
+            con.setExpedienteId(expedienteIdTemp);
+        }
         
         // Establecer usuario que registra (puedes obtenerlo de la sesión)
         if (usuarioQueRegistra != null) {
@@ -209,8 +222,48 @@ public class EstudianteTeaController implements Serializable {
 
             efl.create(con);
 
+            // Si es diagnóstico confirmado, crear automáticamente cuenta de padre/acudiente
+            if ("diagnostico".equals(tipoRegistroSeleccionado)) {
+                try {
+                    com.sena.sitea.services.PadreAccuClienteService.UsuarioPadreDTO usuarioPadreDTO = 
+                        padreAccuClienteService.crearCuentaPadre(con);
+                    
+                    // Enviar credenciales por correo usando SendGrid
+                    boolean correoEnviado = padreEmailService.enviarCredencialesPadre(
+                        usuarioPadreDTO.getCorreo(),
+                        usuarioPadreDTO.getNombreCompleto(),
+                        con.getPrimerNombreEstudiante() + " " + con.getPrimerApellidoEstudiante(),
+                        usuarioPadreDTO.getExpedienteEstudiante(),
+                        usuarioPadreDTO.getNumeroDocumento(),
+                        usuarioPadreDTO.getPasswordTemporal()
+                    );
+                    
+                    // Mensaje adicional informando sobre la cuenta creada
+                    this.mensajeExito += "\n\nCuenta de padre/acudiente creada automáticamente. " +
+                                        "Credenciales enviadas a: " + usuarioPadreDTO.getCorreo();
+                    
+                    if (correoEnviado) {
+                        FacesContext.getCurrentInstance().addMessage(null,
+                            new FacesMessage(FacesMessage.SEVERITY_INFO, "Cuenta Padre Creada", 
+                                "Se creó cuenta para: " + usuarioPadreDTO.getNombreCompleto() + 
+                                " y se envió correo de credenciales"));
+                    } else {
+                        FacesContext.getCurrentInstance().addMessage(null,
+                            new FacesMessage(FacesMessage.SEVERITY_WARN, "Aviso", 
+                                "Cuenta de padre creada pero hubo problema al enviar el correo. " +
+                                "Usuario: " + usuarioPadreDTO.getNumeroDocumento() + 
+                                " | Contraseña: " + usuarioPadreDTO.getPasswordTemporal()));
+                    }
+                } catch (Exception ex) {
+                    // Log pero no bloquear el proceso
+                    System.err.println("Error al crear cuenta de padre: " + ex.getMessage());
+                    FacesContext.getCurrentInstance().addMessage(null,
+                        new FacesMessage(FacesMessage.SEVERITY_WARN, "Advertencia", 
+                            "Estudiante registrado pero hubo error al crear cuenta de padre"));
+                }
+            }
+
             // Mensajes y estados para panel éxito
-            this.mensajeExito = "Estudiante registrado correctamente. ¡Bienvenido!";
             this.procesoCompletado = true;
 
             FacesContext.getCurrentInstance().addMessage(null,

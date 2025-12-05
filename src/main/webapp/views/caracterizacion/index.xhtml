@@ -39,7 +39,7 @@
                                 </h:panelGroup>
                             
                             <h:panelGroup rendered="#{login.rolActual eq 'ADMINISTRADOR' or login.rolActual eq 'PSICOORIENTADOR'}">
-                            <h:link outcome="/views/caracterizacion/crearcaracterizacion.xhtml?faces-redirect=true"
+                            <h:link outcome="/views/caracterizacion/dashboardInicioCaracterizacion.xhtml?faces-redirect=true"
                                     styleClass="btn btn-outline-primary text-start">
                                 <i class="fa-solid fa-file-alt me-2"></i> Iniciar Caracterización
                             </h:link>
@@ -48,12 +48,12 @@
                             
                             <h:link outcome="/views/caracterizacion/gestionarcaracterizacion.xhtml?faces-redirect=true"
                                     styleClass="btn btn-outline-primary text-start">
-                                <i class="fa-solid fa-trash me-2"></i> Gestionar Caracterización
+                                <i class="fa-solid fa-clipboard-list me-2"></i> Gestionar Caracterización
                             </h:link>
-                            <h:outputLink value="https://www.colombiaaprende.edu.co/"                                 
+                            <h:link outcome="/views/caracterizacion/dashboard_dimensiones.xhtml?faces-redirect=true"
                                     styleClass="btn btn-outline-primary text-start">
-                                <i class="fa-solid fa-users me-2"></i> Valoración Pedagógica
-                            </h:outputLink>
+                                <i class="fa-solid fa-clipboard-list me-2"></i> Valoracion Pedagogica
+                            </h:link>
                         </div>
                     </div>
                     <div class="col-md-4 d-none d-md-block text-center">
@@ -72,11 +72,11 @@
                     <div class="col-md-8">
                         <h2 class="text-primary fs-4 fw-semibold mb-4">Reportes Caracterizaciones</h2>
                         <div class="d-grid gap-3">
-                            <h:link outcome="/views/caracterizacion/index.xhtml?faces-redirect=true"
+                            <h:link outcome="/views/caracterizacion/crearcaracterizacion_mejorado.xhtml?faces-redirect=true"
                                     styleClass="btn btn-outline-primary text-start">
                                 <i class="fa-solid fa-file-export me-2"></i> Informe de valoración
                             </h:link>
-                            <h:link outcome="/views/caracterizacion/index.xhtml?faces-redirect=true"
+                            <h:link outcome="/views/caracterizacion/valorar_dimension.xhtml?faces-redirect=true"
                                     styleClass="btn btn-outline-primary text-start">
                                 <i class="fa-solid fa-chart-pie me-2"></i> Acta de Compromiso
                             </h:link>

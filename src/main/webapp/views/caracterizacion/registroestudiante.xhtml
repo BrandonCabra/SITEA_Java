@@ -26,6 +26,17 @@
                                              styleClass="btn btn-primary btn-lg">
                                 <i class="fas fa-plus me-2"></i>
                             </h:commandButton>
+                            
+                            <!-- Filtros rápidos -->
+                            <div class="mt-3 d-flex gap-2 flex-wrap">
+                                <h:form styleClass="d-flex gap-2">
+                                    <h:selectOneMenu styleClass="form-select form-select-sm" style="width: 200px;">
+                                        <f:selectItem itemLabel="Todos los estados" itemValue="" />
+                                        <f:selectItem itemLabel="Diagnóstico Confirmado (EXP)" itemValue="EXP" />
+                                        <f:selectItem itemLabel="Sospecha Fundada (TEMP)" itemValue="TEMP" />
+                                    </h:selectOneMenu>
+                                </h:form>
+                            </div>
                         </div>
 
                         <div class="table-responsive">
@@ -34,6 +45,7 @@
                                     <tr>
                                         <th>ID</th>
                                         <th>Expediente</th>
+                                        <th>Tipo Exp</th>
                                         <th>Tipo Doc</th>
                                         <th>Número Doc</th>
                                         <th>Nombres</th>
@@ -54,6 +66,14 @@
                                                 <span class="badge bg-info text-dark">
                                                     #{item.expedienteId != null ? item.expedienteId : 'Sin expediente'}
                                                 </span>
+                                            </td>
+                                            <td class="text-center">
+                                                <h:panelGroup rendered="#{item.expedienteId != null and item.expedienteId.startsWith('EXP')}">
+                                                    <span class="badge bg-success">EXP</span>
+                                                </h:panelGroup>
+                                                <h:panelGroup rendered="#{item.expedienteId != null and item.expedienteId.startsWith('TEMP')}">
+                                                    <span class="badge bg-warning text-dark">TEMP</span>
+                                                </h:panelGroup>
                                             </td>
                                             <td>#{item.tipoDocumentoIdTipoDocumento.nombreTipoDocumento}</td>
                                             <td>#{item.numeroDocumentoEstudiante}</td>
@@ -196,18 +216,19 @@
                                     pageLength: 25,
                                     order: [[ 0, "desc" ]], // Ordenar por ID descendente
                                     columnDefs: [
-                                        { "width": "5%", "targets": 0 },   // ID
+                                        { "width": "4%", "targets": 0 },   // ID
                                         { "width": "12%", "targets": 1 },  // Expediente
-                                        { "width": "8%", "targets": 2 },   // Tipo Doc
-                                        { "width": "10%", "targets": 3 },  // Número Doc
-                                        { "width": "15%", "targets": 4 },  // Nombres
-                                        { "width": "15%", "targets": 5 },  // Apellidos
-                                        { "width": "8%", "targets": 6 },   // Curso
-                                        { "width": "12%", "targets": 7 },  // Estado TEA
-                                        { "width": "10%", "targets": 8 },  // Tipo TEA
-                                        { "width": "8%", "targets": 9 },   // Estado Registro
-                                        { "width": "10%", "targets": 10 }, // Fecha
-                                        { "width": "15%", "targets": 11, "orderable": false } // Acciones
+                                        { "width": "6%", "targets": 2 },   // Tipo Exp
+                                        { "width": "8%", "targets": 3 },   // Tipo Doc
+                                        { "width": "10%", "targets": 4 },  // Número Doc
+                                        { "width": "12%", "targets": 5 },  // Nombres
+                                        { "width": "12%", "targets": 6 },  // Apellidos
+                                        { "width": "6%", "targets": 7 },   // Curso
+                                        { "width": "10%", "targets": 8 },  // Estado TEA
+                                        { "width": "8%", "targets": 9 },   // Tipo TEA
+                                        { "width": "8%", "targets": 10 },  // Estado Registro
+                                        { "width": "10%", "targets": 11 }, // Fecha
+                                        { "width": "14%", "targets": 12, "orderable": false } // Acciones
                                     ],
                                     buttons: [
                                         {

@@ -4,10 +4,18 @@ import com.sena.sitea.entities.Caracterizacion;
 import com.sena.sitea.entities.DimensionValoracion;
 import com.sena.sitea.entities.Estudiante;
 import com.sena.sitea.entities.ObservacionSistematica;
+import com.sena.sitea.entities.ContextoEscolar;
+import com.sena.sitea.entities.Usuarios;
+import com.sena.sitea.entities.Rol;
+import com.sena.sitea.entities.TipoDocumento;
 import com.sena.sitea.services.CaracterizacionFacadeLocal;
 import com.sena.sitea.services.DimensionValoracionFacadeLocal;
 import com.sena.sitea.services.EstudianteFacadeLocal;
 import com.sena.sitea.services.ObservacionSistematicaFacadeLocal;
+import com.sena.sitea.services.UsuariosFacadeLocal;
+import com.sena.sitea.services.RolFacadeLocal;
+import com.sena.sitea.services.EmailService;
+import com.sena.sitea.security.PasswordUtil;
 import javax.inject.Named;
 import java.io.Serializable;
 import javax.annotation.PostConstruct;
@@ -16,6 +24,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.security.SecureRandom;
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
@@ -37,6 +46,10 @@ public class CaracterizacionControllerMejorado implements Serializable {
     private DimensionValoracion dimensionActual = new DimensionValoracion();
     private ObservacionSistematica observacionActual = new ObservacionSistematica();
     
+    // Propiedades para captura de contexto familiar
+    private com.sena.sitea.entities.ContextoFamiliar contextoFamiliar = new com.sena.sitea.entities.ContextoFamiliar();
+    private com.sena.sitea.entities.ContextoEscolar contextoEscolar = new com.sena.sitea.entities.ContextoEscolar();
+    
     private List<SelectItem> listaEstudiantes;
     private List<DimensionValoracion> dimensiones;
     private List<ObservacionSistematica> observaciones;
@@ -55,6 +68,17 @@ public class CaracterizacionControllerMejorado implements Serializable {
         "Dimensión pedagógica"
     };
     
+    // Estilos e inteligencias para valoración de habilidades intelectuales
+    private static final String[] ESTILOS = {"Visual", "Auditivo", "Kinestésico"};
+    private static final String[] INTELIGENCIAS = {
+        "Lingüística", "Lógico-matemática", "Espacial", "Corporal-cinestésica",
+        "Musical", "Interpersonal", "Intrapersonal", "Naturalista"
+    };
+
+    // Valores temporales para el formulario (1-5)
+    private Integer[] estilosPuntuaciones;
+    private Integer[] inteligenciasPuntuaciones;
+    
     @EJB
     private CaracterizacionFacadeLocal caracterizacionFacade;
     @EJB
@@ -65,8 +89,43 @@ public class CaracterizacionControllerMejorado implements Serializable {
     private DimensionValoracionFacadeLocal dimensionFacade;
     @EJB
     private ObservacionSistematicaFacadeLocal observacionFacade;
+    @EJB
+    private com.sena.sitea.services.ContextoEscolarFacadeLocal contextoEscolarFacade;
+    @EJB
+    private com.sena.sitea.services.ContextoFamiliarFacadeLocal contextoFamiliarFacade;
+    @EJB
+    private UsuariosFacadeLocal usuariosFacade;
+    @EJB
+    private RolFacadeLocal rolFacade;
+    @EJB
+    private EmailService emailService;
 
     public CaracterizacionControllerMejorado() {
+    }
+    
+    // Exponer los arrays para la vista
+    public String[] getEstilos() {
+        return ESTILOS;
+    }
+
+    public String[] getInteligencias() {
+        return INTELIGENCIAS;
+    }
+
+    public Integer[] getEstilosPuntuaciones() {
+        return estilosPuntuaciones;
+    }
+
+    public void setEstilosPuntuaciones(Integer[] estilosPuntuaciones) {
+        this.estilosPuntuaciones = estilosPuntuaciones;
+    }
+
+    public Integer[] getInteligenciasPuntuaciones() {
+        return inteligenciasPuntuaciones;
+    }
+
+    public void setInteligenciasPuntuaciones(Integer[] inteligenciasPuntuaciones) {
+        this.inteligenciasPuntuaciones = inteligenciasPuntuaciones;
     }
     @PostConstruct
     public void init() {
@@ -174,11 +233,23 @@ public class CaracterizacionControllerMejorado implements Serializable {
             // Crear nueva caracterización
             caracterizacion = new Caracterizacion();
             caracterizacion.setEstudianteIdEstudiante(est);
-            caracterizacion.setExpedienteCaracterizacion(generarExpedienteCaracterizacion());
+            // Asignar código/expediente y estado inicial
+            String codigo = generarExpedienteCaracterizacion();
+            caracterizacion.setExpedienteCaracterizacion(codigo);
+            caracterizacion.setCodigoCaracterizacion(codigo);
             caracterizacion.setEstadoCaracterizacion("INICIADA");
             caracterizacion.setFechaInicio(new Date());
             caracterizacion.setCreatedAt(new Date());
             caracterizacion.setUpdatedAt(new Date());
+            // Rellenar campos obligatorios con valores por defecto para pasar validación
+            caracterizacion.setContextoAcademico("PENDIENTE");
+            caracterizacion.setContextoFamiliar("PENDIENTE");
+            caracterizacion.setContextoEscolar("PENDIENTE");
+            caracterizacion.setDiagnostico("PENDIENTE");
+            caracterizacion.setValoracionPedagogica("PENDIENTE");
+            caracterizacion.setBarraDeAprendizaje("PENDIENTE");
+            caracterizacion.setRecomendaciones("PENDIENTE");
+            caracterizacion.setCorresponsabilidad("PENDIENTE");
             
             // Obtener usuario actual
             Login login = (Login) FacesContext.getCurrentInstance()
@@ -187,6 +258,7 @@ public class CaracterizacionControllerMejorado implements Serializable {
                 caracterizacion.setCreatedBy(login.getUsuario().getIdUsuario());
             }
             
+            // Persistir caracterización inicial
             caracterizacionFacade.create(caracterizacion);
             
             // RF-009: Inicializar las 8 dimensiones
@@ -425,7 +497,7 @@ public class CaracterizacionControllerMejorado implements Serializable {
                 }
             }
             
-            return (completadas * 100) / dimensiones.size();
+            return completadas * 100 / dimensiones.size();
         } catch (Exception e) {
             e.printStackTrace();
             return 0;
@@ -583,7 +655,8 @@ public class CaracterizacionControllerMejorado implements Serializable {
             Login login = (Login) FacesContext.getCurrentInstance()
                     .getExternalContext().getSessionMap().get("login");
             if (login != null && login.getUsuario() != null) {
-                // Guardar usuario que realizó la valoración si la entidad lo permite
+                // Registro mínimo de auditoría (no intrusivo).
+                System.out.println("Usuario que valoró dimensión: " + login.getUsuario().getIdUsuario());
             }
             
             // Persistir cambios
@@ -738,6 +811,466 @@ public class CaracterizacionControllerMejorado implements Serializable {
     }
 
     /**
+     * Variante: iniciar caracterización y navegar directamente al formulario de Contexto Escolar
+     */
+    public String iniciarCaracterizacionYRegistrarEscolar(Integer estudianteId) {
+        try {
+            if (estudianteId != null) {
+                Estudiante est = estudianteFacade.find(estudianteId);
+                if (est != null) {
+                    String res = iniciarCaracterizacion(est);
+                    // iniciarCaracterizacion ya creó la caracterizacion y dimensiones
+                    // recargar caracterizacion actual y navegar al formulario escolar
+                    return "/views/caracterizacion/contexto_escolar.xhtml?faces-redirect=true";
+                }
+            }
+            addMessage(FacesMessage.SEVERITY_ERROR, "Estudiante no encontrado");
+            return null;
+        } catch (Exception e) {
+            addMessage(FacesMessage.SEVERITY_ERROR, "Error al iniciar caracterización: " + e.getMessage());
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    /**
+     * Iniciar valoración de Habilidades Intelectuales (estilos + inteligencias)
+     */
+    public String iniciarValoracionHabilidades(Integer dimensionId) {
+        try {
+            if (dimensionId != null) {
+                dimensionActual = dimensionFacade.find(dimensionId);
+                if (dimensionActual != null) {
+                    // inicializar puntuaciones por defecto (3 = neutro)
+                    estilosPuntuaciones = new Integer[ESTILOS.length];
+                    for (int i = 0; i < ESTILOS.length; i++) estilosPuntuaciones[i] = 3;
+                    inteligenciasPuntuaciones = new Integer[INTELIGENCIAS.length];
+                    for (int i = 0; i < INTELIGENCIAS.length; i++) inteligenciasPuntuaciones[i] = 3;
+
+                    return "/views/caracterizacion/valorar_habilidades_intelectuales.xhtml?faces-redirect=true";
+                }
+            }
+            addMessage(FacesMessage.SEVERITY_ERROR, "Dimensión no encontrada");
+            return null;
+        } catch (Exception e) {
+            addMessage(FacesMessage.SEVERITY_ERROR, "Error al iniciar valoración: " + e.getMessage());
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    /**
+     * Guardar resultados del formulario de Estilos e Inteligencias
+     */
+    public String guardarHabilidades() {
+        try {
+            if (dimensionActual == null || dimensionActual.getIdDimension() == null) {
+                addMessage(FacesMessage.SEVERITY_ERROR, "Debe seleccionar una dimensión");
+                return null;
+            }
+
+            // Asegurar no-nulos
+            for (int i = 0; i < ESTILOS.length; i++) if (estilosPuntuaciones[i] == null) estilosPuntuaciones[i] = 0;
+            for (int i = 0; i < INTELIGENCIAS.length; i++) if (inteligenciasPuntuaciones[i] == null) inteligenciasPuntuaciones[i] = 0;
+
+            // Determinar estilo predominante
+            int idxEst = 0;
+            int maxEst = estilosPuntuaciones[0];
+            for (int i = 1; i < estilosPuntuaciones.length; i++) {
+                if (estilosPuntuaciones[i] > maxEst) {
+                    maxEst = estilosPuntuaciones[i];
+                    idxEst = i;
+                }
+            }
+            String estiloPred = ESTILOS[idxEst];
+
+            // Determinar 2 inteligencias predominantes
+            List<int[]> lista = new ArrayList<>();
+            for (int i = 0; i < INTELIGENCIAS.length; i++) {
+                lista.add(new int[]{i, inteligenciasPuntuaciones[i]});
+            }
+            lista.sort((a, b) -> Integer.compare(b[1], a[1]));
+            String principales = INTELIGENCIAS[lista.get(0)[0]] + (lista.size() > 1 ? ", " + INTELIGENCIAS[lista.get(1)[0]] : "");
+
+            // Calcular puntuación global como promedio de inteligencias (1-5)
+            double avg = 0;
+            int sum = 0;
+            for (int v : inteligenciasPuntuaciones) sum += v;
+            avg = (double) sum / inteligenciasPuntuaciones.length;
+
+            // Guardar resumen en la entidad de dimensión
+            dimensionActual.setPuntuacion((int) Math.round(avg));
+            String resumen = "Estilo predominante: " + estiloPred + ". Inteligencias predominantes: " + principales + ".";
+            dimensionActual.setFortalezas("Resumen: " + resumen);
+            dimensionActual.setAreasApoyo("Recomendaciones: Revisar estrategias pedagógicas acordes al estilo " + estiloPred + ".");
+            dimensionActual.setEstado("COMPLETADA");
+            dimensionActual.setFechaValoracion(new Date());
+            dimensionActual.setUpdatedAt(new Date());
+
+            dimensionFacade.edit(dimensionActual);
+
+            addMessage(FacesMessage.SEVERITY_INFO, "Valoración guardada: " + resumen);
+            return "/views/caracterizacion/dashboard_dimensiones.xhtml?faces-redirect=true";
+        } catch (Exception e) {
+            addMessage(FacesMessage.SEVERITY_ERROR, "Error al guardar valoración: " + e.getMessage());
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    /**
+     * Guardar datos del Contexto Escolar en la caracterización actual
+     */
+    public String guardarContextoEscolar() {
+        try {
+            if (caracterizacion == null || caracterizacion.getIdCaracterizacion() == null) {
+                addMessage(FacesMessage.SEVERITY_ERROR, "No hay caracterización seleccionada");
+                return null;
+            }
+            // Validación mínima basada en la entidad ContextoEscolar vinculada al controlador
+            if (contextoEscolar == null || contextoEscolar.getInfraestructura() == null || contextoEscolar.getInfraestructura().trim().isEmpty()) {
+                addMessage(FacesMessage.SEVERITY_WARN, "Debe ingresar la información del contexto escolar (Infraestructura)");
+                return null;
+            }
+
+            // Validaciones detalladas de todos los campos requeridos
+            StringBuilder erroresValidacion = new StringBuilder();
+            
+            if (contextoEscolar.getAccesibilidad() == null || contextoEscolar.getAccesibilidad().trim().isEmpty()) {
+                erroresValidacion.append("• Debe describir la accesibilidad de las instalaciones\n");
+            }
+            if (contextoEscolar.getRecursos() == null || contextoEscolar.getRecursos().trim().isEmpty()) {
+                erroresValidacion.append("• Debe describir los recursos disponibles\n");
+            }
+            if (contextoEscolar.getAmbiente() == null || contextoEscolar.getAmbiente().trim().isEmpty()) {
+                erroresValidacion.append("• Debe describir el ambiente del contexto escolar\n");
+            }
+            if (contextoEscolar.getObservacionesDocentes() == null || contextoEscolar.getObservacionesDocentes().trim().isEmpty()) {
+                erroresValidacion.append("• Debe ingresar las observaciones de los docentes\n");
+            }
+            if (contextoEscolar.getBarrerasAprendizaje() == null || contextoEscolar.getBarrerasAprendizaje().trim().isEmpty()) {
+                erroresValidacion.append("• Debe describir las barreras de aprendizaje identificadas\n");
+            }
+            if (contextoEscolar.getRecomendacionesInstitucionales() == null || contextoEscolar.getRecomendacionesInstitucionales().trim().isEmpty()) {
+                erroresValidacion.append("• Debe incluir recomendaciones institucionales\n");
+            }
+            
+            // Si hay errores, mostrarlos todos en un mensaje
+            if (erroresValidacion.length() > 0) {
+                addMessage(FacesMessage.SEVERITY_ERROR, 
+                    "Por favor, complete los siguientes campos:\n" + erroresValidacion.toString());
+                return null;
+            }
+
+            // Buscar contexto escolar existente o crear nuevo
+            com.sena.sitea.entities.ContextoEscolar ce = null;
+            java.util.List<com.sena.sitea.entities.ContextoEscolar> encontrados = contextoEscolarFacade.findByCaracterizacion(caracterizacion.getIdCaracterizacion());
+            if (encontrados != null && !encontrados.isEmpty()) {
+                ce = encontrados.get(0);
+                addMessage(FacesMessage.SEVERITY_INFO, "Actualizando contexto escolar existente...");
+            } else {
+                ce = new com.sena.sitea.entities.ContextoEscolar();
+                ce.setCaracterizacion(caracterizacion);
+                ce.setCreatedAt(new Date());
+                // set created_by from session user if available
+                Login login = (Login) FacesContext.getCurrentInstance()
+                        .getExternalContext().getSessionMap().get("login");
+                if (login != null && login.getUsuario() != null) {
+                    ce.setCreatedBy(login.getUsuario().getIdUsuario());
+                }
+            }
+
+            // Mapear campos desde el objeto contextoEscolar del controlador a la entidad persistente
+            ce.setInfraestructura(contextoEscolar.getInfraestructura().trim());
+            ce.setAccesibilidad(contextoEscolar.getAccesibilidad().trim());
+            ce.setRecursos(contextoEscolar.getRecursos().trim());
+            ce.setAmbiente(contextoEscolar.getAmbiente().trim());
+            ce.setObservacionesDocentes(contextoEscolar.getObservacionesDocentes().trim());
+            ce.setBarrerasAprendizaje(contextoEscolar.getBarrerasAprendizaje().trim());
+            ce.setRecomendacionesInstitucionales(contextoEscolar.getRecomendacionesInstitucionales().trim());
+            ce.setUpdatedAt(new Date());
+            
+            // Persistir
+            if (ce.getIdContextoEscolar() == null) {
+                contextoEscolarFacade.create(ce);
+                addMessage(FacesMessage.SEVERITY_INFO, 
+                    "✓ Contexto escolar guardado correctamente. ID: " + ce.getIdContextoEscolar());
+            } else {
+                contextoEscolarFacade.edit(ce);
+                addMessage(FacesMessage.SEVERITY_INFO, 
+                    "✓ Contexto escolar actualizado correctamente");
+            }
+            
+            // después de guardar, ir al formulario de contexto familiar
+            // Mantener mensajes en Flash para que se muestren después del redirect
+            FacesContext.getCurrentInstance().getExternalContext().getFlash().setKeepMessages(true);
+            return "/views/caracterizacion/contexto_familiar.xhtml?faces-redirect=true";
+        } catch (Exception e) {
+            addMessage(FacesMessage.SEVERITY_ERROR, "Error al guardar contexto escolar: " + e.getMessage());
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    /**
+     * Guardar datos del Contexto Familiar y registrar acudiente
+     * Incluye creación de usuario para el acudiente
+     */
+    public String guardarContextoFamiliarYRegistrarAcudiente() {
+        try {
+            if (caracterizacion == null || caracterizacion.getIdCaracterizacion() == null) {
+                addMessage(FacesMessage.SEVERITY_ERROR, "No hay caracterización seleccionada");
+                return null;
+            }
+
+            // Validación mínima - al menos nombre del acudiente
+            if (contextoFamiliar.getAcudienteNombre() == null || contextoFamiliar.getAcudienteNombre().trim().isEmpty()) {
+                addMessage(FacesMessage.SEVERITY_WARN, "Debe ingresar el nombre del acudiente principal");
+                return null;
+            }
+
+            // Buscar contexto familiar existente o crear nuevo
+            com.sena.sitea.entities.ContextoFamiliar cf = null;
+            java.util.List<com.sena.sitea.entities.ContextoFamiliar> encontrados = 
+                contextoFamiliarFacade.findByCaracterizacion(caracterizacion.getIdCaracterizacion());
+            
+            if (encontrados != null && !encontrados.isEmpty()) {
+                cf = encontrados.get(0);
+            } else {
+                cf = new com.sena.sitea.entities.ContextoFamiliar();
+                cf.setCaracterizacion(caracterizacion);
+                cf.setCreatedAt(new Date());
+                
+                // Set created_by from session user if available
+                Login login = (Login) FacesContext.getCurrentInstance()
+                        .getExternalContext().getSessionMap().get("login");
+                if (login != null && login.getUsuario() != null) {
+                    cf.setCreatedBy(login.getUsuario().getIdUsuario());
+                }
+            }
+
+            // Mapear datos del acudiente desde contextoFamiliar
+            cf.setAcudienteNombre(contextoFamiliar.getAcudienteNombre());
+            cf.setAcudienteDocumento(contextoFamiliar.getAcudienteDocumento());
+            cf.setAcudienteTelefono(contextoFamiliar.getAcudienteTelefono());
+            cf.setAcudienteEmail(contextoFamiliar.getAcudienteEmail());
+            cf.setAcudienteParentesco(contextoFamiliar.getAcudienteParentesco());
+
+            // Mapear datos de madre, padre y otros familiares
+            cf.setMadreNombre(contextoFamiliar.getMadreNombre());
+            cf.setMadreDocumento(contextoFamiliar.getMadreDocumento());
+            cf.setMadreTelefono(contextoFamiliar.getMadreTelefono());
+            cf.setMadreEmail(contextoFamiliar.getMadreEmail());
+            cf.setMadreOcupacion(contextoFamiliar.getMadreOcupacion());
+            cf.setMadreEscolaridad(contextoFamiliar.getMadreEscolaridad());
+
+            cf.setPadreNombre(contextoFamiliar.getPadreNombre());
+            cf.setPadreDocumento(contextoFamiliar.getPadreDocumento());
+            cf.setPadreTelefono(contextoFamiliar.getPadreTelefono());
+            cf.setPadreEmail(contextoFamiliar.getPadreEmail());
+            cf.setPadreOcupacion(contextoFamiliar.getPadreOcupacion());
+            cf.setPadreEscolaridad(contextoFamiliar.getPadreEscolaridad());
+
+            // Mapear información familiar, vivienda y observaciones
+            cf.setOtrosFamiliares(contextoFamiliar.getOtrosFamiliares());
+            cf.setRelacionesFamiliares(contextoFamiliar.getRelacionesFamiliares());
+            cf.setComunicacionFamiliar(contextoFamiliar.getComunicacionFamiliar());
+            cf.setTipoVivienda(contextoFamiliar.getTipoVivienda());
+            cf.setTenenciaVivienda(contextoFamiliar.getTenenciaVivienda());
+            cf.setCondicionesVivienda(contextoFamiliar.getCondicionesVivienda());
+            cf.setSituacionEconomica(contextoFamiliar.getSituacionEconomica());
+            cf.setObservacionesFamilia(contextoFamiliar.getObservacionesFamilia());
+
+            cf.setUpdatedAt(new Date());
+
+            // Persistir
+            if (cf.getIdContextoFamiliar() == null) {
+                contextoFamiliarFacade.create(cf);
+                addMessage(FacesMessage.SEVERITY_INFO, 
+                    "✓ Contexto familiar guardado correctamente. ID: " + cf.getIdContextoFamiliar());
+            } else {
+                contextoFamiliarFacade.edit(cf);
+                addMessage(FacesMessage.SEVERITY_INFO, 
+                    "✓ Contexto familiar actualizado correctamente");
+            }
+
+            // Registrar acudiente como usuario si tiene email
+            if (contextoFamiliar.getAcudienteEmail() != null && !contextoFamiliar.getAcudienteEmail().trim().isEmpty()) {
+                registrarUsuarioAcudiente(contextoFamiliar.getAcudienteNombre(), 
+                                          contextoFamiliar.getAcudienteEmail(),
+                                          contextoFamiliar.getAcudienteDocumento());
+            }
+
+            // Antes de redirigir, conservar mensajes para que el usuario vea la confirmación
+            FacesContext.getCurrentInstance().getExternalContext().getFlash().setKeepMessages(true);
+            // Después de guardar, ir al dashboard de dimensiones para valorar
+            return "/views/caracterizacion/dashboard_dimensiones.xhtml?faces-redirect=true";
+        } catch (Exception e) {
+            addMessage(FacesMessage.SEVERITY_ERROR, 
+                "Error al guardar contexto familiar: " + e.getMessage());
+            e.printStackTrace();
+            return null;
+        }
+    }
+    
+    /**
+     * Validar formato de email
+     */
+    private boolean esEmailValido(String email) {
+        if (email == null || email.trim().isEmpty()) {
+            return false;
+        }
+        // Patrón básico de email: usuario@dominio.extensión
+        String regex = "^[A-Za-z0-9+_.-]+@([A-Za-z0-9.-]+\\.[A-Za-z]{2,})$";
+        return email.matches(regex);
+    }
+
+    /**
+     * Registrar usuario acudiente en el sistema
+     * Genera password temporal y envía por email
+     */
+    private void registrarUsuarioAcudiente(String nombre, String email, String documento) {
+        try {
+            // Validar inputs básicos
+            if (nombre == null || nombre.trim().isEmpty() || 
+                email == null || email.trim().isEmpty() || 
+                documento == null || documento.trim().isEmpty()) {
+                addMessage(FacesMessage.SEVERITY_WARN, 
+                    "Datos incompletos del acudiente. Email no será registrado.");
+                return;
+            }
+
+            // Validar email básico
+            if (!email.contains("@")) {
+                addMessage(FacesMessage.SEVERITY_WARN, 
+                    "Email del acudiente inválido: " + email);
+                return;
+            }
+
+            // 1. Generar password temporal seguro
+            String passwordTemporal = generateSecurePassword();
+            String passwordHash = PasswordUtil.hashPassword(passwordTemporal);
+
+            // 2. Crear nuevo usuario
+            Usuarios usuarioAcudiente = new Usuarios();
+            
+            // Dividir nombre en primer nombre y apellido
+            String[] partes = nombre.trim().split("\\s+", 2);
+            usuarioAcudiente.setPrimerNombre(partes[0]);
+            usuarioAcudiente.setPrimerApellido(partes.length > 1 ? partes[1] : "SIN_APELLIDO");
+            
+            // Llenar campos obligatorios
+            usuarioAcudiente.setNumeroDocumento(documento);
+            usuarioAcudiente.setCorreoUsuario(email);
+            usuarioAcudiente.setPassword(passwordHash);
+            usuarioAcudiente.setEstatus("ACTIVO");
+            usuarioAcudiente.setDireccionUsuario("NO_ESPECIFICADO"); // Campo obligatorio (@NotNull)
+            usuarioAcudiente.setFechaRegistroIdFechaRegistro(new Date());
+            
+            // 3. Asignar TipoDocumento (por defecto: CC = Cédula de Ciudadanía, id=1)
+            TipoDocumento tipoDoc = new TipoDocumento();
+            tipoDoc.setIdTipoDocumento(1); // CC es generalmente el tipo 1
+            usuarioAcudiente.setTipoDocumentoIdTipoDocumento(tipoDoc);
+            
+            // 4. Buscar rol "acudiente" y asignar
+            // Consultar rol por nombre en la BD
+            List<Rol> rolesEncontrados = rolFacade.findAll();
+            Rol rolAcudiente = null;
+            
+            for (Rol rol : rolesEncontrados) {
+                if ("acudiente".equalsIgnoreCase(rol.getNombreRol())) {
+                    rolAcudiente = rol;
+                    break;
+                }
+            }
+            
+            // Si no existe rol "acudiente", crear uno o usar rol predeterminado
+            if (rolAcudiente == null) {
+                // Buscar rol por defecto (padre, tutor, etc.) - id 4 es usualmente para acudientes
+                for (Rol rol : rolesEncontrados) {
+                    if (rol.getIdRol() == 4) { // Ajustar según tu BD
+                        rolAcudiente = rol;
+                        break;
+                    }
+                }
+            }
+            
+            if (rolAcudiente != null) {
+                usuarioAcudiente.setRolIdRol(rolAcudiente);
+            } else {
+                addMessage(FacesMessage.SEVERITY_WARN, 
+                    "No se encontró rol 'acudiente' en el sistema. Contacte al administrador.");
+                return;
+            }
+            
+            // 5. Persistir usuario
+            usuariosFacade.create(usuarioAcudiente);
+            
+            System.out.println("[SITEA] Nuevo usuario acudiente creado: " + email + 
+                             " | Documento: " + documento + " | Usuario ID: " + usuarioAcudiente.getIdUsuario());
+            
+            addMessage(FacesMessage.SEVERITY_INFO, 
+                "✓ Acudiente registrado exitosamente en el sistema con ID: " + usuarioAcudiente.getIdUsuario());
+
+            // 6. Enviar email con credenciales via SendGrid
+            String asuntoEmail = "SITEA - Credenciales de Acceso";
+            String cuerpoEmail = "Estimado/a " + nombre + ",\n\n" +
+                "Le informamos que ha sido registrado/a en la plataforma SITEA como acudiente.\n\n" +
+                "CREDENCIALES DE ACCESO:\n" +
+                "Usuario (Documento): " + documento + "\n" +
+                "Contraseña temporal: " + passwordTemporal + "\n\n" +
+                "Por favor, ingrese a la plataforma en la siguiente dirección:\n" +
+                "http://localhost:8080/sitea/ (ajustar según tu dominio)\n\n" +
+                "IMPORTANTE: Cambie su contraseña en el primer inicio de sesión.\n" +
+                "Esta contraseña es temporal y expira en 30 días.\n\n" +
+                "Si tiene dudas, contacte al equipo SITEA.\n\n" +
+                "Saludos,\n" +
+                "Plataforma SITEA";
+            
+            try {
+                emailService.enviarEmailPrueba(email, asuntoEmail, cuerpoEmail);
+                
+                addMessage(FacesMessage.SEVERITY_INFO, 
+                    "✓ Acudiente registrado y credenciales enviadas a: " + email);
+                
+                System.out.println("[SITEA] Email enviado exitosamente a: " + email);
+            } catch (Exception emailEx) {
+                // No fallar la creación de usuario si falla el email
+                addMessage(FacesMessage.SEVERITY_WARN, 
+                    "Acudiente registrado pero no se pudo enviar email: " + emailEx.getMessage() + 
+                    ". Contraseña temporal: " + passwordTemporal);
+                
+                System.err.println("[SITEA ERROR] No se pudo enviar email a " + email + ": " + emailEx.getMessage());
+                emailEx.printStackTrace();
+            }
+            
+        } catch (Exception e) {
+            addMessage(FacesMessage.SEVERITY_ERROR, 
+                "Error al registrar acudiente: " + e.getMessage());
+            
+            System.err.println("[SITEA ERROR] Error registrando acudiente: " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * Genera una contraseña temporal segura
+     * @return password de 12 caracteres (mayúsculas, minúsculas, números)
+     */
+    private String generateSecurePassword() {
+        String caracteres = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$";
+        SecureRandom random = new SecureRandom();
+        StringBuilder password = new StringBuilder();
+        
+        for (int i = 0; i < 12; i++) {
+            int index = random.nextInt(caracteres.length());
+            password.append(caracteres.charAt(index));
+        }
+        
+        return password.toString();
+    }
+
+    /**
      * Método auxiliar para agregar mensajes
      */
     private void addMessage(FacesMessage.Severity severity, String message) {
@@ -745,7 +1278,22 @@ public class CaracterizacionControllerMejorado implements Serializable {
             new FacesMessage(severity, message, ""));
     }
 
-    // Getters y Setters
+    // Getters y Setters para contexto familiar
+    public com.sena.sitea.entities.ContextoFamiliar getContextoFamiliar() {
+        return contextoFamiliar;
+    }
+
+    public void setContextoFamiliar(com.sena.sitea.entities.ContextoFamiliar contextoFamiliar) {
+        this.contextoFamiliar = contextoFamiliar;
+    }
+
+    public com.sena.sitea.entities.ContextoEscolar getContextoEscolar() {
+        return contextoEscolar;
+    }
+
+    public void setContextoEscolar(com.sena.sitea.entities.ContextoEscolar contextoEscolar) {
+        this.contextoEscolar = contextoEscolar;
+    }
     public Caracterizacion getCaracterizacion() {
         return caracterizacion;
     }

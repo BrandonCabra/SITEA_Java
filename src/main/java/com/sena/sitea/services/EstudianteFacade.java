@@ -75,6 +75,16 @@ public class EstudianteFacade extends AbstractFacade<Estudiante> implements Estu
 
     @Override
     public void updateExpedienteId(Integer estudianteId, String nuevoExpediente) {
+        try {
+            Estudiante est = em.find(Estudiante.class, estudianteId);
+            if (est != null) {
+                est.setExpedienteId(nuevoExpediente);
+                em.merge(est);
+            }
+        } catch (Exception e) {
+            // Log o rethrow según políticas del proyecto
+            e.printStackTrace();
+        }
     }
 
    

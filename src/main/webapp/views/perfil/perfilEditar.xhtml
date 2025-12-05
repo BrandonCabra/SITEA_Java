@@ -2,7 +2,8 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-      xmlns:h="http://xmlns.jcp.org/jsf/html">
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
 
     <body>
 
@@ -17,41 +18,54 @@
             </ui:define>
 
             <ui:define name="content">
-                <div class="container mt-4 mb-4">
-            <div class="card shadow">
-                <div class="card-header bg-primary text-white text-center">
-                    <i class="fa fa-user-circle fa-2x"></i>
-                    <h4>Perfil del Usuario</h4>
+                
+                <div class="page-header">
+                    <h:link value="← Volver al Perfil" outcome="index.xhtml" styleClass="btn-link" />
+                    <a href="index.xhtml"></a>
+                    <h1>Editar Perfil</h1>
                 </div>
 
-                <div class="card-body">
-                    <div class="row mb-3">
-                        <div class="col-sm-4 font-weight-bold">Nombre:</div>
-                        <div class="col-sm-8">#{login.nombreUsuario}</div>
-                    </div>
-                    <div class="row mb-3">
-                        <div class="col-sm-4 font-weight-bold">Documento:</div>
-                        <div class="col-sm-8">#{login.NUMERO_DOCUMENTO}</div>
-                    </div>
-                    <div class="row mb-3">
-                        <div class="col-sm-4 font-weight-bold">Rol:</div>
-                        <div class="col-sm-8">#{login.rolActual}</div>
-                    </div>
-                    <div class="row mb-3">
-                        <div class="col-sm-4 font-weight-bold">Correo:</div>
-                        <div class="col-sm-8"></div>
+                <h:form id="formEditarPerfil">
+                    <h:messages globalOnly="true" showDetail="true" styleClass="alert" />
+
+                    <div class="card" style="padding: 20px; margin-top: 20px;">
+                        <h3>Información Personal</h3>
+                        <hr/>
+                        
+                        <h:panelGrid columns="3" cellpadding="10" style="width: 100%;">
+                            
+                            <h:outputLabel value="Nombre:" for="nom" />
+                            <h:inputText id="nom" value="#{perfilBean.usuario.primerNombre}" required="true" styleClass="form-control" />
+                            <h:message for="nom" style="color: red;" />
+
+                            <h:outputLabel value="Apellidos:" for="ape" />
+                            <h:inputText id="ape" value="#{perfilBean.usuario.primerApellido}" required="true" styleClass="form-control" />
+                            <h:message for="ape" style="color: red;" />
+
+                            <h:outputLabel value="Teléfono:" for="tel" />
+                            <h:inputText id="tel" value="#{perfilBean.usuario.telefonoUsuario}" styleClass="form-control" />
+                            <h:message for="tel" style="color: red;" />
+
+                            <h:outputLabel value="Dirección:" for="dir" />
+                            <h:inputText id="dir" value="#{perfilBean.usuario.direccionUsuario}" styleClass="form-control" />
+                            <h:message for="dir" style="color: red;" />
+
+                            <h:outputLabel value="Email (Lectura):" />
+                            <h:inputText value="#{perfilBean.usuario.correoUsuario}" readonly="true" styleClass="form-control disabled" />
+                            <h:panelGroup />
+
+                            <h:outputLabel value="Correo secundario:" for="secMail" />
+                            <h:inputText id="secMail" value="#{perfilBean.usuario.correoInstitucional}" styleClass="form-control" />
+                            <h:panelGroup />
+                        </h:panelGrid>
                     </div>
 
-                    <!-- Botón para cerrar sesión o editar perfil -->
-                    <div class="text-center mt-4">
-                        <h:form><h:commandButton value="Editar Perfil" 
-                                          
-                                         styleClass="btn btn-outline-primary btn-sm" 
-                                         rendered="#{permisos.descripcion eq 'dashboard'}"/></h:form>
+                        <div style="margin-top: 20px; text-align: right;">
+                        <h:link value="Cancelar" outcome="perfilVer" styleClass="btn btn-secondary" style="margin-right: 10px;" />
+                        <h:commandButton value="Guardar Cambios" action="#{perfilBean.guardarPerfil}" styleClass="btn btn-primary" />
                     </div>
-                </div>
-            </div>
-        </div>
+
+                </h:form>
 
             </ui:define>
 

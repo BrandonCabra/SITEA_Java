@@ -1,0 +1,470 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <h:head>
+        <style>
+            .form-section {
+                margin-bottom: 30px;
+                padding: 20px;
+                background: #f9f9f9;
+                border-left: 4px solid #2196F3;
+                border-radius: 4px;
+            }
+            .form-section h3 {
+                color: #1976D2;
+                margin-top: 0;
+                margin-bottom: 15px;
+                font-size: 18px;
+            }
+            .info-box {
+                background: #E3F2FD;
+                padding: 15px;
+                border-radius: 4px;
+                margin-bottom: 20px;
+                border-left: 4px solid #2196F3;
+            }
+            .form-row {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 15px;
+                margin-bottom: 15px;
+            }
+            .form-row.full {
+                grid-template-columns: 1fr;
+            }
+            .alert-info {
+                background: #FFF3E0;
+                padding: 12px;
+                border-left: 4px solid #FF9800;
+                border-radius: 3px;
+                margin-bottom: 15px;
+                font-size: 13px;
+                color: #E65100;
+            
+                        /* Estilos para mensajes */
+                        .msg-error {
+                            background-color: #ffebee;
+                            border: 1px solid #ef5350;
+                            color: #c62828;
+                            padding: 15px;
+                            border-radius: 4px;
+                            margin-bottom: 20px;
+                            white-space: pre-wrap;
+                            font-size: 13px;
+                        }
+                        .msg-success {
+                            background-color: #e8f5e9;
+                            border: 1px solid #66bb6a;
+                            color: #2e7d32;
+                            padding: 15px;
+                            border-radius: 4px;
+                            margin-bottom: 20px;
+                            font-size: 13px;
+                        }
+                        .msg-warning {
+                            background-color: #fff3e0;
+                            border: 1px solid #ffa726;
+                            color: #e65100;
+                            padding: 15px;
+                            border-radius: 4px;
+                            margin-bottom: 20px;
+                            font-size: 13px;
+                        }
+                        .required-field::after {
+                            content: " *";
+                            color: #d32f2f;
+                            font-weight: bold;
+                                    .msg-error {
+                                        background-color: #ffebee;
+                                        border: 1px solid #ef5350;
+                                        color: #c62828;
+                                        padding: 15px;
+                                        border-radius: 4px;
+                                        margin-bottom: 20px;
+                                        white-space: pre-wrap;
+                                        font-size: 13px;
+                                    }
+                                    .msg-success {
+                                        background-color: #e8f5e9;
+                                        border: 1px solid #66bb6a;
+                                        color: #2e7d32;
+                                        padding: 15px;
+                                        border-radius: 4px;
+                                        margin-bottom: 20px;
+                                        font-size: 13px;
+                                    }
+                                    .msg-warning {
+                                        background-color: #fff3e0;
+                                        border: 1px solid #ffa726;
+                                        color: #e65100;
+                                        padding: 15px;
+                                        border-radius: 4px;
+                                        margin-bottom: 20px;
+                                        font-size: 13px;
+                                    }
+                                    .required-field::after {
+                                        content: " *";
+                                        color: #d32f2f;
+                                        font-weight: bold;
+                                    }
+                        }
+            }
+        </style>
+    </h:head>
+
+    <body>
+        <ui:composition template="./../TemplateSitio.xhtml">
+            <ui:define name="content">
+                <f:view>
+                    <h:form id="formContextoFamiliar" styleClass="container">
+                        <div class="card p-3 shadow-sm">
+                            <div class="card-header bg-primary text-white">
+                                <h3>Caracterización - Contexto Familiar</h3>
+                                <small>Expediente: #{caracterizacionControllerMejorado.caracterizacion.expedienteCaracterizacion}</small>
+                                <small>Estudiante: #{caracterizacionControllerMejorado.caracterizacion.estudianteIdEstudiante.primerNombreEstudiante} #{caracterizacionControllerMejorado.caracterizacion.estudianteIdEstudiante.primerApellidoEstudiante}</small>
+                            </div>
+
+                            <div class="card-body">
+
+                                <!-- INFORMACIÓN DEL ACUDIENTE PRINCIPAL -->
+                                <div class="form-section">
+                                    <h3>1. Acudiente Principal *</h3>
+                                    <div class="alert-info">
+                                        ℹ️ El acudiente recibirá credenciales de acceso al sistema después de registrarlo
+                                    </div>
+                                
+                                                                    <!-- INFORMACIÓN DEL ACUDIENTE PRINCIPAL -->
+                                                                    <div class="form-section">
+                                                                        <h3>1. Acudiente Principal *</h3>
+                                                                        <div class="alert-info">
+                                                                            ℹ️ El acudiente recibirá credenciales de acceso al sistema después de registrarlo
+                                                                        </div>
+                                    </div>
+
+                                    <div class="form-row full">
+                                        <h:outputLabel value="Nombre Completo del Acudiente *" styleClass="form-label"/>
+                                        <h:inputText id="acudienteNombre" 
+                                                    value="#{caracterizacionControllerMejorado.contextoFamiliar.acudienteNombre}"
+                                                    required="true"
+                                                  
+                                                    styleClass="form-control"/>
+                                    </div>
+
+                                    <div class="form-row">
+                                        <div>
+                                            <h:outputLabel value="Documento de Identidad" styleClass="form-label"/>
+                                            <h:inputText id="acudienteDocumento" 
+                                                        value="#{caracterizacionControllerMejorado.contextoFamiliar.acudienteDocumento}"
+                                                        
+                                                        styleClass="form-control"/>
+                                        </div>
+                                        <div>
+                                            <h:outputLabel value="Parentesco *" styleClass="form-label"/>
+                                            <h:selectOneMenu id="acudienteParentesco" 
+                                                           value="#{caracterizacionControllerMejorado.contextoFamiliar.acudienteParentesco}"
+                                                           required="true"
+                                                           styleClass="form-control">
+                                                <f:selectItem itemLabel="-- Seleccione --" itemValue=""/>
+                                                <f:selectItem itemLabel="Madre" itemValue="Madre"/>
+                                                <f:selectItem itemLabel="Padre" itemValue="Padre"/>
+                                                <f:selectItem itemLabel="Abuelo(a)" itemValue="Abuelo(a)"/>
+                                                <f:selectItem itemLabel="Tío(a)" itemValue="Tío(a)"/>
+                                                <f:selectItem itemLabel="Hermano(a)" itemValue="Hermano(a)"/>
+                                                <f:selectItem itemLabel="Otro" itemValue="Otro"/>
+                                            </h:selectOneMenu>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-row">
+                                        <div>
+                                            <h:outputLabel value="Teléfono" styleClass="form-label"/>
+                                            <h:inputText id="acudienteTelefono" 
+                                                        value="#{caracterizacionControllerMejorado.contextoFamiliar.acudienteTelefono}"
+                                                        
+                                                        styleClass="form-control"/>
+                                        </div>
+                                        <div>
+                                            <h:outputLabel value="Email *" styleClass="form-label"/>
+                                            <h:inputText id="acudienteEmail" 
+                                                        value="#{caracterizacionControllerMejorado.contextoFamiliar.acudienteEmail}"
+                                                        required="true"
+                                                        
+                                                        
+                                                        styleClass="form-control"/>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- INFORMACIÓN DE LA MADRE -->
+                                <div class="form-section">
+                                    <h3>2. Información de la Madre</h3>
+
+                                    <div class="form-row full">
+                                        <h:outputLabel value="Nombre Completo" styleClass="form-label"/>
+                                        <h:inputText id="madreNombre" 
+                                                    value="#{caracterizacionControllerMejorado.contextoFamiliar.madreNombre}"
+                                                    
+                                                    styleClass="form-control"/>
+                                    </div>
+
+                                    <div class="form-row">
+                                        <div>
+                                            <h:outputLabel value="Documento de Identidad" styleClass="form-label"/>
+                                            <h:inputText id="madreDocumento" 
+                                                        value="#{caracterizacionControllerMejorado.contextoFamiliar.madreDocumento}"
+                                                        
+                                                        styleClass="form-control"/>
+                                        </div>
+                                        <div>
+                                            <h:outputLabel value="Teléfono" styleClass="form-label"/>
+                                            <h:inputText id="madreTelefono" 
+                                                        value="#{caracterizacionControllerMejorado.contextoFamiliar.madreTelefono}"
+                                                        
+                                                        styleClass="form-control"/>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-row">
+                                        <div>
+                                            <h:outputLabel value="Email" styleClass="form-label"/>
+                                            <h:inputText id="madreEmail" 
+                                                        value="#{caracterizacionControllerMejorado.contextoFamiliar.madreEmail}"
+                                                        
+                                                        styleClass="form-control"/>
+                                        </div>
+                                        <div>
+                                            <h:outputLabel value="Ocupación" styleClass="form-label"/>
+                                            <h:inputText id="madreOcupacion" 
+                                                        value="#{caracterizacionControllerMejorado.contextoFamiliar.madreOcupacion}"
+                                                        
+                                                        styleClass="form-control"/>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-row">
+                                        <div>
+                                            <h:outputLabel value="Escolaridad" styleClass="form-label"/>
+                                            <h:selectOneMenu id="madreEscolaridad" 
+                                                           value="#{caracterizacionControllerMejorado.contextoFamiliar.madreEscolaridad}"
+                                                           styleClass="form-control">
+                                                <f:selectItem itemLabel="-- Seleccione --" itemValue=""/>
+                                                <f:selectItem itemLabel="Primaria" itemValue="Primaria"/>
+                                                <f:selectItem itemLabel="Secundaria" itemValue="Secundaria"/>
+                                                <f:selectItem itemLabel="Técnica" itemValue="Técnica"/>
+                                                <f:selectItem itemLabel="Tecnológica" itemValue="Tecnológica"/>
+                                                <f:selectItem itemLabel="Universitaria" itemValue="Universitaria"/>
+                                                <f:selectItem itemLabel="No sabe leer ni escribir" itemValue="Analfabeta"/>
+                                            </h:selectOneMenu>
+                                        </div>
+                                        <div></div>
+                                    </div>
+                                </div>
+
+                                <!-- INFORMACIÓN DEL PADRE -->
+                                <div class="form-section">
+                                    <h3>3. Información del Padre</h3>
+
+                                    <div class="form-row full">
+                                        <h:outputLabel value="Nombre Completo" styleClass="form-label"/>
+                                        <h:inputText id="padreNombre" 
+                                                    value="#{caracterizacionControllerMejorado.contextoFamiliar.padreNombre}"
+                                                    
+                                                    styleClass="form-control"/>
+                                    </div>
+
+                                    <div class="form-row">
+                                        <div>
+                                            <h:outputLabel value="Documento de Identidad" styleClass="form-label"/>
+                                            <h:inputText id="padreDocumento" 
+                                                        value="#{caracterizacionControllerMejorado.contextoFamiliar.padreDocumento}"
+                                                        
+                                                        styleClass="form-control"/>
+                                        </div>
+                                        <div>
+                                            <h:outputLabel value="Teléfono" styleClass="form-label"/>
+                                            <h:inputText id="padreTelefono" 
+                                                        value="#{caracterizacionControllerMejorado.contextoFamiliar.padreTelefono}"
+                                                        
+                                                        styleClass="form-control"/>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-row">
+                                        <div>
+                                            <h:outputLabel value="Email" styleClass="form-label"/>
+                                            <h:inputText id="padreEmail" 
+                                                        value="#{caracterizacionControllerMejorado.contextoFamiliar.padreEmail}"
+                                                        
+                                                        styleClass="form-control"/>
+                                        </div>
+                                        <div>
+                                            <h:outputLabel value="Ocupación" styleClass="form-label"/>
+                                            <h:inputText id="padreOcupacion" 
+                                                        value="#{caracterizacionControllerMejorado.contextoFamiliar.padreOcupacion}"
+                                                        
+                                                        styleClass="form-control"/>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-row">
+                                        <div>
+                                            <h:outputLabel value="Escolaridad" styleClass="form-label"/>
+                                            <h:selectOneMenu id="padreEscolaridad" 
+                                                           value="#{caracterizacionControllerMejorado.contextoFamiliar.padreEscolaridad}"
+                                                           styleClass="form-control">
+                                                <f:selectItem itemLabel="-- Seleccione --" itemValue=""/>
+                                                <f:selectItem itemLabel="Primaria" itemValue="Primaria"/>
+                                                <f:selectItem itemLabel="Secundaria" itemValue="Secundaria"/>
+                                                <f:selectItem itemLabel="Técnica" itemValue="Técnica"/>
+                                                <f:selectItem itemLabel="Tecnológica" itemValue="Tecnológica"/>
+                                                <f:selectItem itemLabel="Universitaria" itemValue="Universitaria"/>
+                                                <f:selectItem itemLabel="No sabe leer ni escribir" itemValue="Analfabeta"/>
+                                            </h:selectOneMenu>
+                                        </div>
+                                        <div></div>
+                                    </div>
+                                </div>
+
+                                <!-- COMPOSICIÓN Y RELACIONES FAMILIARES -->
+                                <div class="form-section">
+                                    <h3>4. Composición y Relaciones Familiares</h3>
+
+                                    <div class="form-row full">
+                                        <h:outputLabel value="Otras personas que viven con el estudiante" styleClass="form-label"/>
+                                        <h:inputTextarea id="otrosFamiliares" 
+                                                        value="#{caracterizacionControllerMejorado.contextoFamiliar.otrosFamiliares}"
+                                                        rows="2"
+                                                        
+                                                        styleClass="form-control"/>
+                                    </div>
+
+                                    <div class="form-row full">
+                                        <h:outputLabel value="Relaciones Familiares y Dinámicas" styleClass="form-label"/>
+                                        <h:inputTextarea id="relacionesFamiliares" 
+                                                        value="#{caracterizacionControllerMejorado.contextoFamiliar.relacionesFamiliares}"
+                                                        rows="3"
+                                                        
+                                                        styleClass="form-control"/>
+                                    </div>
+
+                                    <div class="form-row full">
+                                        <h:outputLabel value="Comunicación Familiar" styleClass="form-label"/>
+                                        <h:inputTextarea id="comunicacionFamiliar" 
+                                                        value="#{caracterizacionControllerMejorado.contextoFamiliar.comunicacionFamiliar}"
+                                                        rows="3"
+                                                        
+                                                        styleClass="form-control"/>
+                                    </div>
+                                </div>
+
+                                <!-- VIVIENDA Y SITUACIÓN SOCIOECONÓMICA -->
+                                <div class="form-section">
+                                    <h3>5. Vivienda y Situación Socioeconómica</h3>
+
+                                    <div class="form-row">
+                                        <div>
+                                            <h:outputLabel value="Tipo de Vivienda" styleClass="form-label"/>
+                                            <h:selectOneMenu id="tipoVivienda" 
+                                                           value="#{caracterizacionControllerMejorado.contextoFamiliar.tipoVivienda}"
+                                                           styleClass="form-control">
+                                                <f:selectItem itemLabel="-- Seleccione --" itemValue=""/>
+                                                <f:selectItem itemLabel="Casa propia" itemValue="Casa propia"/>
+                                                <f:selectItem itemLabel="Apartamento" itemValue="Apartamento"/>
+                                                <f:selectItem itemLabel="Inquilinato" itemValue="Inquilinato"/>
+                                                <f:selectItem itemLabel="Habitación arrendada" itemValue="Habitación arrendada"/>
+                                                <f:selectItem itemLabel="Vivienda compartida" itemValue="Vivienda compartida"/>
+                                                <f:selectItem itemLabel="Refugio/Albergue" itemValue="Refugio/Albergue"/>
+                                            </h:selectOneMenu>
+                                        </div>
+                                        <div>
+                                            <h:outputLabel value="Tenencia" styleClass="form-label"/>
+                                            <h:selectOneMenu id="tenenciaVivienda" 
+                                                           value="#{caracterizacionControllerMejorado.contextoFamiliar.tenenciaVivienda}"
+                                                           styleClass="form-control">
+                                                <f:selectItem itemLabel="-- Seleccione --" itemValue=""/>
+                                                <f:selectItem itemLabel="Propia" itemValue="Propia"/>
+                                                <f:selectItem itemLabel="Arrendada" itemValue="Arrendada"/>
+                                                <f:selectItem itemLabel="Prestada" itemValue="Prestada"/>
+                                                <f:selectItem itemLabel="Otra" itemValue="Otra"/>
+                                            </h:selectOneMenu>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-row full">
+                                        <h:outputLabel value="Condiciones de la Vivienda" styleClass="form-label"/>
+                                        <h:inputTextarea id="condicionesVivienda" 
+                                                        value="#{caracterizacionControllerMejorado.contextoFamiliar.condicionesVivienda}"
+                                                        rows="3"
+                                                        
+                                                        styleClass="form-control"/>
+                                    </div>
+
+                                    <div class="form-row full">
+                                        <h:outputLabel value="Situación Económica" styleClass="form-label"/>
+                                        <h:inputTextarea id="situacionEconomica" 
+                                                        value="#{caracterizacionControllerMejorado.contextoFamiliar.situacionEconomica}"
+                                                        rows="3"
+                                                        
+                                                        styleClass="form-control"/>
+                                    </div>
+                                </div>
+
+                                <!-- OBSERVACIONES ADICIONALES -->
+                                <div class="form-section">
+                                    <h3>6. Observaciones Adicionales</h3>
+
+                                    <div class="form-row full">
+                                        <h:outputLabel value="Otros comentarios relevantes" styleClass="form-label"/>
+                                        <h:inputTextarea id="observacionesFamilia" 
+                                                        value="#{caracterizacionControllerMejorado.contextoFamiliar.observacionesFamilia}"
+                                                        rows="3"
+                                                        
+                                                        styleClass="form-control"/>
+                                    </div>
+                                </div>
+
+                                <!-- MENSAJES -->
+                                <p:messages id="messages" showDetail="true" closable="true" style="margin-bottom: 20px;"/>
+                            </div>
+
+                            <div class="card-footer text-end">
+                                <h:commandButton value="← Volver" 
+                                                action="/views/caracterizacion/contexto_escolar.xhtml?faces-redirect=true"
+                                                styleClass="btn btn-secondary" 
+                                                style="margin-right: 10px;"/>
+                                <p:commandButton id="btnGuardar" value="Guardar y Continuar →" 
+                                                action="#{caracterizacionControllerMejorado.guardarContextoFamiliarYRegistrarAcudiente()}"
+                                                styleClass="btn btn-primary"
+                                                update=":formContextoFamiliar:messages"
+                                                oncomplete="if (!args.validationFailed) PF('dlgContextoFamiliarGuardado').show();" />
+                            </div>
+
+                            <!-- DIÁLOGO MODAL DE CONFIRMACIÓN - CONTEXTO FAMILIAR GUARDADO -->
+                            <p:dialog id="dlgContextoFamiliarGuardado" widgetVar="dlgContextoFamiliarGuardado" 
+                                    header="✓ Guardado Exitosamente" modal="true" closable="false" 
+                                    style="border-radius: 8px; box-shadow: 0 4px 16px rgba(0,0,0,0.2);">
+                                <div style="padding: 20px; text-align: center;">
+                                    <h:outputText value="El contexto familiar ha sido guardado correctamente." 
+                                                style="font-size: 16px; color: #333; display: block; margin-bottom: 20px;"/>
+                                    <h:outputText value="El acudiente ha sido registrado en el sistema y recibirá sus credenciales por correo electrónico." 
+                                                style="font-size: 14px; color: #666; display: block; margin-bottom: 30px;"/>
+                                    <p:commandButton value="Ir al Dashboard →" 
+                                                   icon="pi pi-arrow-right"
+                                                   onclick="PF('dlgContextoFamiliarGuardado').hide();"
+                                                   oncomplete="window.location.href='/sitea/views/caracterizacion/dashboard.xhtml';"
+                                                   styleClass="btn btn-success"/>
+                                </div>
+                            </p:dialog>
+                        </div>
+                    </h:form>
+
+                </f:view>
+            </ui:define>
+        </ui:composition>
+    </body>
+</html>

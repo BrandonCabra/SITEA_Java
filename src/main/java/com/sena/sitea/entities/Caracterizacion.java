@@ -5,6 +5,7 @@
 package com.sena.sitea.entities;
 
 import java.io.Serializable;
+import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -17,6 +18,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -93,6 +96,28 @@ public class Caracterizacion implements Serializable {
     @Size(min = 1, max = 255)
     @Column(name = "CORRESPONSABILIDAD")
     private String corresponsabilidad;
+    @Size(max = 30)
+    @Column(name = "EXPEDIENTE_CARACTERIZACION")
+    private String expedienteCaracterizacion;
+    @Size(max = 20)
+    @Column(name = "ESTADO_CARACTERIZACION")
+    private String estadoCaracterizacion; // INICIADA, EN_PROCESO, COMPLETADA, ARCHIVADA
+    @Column(name = "FECHA_INICIO")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date fechaInicio;
+    @Column(name = "FECHA_FINALIZACION")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date fechaFinalizacion;
+    @Column(name = "CREATED_AT")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date createdAt;
+    @Column(name = "UPDATED_AT")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date updatedAt;
+    @Column(name = "CREATED_BY")
+    private Integer createdBy;
+    @Column(name = "UPDATED_BY")
+    private Integer updatedBy;
     @JoinColumn(name = "ESTUDIANTE_ID_ESTUDIANTE", referencedColumnName = "ID_ESTUDIANTE")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Estudiante estudianteIdEstudiante;
@@ -203,6 +228,70 @@ public class Caracterizacion implements Serializable {
 
     public void setEstudianteIdEstudiante(Estudiante estudianteIdEstudiante) {
         this.estudianteIdEstudiante = estudianteIdEstudiante;
+    }
+
+    public String getExpedienteCaracterizacion() {
+        return expedienteCaracterizacion;
+    }
+
+    public void setExpedienteCaracterizacion(String expedienteCaracterizacion) {
+        this.expedienteCaracterizacion = expedienteCaracterizacion;
+    }
+
+    public String getEstadoCaracterizacion() {
+        return estadoCaracterizacion;
+    }
+
+    public void setEstadoCaracterizacion(String estadoCaracterizacion) {
+        this.estadoCaracterizacion = estadoCaracterizacion;
+    }
+
+    public Date getFechaInicio() {
+        return fechaInicio;
+    }
+
+    public void setFechaInicio(Date fechaInicio) {
+        this.fechaInicio = fechaInicio;
+    }
+
+    public Date getFechaFinalizacion() {
+        return fechaFinalizacion;
+    }
+
+    public void setFechaFinalizacion(Date fechaFinalizacion) {
+        this.fechaFinalizacion = fechaFinalizacion;
+    }
+
+    public Date getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(Date createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public Date getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(Date updatedAt) {
+        this.updatedAt = updatedAt;
+    }
+
+    public Integer getCreatedBy() {
+        return createdBy;
+    }
+
+    public void setCreatedBy(Integer createdBy) {
+        this.createdBy = createdBy;
+    }
+
+    public Integer getUpdatedBy() {
+        return updatedBy;
+    }
+
+    public void setUpdatedBy(Integer updatedBy) {
+        this.updatedBy = updatedBy;
     }
 
     @Override

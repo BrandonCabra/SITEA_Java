@@ -1,0 +1,247 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+    <h:head>
+        <meta charset="UTF-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <title>Valoración de Dimensión - SITEA</title>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css"/>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+        <style>
+            body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f5f7fa; }
+            .page-header { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 30px 0; margin-bottom: 40px; }
+            .form-section { background: white; border-radius: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); padding: 30px; margin-bottom: 30px; }
+            .section-title { font-size: 18px; font-weight: 600; color: #333; margin-bottom: 20px; padding-bottom: 10px; border-bottom: 2px solid #667eea; }
+            .likert-container { margin: 20px 0; }
+            .likert-title { font-weight: 600; margin-bottom: 10px; color: #333; }
+            .likert-scale { display: flex; justify-content: space-between; gap: 10px; }
+            .likert-option { flex: 1; text-align: center; }
+            .likert-radio { width: 100%; padding: 10px; margin-bottom: 10px; border: 2px solid #ddd; border-radius: 8px; cursor: pointer; transition: all 0.3s; }
+            .likert-radio:hover { border-color: #667eea; background-color: #f0f0f0; }
+            .likert-radio input[type="radio"]:checked + label { display: block; font-weight: 600; }
+            input[type="radio"]:checked ~ .likert-radio { border-color: #667eea; background-color: #e8eaf6; }
+            .likert-label { font-size: 12px; font-weight: 500; color: #666; margin-bottom: 5px; display: block; }
+            .likert-value { font-size: 24px; font-weight: 600; color: #667eea; margin-bottom: 5px; }
+            .likert-description { font-size: 11px; color: #999; }
+            .form-group label { font-weight: 600; color: #333; margin-bottom: 8px; }
+            .form-control { border: 1px solid #ddd; border-radius: 8px; font-size: 14px; }
+            .form-control:focus { border-color: #667eea; box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.25); }
+            textarea.form-control { min-height: 120px; resize: vertical; }
+            .btn-primary-custom { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border: none; color: white; padding: 10px 30px; font-weight: 600; }
+            .btn-primary-custom:hover { background: linear-gradient(135deg, #5568d3 0%, #673a91 100%); color: white; }
+            .info-box { background: #e8eaf6; border-left: 4px solid #667eea; padding: 15px; border-radius: 5px; margin-bottom: 20px; }
+            .info-box strong { color: #667eea; }
+            .current-value { font-size: 16px; font-weight: 600; color: #667eea; margin-top: 10px; }
+            .progress-dimension { margin-bottom: 20px; }
+            .container-form { max-width: 800px; }
+        </style>
+    </h:head>
+
+    <h:body>
+        <ui:composition template="./../TemplateSitio.xhtml">
+            <ui:define name="content">
+                <!-- Header -->
+                <div class="page-header">
+                    <div class="container">
+                        <h1>
+                            <i class="fas fa-pen-fancy me-3"></i>
+                            Valorar Dimensión
+                        </h1>
+                        <p class="mb-0">Evalúa: <strong>#{caracterizacionControllerMejorado.dimensionActual.nombreDimension}</strong></p>
+                    </div>
+                </div>
+
+                <div class="container container-form">
+                    <!-- Información de la dimensión -->
+                    <div class="form-section">
+                        <h3 class="section-title">
+                            <i class="fas fa-info-circle me-2"></i>
+                            Información de la Dimensión
+                        </h3>
+
+                        <div class="info-box">
+                            <h5>#{caracterizacionControllerMejorado.dimensionActual.nombreDimension}</h5>
+                            <p class="mb-0">#{caracterizacionControllerMejorado.dimensionActual.descripcion}</p>
+                        </div>
+
+                        <div class="row mt-3">
+                            <div class="col-md-6">
+                                <strong>Estado Actual:</strong>
+                                <p>
+                                    <span class="badge" style="#{caracterizacionControllerMejorado.dimensionActual.estado == 'COMPLETADA' ? 'background-color: #28a745;' : caracterizacionControllerMejorado.dimensionActual.estado == 'EN_PROCESO' ? 'background-color: #007bff;' : 'background-color: #ffc107;'}">
+                                        #{caracterizacionControllerMejorado.dimensionActual.estado}
+                                    </span>
+                                </p>
+                            </div>
+                            <div class="col-md-6">
+                                <strong>Puntuación Actual:</strong>
+                                <p>#{empty caracterizacionControllerMejorado.dimensionActual.puntuacion ? 'Sin valorar' : caracterizacionControllerMejorado.dimensionActual.puntuacion + '/5'}</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Formulario de valoración -->
+                    <h:form id="valoracionForm" styleClass="form-section">
+                        <!-- Escala Likert -->
+                        <div class="likert-container">
+                            <p class="likert-title">
+                                <i class="fas fa-star me-2"></i>
+                                Selecciona una puntuación (1-5)
+                            </p>
+                            <small class="text-muted d-block mb-3">
+                                Donde 1 = Bajo desempeño, 5 = Desempeño Alto
+                            </small>
+
+                            <div class="likert-scale">
+                                <div class="likert-option">
+                                    <div class="likert-radio">
+                                        <h:selectOneRadio value="#{caracterizacionControllerMejorado.dimensionActual.puntuacion}">
+                                            <f:selectItem itemValue="1" itemLabel="1"/>
+                                        </h:selectOneRadio>
+                                    </div>
+                                    <span class="likert-label">Bajo</span>
+                                    <span class="likert-value">1</span>
+                                    <span class="likert-description">Desempeño bajo</span>
+                                </div>
+
+                                <div class="likert-option">
+                                    <div class="likert-radio">
+                                        <h:selectOneRadio value="#{caracterizacionControllerMejorado.dimensionActual.puntuacion}">
+                                            <f:selectItem itemValue="2" itemLabel="2"/>
+                                        </h:selectOneRadio>
+                                    </div>
+                                    <span class="likert-label">Bajo-Medio</span>
+                                    <span class="likert-value">2</span>
+                                    <span class="likert-description">Desempeño bajo-medio</span>
+                                </div>
+
+                                <div class="likert-option">
+                                    <div class="likert-radio">
+                                        <h:selectOneRadio value="#{caracterizacionControllerMejorado.dimensionActual.puntuacion}">
+                                            <f:selectItem itemValue="3" itemLabel="3"/>
+                                        </h:selectOneRadio>
+                                    </div>
+                                    <span class="likert-label">Medio</span>
+                                    <span class="likert-value">3</span>
+                                    <span class="likert-description">Desempeño medio</span>
+                                </div>
+
+                                <div class="likert-option">
+                                    <div class="likert-radio">
+                                        <h:selectOneRadio value="#{caracterizacionControllerMejorado.dimensionActual.puntuacion}">
+                                            <f:selectItem itemValue="4" itemLabel="4"/>
+                                        </h:selectOneRadio>
+                                    </div>
+                                    <span class="likert-label">Medio-Alto</span>
+                                    <span class="likert-value">4</span>
+                                    <span class="likert-description">Desempeño medio-alto</span>
+                                </div>
+
+                                <div class="likert-option">
+                                    <div class="likert-radio">
+                                        <h:selectOneRadio value="#{caracterizacionControllerMejorado.dimensionActual.puntuacion}">
+                                            <f:selectItem itemValue="5" itemLabel="5"/>
+                                        </h:selectOneRadio>
+                                    </div>
+                                    <span class="likert-label">Alto</span>
+                                    <span class="likert-value">5</span>
+                                    <span class="likert-description">Desempeño alto</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <hr class="my-4"/>
+
+                        <!-- Fortalezas -->
+                        <div class="form-group">
+                            <label for="fortalezas">
+                                <i class="fas fa-check-circle text-success me-2"></i>
+                                Fortalezas Identificadas
+                            </label>
+                            <h:inputTextarea id="fortalezas" 
+                                            value="#{caracterizacionControllerMejorado.dimensionActual.fortalezas}"
+                                            styleClass="form-control"
+                                            />
+                            <small class="form-text text-muted">
+                                Máximo 500 caracteres. Enfócate en comportamientos positivos observables.
+                            </small>
+                        </div>
+
+                        <!-- Áreas de Apoyo -->
+                        <div class="form-group mt-3">
+                            <label for="areasApoyo">
+                                <i class="fas fa-exclamation-circle text-warning me-2"></i>
+                                Áreas que Requieren Apoyo
+                            </label>
+                            <h:inputTextarea id="areasApoyo" 
+                                            value="#{caracterizacionControllerMejorado.dimensionActual.areasApoyo}"
+                                            styleClass="form-control"
+                                            />
+                            <small class="form-text text-muted">
+                                Máximo 500 caracteres. Sugiere áreas de mejora de forma constructiva.
+                            </small>
+                        </div>
+
+                        <!-- Botones de acción -->
+                        <div class="d-flex gap-2 mt-4">
+                            <h:commandButton id="guardarBtn"
+                                            value="Guardar Valoración"
+                                            action="#{caracterizacionControllerMejorado.guardarValoracion}"
+                                            styleClass="btn btn-primary-custom">
+                                <f:ajax execute="@form" render="@form :mensajes"/>
+                            </h:commandButton>
+
+                            <h:commandButton id="cancelarBtn"
+                                            value="Volver sin Guardar"
+                                            action="#{caracterizacionControllerMejorado.irAlDashboardDimensiones}"
+                                            styleClass="btn btn-secondary immediate">
+                            </h:commandButton>
+                        </div>
+
+                        <!-- Información de guardado -->
+                        <div class="alert alert-info mt-3" role="alert">
+                            <i class="fas fa-lightbulb me-2"></i>
+                            <strong>Tip:</strong> Al guardar, el estado de la dimensión cambiará a "COMPLETADA".
+                        </div>
+                    </h:form>
+
+                    <!-- Panel de mensajes -->
+                    <h:panelGroup id="mensajes" layout="block">
+                        <h:messages globalOnly="true" styleClass="mt-3"/>
+                    </h:panelGroup>
+
+                    <!-- Navegación -->
+                    <div class="mt-5 mb-5">
+                        <h:form>
+                            <h:commandButton value="← Volver al Dashboard de Dimensiones"
+                                            action="#{caracterizacionControllerMejorado.irAlDashboardDimensiones}"
+                                            styleClass="btn btn-outline-secondary"/>
+                        </h:form>
+                    </div>
+                </div>
+
+                <!-- Scripts -->
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+                <script>
+                    // Mejora visual de opciones Likert
+                    document.addEventListener('DOMContentLoaded', function() {
+                        const radios = document.querySelectorAll('input[type="radio"]');
+                        radios.forEach(radio => {
+                            radio.addEventListener('change', function() {
+                                const parent = this.closest('.likert-option');
+                                document.querySelectorAll('.likert-option').forEach(opt => {
+                                    opt.style.opacity = '0.7';
+                                });
+                                if (parent) parent.style.opacity = '1';
+                            });
+                        });
+                    });
+                </script>
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>

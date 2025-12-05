@@ -1,0 +1,308 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+                      "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <body>
+        <ui:composition template="./../TemplateSitio.xhtml">
+            <ui:define name="head">
+                <title>Formulario Caracterización Mejorado</title>
+                <h:outputStylesheet library="css" name="custom.css" />
+                <style>
+                    .form-section {
+                        background-color: #f8f9fa;
+                        padding: 20px;
+                        margin-bottom: 20px;
+                        border-radius: 8px;
+                        border-left: 4px solid #304878;
+                    }
+                    .form-section h3 {
+                        color: #304878;
+                        margin-bottom: 15px;
+                        font-size: 1.2rem;
+                    }
+                    .char-counter {
+                        font-size: 0.85rem;
+                        color: #6c757d;
+                        text-align: right;
+                        margin-top: 5px;
+                    }
+                    .required-field::after {
+                        content: " *";
+                        color: red;
+                    }
+                </style>
+            </ui:define>
+            
+            <ui:define name="content">
+                <f:view>
+                    <h:form styleClass="container-fluid px-3" style="background-color: #ffffff; padding: 20px;">
+                        <div class="card shadow-sm p-4">
+
+                            <h1 class="mb-4 text-primary">
+                                <i class="fa-solid fa-file-medical me-2"></i>
+                                Formulario de Caracterización Pedagógica y Social
+                            </h1>
+
+                            <h:messages id="mensajes" globalOnly="true"
+                                        infoStyle="color: green; font-weight: bold;"
+                                        errorStyle="color: red; font-weight: bold;" />
+
+                            <!-- Sección 1: Información del Estudiante -->
+                            <div class="form-section">
+                                <h3><i class="fa-solid fa-user me-2"></i>Información del Estudiante</h3>
+                                
+                                <div class="row mb-3">
+                                    <div class="col-md-12">
+                                        <h:outputLabel for="estudianteIdEstudiante" value="Estudiante:" styleClass="form-label required-field" />
+                                        <h:selectOneMenu id="estudianteIdEstudiante"
+                                                         value="#{caracterizacionControllerMejorado.est.idEstudiante}"
+                                                         required="true" requiredMessage="Debe seleccionar un estudiante"
+                                                         styleClass="form-select">
+                                            <f:selectItem itemLabel="Seleccione un estudiante..." itemValue="" />
+                                            <f:selectItems value="#{caracterizacionControllerMejorado.listaEstudiante()}" />
+                                        </h:selectOneMenu>
+                                        <h:message for="estudianteIdEstudiante" styleClass="text-danger d-block mt-1" />
+                                    </div>
+                                </div>
+
+                                <div class="row mb-3">
+                                    <div class="col-md-6">
+                                        <h:outputLabel for="codigoCaracterizacion" value="Código Caracterización:" styleClass="form-label required-field" />
+                                        <h:inputText id="codigoCaracterizacion"
+                                                     value="#{caracterizacionControllerMejorado.car.codigoCaracterizacion}"
+                                                     required="true" requiredMessage="Campo requerido"
+                                                     styleClass="form-control"
+                                                     title="Ej: CHAR-2024-001"/>
+                                        <h:message for="codigoCaracterizacion" styleClass="text-danger d-block mt-1" />
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Sección 2: Contextos -->
+                            <div class="form-section">
+                                <h3><i class="fa-solid fa-home me-2"></i>Contextos del Estudiante</h3>
+                                
+                                <div class="row mb-3">
+                                    <div class="col-md-12">
+                                        <h:outputLabel for="contextoAcademico" value="Contexto Académico:" styleClass="form-label required-field" />
+                                        <h:inputTextarea id="contextoAcademico"
+                                                         value="#{caracterizacionControllerMejorado.car.contextoAcademico}"
+                                                         required="true" requiredMessage="Campo requerido"
+                                                         styleClass="form-control"
+                                                         rows="4"
+                                                         
+                                                         title="Describa el desempeño académico, fortalezas y dificultades del estudiante..."/>
+                                        <div class="char-counter">
+                                            <span id="countAcademico">0</span>/200 caracteres
+                                        </div>
+                                        <h:message for="contextoAcademico" styleClass="text-danger d-block mt-1" />
+                                    </div>
+                                </div>
+
+                                <div class="row mb-3">
+                                    <div class="col-md-12">
+                                        <h:outputLabel for="contextoFamiliar" value="Contexto Familiar:" styleClass="form-label required-field" />
+                                        <h:inputTextarea id="contextoFamiliar"
+                                                         value="#{caracterizacionControllerMejorado.car.contextoFamiliar}"
+                                                         required="true" requiredMessage="Campo requerido"
+                                                         styleClass="form-control"
+                                                         rows="4"
+                                                         
+                                                         title="Describa la composición familiar, dinámica, apoyo y recursos disponibles..."/>
+                                        <div class="char-counter">
+                                            <span id="countFamiliar">0</span>/200 caracteres
+                                        </div>
+                                        <h:message for="contextoFamiliar" styleClass="text-danger d-block mt-1" />
+                                    </div>
+                                </div>
+
+                                <div class="row mb-3">
+                                    <div class="col-md-12">
+                                        <h:outputLabel for="contextoEscolar" value="Contexto Escolar:" styleClass="form-label required-field" />
+                                        <h:inputTextarea id="contextoEscolar"
+                                                         value="#{caracterizacionControllerMejorado.car.contextoEscolar}"
+                                                         required="true" requiredMessage="Campo requerido"
+                                                         styleClass="form-control"
+                                                         rows="4"
+                                                         
+                                                         title="Describa la interacción con compañeros, docentes, participación en actividades..."/>
+                                        <div class="char-counter">
+                                            <span id="countEscolar">0</span>/200 caracteres
+                                        </div>
+                                        <h:message for="contextoEscolar" styleClass="text-danger d-block mt-1" />
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Sección 3: Diagnóstico y Valoración -->
+                            <div class="form-section">
+                                <h3><i class="fa-solid fa-stethoscope me-2"></i>Diagnóstico y Valoración</h3>
+                                
+                                <div class="row mb-3">
+                                    <div class="col-md-12">
+                                        <h:outputLabel for="diagnostico" value="Diagnóstico:" styleClass="form-label required-field" />
+                                        <h:inputTextarea id="diagnostico"
+                                                         value="#{caracterizacionControllerMejorado.car.diagnostico}"
+                                                         required="true" requiredMessage="Campo requerido"
+                                                         styleClass="form-control"
+                                                         rows="3"
+                                                         
+                                                         title="Describa el diagnóstico médico o sospecha fundada..."/>
+                                        <div class="char-counter">
+                                            <span id="countDiagnostico">0</span>/255 caracteres
+                                        </div>
+                                        <h:message for="diagnostico" styleClass="text-danger d-block mt-1" />
+                                    </div>
+                                </div>
+
+                                <div class="row mb-3">
+                                    <div class="col-md-12">
+                                        <h:outputLabel for="valoracionPedagogica" value="Valoración Pedagógica:" styleClass="form-label required-field" />
+                                        <h:inputTextarea id="valoracionPedagogica"
+                                                         value="#{caracterizacionControllerMejorado.car.valoracionPedagogica}"
+                                                         required="true" requiredMessage="Campo requerido"
+                                                         styleClass="form-control"
+                                                         rows="5"
+                                                         
+                                                         title="Describa la valoración pedagógica integral del estudiante..."/>
+                                        <div class="char-counter">
+                                            <span id="countValoracion">0</span>/300 caracteres
+                                        </div>
+                                        <h:message for="valoracionPedagogica" styleClass="text-danger d-block mt-1" />
+                                    </div>
+                                </div>
+
+                                <div class="row mb-3">
+                                    <div class="col-md-12">
+                                        <h:outputLabel for="barraDeAprendizaje" value="Barreras de Aprendizaje:" styleClass="form-label required-field" />
+                                        <h:inputTextarea id="barraDeAprendizaje"
+                                                         value="#{caracterizacionControllerMejorado.car.barraDeAprendizaje}"
+                                                         required="true" requiredMessage="Campo requerido"
+                                                         styleClass="form-control"
+                                                         rows="4"
+                                                         
+                                                         title="Identifique las barreras que dificultan el aprendizaje del estudiante..."/>
+                                        <div class="char-counter">
+                                            <span id="countBarreras">0</span>/200 caracteres
+                                        </div>
+                                        <h:message for="barraDeAprendizaje" styleClass="text-danger d-block mt-1" />
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Sección 4: Recomendaciones y Corresponsabilidad -->
+                            <div class="form-section">
+                                <h3><i class="fa-solid fa-lightbulb me-2"></i>Recomendaciones y Compromisos</h3>
+                                
+                                <div class="row mb-3">
+                                    <div class="col-md-12">
+                                        <h:outputLabel for="recomendaciones" value="Recomendaciones:" styleClass="form-label required-field" />
+                                        <h:inputTextarea id="recomendaciones"
+                                                         value="#{caracterizacionControllerMejorado.car.recomendaciones}"
+                                                         required="true" requiredMessage="Campo requerido"
+                                                         styleClass="form-control"
+                                                         rows="5"
+                                                         
+                                                         title="Describa las recomendaciones para el estudiante, familia y docentes..."/>
+                                        <div class="char-counter">
+                                            <span id="countRecomendaciones">0</span>/500 caracteres
+                                        </div>
+                                        <h:message for="recomendaciones" styleClass="text-danger d-block mt-1" />
+                                    </div>
+                                </div>
+
+                                <div class="row mb-3">
+                                    <div class="col-md-12">
+                                        <h:outputLabel for="corresponsabilidad" value="Corresponsabilidad:" styleClass="form-label required-field" />
+                                        <h:inputTextarea id="corresponsabilidad"
+                                                         value="#{caracterizacionControllerMejorado.car.corresponsabilidad}"
+                                                         required="true" requiredMessage="Campo requerido"
+                                                         styleClass="form-control"
+                                                         rows="4"
+                                                         
+                                                         title="Describa los compromisos de la familia, institución y entidades de apoyo..."/>
+                                        <div class="char-counter">
+                                            <span id="countCorresponsabilidad">0</span>/255 caracteres
+                                        </div>
+                                        <h:message for="corresponsabilidad" styleClass="text-danger d-block mt-1" />
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Botones de Acción -->
+                            <div class="d-flex gap-2 justify-content-end mt-4">
+                                <h:button value="Cancelar"
+                                          outcome="/views/caracterizacion/index.xhtml"
+                                          styleClass="btn btn-secondary">
+                                    <i class="fa-solid fa-times me-2"></i>
+                                </h:button>
+
+                                <h:commandButton value="Registrar Caracterización"
+                                                 action="#{caracterizacionControllerMejorado.crearCaracterizacionP2()}"
+                                                 rendered="#{caracterizacionControllerMejorado.car.idCaracterizacion == null}"
+                                                 styleClass="btn btn-success">
+                                    <i class="fa-solid fa-save me-2"></i>
+                                </h:commandButton>
+
+                                <h:commandButton value="Actualizar Caracterización"
+                                                 action="#{caracterizacionControllerMejorado.editarCaracterizacionP2()}"
+                                                 rendered="#{caracterizacionControllerMejorado.car.idCaracterizacion != null}"
+                                                 styleClass="btn btn-info">
+                                    <i class="fa-solid fa-edit me-2"></i>
+                                </h:commandButton>
+                            </div>
+                        </div>
+                    </h:form>
+                </f:view>
+
+                <!-- Script para contador de caracteres y placeholders -->
+                <script>
+                    function setupCharCounter(textareaId, counterId) {
+                        var textarea = document.getElementById(textareaId);
+                        var counter = document.getElementById(counterId);
+                        if (textarea && counter) {
+                            textarea.addEventListener('input', function() {
+                                counter.textContent = this.value.length;
+                            });
+                            counter.textContent = textarea.value.length;
+                        }
+                    }
+                    
+                    function setupPlaceholder(elementId, placeholderText) {
+                        var element = document.getElementById(elementId);
+                        if (element) {
+                            element.setAttribute('placeholder', placeholderText);
+                        }
+                    }
+
+                    document.addEventListener('DOMContentLoaded', function() {
+                        // Contadores
+                        setupCharCounter('crearcaracterizacion_mejorado:contextoAcademico', 'countAcademico');
+                        setupCharCounter('crearcaracterizacion_mejorado:contextoFamiliar', 'countFamiliar');
+                        setupCharCounter('crearcaracterizacion_mejorado:contextoEscolar', 'countEscolar');
+                        setupCharCounter('crearcaracterizacion_mejorado:diagnostico', 'countDiagnostico');
+                        setupCharCounter('crearcaracterizacion_mejorado:valoracionPedagogica', 'countValoracion');
+                        setupCharCounter('crearcaracterizacion_mejorado:barraDeAprendizaje', 'countBarreras');
+                        setupCharCounter('crearcaracterizacion_mejorado:recomendaciones', 'countRecomendaciones');
+                        setupCharCounter('crearcaracterizacion_mejorado:corresponsabilidad', 'countCorresponsabilidad');
+                        
+                        // Placeholders
+                        setupPlaceholder('crearcaracterizacion_mejorado:codigoCaracterizacion', 'Ej: CHAR-2024-001');
+                        setupPlaceholder('crearcaracterizacion_mejorado:contextoAcademico', 'Describa el desempeño académico, fortalezas y dificultades del estudiante...');
+                        setupPlaceholder('crearcaracterizacion_mejorado:contextoFamiliar', 'Describa la composición familiar, dinámica, apoyo y recursos disponibles...');
+                        setupPlaceholder('crearcaracterizacion_mejorado:contextoEscolar', 'Describa la interacción con compañeros, docentes, participación en actividades...');
+                        setupPlaceholder('crearcaracterizacion_mejorado:diagnostico', 'Describa el diagnóstico médico o sospecha fundada...');
+                        setupPlaceholder('crearcaracterizacion_mejorado:valoracionPedagogica', 'Describa la valoración pedagógica integral del estudiante...');
+                        setupPlaceholder('crearcaracterizacion_mejorado:barraDeAprendizaje', 'Identifique las barreras que dificultan el aprendizaje del estudiante...');
+                        setupPlaceholder('crearcaracterizacion_mejorado:recomendaciones', 'Describa las recomendaciones para el estudiante, familia y docentes...');
+                        setupPlaceholder('crearcaracterizacion_mejorado:corresponsabilidad', 'Describa los compromisos de la familia, institución y entidades de apoyo...');
+                    });
+                </script>
+            </ui:define>
+        </ui:composition>
+    </body>
+</html>

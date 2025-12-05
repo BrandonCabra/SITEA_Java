@@ -3,84 +3,91 @@
                       "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-      xmlns:h="http://xmlns.jcp.org/jsf/html">
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
 
     <body style="background-color: white; margin: 0;">
         <ui:composition template="./../TemplateSitio.xhtml">
             <ui:define name="content">
+                
+                <h2>Gestión de Usuarios (Administración)</h2>
+    
+    <h:messages globalOnly="true" showDetail="true" />
 
-                <h:form styleClass="container-fluid px-0">
-                    <div class="card shadow-sm bg-white rounded border-0 w-100">
-                        <div class="p-4">
-                            <h2 class="mb-4 text-primary fw-bold text-center">Listado de Estudiantes con PIAR</h2>
+    <h:form id="formCrear">
+        <h3>Crear Nuevo Usuario</h3>
+        
+        <h:panelGrid columns="2">
+            
+            <h:outputLabel value="Nombre:" />
+            <h:inputText value="#{adminUsuarioBean.nuevoUsuario.nombre}" required="true" />
+            
+            <h:outputLabel value="Apellidos:" />
+            <h:inputText value="#{adminUsuarioBean.nuevoUsuario.apellidos}" required="true" />
 
-                            <div class="table-responsive">
-                                <table id="t-all" class="table table-bordered table-hover table-sm jsf-data-table w-100">
-                                    <thead class="bg-primary text-white text-center">
-                                        <tr>
-                                            <th>Documento</th>
-                                            <th>Nombre</th>
-                                            <th>PIAR ID</th>
-                                            <th>Periodo</th>
-                                            <th>Evaluación</th>
-                                            <th>Barrera de Aprendizaje</th>
-                                            <th>Flexibilización</th>
-                                            <th>Acciones</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <ui:repeat value="#{piarController.obtenerpiar()}" var="item">
-                                            <tr>
-                                                <td>#{item.estudianteIdEstudiante.numeroDocumentoEstudiante}</td>
-                                                <td>#{item.estudianteIdEstudiante.primerNombreEstudiante}</td>
-                                                <td>#{item.idPiar}</td>
-                                                <td>#{item.periodo}</td>
-                                                <td>#{item.evaluacion}</td>
-                                                <td>#{item.barraDeAprendizaje}</td>
-                                                <td>#{item.flexibilizacion}</td>
-                                                <td class="text-center">
-                                                    <div class="d-flex justify-content-center gap-2 flex-wrap">
-                                                        <h:form styleClass="d-inline">
-                                                            <h:commandButton value="✏️ Editar"
-                                                                             action="#{piarController.editarPiarP1(item)}"
-                                                                             styleClass="btn btn-outline-success btn-sm rounded-pill" />
-                                                        </h:form>
-                                                        <h:form styleClass="d-inline">
-                                                            <h:commandButton value="🗑 Eliminar"
-                                                                             action="#{piarController.eliminarPiar(item)}"
-                                                                             onclick="return confirm('¿Desea eliminar el registro?')"
-                                                                             styleClass="btn btn-outline-danger btn-sm rounded-pill" />
-                                                        </h:form>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                        </ui:repeat>
-                                    </tbody>
-                                </table>
-                            </div>
+            <h:outputLabel value="Correo (Email):" />
+            <h:inputText value="#{adminUsuarioBean.nuevoUsuario.email}" required="true" 
+                         validatorMessage="Formato de Email no válido.">
+                <f:validateRegex pattern="[\w\.-]*[a-zA-Z0-9_]@[\w\.-]*[a-zA-Z0-9]\.[a-zA-Z][a-zA-Z\.]*[a-zA-Z]" />
+            </h:inputText>
+            
+            <h:outputLabel value="Documento (DNI):" />
+            <h:inputText value="#{adminUsuarioBean.nuevoUsuario.dni}" required="true" />
 
-                            <!-- Botón Crear PIAR abajo, centrado -->
-                            <div class="text-center mt-4">
-                                <h:commandButton value="➕ Crear PIAR"
-                                                 action="#{piarController.crearP1()}"
-                                                 styleClass="btn btn-outline-primary btn-lg rounded-pill" />
-                            </div>
-                        </div>
-                    </div>
-                </h:form>
+            <h:outputLabel value="Contraseña Temporal:" />
+            <h:inputSecret value="#{adminUsuarioBean.passwordClaro}" required="true" />
 
-                <script>
-                    $(document).ready(function () {
-                        $('.jsf-data-table').DataTable({
-                            dom: 'Bfrtip',
-                            language: {
-                                url: 'https://cdn.datatables.net/plug-ins/1.11.3/i18n/es_es.json'
-                            },
-                            pageLength: 50,
-                            buttons: ['copy', 'csv', 'excel', 'pdf', 'print']
-                        });
-                    });
-                </script>
+            <h:outputLabel value="Rol a Asignar:" />
+            <h:selectOneMenu value="#{adminUsuarioBean.rolSeleccionadoId}" required="true">
+                <f:selectItem itemLabel="-- Seleccionar Rol --" itemValue="#{null}" noSelectionOption="true" />
+                <f:selectItems value="#{adminUsuarioBean.listaRoles}" var="rol" 
+                               itemLabel="#{rol.nombre}" itemValue="#{rol.id}" />
+            </h:selectOneMenu>
+            
+            <h:outputLabel />
+            <h:commandButton value="Crear Usuario" action="#{adminUsuarioBean.crearUsuario}" />
+            
+        </h:panelGrid>
+    </h:form>
+
+    <hr/>
+
+    <h3>Usuarios Activos</h3>
+    <h:dataTable value="#{adminUsuarioBean.listaUsuarios}" var="u" styleClass="table" border="1">
+        
+        <h:column>
+            <f:facet name="header">Nombre</f:facet>
+            #{u.nombre} #{u.apellidos}
+        </h:column>
+        
+        <h:column>
+            <f:facet name="header">Email</f:facet>
+            #{u.email}
+        </h:column>
+
+        <h:column>
+            <f:facet name="header">Rol</f:facet>
+            <h:outputText value="#{u.rol.nombre}" style="font-weight: bold;"/>
+        </h:column>
+
+        <h:column>
+            <f:facet name="header">Estado</f:facet>
+            #{u.estado}
+        </h:column>
+        
+        <h:column>
+            <f:facet name="header">Acciones</f:facet>
+            <h:form>
+                <h:commandLink value="Editar" action="editarUsuario.xhtml" />
+                |
+                <h:commandLink value="Desactivar" action="#{adminUsuarioBean.desactivarUsuario(u)}">
+                    <f:ajax execute="@form" render="@all" /> </h:commandLink>
+            </h:form>
+        </h:column>
+        
+    </h:dataTable>
+
+                
 
             </ui:define>
         </ui:composition>

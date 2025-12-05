@@ -11,6 +11,7 @@ import com.sena.sitea.services.EstudianteFacadeLocal;
 import javax.inject.Named;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
@@ -85,16 +86,35 @@ public class Caracterizacioncontroller implements Serializable {
     }
     
     public void crearCaracterizacionP2 () {
-        car.setEstudianteIdEstudiante(est);
-                
         try {
+            // Buscar el estudiante seleccionado por ID
+            if (est != null && est.getIdEstudiante() != null) {
+                Estudiante estudianteSeleccionado = this.efl.find(est.getIdEstudiante());
+                car.setEstudianteIdEstudiante(estudianteSeleccionado);
+            } else {
+                FacesContext fc = FacesContext.getCurrentInstance();
+                FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Debe seleccionar un estudiante", "MSG_ERROR");
+                fc.addMessage(null, fm);
+                return;
+            }
+            
+            // Establecer fechas de auditoría
+            car.setCreatedAt(new Date());
+            car.setUpdatedAt(new Date());
+            car.setFechaInicio(new Date());
+            car.setEstadoCaracterizacion("EN_PROCESO");
+            
             this.cafl.create(car);
             FacesContext fc = FacesContext.getCurrentInstance();
             FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_INFO, "Caracterización registrada correctamente", "MSG_INFO");
             fc.addMessage(null, fm);
             car = new Caracterizacion();
+            est = new Estudiante();
         } catch (Exception e) {
-            
+            FacesContext fc = FacesContext.getCurrentInstance();
+            FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error al registrar caracterización: " + e.getMessage(), "MSG_ERROR");
+            fc.addMessage(null, fm);
+            e.printStackTrace();
         }
         
     }
@@ -107,13 +127,24 @@ public class Caracterizacioncontroller implements Serializable {
     
     public void editarCaracterizacionP2 (){
         try {
-            this.car.setEstudianteIdEstudiante(est);
+            // Buscar el estudiante seleccionado por ID si cambió
+            if (est != null && est.getIdEstudiante() != null) {
+                Estudiante estudianteSeleccionado = this.efl.find(est.getIdEstudiante());
+                this.car.setEstudianteIdEstudiante(estudianteSeleccionado);
+            }
+            
+            // Actualizar fecha de modificación
+            this.car.setUpdatedAt(new Date());
+            
             this.cafl.edit(car);
             FacesContext fc = FacesContext.getCurrentInstance();
             FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_INFO, "Caracterización editada correctamente", "MSG_INFO");
             fc.addMessage(null, fm);
         } catch (Exception e) {
-            
+            FacesContext fc = FacesContext.getCurrentInstance();
+            FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error al editar caracterización: " + e.getMessage(), "MSG_ERROR");
+            fc.addMessage(null, fm);
+            e.printStackTrace();
         }
     }
     
@@ -124,6 +155,10 @@ public class Caracterizacioncontroller implements Serializable {
             FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_INFO, "Caracterización eliminada correctamente", "MSG_INFO");
             fc.addMessage(null, fm);
         } catch (Exception e) {
+            FacesContext fc = FacesContext.getCurrentInstance();
+            FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error al eliminar caracterización: " + e.getMessage(), "MSG_ERROR");
+            fc.addMessage(null, fm);
+            e.printStackTrace();
         }
     }
     

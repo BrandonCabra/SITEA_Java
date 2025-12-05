@@ -1,0 +1,117 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+     
+    <body>
+
+        <ui:composition template="./../TemplateSitio.xhtml">
+
+            <ui:define name="top">
+                
+            </ui:define>
+
+            <ui:define name="left">
+                
+            </ui:define>
+
+            <ui:define name="content">
+               <h:outputStylesheet name="/css/preregistro.css" />            
+             
+    <div class="container">
+        <!-- Vista: Buscar y listar estudiantes para iniciar caracterización -->
+        <div class="search-section mb-4">
+            <h2>Buscar Estudiante</h2>
+            <p>Ingrese el nombre o número de documento del estudiante para iniciar o continuar su proceso de caracterización.</p>
+            <h:form id="searchForm">
+                <div class="row g-2 align-items-center">
+                    <div class="col-md-6">
+                        <h:inputText id="busquedaInput" value="#{caracterizacionControllerMejorado.filtroBusqueda}" styleClass="form-control" />
+                    </div>
+                    <div class="col-md-3">
+                        <h:selectOneMenu id="estadoSelect" value="#{caracterizacionControllerMejorado.filtroEstado}" styleClass="form-select">
+                            <f:selectItem itemLabel="Todos" itemValue="TODOS" />
+                            <f:selectItem itemLabel="Sin Iniciar" itemValue="INICIADA" />
+                            <f:selectItem itemLabel="En Proceso" itemValue="EN_PROCESO" />
+                            <f:selectItem itemLabel="Completada" itemValue="COMPLETADA" />
+                        </h:selectOneMenu>
+                    </div>
+                    <div class="col-md-3">
+                        <h:commandButton id="searchBtn" value="Buscar" styleClass="btn btn-primary">
+                            <f:ajax execute="searchForm" render="resultsPanel" />
+                        </h:commandButton>
+                    </div>
+                </div>
+            </h:form>
+        </div>
+
+        <!-- Resultados de búsqueda: caracterizaciones existentes -->
+        <div class="results-section mb-4" id="resultsPanel">
+            <h3>Resultados de Búsqueda (#{caracterizacionControllerMejorado.obtenerCaracterizacionesFiltradas().size()})</h3>
+            <div class="row">
+                <ui:repeat var="car" value="#{caracterizacionControllerMejorado.obtenerCaracterizacionesFiltradas()}">
+                    <div class="col-md-4 mb-3">
+                        <div class="card h-100 shadow-sm">
+                            <div class="card-body">
+                                <h5 class="card-title">#{car.estudianteIdEstudiante.primerNombreEstudiante} #{car.estudianteIdEstudiante.primerApellidoEstudiante}</h5>
+                                <p class="card-text">Documento: #{car.estudianteIdEstudiante.numeroDocumentoEstudiante}</p>
+                                <p class="card-text">Expediente: #{car.expedienteCaracterizacion}</p>
+                                <p>
+                                    <span class="badge #{car.estadoCaracterizacion == 'COMPLETADA' ? 'bg-success' : car.estadoCaracterizacion == 'EN_PROCESO' ? 'bg-warning text-dark' : 'bg-primary'}">#{car.estadoCaracterizacion}</span>
+                                </p>
+                                <p class="small text-muted">Última actualización: #{car.updatedAt}</p>
+                                <div class="d-flex gap-2 mt-2">
+                                    <h:commandButton value="Continuar Caracterización" action="#{caracterizacionControllerMejorado.seleccionarCaracterizacion(car.idCaracterizacion)}" styleClass="btn btn-outline-primary btn-sm" rendered="#{car.estadoCaracterizacion == 'EN_PROCESO' or car.estadoCaracterizacion == 'INICIADA'}" />
+                                    <h:link outcome="/views/caracterizacion/ver_caracterizacion.xhtml?faces-redirect=true" styleClass="btn btn-light btn-sm" rendered="#{car.estadoCaracterizacion == 'COMPLETADA'}">
+                                        <f:param name="id" value="#{car.idCaracterizacion}" />
+                                        Ver Anterior
+                                    </h:link>
+                                    <h:commandButton value="Nueva Caracterización" action="#{caracterizacionControllerMejorado.seleccionarCaracterizacion(car.idCaracterizacion)}" styleClass="btn btn-primary btn-sm" rendered="#{car.estadoCaracterizacion == 'COMPLETADA'}" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </ui:repeat>
+            </div>
+        </div>
+
+        <!-- Pre-Registro: Estudiantes sin caracterización activa -->
+        <div class="preregistro-section mb-4">
+            <h3>Pre-Registro / Estudiantes sin caracterización activa</h3>
+            <div class="row">
+                <ui:repeat var="est" value="#{caracterizacionControllerMejorado.listaEstudiantesParaIniciar()}">
+                    <div class="col-md-4 mb-3">
+                        <div class="card h-100 shadow-sm">
+                            <div class="card-body">
+                                <h5 class="card-title">#{est.primerNombreEstudiante} #{est.primerApellidoEstudiante}</h5>
+                                <p class="card-text">Documento: #{est.numeroDocumentoEstudiante}</p>
+                                <p class="card-text">Expediente: #{est.expedienteId}</p>
+                                <p class="small text-muted">Estado registro: #{est.estadoRegistro}</p>
+                                <div class="d-flex gap-2 mt-2">
+                                    <h:form id="crearForm_#{est.idEstudiante}" style="display:inline;">
+                                        <h:commandButton value="Crear/Iniciar Caracterización" action="#{caracterizacionControllerMejorado.iniciarCaracterizacionYRegistrarEscolar(est.idEstudiante)}" styleClass="btn btn-primary btn-sm">
+                                            <f:ajax execute="@form" onevent="function(data){if(data.status==='success'){window.location='/SITEA_Java/views/caracterizacion/contexto_escolar.xhtml';}}" />
+                                        </h:commandButton>
+                                    </h:form>
+                                    <h:link outcome="/views/caracterizacion/crearcaracterizacion.xhtml?faces-redirect=true" styleClass="btn btn-outline-secondary btn-sm">
+                                        <f:param name="id" value="#{est.idEstudiante}" />
+                                        Editar
+                                    </h:link>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </ui:repeat>
+            </div>
+        </div>
+
+    </div>
+
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

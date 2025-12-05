@@ -42,7 +42,7 @@ public class EmailService {
         }
                 
         // Configurar remitente (cambiar por tu email verificado en SendGrid)
-        Email from = new Email("sitea.edu@gmail.com");
+        Email from = new Email("elotroprofest@gmail.com");
         Email to = new Email(toEmail);
         Content content = new Content("text/plain", message);
         Mail mail = new Mail(from, subject, to, content);
@@ -75,7 +75,7 @@ public class EmailService {
         // Opción 1: Usar personalizations de SendGrid (más eficiente)
         try {
             Mail mail = new Mail();
-            mail.setFrom(new Email("sitea.edu@gmail.com"));
+            mail.setFrom(new Email("elotroprofest@gmail.com"));
             mail.setSubject(asunto);
             mail.addContent(new Content("text/html", mensaje));
             

@@ -1,0 +1,265 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <h:head>
+        <style>
+            .form-section {
+                margin-bottom: 30px;
+                padding: 20px;
+                background: #f9f9f9;
+                border-left: 4px solid #2196F3;
+                border-radius: 4px;
+            }
+            .form-section h3 {
+                color: #1976D2;
+                margin-top: 0;
+                margin-bottom: 15px;
+                font-size: 18px;
+            }
+            .info-box {
+                background: #E3F2FD;
+                padding: 15px;
+                border-radius: 4px;
+                margin-bottom: 20px;
+                border-left: 4px solid #2196F3;
+            }
+            .field-row {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 15px;
+                margin-bottom: 15px;
+            }
+            .field-row.full {
+                grid-template-columns: 1fr;
+            }
+            .field-label {
+                font-weight: bold;
+                color: #333;
+                font-size: 13px;
+                text-transform: uppercase;
+            }
+            .field-value {
+                padding: 10px;
+                background: white;
+                border: 1px solid #ddd;
+                border-radius: 3px;
+                font-size: 14px;
+                color: #555;
+            
+                        /* Estilos para mensajes */
+                        .msg-error {
+                            background-color: #ffebee;
+                            border: 1px solid #ef5350;
+                            color: #c62828;
+                            padding: 15px;
+                            border-radius: 4px;
+                            margin-bottom: 20px;
+                            white-space: pre-wrap;
+                            font-size: 13px;
+                        }
+                        .msg-success {
+                            background-color: #e8f5e9;
+                            border: 1px solid #66bb6a;
+                            color: #2e7d32;
+                            padding: 15px;
+                            border-radius: 4px;
+                            margin-bottom: 20px;
+                            font-size: 13px;
+                        }
+                        .msg-warning {
+                            background-color: #fff3e0;
+                            border: 1px solid #ffa726;
+                            color: #e65100;
+                            padding: 15px;
+                            border-radius: 4px;
+                            margin-bottom: 20px;
+                            font-size: 13px;
+                        }
+                        .required-field::after {
+                            content: " *";
+                            color: #d32f2f;
+                            font-weight: bold;
+                        }
+            }
+        </style>
+    </h:head>
+
+    <body>
+        <ui:composition template="./../TemplateSitio.xhtml">
+            <ui:define name="content">
+                <f:view>
+                    <h:form id="formContextoEscolar" styleClass="container">
+                        <div class="card p-3 shadow-sm">
+                            <div class="card-header bg-primary text-white">
+                                <h3>Caracterización - Contexto Escolar</h3>
+                                <small>Expediente: #{caracterizacionControllerMejorado.caracterizacion.expedienteCaracterizacion}</small>
+                            </div>
+
+                            <div class="card-body">
+                                
+                                <!-- INFORMACIÓN DEL ESTUDIANTE (PRE-RELLENADA) -->
+                                <div class="form-section">
+                                    <h3>1. Información General del Estudiante (Pre-registrada)</h3>
+                                    
+                                    <div class="field-row">
+                                        <div>
+                                            <div class="field-label">Nombre Completo</div>
+                                            <div class="field-value">
+                                                #{caracterizacionControllerMejorado.caracterizacion.estudianteIdEstudiante.primerNombreEstudiante}
+                                                #{caracterizacionControllerMejorado.caracterizacion.estudianteIdEstudiante.segundoNombreEstudiante}
+                                                #{caracterizacionControllerMejorado.caracterizacion.estudianteIdEstudiante.primerApellidoEstudiante}
+                                                #{caracterizacionControllerMejorado.caracterizacion.estudianteIdEstudiante.segundoApellidoEstudiante}
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <div class="field-label">Número de Documento</div>
+                                            <div class="field-value">#{caracterizacionControllerMejorado.caracterizacion.estudianteIdEstudiante.numeroDocumentoEstudiante}</div>
+                                        </div>
+                                    </div>
+
+                                    <div class="field-row">
+                                        <div>
+                                            <div class="field-label">Fecha de Nacimiento</div>
+                                            <div class="field-value">
+                                                <h:outputText value="#{caracterizacionControllerMejorado.caracterizacion.estudianteIdEstudiante.fechaNacimiento}">
+                                                    <f:convertDateTime pattern="dd/MM/yyyy"/>
+                                                </h:outputText>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <div class="field-label">Grado / Curso</div>
+                                            <div class="field-value">#{caracterizacionControllerMejorado.caracterizacion.estudianteIdEstudiante.cursoIdCurso.gradoIdGrado.nivelGrado} #{caracterizacionControllerMejorado.caracterizacion.estudianteIdEstudiante.cursoIdCurso.codigoCurso}</div>
+                                        </div>
+                                    </div>
+
+                                    <div class="field-row">
+                                        <div>
+                                            <div class="field-label">Teléfono</div>
+                                            <div class="field-value">#{caracterizacionControllerMejorado.caracterizacion.estudianteIdEstudiante.telefonoEstudiante}</div>
+                                        </div>
+                                        <div>
+                                            <div class="field-label">Email Institucional</div>
+                                            <div class="field-value">#{caracterizacionControllerMejorado.caracterizacion.estudianteIdEstudiante.correoInstitucionalEstudiante}</div>
+                                        </div>
+                                    </div>
+
+                                    <div class="field-row full">
+                                        <div>
+                                            <div class="field-label">Dirección de Residencia</div>
+                                            <div class="field-value">#{caracterizacionControllerMejorado.caracterizacion.estudianteIdEstudiante.direccionEstudiante}</div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- CONTEXTO ESCOLAR - CAMPOS A CAPTURAR -->
+                                <div class="form-section">
+                                    <h3>2. Contexto Escolar del Estudiante</h3>
+                                    
+                                    <p style="font-size: 12px; color: #666; margin-bottom: 20px;">
+                                        Complete la siguiente información sobre el contexto escolar del estudiante: infraestructura, accesibilidad, 
+                                        recursos disponibles, ambiente escolar, observaciones del docente, barreras de aprendizaje y recomendaciones.
+                                    </p>
+
+                                    <h:panelGrid columns="1" style="width:100%">
+                                        <h:outputLabel value="Infraestructura de la Institución *" />
+                                        <h:inputTextarea id="infraestructura" 
+                                                        value="#{caracterizacionControllerMejorado.contextoEscolar.infraestructura}"
+                                                        required="true"
+                                                        rows="3"
+                                                        
+                                                        styleClass="form-control" />
+
+                                        <h:outputLabel value="Accesibilidad y Adaptaciones *" />
+                                        <h:inputTextarea id="accesibilidad" 
+                                                        value="#{caracterizacionControllerMejorado.contextoEscolar.accesibilidad}"
+                                                        required="true"
+                                                        rows="3"
+                                                        
+                                                        styleClass="form-control" />
+
+                                        <h:outputLabel value="Recursos y Materiales Disponibles *" />
+                                        <h:inputTextarea id="recursos" 
+                                                        value="#{caracterizacionControllerMejorado.contextoEscolar.recursos}"
+                                                        required="true"
+                                                        rows="3"
+                                                        
+                                                        styleClass="form-control" />
+                                        
+                                         <h:outputLabel value="Ambientes virtuales" />
+                                        <h:inputTextarea id="ambientes" 
+                                                         value="#{caracterizacionControllerMejorado.contextoEscolar.ambiente}"
+                                                        required="true"
+                                                        rows="3"
+                                                        
+                                                        styleClass="form-control" />
+
+                                        <h:outputLabel value="Observaciones de Docentes y Personal *" />
+                                        <h:inputTextarea id="observacionesDocentes" 
+                                                        value="#{caracterizacionControllerMejorado.contextoEscolar.observacionesDocentes}"
+                                                        required="true"
+                                                        rows="3"
+                                                        
+                                                        styleClass="form-control" />
+
+                                        <h:outputLabel value="Barreras de Aprendizaje Identificadas *" />
+                                        <h:inputTextarea id="barreras" 
+                                                        value="#{caracterizacionControllerMejorado.contextoEscolar.barrerasAprendizaje}"
+                                                        required="true"
+                                                        rows="3"
+                                                        
+                                                        styleClass="form-control" />
+
+                                        <h:outputLabel value="Recomendaciones Institucionales" />
+                                        <h:inputTextarea id="recomendaciones" 
+                                                        value="#{caracterizacionControllerMejorado.contextoEscolar.recomendacionesInstitucionales}"
+                                                        rows="3"
+                                                        
+                                                        styleClass="form-control" />
+                                    </h:panelGrid>
+                                </div>
+
+                                <!-- MENSAJES -->
+                                <p:messages id="messages" showDetail="true"  closable="true" style="margin-bottom: 20px;"/>
+                            </div>
+
+                            <div class="card-footer text-end">
+                                <h:commandButton value="← Volver" 
+                                                action="/views/caracterizacion/dashboardInicioCaracterizacion.xhtml?faces-redirect=true"
+                                                styleClass="btn btn-secondary" 
+                                                style="margin-right: 10px;"/>
+                                <p:commandButton id="btnGuardar" value="Guardar y Continuar →" 
+                                                action="#{caracterizacionControllerMejorado.guardarContextoEscolar()}"
+                                                styleClass="btn btn-primary"
+                                                update=":formContextoEscolar:messages"
+                                                oncomplete="if (!args.validationFailed) PF('dlgContextoEscolarGuardado').show();" />
+                            </div>
+
+                            <!-- DIÁLOGO MODAL DE CONFIRMACIÓN - CONTEXTO ESCOLAR GUARDADO -->
+                            <p:dialog id="dlgContextoEscolarGuardado" widgetVar="dlgContextoEscolarGuardado" 
+                                    header="✓ Guardado Exitosamente" modal="true" closable="false" 
+                                    style="border-radius: 8px; box-shadow: 0 4px 16px rgba(0,0,0,0.2);">
+                                <div style="padding: 20px; text-align: center;">
+                                    <h:outputText value="El contexto escolar ha sido guardado correctamente." 
+                                                style="font-size: 16px; color: #333; display: block; margin-bottom: 20px;"/>
+                                    <h:outputText value="Por favor haga clic en continuar para proceder con el contexto familiar." 
+                                                style="font-size: 14px; color: #666; display: block; margin-bottom: 30px;"/>
+                                    <p:commandButton value="Continuar →" 
+                                                   icon="pi pi-arrow-right"
+                                                   onclick="PF('dlgContextoEscolarGuardado').hide();"
+                                                   oncomplete="window.location.href='/sitea/views/caracterizacion/contexto_familiar.xhtml';"
+                                                   styleClass="btn btn-success"/>
+                                </div>
+                            </p:dialog>
+                        </div>
+                    </h:form>
+
+                </f:view>
+            </ui:define>
+        </ui:composition>
+    </body>
+</html>

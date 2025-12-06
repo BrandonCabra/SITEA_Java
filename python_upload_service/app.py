@@ -256,4 +256,4 @@ if __name__ == '__main__':
     from waitress import serve
     print("Servidor iniciado en http://localhost:5000")
     print("Presiona Ctrl+C para detener")
-    serve(app, host='0.0.0.0', port=50
+    serve(app, host='0.0.0.0', port=5000)

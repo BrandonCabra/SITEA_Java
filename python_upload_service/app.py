@@ -255,4 +255,5 @@ if __name__ == '__main__':
     # Modo producción (sin warning) - Descomenta para usar
     from waitress import serve
     print("Servidor iniciado en http://localhost:5000")
-    print("Presion
+    print("Presiona Ctrl+C para detener")
+    serve(app, host='0.0.0.0', port=50

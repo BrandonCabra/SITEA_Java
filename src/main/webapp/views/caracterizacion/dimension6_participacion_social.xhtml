@@ -1,0 +1,81 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+
+    <body>
+
+        <ui:composition template="./../TemplateSitio.xhtml">
+
+            <ui:define name="head">
+                <title>Participación Social</title>
+  
+            </ui:define>
+            <ui:define name="content" >
+                
+                <h:form>
+    <h2>Valoración – Participación Social</h2>
+
+    <f:metadata>
+        <f:viewParam name="dim" value="D6" />
+        <f:viewParam name="student" value="#{dimensionFormBean.studentId}" />
+    </f:metadata>
+
+    <h:panelGrid columns="1" cellpadding="5">
+
+        <h:outputLabel value="Participación en actividades grupales:" />
+        <h:inputTextarea value="#{dimensionFormBean.caracteristicas}" />
+
+        <h:outputLabel value="Dificultades en interacción social:" />
+        <h:inputTextarea value="#{dimensionFormBean.dificultades}" />
+
+        <h:outputLabel value="Nivel de participación (0 – 100):" />
+        <h:inputText value="#{dimensionFormBean.progress}" required="true"/>
+
+        <h:outputLabel value="Recomendaciones para la integración:" />
+        <h:inputTextarea value="#{dimensionFormBean.recomendaciones}" />
+
+        <h:commandButton value="Guardar" action="#{dimensionFormBean.save('D6')}" />
+        <h:commandButton value="Cancelar" action="#{dimensionFormBean.goBack}" immediate="true" />
+    </h:panelGrid>
+
+    <!-- INSTRUMENTO ESTÁNDAR (Ejemplo) -->
+    <div class="section-card" style="margin-top:20px;">
+        <div class="section-title">📐 Instrumento Estándar - Participación Social (Ejemplo)</div>
+        <div class="section-content">
+            <p style="color:#666;">Ejemplo de instrumento estandarizado: escala Likert breve y guía de observación.</p>
+
+            <ui:include src="../components/instrument_template.xhtml">
+                <ui:param name="questionText" value="1. ¿Participa el estudiante en actividades grupales?" />
+                <ui:param name="responseKey" value="D6_q1" />
+                <ui:param name="qid" value="D6_q1" />
+            </ui:include>
+            <ui:include src="../components/instrument_template.xhtml">
+                <ui:param name="questionText" value="2. ¿Interacciona adecuadamente con sus pares?" />
+                <ui:param name="responseKey" value="D6_q2" />
+                <ui:param name="qid" value="D6_q2" />
+            </ui:include>
+
+            <div style="margin-top:12px;">
+                <label><strong>Observaciones (guía):</strong></label>
+                <h:inputTextarea value="#{dimensionFormBean.observaciones}" styleClass="textarea-field" />
+            </div>
+        </div>
+    </div>
+
+</h:form>
+      
+       
+
+        
+        
+            </ui:define>
+
+
+        </ui:composition>
+
+    </body>
+</html>

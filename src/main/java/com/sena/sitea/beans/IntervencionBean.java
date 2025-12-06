@@ -1,44 +1,49 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package com.sena.sitea.beans;
 
-/**
- *
- * @author brandon
- */
-
-
 import com.mycompany.webserviceconsumer.PerplexityAPIClient;
+import java.io.Serializable;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.RequestScoped;
+import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
 
-@ManagedBean
-@RequestScoped
-public class IntervencionBean {
+@ManagedBean(name = "intervencionBean")
+@ViewScoped
+public class IntervencionBean implements Serializable {
 
+    // 1. Variable para capturar lo que escribes en el área de texto
     private String fichaEstudiante;
+    
+    // 2. Variable para mostrar la respuesta
     private String resultado;
 
-    public String getFichaEstudiante() {
-        return fichaEstudiante;
-    }
-
-    public void setFichaEstudiante(String fichaEstudiante) {
-        this.fichaEstudiante = fichaEstudiante;
-    }
-
-    public String getResultado() {
-        return resultado;
-    }
-
+    // --- ACCIÓN ---
     public void consultarRecomendacion() {
-        PerplexityAPIClient client = new PerplexityAPIClient();
+        System.out.println("--- Iniciando Test de Conexión ---");
+        System.out.println("Datos enviados: " + fichaEstudiante);
+
         try {
-            resultado = client.obtenerRecomendacion(fichaEstudiante);
+            if (fichaEstudiante == null || fichaEstudiante.trim().isEmpty()) {
+                this.resultado = "Por favor escribe algo en la ficha del estudiante.";
+                return;
+            }
+
+            // Llamamos a la API (Asegúrate de que PerplexityAPIClient.java tenga las correcciones que te di antes)
+            String respuestaApi = PerplexityAPIClient.generarEstrategia(fichaEstudiante);
+            
+            // Asignamos la respuesta
+            this.resultado = respuestaApi;
+            
         } catch (Exception e) {
-            resultado = "Error: " + e.getMessage();
+            this.resultado = "ERROR CONECTANDO: " + e.getMessage();
+            e.printStackTrace(); // Esto imprimirá el error real en la consola de NetBeans/Glassfish
         }
     }
+
+    // --- GETTERS Y SETTERS OBLIGATORIOS ---
+    public String getFichaEstudiante() { return fichaEstudiante; }
+    public void setFichaEstudiante(String fichaEstudiante) { this.fichaEstudiante = fichaEstudiante; }
+
+    public String getResultado() { return resultado; }
+    public void setResultado(String resultado) { this.resultado = resultado; }
 }

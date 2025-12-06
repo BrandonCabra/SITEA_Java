@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+<h:head>
+    <title>SI-TEA: Test de Inteligencias Múltiples</title>
+        <style>
+            /* Estilos básicos para el ejemplo */
+            .test-container { width: 90%; margin: 20px auto; font-family: sans-serif; }
+            .header-panel { background-color: #f4f4f4; padding: 15px; border-radius: 5px; margin-bottom: 20px; }
+            .question-row { border-bottom: 1px solid #eee; padding: 10px 0; display: flex; justify-content: space-between; align-items: center;}
+            .question-text { width: 60%; font-size: 1.1em; }
+            .scale-options { width: 35%; }
+            .scale-options table { width: 100%; }
+            .scale-options td { text-align: center; font-size: 0.9em; color: #666; }
+            .category-header { background-color: #0056b3; color: white; padding: 10px; margin-top: 20px; font-weight: bold; border-radius: 4px;}
+            .results-panel { margin-top: 30px; padding: 20px; border: 2px solid #0056b3; background-color: #e9f4ff; }
+            .results-table td, .results-table th { padding: 8px; border: 1px solid #ddd; text-align: left;}
+            .btn-calcular { background-color: #28a745; color: white; padding: 10px 20px; border: none; cursor: pointer; font-size: 1em; border-radius: 4px;}
+            .btn-guardar { background-color: #0056b3; color: white; padding: 10px 20px; border: none; cursor: pointer; font-size: 1.1em; border-radius: 4px; margin-top: 15px;}
+        </style>
+</h:head>
+<h:body>
+    <div class="test-container">
+            <h1>Valoración de Inteligencias Múltiples</h1>
+            
+            <div class="header-panel">
+                <h3>Estudiante: Juan Pérez (Ejemplo)</h3>
+                <p><strong>Instrucciones para el Psicoorientador:</strong> A continuación se presentan una serie de afirmaciones. 
+                Valore de 1 a 5 la frecuencia con la que el estudiante manifiesta estas conductas, donde 1 es "Nunca" y 5 es "Siempre".</p>
+            </div>
+
+            <h:form id="formTestIM">
+                <h:messages globalOnly="true" showDetail="true" style="color:red; margin-bottom: 15px;"/>
+                
+                <ui:repeat value="#{testIMBean.listaPreguntas}" var="pregunta">
+                    
+                    <div class="question-row" style="border-left: 5px solid #ccc; padding-left: 10px; margin-bottom: 5px;">
+                        <div class="question-text">
+                            <span style="font-size: 0.8em; color: #0056b3; display: block;">[#{pregunta.tipoInteligencia}]</span>
+                            #{pregunta.enunciado}
+                        </div>
+                        <div class="scale-options">
+                            <h:selectOneRadio value="#{pregunta.puntajeSeleccionado}" required="true" requiredMessage="Debe calificar todas las preguntas">
+                                <f:selectItem itemValue="1" itemLabel="1 (Nunca)" />
+                                <f:selectItem itemValue="2" itemLabel="2" />
+                                <f:selectItem itemValue="3" itemLabel="3 (A veces)" />
+                                <f:selectItem itemValue="4" itemLabel="4" />
+                                <f:selectItem itemValue="5" itemLabel="5 (Siempre)" />
+                            </h:selectOneRadio>
+                        </div>
+                    </div>
+                </ui:repeat>
+
+                <div style="text-align: center; margin-top: 30px;">
+                    <h:commandButton value="Calcular Resultados Preliminares" actionListener="#{testIMBean.calcularResultadosPreliminares}" styleClass="btn-calcular">
+                        <f:ajax execute="@form" render="panelResultados @form:messages" />
+                    </h:commandButton>
+                </div>
+
+                <h:panelGroup id="panelResultados" layout="block">
+                    <h:panelGroup rendered="#{testIMBean.mostrarResultados}" styleClass="results-panel">
+                        <h2>Resultados de la Caracterización</h2>
+                        <p>A mayor puntaje, mayor predominancia de la inteligencia.</p>
+                        
+                        <table class="results-table" style="width: 50%; margin: auto;">
+                            <thead>
+                                <tr style="background-color: #f2f2f2;">
+                                    <th>Tipo de Inteligencia</th>
+                                    <th>Puntaje Total Acumulado</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <ui:repeat value="#{testIMBean.resultadosMap.entrySet().toArray()}" var="entry">
+                                    <tr>
+                                        <td><strong>#{entry.key}</strong></td>
+                                        <td style="text-align: center; font-size: 1.2em;">
+                                            <h:outputText value="#{entry.value}" style="#{entry.value > 8 ? 'color:green; font-weight:bold;' : ''}" />
+                                        </td>
+                                    </tr>
+                                </ui:repeat>
+                            </tbody>
+                        </table>
+
+                        <div style="text-align: center; margin-top: 20px;">
+                            <p><em>Verifique los resultados con sus observaciones antes de guardar.</em></p>
+                            <h:commandButton value="Guardar Valoración en Historial del Estudiante" 
+                                             action="#{testIMBean.guardarValoracionFinal}" 
+                                             styleClass="btn-guardar"
+                                             onclick="return confirm('¿Está seguro de guardar esta valoración?');"/>
+                        </div>
+                    </h:panelGroup>
+                </h:panelGroup>
+            </h:form>
+        </div>
+</h:body>
+</html>

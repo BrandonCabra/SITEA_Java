@@ -1,0 +1,162 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <body>
+        <ui:composition template="./../TemplateSitio.xhtml">
+            <ui:define name="head">
+                <title>Valoración - Habilidades Intelectuales (D2)</title>
+                <style>
+                    .dimension-form { max-width: 900px; margin: 20px auto; }
+                    .dimension-header { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); 
+                        color: white; padding: 25px; border-radius: 8px 8px 0 0; margin-bottom: 20px; }
+                    .dimension-header h1 { margin: 0 0 5px 0; font-size: 28px; }
+                    .dimension-header p { margin: 5px 0; font-size: 14px; opacity: 0.9; }
+                    .section-card { border: 1px solid #ddd; border-radius: 8px; margin-bottom: 20px; 
+                        box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+                    .section-title { background: #f5f5f5; border-left: 4px solid #667eea; padding: 15px; 
+                        font-weight: bold; font-size: 16px; }
+                    .section-content { padding: 20px; }
+                    .likert-group { margin-bottom: 20px; }
+                    .likert-question { font-weight: 600; margin-bottom: 10px; color: #333; font-size: 14px; }
+                    .likert-scale { display: flex; gap: 10px; justify-content: space-between; }
+                    .likert-option { flex: 1; text-align: center; }
+                    .likert-radio { margin: 0; }
+                    .likert-label { display: block; font-size: 12px; margin-top: 5px; color: #666; }
+                    .likert-1 { color: #f44336; }
+                    .likert-2 { color: #ff9800; }
+                    .likert-3 { color: #ffc107; }
+                    .likert-4 { color: #8bc34a; }
+                    .likert-5 { color: #4caf50; }
+                    .textarea-field { width: 100%; min-height: 100px; padding: 10px; 
+                        border: 1px solid #ddd; border-radius: 4px; font-family: Arial, sans-serif; }
+                    .button-group { text-align: right; margin-top: 20px; gap: 10px; }
+                    .btn-save { background: #4caf50; color: white; padding: 10px 25px; 
+                        border: none; border-radius: 4px; cursor: pointer; font-weight: bold; }
+                    .btn-save:hover { background: #45a049; }
+                    .btn-cancel { background: #f44336; color: white; padding: 10px 25px; 
+                        border: none; border-radius: 4px; cursor: pointer; font-weight: bold; }
+                    .btn-cancel:hover { background: #da190b; }
+                    .score-display { background: #e8f5e9; border-left: 4px solid #4caf50; 
+                        padding: 15px; margin-bottom: 20px; border-radius: 4px; }
+                    .score-display strong { font-size: 24px; color: #2e7d32; }
+                    .legend { background: #fff3cd; border-left: 4px solid #ffc107; padding: 15px; 
+                        margin-bottom: 20px; border-radius: 4px; font-size: 13px; }
+                </style>
+            </ui:define>
+
+            <ui:define name="content">
+                <h:form>
+                    <f:metadata>
+                        <f:viewParam name="student" value="#{dimensionFormBean.studentId}" />
+                        <f:viewParam name="dim" value="D2" />
+                    </f:metadata>
+
+                    <div class="dimension-form">
+                        <!-- ENCABEZADO -->
+                        <div class="dimension-header">
+                            <h1>🧠 Dimensión 2: Habilidades Intelectuales</h1>
+                            <p>Instrumento de Valoración Estandarizado - Escala Likert + Cuestionario Estructurado + Guía de Observación</p>
+                            <p style="margin-top: 10px;">Estudiante: <strong>#{dimensionFormBean.studentId}</strong> | 
+                                Fecha: <strong>#{dimensionFormBean.evaluationDate}</strong></p>
+                        </div>
+
+                        <!-- LEYENDA -->
+                        <div class="legend">
+                            <strong>Leyenda de Escalas Likert:</strong>
+                            <div style="margin-top: 8px;"><span class="likert-1">■</span> 1 = Totalmente en Desacuerdo | 
+                                <span class="likert-2">■</span> 2 = En Desacuerdo | 
+                                <span class="likert-3">■</span> 3 = Neutral | 
+                                <span class="likert-4">■</span> 4 = De Acuerdo | 
+                                <span class="likert-5">■</span> 5 = Totalmente de Acuerdo</div>
+                        </div>
+
+                        <!-- SECCIÓN 1: ESCALAS LIKERT -->
+                        <div class="section-card">
+                            <div class="section-title">📋 Sección 1: Escalas Likert - Competencias Cognitivas</div>
+                            <div class="section-content">
+                                <p style="color: #666; margin-bottom: 20px;">Indique su nivel de acuerdo con cada afirmación:</p>
+
+                                <ui:repeat value="#{dimensionFormBean.likertQuestions}" var="question">
+                                    <ui:include src="../components/instrument_template.xhtml">
+                                        <ui:param name="questionText" value="#{question.text}" />
+                                        <ui:param name="responseKey" value="#{question.id}" />
+                                        <ui:param name="qid" value="q#{question.id}" />
+                                    </ui:include>
+                                </ui:repeat>
+                            </div>
+                        </div>
+
+                        <!-- SECCIÓN 2: CUESTIONARIO ESTRUCTURADO -->
+                        <div class="section-card">
+                            <div class="section-title">❓ Sección 2: Cuestionario Estructurado</div>
+                            <div class="section-content">
+                                <ui:repeat value="#{dimensionFormBean.structuredSections}" var="section">
+                                    <div style="margin-bottom: 20px;">
+                                        <label style="font-weight: bold; color: #333; display: block; margin-bottom: 8px;">
+                                            <strong>#{section.title}</strong><br />
+                                            <span style="font-weight: normal; color: #666; font-size: 13px;">
+                                                Pregunta orientadora: #{section.guidingQuestion}
+                                            </span>
+                                        </label>
+                                        <h:inputTextarea value="#{section.answer}" styleClass="textarea-field" />
+                                    </div>
+                                </ui:repeat>
+                            </div>
+                        </div>
+
+                        <!-- SECCIÓN 3: GUÍA DE OBSERVACIÓN -->
+                        <div class="section-card">
+                            <div class="section-title">👁️ Sección 3: Guía de Observación</div>
+                            <div class="section-content">
+                                <p style="color: #666; margin-bottom: 20px;">Registre sus observaciones según la siguiente guía:</p>
+
+                                <ui:repeat value="#{dimensionFormBean.observationGuides}" var="guide">
+                                    <div style="margin-bottom: 20px; background: #f9f9f9; padding: 15px; border-radius: 4px;">
+                                        <label style="font-weight: bold; color: #333; display: block; margin-bottom: 8px;">
+                                            #{guide.title}
+                                        </label>
+                                        <p style="font-style: italic; color: #999; margin: 8px 0; font-size: 13px;">
+                                            Guía: #{guide.guidanceText}
+                                        </p>
+                                        <h:inputTextarea value="#{guide.observations}" styleClass="textarea-field" />
+                                    </div>
+                                </ui:repeat>
+                            </div>
+                        </div>
+
+                        <!-- SECCIÓN 4: INFORMACIÓN COMPLEMENTARIA -->
+                        <div class="section-card">
+                            <div class="section-title">📝 Sección 4: Información Complementaria</div>
+                            <div class="section-content">
+                                <div style="margin-bottom: 15px;">
+                                    <label><strong>Observaciones Adicionales:</strong></label>
+                                    <h:inputTextarea value="#{dimensionFormBean.observaciones}" styleClass="textarea-field" />
+                                </div>
+
+                                <div>
+                                    <label><strong>Recomendaciones Pedagógicas:</strong></label>
+                                    <h:inputTextarea value="#{dimensionFormBean.recomendaciones}" styleClass="textarea-field" />
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- BOTONES DE ACCIÓN -->
+                        <div class="button-group">
+                            <h:commandButton value="Calcular Puntuación" action="#{dimensionFormBean.calculateLikertScore}" 
+                                styleClass="btn-save" style="background: #2196F3;" />
+                            <h:commandButton value="Guardar Valoración" action="#{dimensionFormBean.save('D2')}" 
+                                styleClass="btn-save" />
+                            <h:commandButton value="Cancelar" action="#{dimensionFormBean.goBack}" 
+                                styleClass="btn-cancel" immediate="true" />
+                        </div>
+                    </div>
+                </h:form>
+            </ui:define>
+        </ui:composition>
+    </body>
+</html>

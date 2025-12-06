@@ -1,0 +1,75 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+
+    <body>
+
+        <ui:composition template="./../TemplateSitio.xhtml">
+
+            <ui:define name="head">
+                <title>Bienestar Emocional</title>
+  
+            </ui:define>
+            <ui:define name="content" >
+                
+                <h:form>
+    <h2>Valoración – Bienestar Emocional</h2>
+
+    <f:metadata>
+        <f:viewParam name="dim" value="D3" />
+        <f:viewParam name="student" value="#{dimensionFormBean.studentId}" />
+    </f:metadata>
+
+    <h:panelGrid columns="1" cellpadding="5">
+
+        <h:outputLabel value="Estado emocional general del estudiante:" />
+        <h:inputTextarea value="#{dimensionFormBean.caracteristicas}" />
+
+        <h:outputLabel value="Situaciones emocionales que requieren atención:" />
+        <h:inputTextarea value="#{dimensionFormBean.dificultades}" />
+
+        <h:outputLabel value="Estabilidad emocional (0 – 100):" />
+        <h:inputText value="#{dimensionFormBean.progress}"  required="true" />
+
+        <h:outputLabel value="Recomendaciones:" />
+        <h:inputTextarea value="#{dimensionFormBean.recomendaciones}" />
+
+        <h:commandButton value="Guardar" action="#{dimensionFormBean.save('D3')}" />
+        <h:commandButton value="Cancelar" action="#{dimensionFormBean.goBack}" immediate="true" />
+
+            <h:outputLabel value="Valoración de Bienestar Emocional:" />
+            <ui:include src="../components/instrument_template.xhtml">
+                <ui:param name="questionText" value="1. ¿Muestra estabilidad emocional durante el horario escolar?" />
+                <ui:param name="responseKey" value="D3_q1" />
+                <ui:param name="qid" value="D3_q1" />
+            </ui:include>
+            <ui:include src="../components/instrument_template.xhtml">
+                <ui:param name="questionText" value="2. ¿Responde adecuadamente ante situaciones de estrés?" />
+                <ui:param name="responseKey" value="D3_q2" />
+                <ui:param name="qid" value="D3_q2" />
+            </ui:include>
+            <ui:include src="../components/instrument_template.xhtml">
+                <ui:param name="questionText" value="3. ¿Presenta señales de angustia que requieren intervención?" />
+                <ui:param name="responseKey" value="D3_q3" />
+                <ui:param name="qid" value="D3_q3" />
+            </ui:include>
+    </h:panelGrid>
+</h:form>
+                
+                
+      
+       
+
+        
+        
+            </ui:define>
+
+
+        </ui:composition>
+
+    </body>
+</html>

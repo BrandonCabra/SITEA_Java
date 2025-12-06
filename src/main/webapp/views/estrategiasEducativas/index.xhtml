@@ -3,125 +3,261 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:pt="http://xmlns.jcp.org/jsf/passthrough">
+      
+
 
     <body>
 
         <ui:composition template="./../TemplateSitio.xhtml">
 
-            <ui:define name="top">
-                
-            </ui:define>
-
-            <ui:define name="left">
-                
-            </ui:define>
-
             <ui:define name="content">
-                <h:form>
+                <style>
+                    /* Degradado para el Hero Section */
+                    .hero-gradient {
+                        background: linear-gradient(135deg, #0d6efd 0%, #0a58ca 100%); /* Azul Bootstrap */
+                    }
+                    /* Opacidad para elementos de fondo decorativos */
+                    .opacity-10 { opacity: 0.1 !important; }
                     
-    
-    <div class="card mb-3">
-        <div class="card-body">
-            <h5 class="card-title">Estrategias Educativas Inclusivas</h5>
-            <p class="card-text">Espacio donde encontrara estrategias educativas efectivas que fomentan el aprendizaje inclusivo y significativo</p>
-            <p><strong>Categoría:</strong> CATEGORIA</p>
-            <h:link outcome="">
-                <f:param name="id" value="ID" />
-                Compartir Estrategia
-            </h:link>
-        </div>
-    </div>
-
-           <h:form>
-    <div class="container mt-4">
-        <div class="row row-cols-1 row-cols-md-3 g-4">
-
-            <!-- Tarjeta 1 -->
-            <div class="col">
-                <div class="card h-100 shadow-sm border-0">
-                    <img src="../../resources/images/biblioteca.jpeg" 
-                         class="card-img-top" alt="Imagen estrategia 1"
-                         style="height: 180px; object-fit: cover;" />
-
-                    <div class="card-body">
-                        <h5 class="card-title text-primary">REPOSITORIO ESTRATEGIAS</h5>
-                        <span class="badge bg-info text-dark">biblioteca</span>
-                        <p class="card-text mt-2 text-muted">
-                            Drive de documentos con estrategias puntuales para estudiantes con TEA
-                        </p>
-                    </div>
-
-                    <div class="card-footer bg-light text-end">
-                        <small class="text-muted">Autor: SITEA</small><br/>
-                        <a href="repositorioDrive.xhtml" target="_blank"
-                           class="btn btn-sm btn-outline-primary mt-2">Ver más</a>
-                    </div>
-                 
-                </div>
-            </div>
-
-            <!-- Tarjeta 2 -->
-            <div class="col">
-                <div class="card h-100 shadow-sm border-0">
-                    <img src="../../resources/images/estraIA.jpeg"
-                         class="card-img-top" alt="Imagen estrategia 2"
-                         style="height: 180px; object-fit: cover;" />
-
-                    <div class="card-body">
-                        <h5 class="card-title text-primary">Recomendaciones IA</h5>
-                        <span class="badge bg-success text-light">Inclusión</span>
-                        <p class="card-text mt-2 text-muted">
-                            Recomendaciones de estrategias con IA para estudiantes TEA
-                        </p>
-                    </div>
-
-                    <div class="card-footer bg-light text-end">
-                        <small class="text-muted">SITEA-Perplexity</small><br/>
-                        <a href="RecomendacionPerplexity.xhtml" target="_blank"
-                           class="btn btn-sm btn-outline-primary mt-2">Ver más</a>
-                    </div>
+                    /* Efecto Hover mejorado para las tarjetas */
+                    .hover-shadow-lg { transition: all 0.3s ease-in-out; }
+                    .hover-shadow-lg:hover {
+                        transform: translateY(-5px); /* Levanta la tarjeta ligeramente */
+                        box-shadow: 0 1rem 3rem rgba(0,0,0,.175)!important; /* Sombra más profunda */
+                        border-color: #86b7fe !important; /* Borde azul sutil al pasar el mouse */
+                    }
                     
-                </div>
-            </div>
-
-            <!-- Tarjeta 3 -->
-            <div class="col">
-                <div class="card h-100 shadow-sm border-0">
-                    <img src="../../resources/images/tic.jpeg"
-                         class="card-img-top" alt="Imagen estrategia 3"
-                         style="height: 180px; object-fit: cover;" />
-
-                    <div class="card-body">
-                        <h5 class="card-title text-primary">Estrategias TIC</h5>
-                        <span class="badge bg-warning text-dark">Herramientas</span>
-                        <p class="card-text mt-2 text-muted">
-                            Actividades adaptadas para .
-                        </p>
-                    </div>
-
-                    <div class="card-footer bg-light text-end">
-                        <small class="text-muted">Autor: Esp. Paula Gómez</small><br/>
-                        <a href="https://ticsinbarreras.mintic.gov.co/791/w3-article-210229.html" target="_blank"
-                           class="btn btn-sm btn-outline-primary mt-2">Ver más</a>
-                    </div>
-                </div>
-            </div>
-
-        </div>
-    </div>
-</h:form>         
+                 /* Opción 4: Índigo / Morado Suave */
+                    .hero-indigo {
+                         background: linear-gradient(210deg, #a594f9 20%, #1D4ED8 100%); /* Degradado de lavanda a morado intenso */
+                    }
                     
-    <ul>
-    <li><h:outputLink value="https://www.colombiaaprende.edu.co/" target="_blank">Portal Colombia Aprende</h:outputLink></li>
-    <li><h:outputLink value="https://sl.bing.net/jI3u9g2hpm0">Guía PIAR</h:outputLink></li>
-    <li><h:outputLink value="https://drive.google.com/drive/folders/1sKCviKKvbUuH3Af71ZuzxB2tRKjfNmx5" target="_blank">Repositorio Estrategias</h:outputLink></li>
-</ul>
+                </style>
+                <h:form id="frmEstrategias">
+                    <div class="container-fluid px-4 py-4">
+
+                        <div class="p-5 rounded-3 mb-4 text-center text-white hero-indigo  position-relative overflow-hidden shadow text-lg-start">
+                            <i class="bi bi-lightbulb position-absolute text-white opacity-10 d-none d-lg-block" 
+                               style="font-size: 15rem; top: -20%; right: -5%; transform: rotate(20deg); z-index: 0;"></i>
+                            
+                            <div class="row align-items-center position-relative" style="z-index: 1;">
+                                <div class="col-lg-8">
+                                    <h1 class="display-5 fw-bold ls-tight mb-3">Estrategias Educativas Inclusivas</h1>
+                                    <p class="fs-5 text-white-50 mb-4">
+                                        Explora un repositorio dinámico de recursos, herramientas TIC y guías pedagógicas diseñadas para fomentar el aprendizaje significativo en estudiantes con TEA.
+                                    </p>
+                                </div>
+                                <div class="col-lg-4 text-lg-end">
+                                     <h:link outcome="crearEstrategia.xhtml" styleClass="btn btn-light btn-lg px-4 gap-3 fw-bold text-primary shadow-sm">
+                                        <i class="bi bi-plus-circle-fill me-2"></i>
+                                        Compartir Estrategia
+                                    </h:link>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Buscador -->
+                        
+                        <div class="card shadow-sm border-0 mb-4">
+                            <div class="card-body p-3 bg-white rounded-3">
+                                <div class="row g-3 align-items-center">
+                                    <div class="col-md-6">
+                                        <div class="input-group">
+                                            <span class="input-group-text bg-white border-end-0 text-muted">
+                                                <i class="bi bi-search"></i>
+                                            </span>
+                                            <h:inputText styleClass="form-control border-start-0 ps-0 shadow-none" 
+                                                         pt:placeholder="Buscar por título, autor o palabra clave..." />
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-4">
+                                        <div class="input-group">
+                                            <span class="input-group-text bg-white border-end-0 text-muted">
+                                                <i class="bi bi-funnel"></i>
+                                            </span>
+                                            <h:selectOneMenu styleClass="form-select border-start-0 ps-0 shadow-none" >
+                                                <f:selectItem itemLabel="Todas las Categorías" itemValue="#{null}" />
+                                                <f:selectItem itemLabel="Biblioteca / Documentos" itemValue="BIBLIO" />
+                                                <f:selectItem itemLabel="Herramientas TIC" itemValue="TIC" />
+                                                <f:selectItem itemLabel="Inclusión con IA" itemValue="IA" />
+                                                <f:selectItem itemLabel="Pedagogía Visual" itemValue="VISUAL" />
+                                            </h:selectOneMenu>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-2">
+                                        <h:commandButton value="Filtrar Resultados" styleClass="btn btn-primary w-100">
+                                            <f:ajax execute="@form" render="panelResultados" />
+                                        </h:commandButton>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Estadísticas Rápidas -->
+                        <div class="row mb-4 g-3 font-monospace">
+                            <div class="col-md-6 col-xl-3">
+                                <div class="card bg-white border-0 shadow-sm h-100">
+                                    <div class="card-body d-flex align-items-center p-3">
+                                        <div class="bg-primary bg-opacity-10 p-3 rounded-circle me-3 text-primary d-flex align-items-center justify-content-center" style="width: 60px; height: 60px;">
+                                            <i class="bi bi-collection-play fs-3"></i>
+                                        </div>
+                                        <div>
+                                            <h6 class="card-subtitle text-muted mb-1 text-uppercase fs-7 ls-wider">Total Recursos</h6>
+                                            <h3 class="card-title mb-0 fw-bolder">24</h3> 
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-xl-3">
+                                <div class="card bg-white border-0 shadow-sm h-100">
+                                    <div class="card-body d-flex align-items-center p-3">
+                                        <div class="bg-success bg-opacity-10 p-3 rounded-circle me-3 text-success d-flex align-items-center justify-content-center" style="width: 60px; height: 60px;">
+                                            <i class="bi bi-stars fs-3"></i>
+                                        </div>
+                                        <div>
+                                            <h6 class="card-subtitle text-muted mb-1 text-uppercase fs-7 ls-wider">Nuevos este mes</h6>
+                                            <h3 class="card-title mb-0 fw-bolder">5</h3>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                                               
+                        <!-- Columna Izquierda tarjetas -->
+                
+                
+                        <h:panelGroup id="panelResultados" layout="block">
+                                       <div class="row">
+
+                                           <div class="col-lg-9 mb-4">
+                                               <div class="row row-cols-1 row-cols-md-2 row-cols-xl-3 g-4">
+
+                                                   <ui:repeat value="#{['1', '2', '3']}" var="dummyStatus" varStatus="status">
+                                                       <div class="col">
+                                                           <div class="card h-100 shadow-sm border-0 hover-shadow-lg overflow-hidden">
+
+                                                               <div class="position-relative">
+                                                                   <h:graphicImage library="images" 
+                                                                                   name="#{status.index % 3 == 0 ? 'biblioteca.jpeg' : (status.index % 3 == 1 ? 'estraIA.jpeg' : 'tic.jpeg')}"
+                                                                                   styleClass="card-img-top" 
+                                                                                   alt="Imagen de estrategia"
+                                                                                   style="height: 200px; object-fit: cover;" />
+                                                                   <span class="position-absolute top-0 end-0 m-3 badge #{status.index % 3 == 0 ? 'bg-info text-dark' : (status.index % 3 == 1 ? 'bg-success' : 'bg-warning text-dark')} rounded-pill shadow-sm">
+                                                                       <i class="bi #{status.index % 3 == 0 ? 'bi-file-earmark-text' : (status.index % 3 == 1 ? 'bi-robot' : 'bi-laptop')} me-1"></i>
+                                                                       #{status.index % 3 == 0 ? 'Documentos' : (status.index % 3 == 1 ? 'IA Inclusiva' : 'Herramientas TIC')}
+                                                                   </span>
+                                                               </div>
+
+                                                               <div class="card-body d-flex flex-column pt-4">
+                                                                   <h5 class="card-title text-primary fw-bold mb-2 text-truncate">
+                                                                       #{status.index % 3 == 0 ? 'Repositorio de Guías PDF' : (status.index % 3 == 1 ? 'Recomendaciones IA' : 'Estrategias TIC')}
+                                                                   </h5>
+
+                                                                   <p class="card-text text-muted flex-grow-1 small">
+                                                                       #{status.index % 3 == 0 ? 'Colección de guías metodológicas y lecturas de apoyo para docentes.' : (status.index % 3 == 1 ? 'Recomendaciones de estrategias con IA para estudiantes con TEA.' : 'Lista de aplicaciones y actividaes para fomentar el aprendizaje.')}
+                                                                   </p>
+
+                                                                   <div class="d-flex align-items-center text-muted small mt-3">
+                                                                       <i class="bi bi-calendar-event me-1"></i>
+                                                                       <span>Publicado: 06/10/2023</span>
+                                                                       <span class="mx-2">|</span>
+                                                                       <i class="bi bi-hand-thumbs-up-fill text-primary me-1"></i>
+                                                                       <span>12 Likes</span>
+                                                                   </div>
+                                                               </div>
+
+                                                               <div class="card-footer bg-white border-top-0 py-3 d-flex justify-content-between align-items-center">
+                                                                   <div class="d-flex align-items-center">
+                                                                       <div class="bg-light rounded-circle d-flex justify-content-center align-items-center me-2" style="width: 32px; height: 32px;">
+                                                                            <i class="bi bi-person-fill text-muted"></i>
+                                                                       </div>
+                                                                       <small class="text-muted fw-bold">
+                                                                           #{status.index % 3 == 0 ? 'Admin SITEA' : (status.index % 3 == 1 ? 'SITEA-Perplexity AI' : 'Prof. Gómez')}
+                                                                       </small>
+                                                                   </div>
+
+                                                                   <a href="#{status.index % 3 == 0 ? 'repositorioDrive.xhtml' : (status.index % 3 == 1 ? 'RecomendacionPerplexity_1.xhtml' : 'https://ticsinbarreras.mintic.gov.co/791/w3-article-210229.html')}"
+                                                                        target="#{status.index % 3 == 2 ? '_blank' : '_self'}"
+                                                                        class="btn btn-primary btn-sm rounded-pill px-3 stretched-link">
+                                                                        Ver detalle <i class="bi bi-arrow-right-short ms-1"></i>
+                                                                    </a>
+                                                               </div>
+                                                           </div>
+                                                       </div>
+                                                   </ui:repeat> </div>
+                                           </div>
+                            
+                            <!-- Columna Derecha enlaces -->
+                                            <div class="col-lg-3">
+                                                     <div class="card shadow-sm border-0 mb-4">
+                                                         <div class="card-header bg-white fw-bold py-3 d-flex align-items-center border-bottom-0">
+                                                             <i class="bi bi-bookmark-star-fill me-2 text-warning"></i> Enlaces Recomendados
+                                                         </div>
+                                                         <div class="list-group list-group-flush">
+                                                             <h:outputLink value="https://www.colombiaaprende.edu.co/" target="_blank" styleClass="list-group-item list-group-item-action d-flex align-items-center py-3">
+                                                                 <i class="bi bi-box-arrow-up-right me-3 text-muted"></i>
+                                                                 <div>
+                                                                     <div class="fw-bold text-dark">Portal Colombia Aprende</div>
+                                                                     <small class="text-muted">Recursos del MEN</small>
+                                                                 </div>
+                                                             </h:outputLink>
+                                                             <h:outputLink value="https://sl.bing.net/jI3u9g2hpm0" target="_blank" styleClass="list-group-item list-group-item-action d-flex align-items-center py-3">
+                                                                 <i class="bi bi-file-earmark-pdf-fill me-3 text-danger"></i>
+                                                                 <div>
+                                                                     <div class="fw-bold text-dark">Guía Implementación PIAR</div>
+                                                                     <small class="text-muted">Documento oficial</small>
+                                                                 </div>
+                                                             </h:outputLink>
+                                                             <h:outputLink value="#" target="_blank" styleClass="list-group-item list-group-item-action d-flex align-items-center py-3">
+                                                                 <i class="bi bi-google me-3 text-success"></i>
+                                                                 <div>
+                                                                     <div class="fw-bold text-dark">Drive Institucional</div>
+                                                                     <small class="text-muted">Acceso al repositorio</small>
+                                                                 </div>
+                                                             </h:outputLink>
+                                                         </div>
+                                                     </div>
+
+                                                     <div class="card shadow-sm border-0">
+                                                         <div class="card-header bg-white fw-bold py-3 border-bottom-0">
+                                                             Explorar por etiquetas
+                                                         </div>
+                                                          <div class="card-body">
+                                                              <div class="d-flex flex-wrap gap-2">
+                                                                  <a href="#" class="badge bg-light text-dark text-decoration-none border px-3 py-2">#Lectoescritura</a>
+                                                                  <a href="#" class="badge bg-light text-dark text-decoration-none border px-3 py-2">#Matemáticas</a>
+                                                                  <a href="#" class="badge bg-light text-dark text-decoration-none border px-3 py-2">#Sensorial</a>
+                                                                  <a href="#" class="badge bg-light text-dark text-decoration-none border px-3 py-2">#Pictogramas</a>
+                                                                  <a href="#" class="badge bg-light text-dark text-decoration-none border px-3 py-2">#Tecnología</a>
+                                                              </div>
+                                                          </div>
+                                                      </div>
+                                                 </div>
+
+                           
+                        </div> </h:panelGroup>       
+                
+                
+                
+                
+                </div> </h:form>        
+
                     
-</h:form>
-            </ui:define>
+                  
+
+
+        
+</ui:define>
+
 
         </ui:composition>
 
+
     </body>
-</html>
+
+</html> 

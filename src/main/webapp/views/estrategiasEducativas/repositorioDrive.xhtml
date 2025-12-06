@@ -9,37 +9,254 @@
 
         <ui:composition template="./../TemplateSitio.xhtml">
 
-            <ui:define name="top">
-                
-            </ui:define>
-
-            <ui:define name="left">
-                
-            </ui:define>
-
             <ui:define name="content">
-                
-                <h1>Archivos de la carpeta pública</h1>
+    <style>
+        /* Degradado del encabezado */
+        .hero-gradient-repo { background: linear-gradient(135deg, #0d6efd 0%, #0a58ca 100%); }
+        .opacity-10 { opacity: 0.1 !important; }
+        
+        /* Estilos del Carrusel */
+        .carousel-caption-bg {
+            background: rgba(0, 0, 0, 0.6); /* Fondo semitransparente para leer texto */
+            border-radius: 10px;
+            padding: 1rem;
+        }
+        .carousel-item { min-height: 300px; } /* Altura mínima para el carrusel */
+        .featured-book-icon { font-size: 5rem; color: #fff; opacity: 0.8; }
 
-  <h:panelGroup rendered="#{empty listaDriveApiKeyBean.archivos}">
-    <p>No se encontraron archivos. Verifica que la carpeta sea pública y que el ID/API key sean correctos.</p>
-  </h:panelGroup>
+        /* Estilos de la "Tarjeta Libro" (Book Card) */
+        .book-card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: none;
+            position: relative;
+            overflow: hidden;
+        }
+        .book-card:hover {
+            transform: translateY(-5px); /* Efecto de "levantar" el libro al pasar el mouse */
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1) !important;
+        }
+        /* Decoración lateral para simular el lomo de un libro */
+        .book-spine {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 6px;
+            height: 100%;
+            /* El color se asigna dinámicamente según el tipo de archivo en el HTML */
+        }
+        .book-icon-large { font-size: 3.5rem; } /* Icono grande del libro */
 
-  <h:panelGroup rendered="#{not empty listaDriveApiKeyBean.archivos}">
-    <ul>
-      <ui:repeat value="#{listaDriveApiKeyBean.archivos}" var="f">
-        <li>
-          <h:outputText value="#{f.name} (#{f.mimeType})"/>
-          <h:panelGroup rendered="#{not empty f.webViewLink}">
-            — <a target="_blank" href="#{f.webViewLink}">Abrir</a>
-          </h:panelGroup>
-        </li>
-      </ui:repeat>
-    </ul>
-  </h:panelGroup>
+        /* Iframe y otros */
+        .preview-iframe { height: 75vh; width: 100%; border: none; }
+    </style>
 
-   
-            </ui:define>
+
+    <div class="bg-primary p-4 rounded-3 mb-4 text-center text-white hero-gradient-repo position-relative overflow-hidden shadow text-lg-start">
+         <i class="bi bi-collection position-absolute text-white opacity-10 d-none d-lg-block" 
+                   style="font-size: 12rem; top: -10%; right: 5%; transform: rotate(-15deg); z-index: 0;"></i>
+        <div class="position-relative" style="z-index: 1;">
+            <h1 class="fw-bold mb-2"><i class="bi bi-journals me-2"></i>Biblioteca Digital de Estrategias</h1>
+            <p class="fs-6 text-white-50 mb-0 col-lg-8">
+                Accede a nuestra colección centralizada de guías metodológicas, lecturas de apoyo y material didáctico.
+            </p>
+        </div>
+    </div>
+
+
+    <h:panelGroup rendered="#{not empty listaDriveApiKeyBean.archivos and listaDriveApiKeyBean.archivos.size() > 0}">
+        <div class="card shadow-sm border-0 mb-5 bg-dark text-white overflow-hidden">
+            <div class="card-header bg-transparent border-0 pt-3 px-4">
+                <h5 class="mb-0"><i class="bi bi-star-fill text-warning me-2"></i>Lecturas Recomendadas</h5>
+            </div>
+            <div class="card-body p-0">
+                <div id="carouselFeaturedDocs" class="carousel slide" data-bs-ride="carousel">
+                    <div class="carousel-inner">
+                        <ui:repeat value="#{listaDriveApiKeyBean.archivos}" var="f" varStatus="status">
+                            <ui:fragment rendered="#{status.index lt 3}">
+                                <div class="carousel-item #{status.index == 0 ? 'active' : ''}">
+                                    <div class="d-flex justify-content-center align-items-center bg-secondary" style="height: 300px; position: relative;">
+                                         <i class="bi #{f.mimeType.contains('pdf') ? 'bi-file-pdf' : 'bi-file-text'} position-absolute opacity-10" style="font-size: 15rem;"></i>
+                                        
+                                        <div class="carousel-caption mb-4">
+                                            <div class="carousel-caption-bg text-start">
+                                                 <i class="bi bi-book-half featured-book-icon mb-3 d-block text-center"></i>
+                                                <span class="badge bg-warning text-dark mb-2">Destacado</span>
+                                                <h3 class="fw-bold text-truncate">#{f.name}</h3>
+                                                <p>Documento esencial seleccionado para consulta prioritaria.</p>
+                                                 <h:panelGroup rendered="#{not empty f.webViewLink and !f.mimeType.contains('folder')}">
+                                                    <button type="button" class="btn btn-primary mt-2" onclick="openPreview('#{f.webViewLink}')">
+                                                        <i class="bi bi-eye-fill me-1"></i> Leer Ahora
+                                                    </button>
+                                                 </h:panelGroup>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </ui:fragment>
+                        </ui:repeat>
+                    </div>
+                    <button class="carousel-control-prev" type="button" data-bs-target="#carouselFeaturedDocs" data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Anterior</span>
+                    </button>
+                    <button class="carousel-control-next" type="button" data-bs-target="#carouselFeaturedDocs" data-bs-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Siguiente</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </h:panelGroup>
+
+
+    <div class="d-flex flex-column flex-md-row justify-content-between align-items-center mb-4">
+        <h4 class="mb-3 mb-md-0 fw-bold text-secondary">
+            <i class="bi bi-bookshelf me-2"></i>Estantería General
+            <span class="badge bg-light text-dark border ms-2 fs-6 fw-normal">#{listaDriveApiKeyBean.archivos.size()} recursos</span>
+        </h4>
+        <div class="input-group w-md-50 shadow-sm">
+            <span class="input-group-text bg-white border-end-0 ps-3"><i class="bi bi-search"></i></span>
+            <input type="text" id="searchInput" class="form-control border-start-0 ps-0" onkeyup="filterGrid()" placeholder="Buscar título en la estantería..." />
+        </div>
+    </div>
+
+
+    <h:panelGroup rendered="#{empty listaDriveApiKeyBean.archivos}" styleClass="text-center p-5 text-muted bg-light rounded-3 mb-5">
+        <i class="bi bi-inboxes display-4 mb-3 d-block text-secondary opacity-50"></i>
+        <h4>La estantería está vacía.</h4>
+        <p>No se encontraron documentos en el repositorio conectado.</p>
+    </h:panelGroup>
+
+    <h:panelGroup rendered="#{not empty listaDriveApiKeyBean.archivos}">
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-lg-4 row-cols-xl-5 g-4 mb-5" id="bookShelfContainer">
+            <ui:repeat value="#{listaDriveApiKeyBean.archivos}" var="f">
+                <div class="col book-item-col">
+                    <div class="card h-100 shadow-sm book-card bg-white rounded-3">
+                        
+                        <ui:fragment rendered="#{f.mimeType.contains('pdf')}">
+                            <div class="book-spine bg-danger"></div>
+                            <div class="position-absolute top-0 end-0 m-2 text-danger" title="Documento PDF"><i class="bi bi-file-pdf-fill fs-5"></i></div>
+                        </ui:fragment>
+                        <ui:fragment rendered="#{f.mimeType.contains('word') or f.mimeType.contains('document')}">
+                            <div class="book-spine bg-primary"></div>
+                             <div class="position-absolute top-0 end-0 m-2 text-primary" title="Documento Word"><i class="bi bi-file-word-fill fs-5"></i></div>
+                        </ui:fragment>
+                        <ui:fragment rendered="#{f.mimeType.contains('sheet') or f.mimeType.contains('excel')}">
+                            <div class="book-spine bg-success"></div>
+                             <div class="position-absolute top-0 end-0 m-2 text-success" title="Hoja de Cálculo"><i class="bi bi-file-earmark-spreadsheet-fill fs-5"></i></div>
+                        </ui:fragment>
+                         <ui:fragment rendered="#{f.mimeType.contains('folder')}">
+                            <div class="book-spine bg-warning text-dark"></div>
+                             <div class="position-absolute top-0 end-0 m-2 text-warning" title="Carpeta"><i class="bi bi-folder-fill fs-5"></i></div>
+                        </ui:fragment>
+
+                        <div class="card-body text-center d-flex flex-column pt-5 pb-4 px-3">
+                            <i class="bi bi-book book-icon-large mb-3 text-secondary opacity-75"></i>
+                            
+                            <h6 class="card-title fw-bold text-dark mb-3 flex-grow-1 text-truncate-3 book-title" style="display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden;">
+                                #{f.name}
+                            </h6>
+
+                            <h:panelGroup rendered="#{not empty f.webViewLink and !f.mimeType.contains('folder')}">
+                                 <button type="button" class="btn btn-outline-primary w-100 btn-sm rounded-pill stretched-link" 
+                                        onclick="openPreview('#{f.webViewLink}')">
+                                    Vista Previa
+                                </button>
+                             </h:panelGroup>
+                            <h:panelGroup rendered="#{f.mimeType.contains('folder')}">
+                                <span class="badge bg-light text-dark border mt-auto">Carpeta</span>
+                            </h:panelGroup>
+                        </div>
+                    </div>
+                </div>
+            </ui:repeat>
+        </div>
+    </h:panelGroup>
+
+
+    <div class="modal fade" id="previewModal" tabindex="-1" aria-labelledby="previewModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content h-100">
+                <div class="modal-header bg-light py-2">
+                    <h5 class="modal-title" id="previewModalLabel"><i class="bi bi-book-half me-2"></i>Lector de Documentos</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body p-0 bg-dark d-flex justify-content-center align-items-center position-relative">
+                    <div id="loadingSpinner" class="spinner-border text-light position-absolute" role="status" style="z-index: 1;">
+                        <span class="visually-hidden">Cargando...</span>
+                    </div>
+                    <iframe id="drivePreviewFrame" class="preview-iframe" src="" allowfullscreen="true" style="opacity: 0; transition: opacity 0.5s ease;"></iframe>
+                </div>
+                <div class="modal-footer py-1 bg-light justify-content-between">
+                    <small class="text-muted">Visualización provista por Google Drive.</small>
+                    <button type="button" class="btn btn-secondary btn-sm px-4" data-bs-dismiss="modal">Cerrar Libro</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script type="text/javascript">
+        /* <![CDATA[ */
+        // Función para abrir el modal (Igual que antes)
+        function openPreview(driveLink) {
+            const modalElement = document.getElementById('previewModal');
+            const iframe = document.getElementById('drivePreviewFrame');
+            const spinner = document.getElementById('loadingSpinner');
+            
+            let previewLink = driveLink;
+            if (driveLink.includes('/view')) {
+                previewLink = driveLink.replace('/view', '/preview');
+            }
+            
+            spinner.style.opacity = "1"; // Mostrar spinner
+            iframe.style.opacity = "0";  // Ocultar iframe mientras carga
+            iframe.src = previewLink;
+            
+            if (typeof bootstrap !== 'undefined') {
+                    const modal = new bootstrap.Modal(modalElement);
+                    modal.show();
+
+                    // Evento cuando el iframe termina de cargar
+                    iframe.onload = function() {
+                        spinner.style.opacity = "0"; // Ocultar spinner
+                        iframe.style.opacity = "1";  // Mostrar iframe suavemente
+                    };
+
+                    modalElement.addEventListener('hidden.bs.modal', function () {
+                        iframe.src = "";
+                        spinner.style.opacity = "1"; // Resetear spinner para la próxima
+                    });
+            } else {
+                window.open(driveLink, '_blank');
+            }
+        }
+        
+        // Función de búsqueda ACTUALIZADA para la estructura de GRID
+        function filterGrid() {
+            var input, filter, gridContainer, cols, bookTitle, i, txtValue;
+            input = document.getElementById('searchInput');
+            filter = input.value.toUpperCase();
+            gridContainer = document.getElementById('bookShelfContainer');
+            // Buscamos las columnas que contienen las tarjetas
+            cols = gridContainer.getElementsByClassName('book-item-col');
+
+            for (i = 0; i < cols.length; i++) {
+                // Buscamos el título dentro de la tarjeta
+                bookTitle = cols[i].getElementsByClassName('book-title')[0];
+                if (bookTitle) {
+                    txtValue = bookTitle.textContent || bookTitle.innerText;
+                    if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                        cols[i].style.display = ""; // Mostrar la columna entera
+                    } else {
+                        cols[i].style.display = "none"; // Ocultar la columna entera
+                    }
+                }
+            }
+        }
+        /* ]]> */
+    </script>
+
+</ui:define>
 
         </ui:composition>
 

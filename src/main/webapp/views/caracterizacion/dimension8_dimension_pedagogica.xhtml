@@ -1,0 +1,97 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+
+    <body>
+
+        <ui:composition template="./../TemplateSitio.xhtml">
+
+            <ui:define name="head">
+                
+               <title>Dimensión Pedagógica</title>
+  
+            </ui:define>
+            <ui:define name="content" >
+                
+                <h:form>
+    <h2>Valoración – Dimensión Pedagógica</h2>
+
+    <f:metadata>
+        <f:viewParam name="dim" value="D8" />
+        <f:viewParam name="student" value="#{dimensionFormBean.studentId}" />
+    </f:metadata>
+
+    <h:panelGrid columns="1" cellpadding="5">
+
+        <h:outputLabel value="Procesos de aprendizaje observados:" />
+        <h:inputTextarea value="#{dimensionFormBean.caracteristicas}" />
+
+        <h:outputLabel value="Dificultades pedagógicas:" />
+        <h:inputTextarea value="#{dimensionFormBean.dificultades}" />
+
+        <h:outputLabel value="Nivel de desempeño académico (0 – 100):" />
+        <h:inputText value="#{dimensionFormBean.progress}"  required="true"/>
+
+        <h:outputLabel value="Recomendaciones pedagógicas:" />
+        <h:inputTextarea value="#{dimensionFormBean.recomendaciones}" />
+
+        <h:commandButton value="Guardar" action="#{dimensionFormBean.save('D8')}" />
+        <h:commandButton value="Cancelar" action="#{dimensionFormBean.goBack}" immediate="true" />
+    </h:panelGrid>
+
+    <!-- INSTRUMENTO ESTÁNDAR (Ejemplo) -->
+    <div class="section-card" style="margin-top:20px;">
+        <div class="section-title">📐 Instrumento Estándar - Dimensión Pedagógica (Ejemplo)</div>
+        <div class="section-content">
+            <p style="color:#666;">Ejemplo de instrumento: preguntas Likert para habilidades de aprendizaje y una guía de observación para el aula.</p>
+
+            <div class="likert-group">
+                <div class="likert-question">1. ¿El estudiante muestra atención sostenida durante la clase?</div>
+                <div class="likert-scale">
+                    <h:selectOneRadio id="D8_q1" value="#{dimensionFormBean.likertResponses['D8_q1']}" layout="lineDirection" styleClass="likert-radio">
+                        <f:selectItem itemValue="1" itemLabel="1" />
+                        <f:selectItem itemValue="2" itemLabel="2" />
+                        <f:selectItem itemValue="3" itemLabel="3" />
+                        <f:selectItem itemValue="4" itemLabel="4" />
+                        <f:selectItem itemValue="5" itemLabel="5" />
+                    </h:selectOneRadio>
+                </div>
+            </div>
+
+            <div class="likert-group">
+                <div class="likert-question">2. ¿Resuelve tareas con independencia apropiada?</div>
+                <div class="likert-scale">
+                    <h:selectOneRadio id="D8_q2" value="#{dimensionFormBean.likertResponses['D8_q2']}" layout="lineDirection" styleClass="likert-radio">
+                        <f:selectItem itemValue="1" itemLabel="1" />
+                        <f:selectItem itemValue="2" itemLabel="2" />
+                        <f:selectItem itemValue="3" itemLabel="3" />
+                        <f:selectItem itemValue="4" itemLabel="4" />
+                        <f:selectItem itemValue="5" itemLabel="5" />
+                    </h:selectOneRadio>
+                </div>
+            </div>
+
+            <div style="margin-top:12px;">
+                <label><strong>Observaciones (guía):</strong></label>
+                <h:inputTextarea value="#{dimensionFormBean.observaciones}" styleClass="textarea-field" />
+            </div>
+        </div>
+    </div>
+
+</h:form>
+      
+       
+
+        
+        
+            </ui:define>
+
+
+        </ui:composition>
+
+    </body>
+</html>

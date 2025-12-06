@@ -1,0 +1,88 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+
+    <body>
+
+        <ui:composition template="./../TemplateSitio.xhtml">
+
+            <ui:define name="head">
+                <title>Salud Física</title>
+  
+            </ui:define>
+            <ui:define name="content" >
+                
+                <h:form>
+    <h2>Valoración – Salud Física</h2>
+
+    <f:metadata>
+        <f:viewParam name="dim" value="D5" />
+        <f:viewParam name="student" value="#{dimensionFormBean.studentId}" />
+    </f:metadata>
+
+    <h:panelGrid columns="1" cellpadding="5">
+
+        <h:outputLabel value="Condiciones físicas relevantes:" />
+        <h:inputTextarea value="#{dimensionFormBean.caracteristicas}" />
+
+        <h:outputLabel value="Dificultades o limitaciones físicas:" />
+        <h:inputTextarea value="#{dimensionFormBean.dificultades}" />
+
+        <h:outputLabel value="Estado físico general (0 – 100):" />
+        <h:inputText value="#{dimensionFormBean.progress}" required="true" />
+
+        <h:outputLabel value="Recomendaciones fisiológicas/pedagógicas:" />
+        <h:inputTextarea value="#{dimensionFormBean.recomendaciones}" />
+
+        <h:commandButton value="Guardar" action="#{dimensionFormBean.save('D5')}" />
+        <h:commandButton value="Cancelar" action="#{dimensionFormBean.goBack}" immediate="true" />
+    </h:panelGrid>
+
+    <!-- INSTRUMENTO ESTÁNDAR (Ejemplo) -->
+    <div class="section-card" style="margin-top:20px;">
+        <div class="section-title">📐 Instrumento Estándar - Salud Física (Ejemplo)</div>
+        <div class="section-content">
+            <p style="color:#666;">A continuación se muestra un instrumento estandarizado de ejemplo con escala Likert y guía de observación. Las respuestas se almacenan temporalmente en `likertResponses` con clave por dimensión.</p>
+
+            <ui:include src="../components/instrument_template.xhtml">
+                <ui:param name="questionText" value="1. ¿El estudiante presenta movilidad suficiente para sus actividades diarias?" />
+                <ui:param name="responseKey" value="D5_q1" />
+                <ui:param name="qid" value="D5_q1" />
+            </ui:include>
+            <ui:include src="../components/instrument_template.xhtml">
+                <ui:param name="questionText" value="2. ¿Presenta el estudiante dolores o molestias frecuentes que afectan su rendimiento?" />
+                <ui:param name="responseKey" value="D5_q2" />
+                <ui:param name="qid" value="D5_q2" />
+            </ui:include>
+            <ui:include src="../components/instrument_template.xhtml">
+                <ui:param name="questionText" value="3. ¿El acceso a atención médica es adecuado para las necesidades del estudiante?" />
+                <ui:param name="responseKey" value="D5_q3" />
+                <ui:param name="qid" value="D5_q3" />
+            </ui:include>
+
+            <div style="margin-top:12px;">
+                <label><strong>Observaciones (guía):</strong></label>
+                <h:inputTextarea value="#{dimensionFormBean.observaciones}" styleClass="textarea-field" />
+            </div>
+        </div>
+    </div>
+
+</h:form>
+                
+                
+      
+       
+
+        
+        
+            </ui:define>
+
+
+        </ui:composition>
+
+    </body>
+</html>

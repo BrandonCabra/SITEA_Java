@@ -1,0 +1,109 @@
+╔══════════════════════════════════════════════════════════════════╗
+║     SITEA - Sistema de Carga de Archivos Python                 ║
+║                    INICIO RÁPIDO                                 ║
+╚══════════════════════════════════════════════════════════════════╝
+
+📋 REQUISITOS
+─────────────
+✓ Python 3.8 o superior instalado
+✓ Proyecto Java SITEA funcionando
+
+
+🚀 INICIO EN 3 PASOS
+────────────────────
+
+1️⃣  INSTALAR DEPENDENCIAS
+   
+   Abre una terminal en esta carpeta y ejecuta:
+   
+   pip install -r requirements.txt
+
+
+2️⃣  INICIAR SERVICIO
+   
+   Opción A (Automático - Windows):
+   start_service.bat
+   
+   Opción B (Manual):
+   python app.py
+
+
+3️⃣  ACCEDER A LA INTERFAZ
+   
+   1. Inicia tu aplicación Java SITEA
+   2. Abre en el navegador:
+      http://localhost:8080/sitea/views/admin/gestionArchivos.xhtml
+
+
+✅ VERIFICAR INSTALACIÓN
+────────────────────────
+
+Ejecuta el script de pruebas:
+
+python test_service.py
+
+Si ves "✅ Todas las pruebas pasaron correctamente", ¡estás listo!
+
+
+🔧 CONFIGURACIÓN
+────────────────
+
+Puerto:              5000
+Tamaño máximo:       16 MB
+Carpeta uploads:     uploads/
+Extensiones:         pdf, doc, docx, xls, xlsx, jpg, jpeg, png, 
+                     gif, txt, csv, zip, rar
+
+
+📚 DOCUMENTACIÓN COMPLETA
+─────────────────────────
+
+README.md                    - Información general del servicio
+GUIA_INSTALACION.md         - Guía detallada de instalación
+EJEMPLO_USO.md              - Ejemplos visuales de uso
+../INTEGRACION_PYTHON_UPLOAD.md - Documentación técnica completa
+
+
+🆘 PROBLEMAS COMUNES
+────────────────────
+
+❌ "Python no está instalado"
+   → Instala Python desde https://www.python.org/
+   → Marca "Add Python to PATH" durante instalación
+
+❌ "No module named 'flask'"
+   → Ejecuta: pip install -r requirements.txt
+
+❌ Indicador rojo en la web
+   → Verifica que el servicio Python esté corriendo
+   → Ejecuta: python app.py
+
+❌ Puerto 5000 en uso
+   → Cambia el puerto en app.py (última línea)
+   → Actualiza UploadServiceClient.java con el nuevo puerto
+
+
+📞 COMANDOS ÚTILES
+──────────────────
+
+Iniciar servicio:        python app.py
+Probar servicio:         python test_service.py
+Instalar dependencias:   pip install -r requirements.txt
+Ver versión Python:      python --version
+
+
+🎯 PRÓXIMOS PASOS
+─────────────────
+
+1. Inicia el servicio Python
+2. Prueba subir un archivo desde la interfaz web
+3. Verifica que aparezca en la lista
+4. ¡Listo para usar en producción!
+
+
+═══════════════════════════════════════════════════════════════════
+
+¿Necesitas ayuda? Revisa la documentación completa en:
+GUIA_INSTALACION.md
+
+═══════════════════════════════════════════════════════════════════

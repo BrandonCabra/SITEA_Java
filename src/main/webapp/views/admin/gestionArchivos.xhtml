@@ -1,0 +1,193 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    
+    <h:head>
+        <title>Gestión de Archivos - SITEA</title>
+        <style>
+            .upload-container {
+                background: #fff;
+                padding: 20px;
+                border-radius: 8px;
+                box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+                margin-bottom: 20px;
+            }
+            
+            .service-status {
+                padding: 10px;
+                border-radius: 4px;
+                margin-bottom: 15px;
+                font-weight: bold;
+            }
+            
+            .service-online {
+                background: #d4edda;
+                color: #155724;
+                border: 1px solid #c3e6cb;
+            }
+            
+            .service-offline {
+                background: #f8d7da;
+                color: #721c24;
+                border: 1px solid #f5c6cb;
+            }
+            
+            .file-card {
+                background: #f8f9fa;
+                padding: 15px;
+                border-radius: 6px;
+                margin-bottom: 10px;
+                border-left: 4px solid #007bff;
+            }
+            
+            .file-info {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+            }
+            
+            .file-details {
+                flex: 1;
+            }
+            
+            .file-name {
+                font-weight: bold;
+                color: #333;
+                margin-bottom: 5px;
+            }
+            
+            .file-meta {
+                font-size: 0.9em;
+                color: #666;
+            }
+        </style>
+    </h:head>
+    
+    <h:body>
+        <h:form id="uploadForm">
+            <p:growl id="messages" showDetail="true" />
+            
+            <div class="upload-container">
+                <h2>Gestión de Archivos con Python</h2>
+                
+                <!-- Estado del servicio -->
+                <div class="service-status #{uploadController.serviceAvailable ? 'service-online' : 'service-offline'}">
+                    <h:outputText value="✓ Servicio Python Activo" rendered="#{uploadController.serviceAvailable}" />
+                    <h:outputText value="✗ Servicio Python No Disponible" rendered="#{not uploadController.serviceAvailable}" />
+                </div>
+                
+                <!-- Panel de carga -->
+                <p:panel header="Subir Archivo" style="margin-bottom: 20px;">
+                    <h:panelGrid columns="2" cellpadding="10">
+                        <p:outputLabel for="modulo" value="Módulo:" />
+                        <p:selectOneMenu id="modulo" value="#{uploadController.modulo}" style="width: 200px;">
+                            <f:selectItem itemLabel="General" itemValue="general" />
+                            <f:selectItem itemLabel="Caracterización" itemValue="caracterizacion" />
+                            <f:selectItem itemLabel="Gestión Estudiantil" itemValue="gestion_estudiantil" />
+                            <f:selectItem itemLabel="Gestión Docente" itemValue="gestion_docente" />
+                            <f:selectItem itemLabel="Gestión Familia" itemValue="gestion_familia" />
+                            <f:selectItem itemLabel="PIAR" itemValue="piar" />
+                            <f:selectItem itemLabel="Incidencias" itemValue="incidencias" />
+                        </p:selectOneMenu>
+                        
+                        <p:outputLabel for="descripcion" value="Descripción:" />
+                        <p:inputTextarea id="descripcion" 
+                                       value="#{uploadController.descripcion}" 
+                                       rows="3" 
+                                       cols="50"
+                                       placeholder="Descripción opcional del archivo..." />
+                    </h:panelGrid>
+                    
+                    <p:fileUpload 
+                        mode="advanced" 
+                        listener="#{uploadController.handleFileUpload}"
+                        update="messages filesList"
+                        auto="false"
+                        multiple="false"
+                        allowTypes="/(\.|\/)(pdf|doc|docx|xls|xlsx|jpg|jpeg|png|gif|txt|csv|zip|rar)$/"
+                        sizeLimit="16777216"
+                        label="Seleccionar"
+                        uploadLabel="Subir"
+                        cancelLabel="Cancelar"
+                        invalidSizeMessage="El archivo es demasiado grande (máx. 16MB)"
+                        invalidFileMessage="Tipo de archivo no permitido"
+                        disabled="#{not uploadController.serviceAvailable}" />
+                    
+                    <p:commandButton 
+                        value="Verificar Servicio" 
+                        action="#{uploadController.checkServiceStatus()}"
+                        update="uploadForm"
+                        icon="pi pi-refresh"
+                        styleClass="ui-button-secondary"
+                        style="margin-top: 10px;" />
+                </p:panel>
+                
+                <!-- Lista de archivos -->
+                <p:panel header="Archivos Subidos (#{uploadController.uploadedFiles.size()})" id="filesList">
+                    <p:commandButton 
+                        value="Actualizar Lista" 
+                        action="#{uploadController.loadFiles()}"
+                        update="filesList"
+                        icon="pi pi-refresh"
+                        styleClass="ui-button-info"
+                        style="margin-bottom: 15px;" />
+                    
+                    <h:panelGroup rendered="#{empty uploadController.uploadedFiles}">
+                        <p style="text-align: center; color: #999; padding: 20px;">
+                            No hay archivos subidos
+                        </p>
+                    </h:panelGroup>
+                    
+                    <h:panelGroup rendered="#{not empty uploadController.uploadedFiles}">
+                        <p:dataTable value="#{uploadController.uploadedFiles}" 
+                                   var="file"
+                                   paginator="true"
+                                   rows="10"
+                                   paginatorPosition="bottom">
+                            
+                            <p:column headerText="Nombre del Archivo" style="width: 40%;">
+                                <i class="pi pi-file" style="margin-right: 8px;"></i>
+                                <h:outputText value="#{file.filename}" />
+                            </p:column>
+                            
+                            <p:column headerText="Tamaño" style="width: 15%;">
+                                <h:outputText value="#{file.sizeFormatted}" />
+                            </p:column>
+                            
+                            <p:column headerText="Tipo" style="width: 20%;">
+                                <h:outputText value="#{file.mimeType}" />
+                            </p:column>
+                            
+                            <p:column headerText="Fecha" style="width: 15%;">
+                                <h:outputText value="#{file.created}">
+                                    <f:convertDateTime pattern="dd/MM/yyyy HH:mm" />
+                                </h:outputText>
+                            </p:column>
+                            
+                            <p:column headerText="Acciones" style="width: 10%; text-align: center;">
+                                <p:commandButton 
+                                    icon="pi pi-trash" 
+                                    styleClass="ui-button-danger"
+                                    action="#{uploadController.deleteFile(file.filename)}"
+                                    update="messages filesList"
+                                    title="Eliminar archivo">
+                                    <p:confirm header="Confirmar" 
+                                             message="¿Está seguro de eliminar este archivo?" 
+                                             icon="pi pi-exclamation-triangle" />
+                                </p:commandButton>
+                            </p:column>
+                        </p:dataTable>
+                    </h:panelGroup>
+                </p:panel>
+            </div>
+            
+            <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+                <p:commandButton value="Sí" type="button" styleClass="ui-confirmdialog-yes" icon="pi pi-check" />
+                <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="pi pi-times" />
+            </p:confirmDialog>
+        </h:form>
+    </h:body>
+</html>

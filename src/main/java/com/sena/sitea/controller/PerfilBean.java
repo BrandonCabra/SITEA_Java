@@ -162,6 +162,18 @@ public class PerfilBean implements Serializable {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error procesando la imagen: " + ex.getMessage(), null));
         }
     }
+    
+    // En PerfilBean.java
+
+public String getFotoPerfil() {
+    if (usuario != null && usuario.getFotoPerfil()!= null && !usuario.getFotoPerfil().isEmpty()) {
+        // Asumiendo que guardas la ruta relativa o el nombre del archivo
+        // Ajusta "/resources/images/perfiles/" según donde guardes las fotos reales
+        return "/resources/images/perfiles/" + usuario.getFotoPerfil();
+    }
+    // Retorna una imagen por defecto si no tiene foto
+    return "/resources/images/perfiles/usuario_default.jpg"; 
+}
 
     public void cargarActividades() {
         actividadesFiltradas.clear();

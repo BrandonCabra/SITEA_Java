@@ -1,38 +1,45 @@
 <?xml version='1.0' encoding='UTF-8' ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html">
 
-<h:head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <title>Facelets Template SI-TEA</title>
+    <h:head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <title>Inicio SI-TEA</title>
+        <!-- imagen navegador -->
+        <link rel="icon" type="image/svg+xml" href="../resources/images/IMAGENES/iconsitea.svg"/>
+        <link href="../resources/css/iniciodesesion.css" rel="stylesheet" type="text/css"/>
+        <script src="../resources/js/iniciodesesion2.js" type="text/javascript"></script>
+        
+        <!-- Estilos locales -->
+        <h:outputStylesheet library="css" name="default.css" />
+        <h:outputStylesheet library="css" name="cssLayout.css" />
 
-    <!-- Estilos locales -->
-    <h:outputStylesheet library="css" name="default.css" />
-    <h:outputStylesheet library="css" name="cssLayout.css" />
+        <!-- Bootstrap + DataTables -->
+         <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet"/>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js"></script>
+         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+        <link rel="stylesheet" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css" />
+        <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.2.3/css/buttons.dataTables.min.css" />
 
-    <!-- Bootstrap + DataTables -->
-     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet"/>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js"></script>
-     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css" />
-    <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.2.3/css/buttons.dataTables.min.css" />
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+        <script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
+        <script src="https://cdn.datatables.net/buttons/2.2.3/js/dataTables.buttons.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+        <script src="https://cdn.datatables.net/buttons/2.2.3/js/buttons.html5.min.js"></script>
+        <script src="https://cdn.datatables.net/buttons/2.2.3/js/buttons.print.min.js"></script>
+        
+    </h:head>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
-    <script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
-    <script src="https://cdn.datatables.net/buttons/2.2.3/js/dataTables.buttons.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
-    <script src="https://cdn.datatables.net/buttons/2.2.3/js/buttons.html5.min.js"></script>
-    <script src="https://cdn.datatables.net/buttons/2.2.3/js/buttons.print.min.js"></script>
-</h:head>
+    <h:body>
 
-<h:body>
+        <!-- Navbar superior -->
 
-    <div id="top">
+        <div id="top">
             <nav class="navbar navbar-expand-lg bg-body-tertiary">
                 <div class="container-fluid">
                     <a class="navbar-brand" href="#">
@@ -54,7 +61,8 @@
                                 </h:link>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="#">
+                                <a class="nav-link" href="comunicaciones/comunicaciones.xhtml">
+                                  
                                     <i class="fas fa-envelope fa-lg" style="color: black"></i>
                                     <span class="visually-hidden">Mensajes</span>
                                 </a>
@@ -72,7 +80,7 @@
                                 <ul class="dropdown-menu dropdown-menu-end"
                                     aria-labelledby="settingsDropdown">
                                     <li>
-                                        <a class="dropdown-item" href="/views/perfil/index.xhtml">
+                                        <a class="dropdown-item" href="#">
                                             <i class="fas fa-user me-2" style="color: black"></i>Perfil
                                         </a>
                                     </li>
@@ -90,7 +98,8 @@
                                 </ul>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="#">
+                                <a class="nav-link" href="perfil/index.xhtml">
+                                    
                                     <i class="fas fa-user-circle fa-lg" style="color: black"></i>
                                     <span class="visually-hidden">Perfil</span>
                                 </a>
@@ -209,7 +218,7 @@
                                                           permisos.descripcion eq 'gestionDocente'or
                                                           permisos.descripcion eq 'gestionFamilia'or
                                                           permisos.descripcion eq 'gestionModulos'}">
-                                    <h:link outcome="/views/#{permisos.descripcion}/index.xhtml">
+                                    <h:link outcome="/views/#{permisos.descripcion}/indexAdmin.xhtml">
                                         <i class="fas fa-pencil-alt" style="color: white; margin-right: 8px;"> </i>
                                         #{login.aplicarTildes(login.formatearDescripcion(permisos.descripcion)).toUpperCase()}
                                     </h:link>
@@ -252,7 +261,7 @@
                             </ui:repeat>
                         </li>
 
-                        <br/><br/>
+                        <br/>
 
                         <h:commandButton value="Cerrar Sesión" 
                                          action="#{login.cerrarSesion()}" 
@@ -262,101 +271,100 @@
                 <ui:insert name="left"></ui:insert>
             </div>
 
-
-
-
-
             <!-- Contenido -->
-            <div align="center"  >
-                <ui:insert name="content"> </ui:insert>
-            
+            <div id="content" class="left_content">
+                <ui:insert name="content">
+                
+                    <!-- Tarjetas -->
+                    <div class="container">
+                        <div class="row g-4">
 
-    <!-- Tarjetas -->
-    <div class="container">
-        <div class="row g-4">
+                            <!-- Tarjeta 1 -->
+                            <div class="col-12 col-md-6 col-lg-4">
+                                <div class="card h-100">
+                                    <h:graphicImage library="images" name="Caracterización.png" styleClass="card-img-top" alt="Caracterización" />
+                                    <div class="card-body">
+                                        <h5 class="card-title text-primary">Caracterización</h5>
+                                        <p class="card-text">Caracterización pedagógica y social de los EcTEA.</p>
+                                        <h:link outcome="/views/caracterizacion/index.xhtml" value="Ir" styleClass="btn btn-primary" />
+                                    </div>
+                                </div>
+                            </div>
 
-            <!-- Tarjeta 1 -->
-            <div class="col-12 col-md-6 col-lg-4">
-                <div class="card h-100">
-                    <h:graphicImage library="images" name="Caracterización.png" styleClass="card-img-top" alt="Caracterización" />
-                    <div class="card-body">
-                        <h5 class="card-title text-primary">Caracterización</h5>
-                        <p class="card-text">Caracterización pedagógica y social de los EcTEA.</p>
-                        <h:link outcome="/views/caracterizacion/index.xhtml" value="Ir" styleClass="btn btn-primary" />
+                            <!-- Tarjeta 2 -->
+                            <div class="col-12 col-md-6 col-lg-4">
+                                <div class="card h-100">
+                                    <h:graphicImage library="images" name="PIAR.png" styleClass="card-img-top" alt="PIAR" />
+                                    <div class="card-body">
+                                        <h5 class="card-title text-primary">PIAR</h5>
+                                        <p class="card-text">Gestión y visualización del Plan Individual de Ajustes Razonables.</p>
+                                        <h:link outcome="/views/Piar/index.xhtml" value="Ir" styleClass="btn btn-primary" />
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <!-- Tarjeta 3 -->
+                            <div class="col-12 col-md-6 col-lg-4">
+                                <div class="card h-100">
+                                    <h:graphicImage library="images" name="Estrategias.png" styleClass="card-img-top" alt="Estrategias" />
+                                    <div class="card-body">
+                                        <h5 class="card-title text-primary">Estrategias Educativas</h5>
+                                        <p class="card-text">Estrategias para estudiantes con Trastornos Específicos de Aprendizaje.</p>
+                                        <h:link outcome="/views/estrategiasEducativas/index.xhtml" value="Ir" styleClass="btn btn-primary" />
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Tarjeta 4 -->
+                             <div class="col-12 col-md-6 col-lg-4">
+                                <div class="card h-100">
+                                    <h:graphicImage library="images" name="Reportes.png" styleClass="card-img-top" alt="Reporte de Novedades" />
+                                    <div class="card-body">
+                                        <h5 class="card-title text-primary">Reporte de Novedades</h5>
+                                        <p class="card-text">Reportes y gestión de novedades de EcTEA.</p>
+                                        <h:link outcome="/views/reportesNovedades/index.xhtml" value="Ir" styleClass="btn btn-primary" />
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Tarjeta 5 -->
+                            <div class="col-12 col-md-6 col-lg-4">
+                                <div class="card h-100">
+                                    <h:graphicImage library="images" name="Gestion.png" styleClass="card-img-top" alt="Gestión de estudiantes" />
+                                    <div class="card-body">
+                                        <h5 class="card-title text-primary">Gestión de estudiantes</h5>
+                                        <p class="card-text">Reportes e informes de Estudiantes registrados.</p>
+                                        <h:link outcome="/views/admin/indexAdmin.xhtml" value="Ir" styleClass="btn btn-primary" />
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Tarjeta 6 -->
+                            <div class="col-12 col-md-6 col-lg-4">
+                                <div class="card h-100">
+                                    <h:graphicImage library="images" name="Protocolos.png" styleClass="card-img-top" alt="Protocolos" />
+                                    <div class="card-body">
+                                        <h5 class="card-title text-primary">Protocolos y Rutas de Atención</h5>
+                                        <p class="card-text">Protocolos, rutas de atención y su gestión.</p>
+                                        <h:link outcome="/views/protocolosRutas/index.xhtml" value="Ir" styleClass="btn btn-primary" />                       
+                                    </div>
+                                </div>
+                            </div>        
+                        </div>
                     </div>
-                </div>
+                </ui:insert>
             </div>
-
-            <!-- Tarjeta 2 -->
-            <div class="col-12 col-md-6 col-lg-4">
-                <div class="card h-100">
-                    <h:graphicImage library="images" name="PIAR.png" styleClass="card-img-top" alt="PIAR" />
-                    <div class="card-body">
-                        <h5 class="card-title text-primary">PIAR</h5>
-                        <p class="card-text">Gestión y visualización del Plan Individual de Ajustes Razonables.</p>
-                        <h:link outcome="/views/Piar/index.xhtml" value="Ir" styleClass="btn btn-primary" />
-                    </div>
-                </div>
-            </div>
-            
-            
-            <!-- Tarjeta 3 -->
-            <div class="col-12 col-md-6 col-lg-4">
-                <div class="card h-100">
-                    <h:graphicImage library="images" name="Estrategias.png" styleClass="card-img-top" alt="Estrategias" />
-                    <div class="card-body">
-                        <h5 class="card-title text-primary">Estrategias Educativas</h5>
-                        <p class="card-text">Estrategias para estudiantes con Trastornos Específicos de Aprendizaje.</p>
-                        <h:link outcome="/views/Piar/index.xhtml" value="Ir" styleClass="btn btn-primary" />
-                    </div>
-                </div>
-            </div>
-
-            <!-- Tarjeta 4 -->
-             <div class="col-12 col-md-6 col-lg-4">
-                <div class="card h-100">
-                    <h:graphicImage library="images" name="Reportes.png" styleClass="card-img-top" alt="Reporte de Novedades" />
-                    <div class="card-body">
-                        <h5 class="card-title text-primary">Reporte de Novedades</h5>
-                        <p class="card-text">Reportes y gestión de novedades de EcTEA.</p>
-                        <h:link outcome="/views/Piar/index.xhtml" value="Ir" styleClass="btn btn-primary" />
-                    </div>
-                </div>
-            </div>
-
-            <!-- Tarjeta 5 -->
-            <div class="col-12 col-md-6 col-lg-4">
-                <div class="card h-100">
-                    <h:graphicImage library="images" name="Gestion.png" styleClass="card-img-top" alt="Gestión de estudiantes" />
-                    <div class="card-body">
-                        <h5 class="card-title text-primary">Gestión de estudiantes</h5>
-                        <p class="card-text">Reportes e informes de Estudiantes registrados.</p>
-                        <h:link outcome="/views/Piar/index.xhtml" value="Ir" styleClass="btn btn-primary" />
-                    </div>
-                </div>
-            </div>
-
-            <!-- Tarjeta 6 -->
-            <div class="col-12 col-md-6 col-lg-4">
-                <div class="card h-100">
-                    <h:graphicImage library="images" name="Protocolos.png" styleClass="card-img-top" alt="Protocolos" />
-                    <div class="card-body">
-                        <h5 class="card-title text-primary">Protocolos y Rutas de Atención</h5>
-                        <p class="card-text">Protocolos, rutas de atención y su gestión.</p>
-                        <h:link outcome="/views/Piar/index.xhtml" value="Ir" styleClass="btn btn-primary" />                       
-                    </div>
-                </div>
-            </div>
-            
-            
-           
-
         </div>
-    </div>
-    </div>
 
-        
-  <!-- Contenedor de la barra fuera de lienzo -->
+        <!-- Botón flotante para abrir la barra -->
+        <div id="accesibilidadToggle" onclick="abrirAccesibilidad()" 
+             style="position: fixed; top: 120px; right: 20px; width: 50px; height: 50px; background: #007BFF; color: white; border-radius: 50%; text-align: center; line-height: 50px; cursor: pointer; z-index: 9999;" 
+             title="Opciones de accesibilidad">
+            <span style="font-size: 22px;">⚙️</span>
+        </div>
+
+        <!-- Contenedor de la barra fuera de lienzo -->
         <div id="barraAccesibilidad" 
              style="position: fixed; top: 0; right: -300px; width: 280px; height: 100%; background: #f5f5f5; border-left: 2px solid #007BFF; box-shadow: -2px 0 8px rgba(0,0,0,0.1); padding: 20px; transition: right 0.4s ease-in-out; z-index: 9998;">
 
@@ -377,7 +385,6 @@
                     style="position: absolute; top: 10px; right: 10px; border: none; background: none; font-size: 18px; cursor: pointer;" 
                     title="Cerrar">✖️</button>
         </div>
-  </div>
 
     </h:body>
     <script>

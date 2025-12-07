@@ -2,66 +2,230 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
-      xmlns:h="http://xmlns.jcp.org/jsf/html">
+      xmlns:p="http://primefaces.org/ui">
 
     <body>
 
         <ui:composition template="./../TemplateSitio.xhtml">
 
-            <ui:define name="top">
-                
-            </ui:define>
-
-            <ui:define name="left">
-                
-            </ui:define>
-
             <ui:define name="content">
                 
-              <h1>Prueba SendGrid Email</h1>
-    <h:form>
-        <h:panelGrid columns="2">
-            <h:outputLabel value="Destinatario:" />
-            <h:inputText value="#{emailTestBean.destinatario}" />
-            
-            <h:outputLabel value="Asunto:" />
-            <h:inputText value="#{emailTestBean.asunto}" />
-            
-            <h:outputLabel value="Mensaje:" />
-            <h:inputTextarea value="#{emailTestBean.mensaje}" rows="4" cols="50" />
-            
-            <h:commandButton value="Enviar Email" action="#{emailTestBean.enviarEmailPrueba}" />
-            <h:messages globalOnly="true" />
+                <h:form id="formProtocolos">
+                    <p:growl id="msgs" showDetail="true" life="4000"/>
 
-        </h:panelGrid>
-    </h:form> 
-              
-              <h:form>
-    <h3>Envio Masivo de Correo</h3>
-    
-    <h:outputLabel value="Asunto:" for="asunto" />
-    <h:inputText id="asunto" value="#{emailMasivoBean.asunto}" style="width:350px;" /><br/><br/>
-    
-    <h:outputLabel value="Mensaje:" for="mensaje" /><br/>
-    <h:inputTextarea id="mensaje" value="#{emailMasivoBean.mensaje}" rows="5" cols="60" /><br/><br/>
-    
-    <h:outputLabel value="Destinatarios (una dirección por línea):" /><br/>
-    <h:inputTextarea value="#{emailMasivoBean.destinatariosTexto}" rows="5" cols="60" /><br/><br/>
-    
-    <h:commandButton value="Enviar a Todos" action="#{emailMasivoBean.enviarEmailMasivo}" />
-    
-    <h:messages globalOnly="true"/>
-    
-    <h:panelGroup rendered="#{not empty emailMasivoBean.resultadoEnvio}">
-        <h:outputText value="#{emailMasivoBean.resultadoEnvio}" style="color:green"/>
-    </h:panelGroup>
-</h:form>
+                    <div class="container-fluid mt-4">
+                        
+                        <div class="d-flex justify-content-between align-items-center mb-4">
+                            <div>
+                                <h2 class="text-primary fw-bold mb-0"><i class="fas fa-file-medical-alt me-2"></i>Protocolos y Rutas de Atención</h2>
+                                <p class="text-muted small">Gestión de alertas, rutas de atención integral y reporte a entidades externas.</p>
+                            </div>
+                            <h:commandButton value="Actualizar Datos" action="#{protocolosController.cargarCasos}" styleClass="btn btn-outline-secondary btn-sm">
+                                <f:ajax render="@form"/>
+                            </h:commandButton>
+                        </div>
 
-               
+                        <ul class="nav nav-tabs" id="myTab" role="tablist">
+                            <li class="nav-item">
+                                <button class="nav-link active" id="catalogo-tab" data-bs-toggle="tab" data-bs-target="#catalogo" type="button">
+                                    <i class="fas fa-book-open me-2"></i>Catálogo de Protocolos
+                                </button>
+                            </li>
+                            <li class="nav-item">
+                                <button class="nav-link" id="casos-tab" data-bs-toggle="tab" data-bs-target="#casos" type="button">
+                                    <i class="fas fa-folder-open me-2"></i>Casos Activos
+                                </button>
+                            </li>
+                        </ul>
+
+                        <div class="tab-content bg-white p-4 border border-top-0 rounded-bottom shadow-sm">
+                            
+                            <div class="tab-pane fade show active" id="catalogo">
+                                <div class="row g-4">
+                                    <ui:repeat value="#{protocolosController.listaProtocolos}" var="proto">
+                                        <div class="col-md-6 col-lg-3">
+                                            <div class="card h-100 border-0 shadow-sm hover-card">
+                                                <div class="card-body text-center">
+                                                    <div class="mb-3">
+                                                        <i class="fas fa-exclamation-circle fa-3x text-warning"></i>
+                                                    </div>
+                                                    <h5 class="card-title fw-bold text-dark">#{proto.nombre}</h5>
+                                                    <span class="badge bg-danger mb-2">#{proto.severidad}</span>
+                                                    <p class="card-text small text-muted">#{proto.descripcion}</p>
+                                                    
+                                                    <h:commandLink action="#{protocolosController.iniciarProtocolo(proto)}" 
+                                                                   styleClass="btn btn-primary w-100 mt-2">
+                                                        <i class="fas fa-play me-2"></i>Activar Ruta
+                                                        <f:ajax render=":modalIniciarContent" onevent="abrirModalIniciar"/>
+                                                    </h:commandLink>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </ui:repeat>
+                                </div>
+                            </div>
+
+                            <div class="tab-pane fade" id="casos">
+                                
+                                <p:dataTable value="#{protocolosController.casosActivos}" var="caso" 
+                                             paginator="true" rows="10" 
+                                             styleClass="fs-6" emptyMessage="No hay rutas de atención activas.">
+                                    
+                                    <p:column headerText="Fecha" width="120" sortBy="#{caso.fechaRegistro}">
+                                        <h:outputText value="#{caso.fechaRegistro}">
+                                            <f:convertDateTime pattern="dd/MM/yyyy"/>
+                                        </h:outputText>
+                                    </p:column>
+
+                                    <p:column headerText="Protocolo / Asunto" filterBy="#{caso.tituloNovedad}">
+                                        <span class="fw-bold">#{caso.tituloNovedad}</span>
+                                    </p:column>
+
+                                    <p:column headerText="Detalle">
+                                        #{caso.detalleNovedad}
+                                    </p:column>
+
+                                    <p:column headerText="Gestión" styleClass="text-center" width="200">
+                                        <div class="btn-group">
+                                            <button type="button" class="btn btn-sm btn-outline-info" title="Ver Seguimiento">
+                                                <i class="fas fa-eye"></i>
+                                            </button>
+                                            
+                                            <button type="button" class="btn btn-sm btn-outline-danger" 
+                                                    data-bs-toggle="modal" data-bs-target="#modalReporteExtero_#{caso.idNovedadesReportes}"
+                                                    title="Reportar a Entidad Externa">
+                                                <i class="fas fa-bullhorn"></i> Reportar
+                                            </button>
+                                        </div>
+
+                                        <div class="modal fade" id="modalReporteExtero_#{caso.idNovedadesReportes}" tabindex="-1" aria-hidden="true">
+                                            <div class="modal-dialog">
+                                                <div class="modal-content text-start">
+                                                    <div class="modal-header bg-danger text-white">
+                                                        <h6 class="modal-title"><i class="fas fa-university me-2"></i>Reporte Externo</h6>
+                                                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <p class="small text-muted">Seleccione la entidad a la cual desea escalar este caso. Se generará una notificación oficial.</p>
+                                                        
+                                                        <div class="mb-3">
+                                                            <label class="form-label fw-bold">Entidad Destino</label>
+                                                            <h:selectOneMenu value="#{protocolosController.tipoEntidadReporte}" styleClass="form-select">
+                                                                <f:selectItem itemLabel="Seleccione..." itemValue=""/>
+                                                                <f:selectItem itemLabel="ICBF (Bienestar Familiar)" itemValue="ICBF"/>
+                                                                <f:selectItem itemLabel="Secretaría de Salud" itemValue="SALUD"/>
+                                                                <f:selectItem itemLabel="Policía de Infancia" itemValue="POLICIA"/>
+                                                                <f:selectItem itemLabel="Secretaría de Educación" itemValue="EDUCACION"/>
+                                                            </h:selectOneMenu>
+                                                        </div>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Cancelar</button>
+                                                        <h:commandButton value="Enviar Reporte" action="#{protocolosController.reportarEntidad(caso)}" 
+                                                                         styleClass="btn btn-danger btn-sm">
+                                                            <f:ajax execute="@form" render="@form" onevent="cerrarModales"/>
+                                                        </h:commandButton>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </p:column>
+                                </p:dataTable>
+                            </div>
+
+                        </div>
+                    </div>
+                </h:form>
+
+                <h:panelGroup id="modalIniciarContent">
+                    <div class="modal fade" id="modalIniciar" tabindex="-1" aria-hidden="true">
+                        <div class="modal-dialog modal-lg">
+                            <div class="modal-content">
+                                <h:form id="formIniciar">
+                                    <div class="modal-header bg-primary text-white">
+                                        <h5 class="modal-title">Iniciar Protocolo de Atención</h5>
+                                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="alert alert-info border-0 shadow-sm">
+                                            <i class="fas fa-info-circle me-2"></i> Estás a punto de activar: 
+                                            <strong>#{protocolosController.nuevoCaso.tituloNovedad}</strong>
+                                        </div>
+
+                                        <div class="row g-3">
+                                            <div class="col-md-12">
+                                                <label class="form-label fw-bold">Estudiante Afectado</label>
+                                                <h:selectOneMenu value="#{protocolosController.estudianteSeleccionado}" 
+                                                                 styleClass="form-select" >
+                                                    <f:selectItem itemLabel="-- Seleccione Estudiante --" itemValue="#{null}"/>
+                                                    <f:selectItems value="#{protocolosController.listaEstudiantes}" var="est" 
+                                                                   itemLabel="#{est.primerNombre} #{est.primerApellido} - #{est.numeroDocumento}" itemValue="#{est}"/>
+                                                </h:selectOneMenu>
+                                            </div>
+
+                                            <div class="col-md-12">
+                                                <label class="form-label fw-bold">Descripción de los Hechos</label>
+                                                <h:inputTextarea value="#{protocolosController.nuevoCaso.detalleNovedad}" 
+                                                                 rows="5" styleClass="form-control" required="true" 
+                                                                 requiredMessage="Debe describir los hechos."/>
+                                            </div>
+                                            
+                                            <div class="col-md-6">
+                                                <label class="form-label fw-bold">Fecha del Incidente</label>
+                                                <h:inputText value="#{protocolosController.nuevoCaso.fechaRegistro}" styleClass="form-control" >
+                                                    <f:convertDateTime pattern="yyyy-MM-dd"/>
+                                                </h:inputText>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                                        <h:commandButton value="Registrar Caso" action="#{protocolosController.guardarCaso}" styleClass="btn btn-primary">
+                                            <f:ajax execute="@form" render=":formProtocolos :formProtocolos:msgs" onevent="cerrarModalIniciarJs"/>
+                                        </h:commandButton>
+                                    </div>
+                                </h:form>
+                            </div>
+                        </div>
+                    </div>
+                </h:panelGroup>
+
+                <script>
+                    var modalIniciar;
+                    function abrirModalIniciar(data) {
+                        if (data.status === 'success') {
+                            var el = document.getElementById('modalIniciar');
+                            modalIniciar = new bootstrap.Modal(el);
+                            modalIniciar.show();
+                        }
+                    }
+                    function cerrarModalIniciarJs(data) {
+                        if (data.status === 'success') {
+                            var el = document.getElementById('modalIniciar');
+                            var instance = bootstrap.Modal.getInstance(el);
+                            if (instance) instance.hide();
+                            document.querySelectorAll('.modal-backdrop').forEach(e => e.remove());
+                        }
+                    }
+                    function cerrarModales(data) {
+                        if (data.status === 'success') {
+                            document.querySelectorAll('.modal').forEach(m => {
+                                var instance = bootstrap.Modal.getInstance(m);
+                                if (instance) instance.hide();
+                            });
+                            document.querySelectorAll('.modal-backdrop').forEach(e => e.remove());
+                        }
+                    }
+                </script>
+
+                <style>
+                    .hover-card:hover { transform: translateY(-5px); transition: 0.3s; cursor: pointer; }
+                </style>
+
             </ui:define>
-
         </ui:composition>
-
     </body>
 </html>

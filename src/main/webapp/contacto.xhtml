@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+<ui:composition template="/templates/layout.xhtml">
+    <ui:define name="title">Contacto</ui:define>
+    
+    <ui:define name="content">
+        <section class="py-5">
+            <div class="container">
+                <h1 class="text-center text-primary mb-4" style="font-size: 42px;">Contáctanos</h1>
+                <p class="text-center text-muted mb-5 lead">
+                    Estamos aquí para ayudarte. Envíanos tu consulta y te responderemos a la brevedad.
+                </p>
+                
+                <div class="row g-4">
+                    <!-- Información de Contacto -->
+                    <div class="col-lg-6">
+                        <p:panel styleClass="h-100 shadow-sm">
+                            <div class="p-4">
+                                <h3 class="text-primary mb-4">Información de Contacto</h3>
+                                
+                                <div class="mb-4">
+                                    <div class="d-flex align-items-start">
+                                        <i class="fas fa-map-marker-alt text-primary me-3" style="font-size: 24px;"></i>
+                                        <div>
+                                            <strong>Dirección:</strong>
+                                            <p class="mb-0">Bogotá D.C., Colombia</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="mb-4">
+                                    <div class="d-flex align-items-start">
+                                        <i class="fas fa-phone text-primary me-3" style="font-size: 24px;"></i>
+                                        <div>
+                                            <strong>Teléfono:</strong>
+                                            <p class="mb-0">+57 (601) 123 4567</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="mb-4">
+                                    <div class="d-flex align-items-start">
+                                        <i class="fas fa-envelope text-primary me-3" style="font-size: 24px;"></i>
+                                        <div>
+                                            <strong>Email:</strong>
+                                            <p class="mb-0">contacto@sitea.edu.co</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div>
+                                    <div class="d-flex align-items-start">
+                                        <i class="fas fa-clock text-primary me-3" style="font-size: 24px;"></i>
+                                        <div>
+                                            <strong>Horario:</strong>
+                                            <p class="mb-0">Lunes a Viernes: 7:00 AM - 5:00 PM</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </p:panel>
+                    </div>
+                    
+                    <!-- Formulario de Contacto -->
+                    <div class="col-lg-6">
+                        <p:panel styleClass="h-100 shadow-sm">
+                            <div class="p-4">
+                                <h3 class="text-primary mb-4">Envíanos un Mensaje</h3>
+                                
+                                <h:form>
+                                    <p:messages id="messages"/>
+                                    
+                                    <div class="mb-3">
+                                        <label class="form-label">Nombre completo *</label>
+                                        <p:inputText value="#{contactoBean.nombre}" 
+                                                   styleClass="form-control" 
+                                                   required="true"
+                                                   requiredMessage="El nombre es requerido"/>
+                                    </div>
+                                    
+                                    <div class="mb-3">
+                                        <label class="form-label">Correo electrónico *</label>
+                                        <p:inputText value="#{contactoBean.email}" 
+                                                   styleClass="form-control" 
+                                                   required="true"
+                                                   requiredMessage="El email es requerido"/>
+                                    </div>
+                                    
+                                    <div class="mb-3">
+                                        <label class="form-label">Teléfono</label>
+                                        <p:inputText value="#{contactoBean.telefono}" 
+                                                   styleClass="form-control"/>
+                                    </div>
+                                    
+                                    <div class="mb-3">
+                                        <label class="form-label">Mensaje *</label>
+                                        <p:inputTextarea value="#{contactoBean.mensaje}" 
+                                                       rows="5" 
+                                                       styleClass="form-control"
+                                                       required="true"
+                                                       requiredMessage="El mensaje es requerido"/>
+                                    </div>
+                                    
+                                    <p:commandButton value="Enviar Mensaje" 
+                                                   styleClass="btn btn-primary w-100"
+                                                   action="#{contactoBean.enviarMensaje}"
+                                                   update="messages"/>
+                                </h:form>
+                            </div>
+                        </p:panel>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </ui:define>
+</ui:composition>
+</html>

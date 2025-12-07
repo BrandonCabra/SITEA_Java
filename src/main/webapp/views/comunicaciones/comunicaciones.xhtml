@@ -1,0 +1,162 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <body>
+
+        <ui:composition template="./../TemplateSitio.xhtml">
+
+            <ui:define name="content">
+                
+                <h:form id="formComm">
+                    <p:growl id="msg" showDetail="true" life="4000"/>
+
+                    <div class="container-fluid mt-4">
+                        <div class="d-flex justify-content-between align-items-center mb-4">
+                            <div>
+                                <h2 class="text-primary fw-bold mb-0"><i class="fas fa-paper-plane me-2"></i>Comunicaciones Masivas</h2>
+                                <p class="text-muted small">Envío de circulares y alertas segmentadas a familias.</p>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            
+                            <div class="col-md-5">
+                                <div class="card shadow-sm border-0 mb-4">
+                                    <div class="card-header bg-white fw-bold text-primary">
+                                        <i class="fas fa-filter me-2"></i>1. Segmentación de Destinatarios
+                                    </div>
+                                    <div class="card-body bg-light">
+                                        <div class="row g-2">
+                                            <div class="col-md-6">
+                                                <label class="form-label small fw-bold">Grado Escolar</label>
+                                                <h:selectOneMenu value="#{comunicacionController.filtroGrado}" styleClass="form-select form-select-sm">
+                                                    <f:selectItem itemLabel="Todos los grados" itemValue="#{null}"/>
+                                                    <f:selectItems value="#{comunicacionController.listaGrados}" var="g" itemLabel="#{g.numeroGrado}" itemValue="#{g.idGrado}"/>
+                                                </h:selectOneMenu>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label class="form-label small fw-bold">Diagnóstico (TEA)</label>
+                                                <h:selectOneMenu value="#{comunicacionController.filtroTrastorno}" styleClass="form-select form-select-sm">
+                                                    <f:selectItem itemLabel="Todos" itemValue="#{null}"/>
+                                                    <f:selectItems value="#{comunicacionController.listaTrastornos}" var="t" itemLabel="#{t.nombreTrastorno}" itemValue="#{t.idTrastorno}"/>
+                                                </h:selectOneMenu>
+                                            </div>
+                                            <div class="col-12 mt-3">
+                                                <h:commandButton value="Aplicar Filtros" action="#{comunicacionController.aplicarFiltros}" styleClass="btn btn-primary btn-sm w-100">
+                                                    <f:ajax execute="@form" render="tablaDestinatarios msg"/>
+                                                </h:commandButton>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="card shadow-sm border-0">
+                                    <div class="card-body p-0">
+                                        <p:dataTable id="tablaDestinatarios" 
+                                                     value="#{comunicacionController.listaEstudiantesFiltrados}" 
+                                                     var="est" 
+                                                     rowKey="#{est.idEstudiante}"
+                                                     selection="#{comunicacionController.estudiantesSeleccionados}"
+                                                     scrollable="true" scrollHeight="400"
+                                                     styleClass="fs-6 small-table"
+                                                     emptyMessage="Aplique filtros para ver destinatarios.">
+                                            
+                                            <p:column selectionMode="multiple" style="width:40px;text-align:center"/>
+                                            
+                                            <p:column headerText="Estudiante">
+                                                <h:outputText value="#{est.primerNombre} #{est.primerApellido}" />
+                                            </p:column>
+                                            
+                                            <p:column headerText="Grado" width="60" styleClass="text-center">
+                                                <span class="badge bg-secondary">#{est.gradoIdGrado.numeroGrado}</span>
+                                            </p:column>
+                                            
+                                            <p:column headerText="Correo" width="120">
+                                                <h:panelGroup rendered="#{not empty est.correo}">
+                                                    <i class="fas fa-envelope text-success me-1"></i> #{est.correo}
+                                                </h:panelGroup>
+                                                <h:panelGroup rendered="#{empty est.correo}">
+                                                    <span class="badge bg-warning text-dark">Sin Datos</span>
+                                                </h:panelGroup>
+                                            </p:column>
+                                        </p:dataTable>
+                                        
+                                        <div class="p-2 text-end bg-light border-top">
+                                            <small class="text-muted">
+                                                Seleccionados: <span class="fw-bold text-primary">#{comunicacionController.estudiantesSeleccionados.size()}</span> / 200
+                                            </small>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-7">
+                                <div class="card shadow h-100 border-0">
+                                    <div class="card-header bg-white fw-bold text-primary">
+                                        <i class="fas fa-edit me-2"></i>2. Contenido del Mensaje
+                                    </div>
+                                    <div class="card-body">
+                                        
+                                        <div class="mb-4 bg-light p-3 rounded border">
+                                            <label class="form-label small fw-bold text-muted mb-2">Usar Plantilla Rápida (RF-070)</label>
+                                            <div class="input-group">
+                                                <h:selectOneMenu value="#{comunicacionController.plantillaSeleccionada}" styleClass="form-select">
+                                                    <f:selectItem itemLabel="-- Escribir mensaje nuevo --" itemValue=""/>
+                                                    <f:selectItem itemLabel="📝 Citación a Padres" itemValue="CITACION"/>
+                                                    <f:selectItem itemLabel="📊 Entrega de Boletines" itemValue="BOLETIN"/>
+                                                    <f:selectItem itemLabel="🤝 Invitación Taller" itemValue="TALLER"/>
+                                                </h:selectOneMenu>
+                                                <h:commandButton value="Cargar" action="#{comunicacionController.cargarPlantilla}" styleClass="btn btn-outline-secondary">
+                                                    <f:ajax execute="@form" render="asunto mensaje"/>
+                                                </h:commandButton>
+                                            </div>
+                                        </div>
+
+                                        <div class="mb-3">
+                                            <label class="form-label fw-bold">Asunto del Correo</label>
+                                            <h:inputText id="asunto" value="#{comunicacionController.asunto}" styleClass="form-control" required="true" requiredMessage="El asunto es obligatorio"/>
+                                        </div>
+
+                                        <div class="mb-3">
+                                            <label class="form-label fw-bold">Cuerpo del Mensaje</label>
+                                            <h:inputTextarea id="mensaje" value="#{comunicacionController.mensaje}" rows="12" styleClass="form-control" required="true" requiredMessage="El mensaje no puede estar vacío"/>
+                                            <div class="form-text">Puede usar firma automática configurada en el sistema.</div>
+                                        </div>
+
+                                        <hr/>
+
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <div class="text-muted small">
+                                                <i class="fas fa-info-circle"></i> El envío puede tardar unos minutos.
+                                            </div>
+                                            <h:commandButton value="Enviar Mensaje Masivo" 
+                                                             action="#{comunicacionController.enviarCorreos}" 
+                                                             styleClass="btn btn-success px-4 fw-bold"
+                                                             onclick="return confirm('¿Confirma el envío a los destinatarios seleccionados?');">
+                                            </h:commandButton>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </h:form>
+                
+                <style>
+                    .small-table { font-size: 0.85rem; }
+                    /* Ajuste para PrimeFaces checkbox */
+                    .ui-chkbox .ui-chkbox-box { border-color: #ced4da; }
+                    .ui-chkbox-box.ui-state-active { border-color: #0d6efd; background: #0d6efd; }
+                </style>
+
+            </ui:define>
+        </ui:composition>
+    </body>
+</html>

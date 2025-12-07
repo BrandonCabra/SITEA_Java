@@ -47,8 +47,14 @@ public class Filtro implements Filter {
 
         // ✅ Añade aquí excepciones para las páginas públicas
         boolean validarRegistro = rutaSolicitud.contains("TemplateRegistro.xhtml") || rutaSolicitud.contains("registro.xhtml");
-
-        if (validarSesion || validarRutaLogin || validarContenido || validarRegistro) {
+        boolean validarPaginasPublicas = rutaSolicitud.contains("acerca.xhtml") 
+                                        ||rutaSolicitud.contains("servicios.xhtml")
+                                        || rutaSolicitud.contains("manuales.xhtml")
+                                        || rutaSolicitud.contains("equipo.xhtml")
+                                        || rutaSolicitud.contains("contacto.xhtml")
+                                        || rutaSolicitud.contains("index.xhtml")
+                                        || rutaSolicitud.contains("webpage.xhtml");
+        if (validarSesion || validarRutaLogin || validarContenido || validarRegistro || validarPaginasPublicas) {
             chain.doFilter(request, response); // ✔️ Deja pasar
         } else {
             System.out.println("❌ Acceso restringido. Redirigiendo a login.");

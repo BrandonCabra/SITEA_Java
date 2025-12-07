@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="/templates/layout.xhtml">
+    <ui:define name="title">Acerca de</ui:define>
+    
+    <ui:define name="content">
+        <section class="py-5">
+            <div class="container" style="max-width: 1000px;">
+                <h1 class="text-center text-primary mb-5" style="font-size: 42px;">Acerca de SI TEA</h1>
+                
+                <!-- Misión -->
+                <p:panel styleClass="mb-4 shadow-sm">
+                    <div class="p-4">
+                        <h2 class="text-primary mb-3">Nuestra Misión</h2>
+                        <p class="text-muted" style="line-height: 1.8; font-size: 16px;">
+                            SI TEA es un sistema de información dedicado a proporcionar apoyo, recursos y servicios especializados 
+                            para personas con Trastorno Específico del Aprendizaje (TEA) y sus familias.
+                        </p>
+                        <p class="text-muted" style="line-height: 1.8; font-size: 16px;">
+                            Nuestro objetivo es mejorar el rendimiento académico y la calidad de vida de las personas con TEA 
+                            mediante la implementación de estrategias psicopedagógicas basadas en evidencia científica y el 
+                            trabajo colaborativo con familias, docentes y profesionales.
+                        </p>
+                    </div>
+                </p:panel>
+                
+                <!-- Visión -->
+                <p:panel styleClass="mb-4 shadow-sm">
+                    <div class="p-4">
+                        <h2 class="text-primary mb-3">Nuestra Visión</h2>
+                        <p class="text-muted" style="line-height: 1.8; font-size: 16px;">
+                            Ser reconocidos como un referente en la gestión de información y atención del Trastorno Específico 
+                            del Aprendizaje, promoviendo la inclusión educativa y el desarrollo pleno del potencial académico 
+                            de cada estudiante.
+                        </p>
+                    </div>
+                </p:panel>
+                
+                <!-- Valores -->
+                <p:panel styleClass="shadow-sm">
+                    <div class="p-4">
+                        <h2 class="text-primary mb-3">Nuestros Valores</h2>
+                        <ul class="text-muted" style="line-height: 2; font-size: 16px;">
+                            <li>Respeto y dignidad hacia todas las personas</li>
+                            <li>Compromiso con la excelencia profesional</li>
+                            <li>Trabajo en equipo y colaboración</li>
+                            <li>Innovación y mejora continua</li>
+                            <li>Inclusión y diversidad</li>
+                        </ul>
+                    </div>
+                </p:panel>
+            </div>
+        </section>
+    </ui:define>
+</ui:composition>
+</html>

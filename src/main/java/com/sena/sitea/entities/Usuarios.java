@@ -296,4 +296,12 @@ public class Usuarios implements Serializable {
         this.fotoPerfil = fotoPerfil;
     }
 
+    public String getPasswordUsuario() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    public void setPasswordUsuario(String nuevoHash) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
 }

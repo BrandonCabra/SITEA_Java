@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+<h:head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>SI TEA - Sistema de Información para TEA</title>
+    
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet"/>
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+    
+    <!-- Custom CSS -->
+    <h:outputStylesheet library="css" name="styles.css"/>
+</h:head>
+
+<h:body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
+        <div class="container">
+            <h:link outcome="home" styleClass="navbar-brand fw-bold text-primary">
+                <span style="font-size: 24px;">SI TEA</span>
+            </h:link>
+            
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <h:link outcome="home" styleClass="nav-link active">Inicio</h:link>
+                    </li>
+                    <li class="nav-item">
+                        <h:link outcome="acerca.xhtml" styleClass="nav-link">Acerca de</h:link>
+                    </li>
+                    <li class="nav-item">
+                        <h:link outcome="servicios" styleClass="nav-link">Servicios</h:link>
+                    </li>
+                    <li class="nav-item">
+                        <h:link outcome="manuales" styleClass="nav-link">Manuales</h:link>
+                    </li>
+                    <li class="nav-item">
+                        <h:link outcome="equipo" styleClass="nav-link">Equipo</h:link>
+                    </li>
+                    <li class="nav-item">
+                        <h:link outcome="contacto" styleClass="nav-link">Contacto</h:link>
+                    </li>
+                    <li class="nav-item">
+                        <p:commandButton value="Ingresar" styleClass="btn btn-primary ms-2" 
+                                       action="#{homeBean.goToLogin}" ajax="false"/>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero-section bg-primary text-white py-5">
+        <div class="container py-5">
+            <div class="row align-items-center">
+                <div class="col-lg-8">
+                    <h1 class="display-4 fw-bold mb-4">Gestión de Aprendizaje Efectiva</h1>
+                    <p class="lead mb-4">
+                        SI TEA es una plataforma integral diseñada para el acompañamiento de estudiantes con 
+                        Trastornos Específicos del Aprendizaje (Dislexia, Discalculia, Disgrafía, TDAH). 
+                        Facilitamos la colaboración entre padres, profesores y psicoorientadores para crear 
+                        un entorno educativo inclusivo y personalizado.
+                    </p>
+                    <p class="lead mb-4">
+                        Nuestro sistema permite la caracterización inicial, creación de PIARs (Planes Individuales 
+                        de Ajustes Razonables), seguimiento continuo del progreso académico y gestión integral 
+                        de todas las actividades relacionadas con el proceso educativo de cada estudiante.
+                    </p>
+                    <p:commandButton value="Comenzar Ahora" styleClass="btn btn-light btn-lg" 
+                                   action="#{homeBean.goToLogin}" ajax="false"/>
+                </div>
+                <div class="col-lg-4 text-center">
+                    <i class="fas fa-graduation-cap" style="font-size: 150px; opacity: 0.8;"></i>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Beneficios Section -->
+    <section class="py-5 bg-light">
+        <div class="container">
+            <div class="text-center mb-5">
+                <h2 class="display-5 fw-bold text-primary">Beneficios de SI TEA</h2>
+                <p class="lead text-muted">Descubre cómo nuestra plataforma transforma el proceso educativo</p>
+            </div>
+            
+            <div class="row g-4">
+                <!-- Beneficio 1 -->
+                <div class="col-md-6 col-lg-4">
+                    <p:panel styleClass="h-100 shadow-sm hover-card">
+                        <div class="text-center p-4">
+                            <i class="fas fa-users text-primary mb-3" style="font-size: 48px;"></i>
+                            <h5 class="fw-bold">Colaboración Integral</h5>
+                            <p class="text-muted">
+                                Conecta a padres, profesores y psicoorientadores en una sola plataforma, 
+                                facilitando la comunicación y el trabajo en equipo.
+                            </p>
+                        </div>
+                    </p:panel>
+                </div>
+                
+                <!-- Beneficio 2 -->
+                <div class="col-md-6 col-lg-4">
+                    <p:panel styleClass="h-100 shadow-sm hover-card">
+                        <div class="text-center p-4">
+                            <i class="fas fa-chart-line text-primary mb-3" style="font-size: 48px;"></i>
+                            <h5 class="fw-bold">Seguimiento Personalizado</h5>
+                            <p class="text-muted">
+                                Monitorea el progreso de cada estudiante con evaluaciones periódicas, 
+                                metas medibles y reportes detallados.
+                            </p>
+                        </div>
+                    </p:panel>
+                </div>
+                
+                <!-- Beneficio 3 -->
+                <div class="col-md-6 col-lg-4">
+                    <p:panel styleClass="h-100 shadow-sm hover-card">
+                        <div class="text-center p-4">
+                            <i class="fas fa-clipboard-list text-primary mb-3" style="font-size: 48px;"></i>
+                            <h5 class="fw-bold">PIARs Estructurados</h5>
+                            <p class="text-muted">
+                                Crea y gestiona Planes Individuales de Ajustes Razonables con 
+                                adaptaciones curriculares específicas para cada estudiante.
+                            </p>
+                        </div>
+                    </p:panel>
+                </div>
+                
+                <!-- Beneficio 4 -->
+                <div class="col-md-6 col-lg-4">
+                    <p:panel styleClass="h-100 shadow-sm hover-card">
+                        <div class="text-center p-4">
+                            <i class="fas fa-bell text-primary mb-3" style="font-size: 48px;"></i>
+                            <h5 class="fw-bold">Notificaciones en Tiempo Real</h5>
+                            <p class="text-muted">
+                                Mantén a todos informados con notificaciones automáticas sobre 
+                                actividades, citas, evaluaciones y mensajes importantes.
+                            </p>
+                        </div>
+                    </p:panel>
+                </div>
+                
+                <!-- Beneficio 5 -->
+                <div class="col-md-6 col-lg-4">
+                    <p:panel styleClass="h-100 shadow-sm hover-card">
+                        <div class="text-center p-4">
+                            <i class="fas fa-calendar-alt text-primary mb-3" style="font-size: 48px;"></i>
+                            <h5 class="fw-bold">Gestión de Citas</h5>
+                            <p class="text-muted">
+                                Programa y gestiona reuniones con padres, evaluaciones y sesiones 
+                                de seguimiento con recordatorios automáticos.
+                            </p>
+                        </div>
+                    </p:panel>
+                </div>
+                
+                <!-- Beneficio 6 -->
+                <div class="col-md-6 col-lg-4">
+                    <p:panel styleClass="h-100 shadow-sm hover-card">
+                        <div class="text-center p-4">
+                            <i class="fas fa-book-open text-primary mb-3" style="font-size: 48px;"></i>
+                            <h5 class="fw-bold">Biblioteca de Recursos</h5>
+                            <p class="text-muted">
+                                Accede a una amplia colección de recursos educativos, guías y 
+                                estrategias pedagógicas especializadas en TEA.
+                            </p>
+                        </div>
+                    </p:panel>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="py-5 bg-primary text-white">
+        <div class="container text-center py-4">
+            <i class="fas fa-lightbulb mb-4" style="font-size: 64px;"></i>
+            <h2 class="display-5 fw-bold mb-3">¿Listo para Transformar la Educación?</h2>
+            <p class="lead mb-4">
+                Únete a SI TEA y comienza a crear experiencias educativas inclusivas y personalizadas
+            </p>
+            <p:commandButton value="Ingresar al Sistema" styleClass="btn btn-light btn-lg" 
+                           action="#{homeBean.goToLogin}" ajax="false"/>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white py-4 mt-5">
+        <div class="container text-center">
+            <p class="mb-0">© 2025 SI TEA - Sistema de Información para Trastornos Específicos del Aprendizaje</p>
+            <p class="mb-0 mt-2">
+                <small>Todos los derechos reservados</small>
+            </p>
+        </div>
+    </footer>
+
+    <!-- Bootstrap 5 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- Custom JS -->
+    <h:outputScript library="js" name="main.js"/>
+</h:body>
+</html>

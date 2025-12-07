@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+<ui:composition template="/templates/layout.xhtml">
+    <ui:define name="title">Equipo</ui:define>
+    
+    <ui:define name="content">
+        <section class="py-5">
+            <div class="container">
+                <div class="text-center mb-5">
+                    <h1 class="display-5 fw-bold text-primary">Nuestro Equipo</h1>
+                    <p class="lead text-muted">Profesionales especializados comprometidos con la excelencia</p>
+                </div>
+                
+                <div class="row g-4">
+                    <ui:repeat value="#{equipoBean.equipo}" var="miembro">
+                        <div class="col-md-6 col-lg-4">
+                            <p:panel styleClass="h-100 shadow-sm miembro-card">
+                                <div class="text-center p-4">
+                                    <div class="miembro-avatar mb-3">
+                                        <span style="font-size: 60px;">#{miembro.emoji}</span>
+                                    </div>
+                                    <h5 class="fw-bold text-primary mb-2">#{miembro.nombre}</h5>
+                                    <p class="text-primary fw-semibold mb-3">#{miembro.cargo}</p>
+                                    <p class="text-muted">#{miembro.descripcion}</p>
+                                </div>
+                            </p:panel>
+                        </div>
+                    </ui:repeat>
+                </div>
+            </div>
+        </section>
+    </ui:define>
+</ui:composition>
+</html>

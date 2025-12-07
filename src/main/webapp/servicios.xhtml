@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+<ui:composition template="/templates/layout.xhtml">
+    <ui:define name="title">Servicios</ui:define>
+    
+    <ui:define name="content">
+        <section class="py-5">
+            <div class="container">
+                <div class="text-center mb-5">
+                    <h1 class="display-5 fw-bold text-primary">Nuestros Servicios</h1>
+                    <p class="lead text-muted">Ofrecemos una amplia gama de servicios especializados para el Trastorno Específico del Aprendizaje</p>
+                </div>
+                
+                <div class="row g-4">
+                    <ui:repeat value="#{serviciosBean.servicios}" var="servicio">
+                        <div class="col-md-6 col-lg-4">
+                            <p:panel styleClass="h-100 shadow-sm hover-card">
+                                <div class="text-center p-4">
+                                    <i class="#{servicio.icon} text-primary mb-3" style="font-size: 48px;"></i>
+                                    <h5 class="fw-bold mb-3">#{servicio.title}</h5>
+                                    <p class="text-muted">#{servicio.description}</p>
+                                </div>
+                            </p:panel>
+                        </div>
+                    </ui:repeat>
+                </div>
+                
+                <!-- CTA -->
+                <div class="text-center mt-5 p-5 bg-light rounded">
+                    <h2 class="mb-3">¿Necesitas más información?</h2>
+                    <p class="lead mb-4">Contáctanos para agendar una consulta o conocer más sobre nuestros servicios</p>
+                    <h:link outcome="contacto" styleClass="btn btn-primary btn-lg">
+                        Contactar Ahora
+                    </h:link>
+                </div>
+            </div>
+        </section>
+    </ui:define>
+</ui:composition>
+</html>

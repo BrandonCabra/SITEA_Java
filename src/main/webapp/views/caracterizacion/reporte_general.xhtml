@@ -1,0 +1,145 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <body>
+        <ui:composition template="./../TemplateSitio.xhtml">
+            <ui:define name="content">
+                
+                <div class="container-fluid py-4">
+                    
+                    <div class="d-flex justify-content-between align-items-center mb-4">
+                        <div>
+                            <h2 class="text-primary fw-bold mb-0">
+                                <i class="fas fa-file-invoice me-2"></i>Reporte General de Caracterización
+                            </h2>
+                            <p class="text-muted small">Listado consolidado de estudiantes y estado de procesos.</p>
+                        </div>
+                        
+                        <h:form>
+                            <div class="btn-group">
+                                <h:commandLink styleClass="btn btn-success">
+                                    <i class="fas fa-file-excel me-2"></i>Exportar Excel
+                                    <p:dataExporter type="xlsx" target=":formReporte:tablaCaracterizaciones" fileName="Reporte_Caracterizacion_SITEA" />
+                                </h:commandLink>
+                                
+                                <h:commandLink styleClass="btn btn-danger">
+                                    <i class="fas fa-file-pdf me-2"></i>Exportar PDF
+                                    <p:dataExporter type="pdf" target=":formReporte:tablaCaracterizaciones" fileName="Reporte_Caracterizacion_SITEA" />
+                                </h:commandLink>
+                            </div>
+                        </h:form>
+                    </div>
+
+                    <div class="row mb-4">
+                        <div class="col-md-3">
+                            <div class="card bg-light border-primary shadow-sm">
+                                <div class="card-body text-center">
+                                    <h3 class="text-primary">#{reporteBean1.totalEstudiantes}</h3>
+                                    <small class="text-muted text-uppercase fw-bold">Estudiantes Registrados</small>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="card bg-light border-success shadow-sm">
+                                <div class="card-body text-center">
+                                    <h3 class="text-success">#{reporteBean1.totalCaracterizaciones}</h3>
+                                    <small class="text-muted text-uppercase fw-bold">Procesos Iniciados</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                   
+                    <h:form id="formReporte">
+                        <div class="card shadow-sm border-0">
+                            <div class="card-body p-0">
+                                <p:dataTable id="tablaCaracterizaciones" 
+                                             value="#{reporteBean1.listaDetallada}" 
+                                             var="car"
+                                             paginator="true" rows="20"
+                                             paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                             rowsPerPageTemplate="20,50,100"
+                                             styleClass="table-hover"
+                                             reflow="true"
+                                             emptyMessage="No se encontraron registros de caracterización.">
+
+                                    <f:facet name="header">
+                                        <div class="flex justify-content-end">
+                                            <span class="fw-bold text-muted">Datos Consolidados</span>
+                                        </div>
+                                    </f:facet>
+
+                                    <p:column headerText="Expediente" sortBy="#{car.expedienteCaracterizacion}" filterBy="#{car.expedienteCaracterizacion}">
+                                        <h:outputText value="#{car.expedienteCaracterizacion}" />
+                                    </p:column>
+
+                                    <p:column headerText="Estudiante" sortBy="#{car.estudianteIdEstudiante.primerApellidoEstudiante}" 
+                                              filterBy="#{car.estudianteIdEstudiante.primerNombreEstudiante}">
+                                        <h:outputText value="#{car.estudianteIdEstudiante.primerNombreEstudiante} #{car.estudianteIdEstudiante.primerApellidoEstudiante}" />
+                                    </p:column>
+
+                                    <p:column headerText="Documento" width="120">
+                                        <h:outputText value="#{car.estudianteIdEstudiante.numeroDocumentoEstudiante}" />
+                                    </p:column>
+
+                                    <p:column headerText="Diagnóstico" sortBy="#{car.diagnostico}" filterBy="#{car.diagnostico}">
+                                        <h:outputText value="#{car.diagnostico}" />
+                                    </p:column>
+
+                                    <p:column headerText="Estado" sortBy="#{car.estadoCaracterizacion}" styleClass="text-center" width="120">
+                                        <f:facet name="filter">
+                                            <p:selectOneMenu onchange="PF('tablaCaracterizaciones').filter()" styleClass="custom-filter">
+                                                <f:selectItem itemLabel="Todos" itemValue="#{null}" noSelectionOption="true" />
+                                                <f:selectItem itemLabel="Iniciada" itemValue="INICIADA" />
+                                                <f:selectItem itemLabel="En Proceso" itemValue="EN_PROCESO" />
+                                                <f:selectItem itemLabel="Completada" itemValue="COMPLETADA" />
+                                            </p:selectOneMenu>
+                                        </f:facet>
+                                        
+                                        <h:panelGroup rendered="#{car.estadoCaracterizacion == 'COMPLETADA'}">
+                                            <span class="badge bg-success">COMPLETADA</span>
+                                        </h:panelGroup>
+                                        <h:panelGroup rendered="#{car.estadoCaracterizacion == 'EN_PROCESO'}">
+                                            <span class="badge bg-warning text-dark">EN PROCESO</span>
+                                        </h:panelGroup>
+                                        <h:panelGroup rendered="#{car.estadoCaracterizacion == 'INICIADA' or car.estadoCaracterizacion == 'PENDIENTE'}">
+                                            <span class="badge bg-secondary">INICIADA</span>
+                                        </h:panelGroup>
+                                    </p:column>
+
+                                    <p:column headerText="Fecha Inicio" width="120">
+                                        <h:outputText value="#{car.fechaInicio}">
+                                            <f:convertDateTime pattern="dd/MM/yyyy" />
+                                        </h:outputText>
+                                    </p:column>
+
+                                    <p:column headerText="Acciones" exportable="false" width="100" styleClass="text-center">
+                                        <h:link outcome="/views/caracterizacion/informe_valoracion.xhtml" 
+                                                styleClass="btn btn-outline-primary btn-sm" 
+                                                title="Ver Informe Detallado"
+                                                rendered="#{car.estadoCaracterizacion == 'COMPLETADA'}">
+                                            <f:param name="id" value="#{car.idCaracterizacion}" />
+                                            <i class="fas fa-eye"></i>
+                                        </h:link>
+                                    </p:column>
+
+                                </p:dataTable>
+                            </div>
+                        </div>
+                    </h:form>
+                    
+                    <div class="mt-4">
+                        <h:link outcome="/views/caracterizacion/index.xhtml" styleClass="btn btn-secondary">
+                            <i class="fas fa-arrow-left me-2"></i>Volver al Menú
+                        </h:link>
+                    </div>
+
+                </div>
+            </ui:define>
+        </ui:composition>
+    </body>
+</html>

@@ -1,0 +1,192 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"> <body>
+
+        <ui:composition template="./../TemplateSitio.xhtml">
+
+            <ui:define name="content">
+                
+                <h:form>
+                    <p:growl id="growl" showDetail="true" life="4000" />
+                </h:form>
+
+                <div class="container mt-4 mb-5">
+                    
+                    <div class="d-flex justify-content-between align-items-center mb-4">
+                        <h2 style="color: #304878; font-weight: bold;">Mi Perfil</h2>
+                        <span class="badge bg-primary fs-6">#{login.rolActual}</span>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-4 mb-4">
+                            <div class="card shadow border-0 text-center p-4">
+                                <div class="position-relative d-inline-block mx-auto">
+                                    <h:graphicImage value="#{perfilBean1.fotoPerfil}" 
+                                                    styleClass="rounded-circle img-thumbnail mb-3 shadow-sm" 
+                                                    style="width: 150px; height: 150px; object-fit: cover;"
+                                                    alt="Foto de perfil" />
+                                    
+                                    <h:link outcome="perfilEditar" 
+                                            styleClass="btn btn-sm btn-light position-absolute bottom-0 end-0 rounded-circle border shadow-sm"
+                                            title="Cambiar foto">
+                                        <i class="fas fa-camera text-primary"></i>
+                                    </h:link>
+                                </div>
+
+                                <h4 class="fw-bold text-dark">#{login.nombreUsuario}</h4>
+                                <p class="text-muted mb-4">#{perfilBean1.usuario.correoUsuario}</p>
+
+                                <div class="d-grid gap-2">
+                                    <h:link outcome="perfilEditar" styleClass="btn btn-outline-primary">
+                                        <i class="fas fa-user-edit me-2"></i> Editar Información
+                                    </h:link>
+                                    
+                                    <h:link outcome="cambiarPassword" styleClass="btn btn-outline-secondary">
+                                        <i class="fas fa-key me-2"></i> Cambiar Contraseña
+                                    </h:link>
+                                </div>
+                            </div>
+                            
+                            <div class="card shadow border-0 mt-3">
+                                <div class="card-body">
+                                    <h6 class="fw-bold text-secondary">Estado de la cuenta</h6>
+                                    <div class="d-flex align-items-center text-success mt-2">
+                                        <i class="fas fa-check-circle me-2"></i> Activa
+                                    </div>
+                                    <small class="text-muted">Último acceso: Hoy</small>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-8">
+                            <div class="card shadow border-0">
+                                <div class="card-header bg-white border-bottom-0 pt-4 px-4">
+                                    <ul class="nav nav-tabs card-header-tabs" id="perfilTabs" role="tablist">
+                                        <li class="nav-item">
+                                            <button class="nav-link active fw-bold" id="info-tab" data-bs-toggle="tab" data-bs-target="#info" type="button" role="tab">
+                                                <i class="fas fa-id-card me-2"></i>Información Personal
+                                            </button>
+                                        </li>
+                                        <li class="nav-item">
+                                            <button class="nav-link fw-bold" id="historial-tab" data-bs-toggle="tab" data-bs-target="#historial" type="button" role="tab">
+                                                <i class="fas fa-history me-2"></i>Historial de Actividad
+                                            </button>
+                                        </li>
+                                    </ul>
+                                </div>
+
+                                <div class="card-body p-4">
+                                    <div class="tab-content" id="perfilTabsContent">
+                                        
+                                        <div class="tab-pane fade show active" id="info" role="tabpanel">
+                                            <h5 class="mb-4 text-primary">Datos Básicos</h5>
+                                            <div class="row g-3">
+                                                <div class="col-sm-6">
+                                                    <label class="small text-muted fw-bold">Tipo de Documento</label>
+                                                    <p class="fs-6 border-bottom pb-2">#{perfilBean1.usuario.tipoDocumentoId.siglaDoc}</p>
+                                                </div>
+                                                <div class="col-sm-6">
+                                                    <label class="small text-muted fw-bold">Número de Documento</label>
+                                                    <p class="fs-6 border-bottom pb-2">#{login.NUMERO_DOCUMENTO}</p>
+                                                </div>
+                                                <div class="col-sm-6">
+                                                    <label class="small text-muted fw-bold">Teléfono</label>
+                                                    <p class="fs-6 border-bottom pb-2">#{perfilBean1.usuario.telefonoUsuario}</p>
+                                                </div>
+                                                <div class="col-sm-6">
+                                                    <label class="small text-muted fw-bold">Dirección</label>
+                                                    <p class="fs-6 border-bottom pb-2">#{perfilBean1.usuario.direccionUsuario}</p>
+                                                </div>
+                                                <div class="col-sm-12">
+                                                    <label class="small text-muted fw-bold">Correo Institucional (Secundario)</label>
+                                                    <p class="fs-6 border-bottom pb-2">#{perfilBean1.usuario.correoInstitucional}</p>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="tab-pane fade" id="historial" role="tabpanel">
+                                            
+                                            <h:form id="formFiltro">
+                                                <div class="row g-2 align-items-end mb-4 bg-light p-3 rounded">
+                                                    <div class="col-md-4">
+                                                        <label class="form-label small fw-bold">Desde:</label>
+                                                        <h:inputText value="#{perfilBean1.filterFrom}" styleClass="form-control form-control-sm" >
+                                                            <f:convertDateTime pattern="yyyy-MM-dd"/>
+                                                        </h:inputText>
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <label class="form-label small fw-bold">Hasta:</label>
+                                                        <h:inputText value="#{perfilBean1.filterTo}" styleClass="form-control form-control-sm" >
+                                                            <f:convertDateTime pattern="yyyy-MM-dd"/>
+                                                        </h:inputText>
+                                                    </div>
+                                                    <div class="col-md-4 d-flex gap-2">
+                                                        <h:commandButton value="Filtrar" action="#{perfilBean1.filtrarActividades}" styleClass="btn btn-primary btn-sm flex-grow-1">
+                                                            <f:ajax execute="@form" render=":tablaHistorial"/>
+                                                        </h:commandButton>
+                                                        <h:commandButton value="Limpiar" action="#{perfilBean1.cargarActividades}" styleClass="btn btn-outline-secondary btn-sm">
+                                                             <f:ajax execute="@this" render=":tablaHistorial @form"/>
+                                                        </h:commandButton>
+                                                    </div>
+                                                </div>
+                                            </h:form>
+
+                                            <h:panelGroup id="tablaHistorial">
+                                                <div class="table-responsive">
+                                                    <h:dataTable value="#{perfilBean1.actividadesFiltradas}" var="act" 
+                                                                 styleClass="table table-hover align-middle"
+                                                                 headerClass="table-light small text-muted text-uppercase">
+                                                        
+                                                        <h:column>
+                                                            <f:facet name="header">Fecha</f:facet>
+                                                            <span class="fw-bold">
+                                                                <h:outputText value="#{act.changedAt}">
+                                                                    <f:convertDateTime pattern="dd/MM/yyyy HH:mm" />
+                                                                </h:outputText>
+                                                            </span>
+                                                        </h:column>
+                                                        
+                                                        <h:column>
+                                                            <f:facet name="header">Acción</f:facet>
+                                                            <span class="badge #{act.operationType == 'LOGIN' ? 'bg-success' : 'bg-info'}">
+                                                                #{act.operationType}
+                                                            </span>
+                                                        </h:column>
+                                                        
+                                                        <h:column>
+                                                            <f:facet name="header">Detalle</f:facet>
+                                                            <span class="text-muted small">
+                                                                Recurso ID: #{act.newExpedienteId}
+                                                            </span>
+                                                        </h:column>
+                                                        
+                                                    </h:dataTable>
+                                                    
+                                                    <h:panelGroup rendered="#{empty perfilBean1.actividadesFiltradas}">
+                                                        <div class="text-center py-4 text-muted">
+                                                            <i class="fas fa-search mb-2"></i><br/>
+                                                            No se encontraron registros en este periodo.
+                                                        </div>
+                                                    </h:panelGroup>
+                                                </div>
+                                            </h:panelGroup>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

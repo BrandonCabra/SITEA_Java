@@ -3,6 +3,7 @@ package com.sena.sitea.controller;
 import com.sena.sitea.entities.AuditEstudiante;
 import com.sena.sitea.entities.Usuarios;
 import com.sena.sitea.services.AuditEstudianteFacadeLocal;
+import com.sena.sitea.services.PasswordHashService;
 import com.sena.sitea.services.UsuariosFacadeLocal;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
@@ -24,15 +25,19 @@ import javax.servlet.ServletContext;
 import javax.servlet.http.Part;
 import javax.imageio.ImageIO;
 
-@Named(value = "perfilBean")
+@Named(value = "perfilBean1")
 @SessionScoped
-public class PerfilBean implements Serializable {
+
+public class PerfilBean1 implements Serializable {
 
     private Usuarios usuario;
     private Part uploadedPhoto;
     private Date filterFrom;
     private Date filterTo;
     private List<AuditEstudiante> actividadesFiltradas = new ArrayList<>();
+    
+    @EJB
+private PasswordHashService passwordService; // <--- AGREGA ESTO
 
     @EJB
     private UsuariosFacadeLocal ufl;
@@ -162,6 +167,18 @@ public class PerfilBean implements Serializable {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error procesando la imagen: " + ex.getMessage(), null));
         }
     }
+    
+    // En PerfilBean.java
+
+public String getFotoPerfil() {
+    if (usuario != null && usuario.getFotoPerfil()!= null && !usuario.getFotoPerfil().isEmpty()) {
+        // Asumiendo que guardas la ruta relativa o el nombre del archivo
+        // Ajusta "/resources/images/perfiles/" según donde guardes las fotos reales
+        return "/resources/images/perfiles/" + usuario.getFotoPerfil();
+    }
+    // Retorna una imagen por defecto si no tiene foto
+    return "/resources/images/perfiles/usuario_default.jpg"; 
+}
 
     public void cargarActividades() {
         actividadesFiltradas.clear();
@@ -192,6 +209,96 @@ public class PerfilBean implements Serializable {
     // small helper to refresh data when ajax triggers
     public void onFilterChange(AjaxBehaviorEvent e) {
         filtrarActividades();
+    }
+    
+
+    
+    // Variables TEMPORALES (no se guardan en BD, solo sirven para el formulario)
+private String currentPassword;
+private String newPassword;
+private String confirmPassword;
+
+// Getters y Setters
+public String getCurrentPassword() { return currentPassword; }
+public void setCurrentPassword(String currentPassword) { this.currentPassword = currentPassword; }
+
+public String getNewPassword() { return newPassword; }
+public void setNewPassword(String newPassword) { this.newPassword = newPassword; }
+
+public String getConfirmPassword() { return confirmPassword; }
+public void setConfirmPassword(String confirmPassword) { this.confirmPassword = confirmPassword; }
+
+// Método Lógico
+public void cambiarPassword() {
+    try {
+        // 1. Validar que las nuevas coincidan
+        if (newPassword == null || !newPassword.equals(confirmPassword)) {
+            FacesContext.getCurrentInstance().addMessage(null, 
+                new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Las nuevas contraseñas no coinciden."));
+            return;
+        }
+
+        // 2. Validar contraseña actual
+        // CORRECCIÓN: Usamos 'passwordService' (la instancia inyectada) y el método 'verifyPassword'
+        boolean passwordCorrecta = passwordService.verifyPassword(currentPassword, usuario.getPasswordUsuario());
+        
+        if (!passwordCorrecta) {
+             FacesContext.getCurrentInstance().addMessage(null, 
+                new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "La contraseña actual es incorrecta."));
+             return;
+        }
+
+        // 3. Hashear nueva y guardar
+        // CORRECCIÓN: Pasamos 'newPassword' como argumento
+        String nuevoHash = passwordService.hashPassword(newPassword);
+        
+        usuario.setPasswordUsuario(nuevoHash);
+        ufl.edit(usuario); // Guardar en BD
+
+        // 4. Limpiar campos y notificar
+        this.currentPassword = null;
+        this.newPassword = null;
+        this.confirmPassword = null;
+
+        FacesContext.getCurrentInstance().addMessage(null, 
+                new FacesMessage(FacesMessage.SEVERITY_INFO, "Éxito", "Tu contraseña ha sido actualizada correctamente."));
+
+    } catch (Exception e) {
+        FacesContext.getCurrentInstance().addMessage(null, 
+                new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error", "No se pudo actualizar: " + e.getMessage()));
+        e.printStackTrace();
+    }
+}
+
+// --- Lógica para Doble Factor de Autenticación (2FA) ---
+
+    // 1. Variable para controlar el estado (false = desactivado, true = activado)
+    private boolean autenticacion2FA;
+
+    // 2. Getters y Setters (OBLIGATORIOS para que la vista lo encuentre)
+    public boolean isAutenticacion2FA() {
+        return autenticacion2FA;
+    }
+
+    public void setAutenticacion2FA(boolean autenticacion2FA) {
+        this.autenticacion2FA = autenticacion2FA;
+    }
+
+    // 3. Método para activar/desactivar (El botón llama a esto)
+    public void toggle2FA() {
+        // Invertimos el valor actual
+        this.autenticacion2FA = !this.autenticacion2FA;
+        
+        String estado = this.autenticacion2FA ? "ACTIVADO" : "DESACTIVADO";
+        String severidad = this.autenticacion2FA ? "INFO" : "WARN";
+        
+        // NOTA: Aquí deberías guardar este estado en la base de datos si quieres que sea permanente.
+        // Ejemplo: usuario.setTwoFactorEnabled(this.autenticacion2FA); ufl.edit(usuario);
+        
+        FacesMessage.Severity severityInfo = this.autenticacion2FA ? FacesMessage.SEVERITY_INFO : FacesMessage.SEVERITY_WARN;
+        
+        FacesContext.getCurrentInstance().addMessage(null, 
+            new FacesMessage(severityInfo, "Seguridad 2FA", "El doble factor ha sido " + estado));
     }
 
 }

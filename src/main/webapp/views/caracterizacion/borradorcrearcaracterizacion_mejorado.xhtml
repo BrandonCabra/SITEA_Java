@@ -260,48 +260,7 @@
                 </f:view>
 
                 <!-- Script para contador de caracteres y placeholders -->
-                <script>
-                    function setupCharCounter(textareaId, counterId) {
-                        var textarea = document.getElementById(textareaId);
-                        var counter = document.getElementById(counterId);
-                        if (textarea && counter) {
-                            textarea.addEventListener('input', function() {
-                                counter.textContent = this.value.length;
-                            });
-                            counter.textContent = textarea.value.length;
-                        }
-                    }
-                    
-                    function setupPlaceholder(elementId, placeholderText) {
-                        var element = document.getElementById(elementId);
-                        if (element) {
-                            element.setAttribute('placeholder', placeholderText);
-                        }
-                    }
-
-                    document.addEventListener('DOMContentLoaded', function() {
-                        // Contadores
-                        setupCharCounter('crearcaracterizacion_mejorado:contextoAcademico', 'countAcademico');
-                        setupCharCounter('crearcaracterizacion_mejorado:contextoFamiliar', 'countFamiliar');
-                        setupCharCounter('crearcaracterizacion_mejorado:contextoEscolar', 'countEscolar');
-                        setupCharCounter('crearcaracterizacion_mejorado:diagnostico', 'countDiagnostico');
-                        setupCharCounter('crearcaracterizacion_mejorado:valoracionPedagogica', 'countValoracion');
-                        setupCharCounter('crearcaracterizacion_mejorado:barraDeAprendizaje', 'countBarreras');
-                        setupCharCounter('crearcaracterizacion_mejorado:recomendaciones', 'countRecomendaciones');
-                        setupCharCounter('crearcaracterizacion_mejorado:corresponsabilidad', 'countCorresponsabilidad');
-                        
-                        // Placeholders
-                        setupPlaceholder('crearcaracterizacion_mejorado:codigoCaracterizacion', 'Ej: CHAR-2024-001');
-                        setupPlaceholder('crearcaracterizacion_mejorado:contextoAcademico', 'Describa el desempeño académico, fortalezas y dificultades del estudiante...');
-                        setupPlaceholder('crearcaracterizacion_mejorado:contextoFamiliar', 'Describa la composición familiar, dinámica, apoyo y recursos disponibles...');
-                        setupPlaceholder('crearcaracterizacion_mejorado:contextoEscolar', 'Describa la interacción con compañeros, docentes, participación en actividades...');
-                        setupPlaceholder('crearcaracterizacion_mejorado:diagnostico', 'Describa el diagnóstico médico o sospecha fundada...');
-                        setupPlaceholder('crearcaracterizacion_mejorado:valoracionPedagogica', 'Describa la valoración pedagógica integral del estudiante...');
-                        setupPlaceholder('crearcaracterizacion_mejorado:barraDeAprendizaje', 'Identifique las barreras que dificultan el aprendizaje del estudiante...');
-                        setupPlaceholder('crearcaracterizacion_mejorado:recomendaciones', 'Describa las recomendaciones para el estudiante, familia y docentes...');
-                        setupPlaceholder('crearcaracterizacion_mejorado:corresponsabilidad', 'Describa los compromisos de la familia, institución y entidades de apoyo...');
-                    });
-                </script>
+                
             </ui:define>
         </ui:composition>
     </body>

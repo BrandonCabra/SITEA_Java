@@ -3,147 +3,69 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:f="http://xmlns.jcp.org/jsf/core"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
 
     <body>
 
         <ui:composition template="./../TemplateSitio.xhtml">
 
+            <ui:define name="top">
+                
+            </ui:define>
+
+            <ui:define name="left">
+                
+            </ui:define>
+
             <ui:define name="content">
                 
-                <p:growl id="growl" showDetail="true" life="4000" />
+                <div class="page-header">
+                    <h:link value="← Volver al Perfil" outcome="index.xhtml" styleClass="btn-link" />
+                    <a href="index.xhtml"></a>
+                    <h1>Editar Perfil</h1>
+                </div>
 
-                <div class="container mt-4 mb-5">
-                    
-                    <div class="d-flex justify-content-between align-items-center mb-4">
-                        <div class="d-flex align-items-center gap-3">
-                            <h:link outcome="index" styleClass="btn btn-outline-secondary btn-sm rounded-circle" title="Volver">
-                                <i class="fas fa-arrow-left"></i>
-                            </h:link>
-                            <h2 style="color: #304878; font-weight: bold; margin: 0;">Editar Perfil</h2>
-                        </div>
+                <h:form id="formEditarPerfil">
+                    <h:messages globalOnly="true" showDetail="true" styleClass="alert" />
+
+                    <div class="card" style="padding: 20px; margin-top: 20px;">
+                        <h3>Información Personal</h3>
+                        <hr/>
+                        
+                        <h:panelGrid columns="3" cellpadding="10" style="width: 100%;">
+                            
+                            <h:outputLabel value="Nombre:" for="nom" />
+                            <h:inputText id="nom" value="#{perfilBean.usuario.primerNombre}" required="true" styleClass="form-control" />
+                            <h:message for="nom" style="color: red;" />
+
+                            <h:outputLabel value="Apellidos:" for="ape" />
+                            <h:inputText id="ape" value="#{perfilBean.usuario.primerApellido}" required="true" styleClass="form-control" />
+                            <h:message for="ape" style="color: red;" />
+
+                            <h:outputLabel value="Teléfono:" for="tel" />
+                            <h:inputText id="tel" value="#{perfilBean.usuario.telefonoUsuario}" styleClass="form-control" />
+                            <h:message for="tel" style="color: red;" />
+
+                            <h:outputLabel value="Dirección:" for="dir" />
+                            <h:inputText id="dir" value="#{perfilBean.usuario.direccionUsuario}" styleClass="form-control" />
+                            <h:message for="dir" style="color: red;" />
+
+                            <h:outputLabel value="Email (Lectura):" />
+                            <h:inputText value="#{perfilBean.usuario.correoUsuario}" readonly="true" styleClass="form-control disabled" />
+                            <h:panelGroup />
+
+                            <h:outputLabel value="Correo secundario:" for="secMail" />
+                            <h:inputText id="secMail" value="#{perfilBean.usuario.correoInstitucional}" styleClass="form-control" />
+                            <h:panelGroup />
+                        </h:panelGrid>
                     </div>
 
-                    <h:form id="formEditar" enctype="multipart/form-data">
-                        
-                        <div class="row">
-                            
-                            <div class="col-lg-4 mb-4">
-                                <div class="card shadow border-0 text-center p-4">
-                                    <h5 class="text-primary mb-3">Foto de Perfil</h5>
-                                    
-                                    <div class="mb-3 position-relative d-inline-block">
-                                        <h:graphicImage value="#{perfilBean.fotoPerfil}" 
-                                                        styleClass="rounded-circle img-thumbnail" 
-                                                        style="width: 180px; height: 180px; object-fit: cover;" 
-                                                        id="fotoVistaPrevia"/>
-                                    </div>
+                        <div style="margin-top: 20px; text-align: right;">
+                        <h:link value="Cancelar" outcome="perfilVer" styleClass="btn btn-secondary" style="margin-right: 10px;" />
+                        <h:commandButton value="Guardar Cambios" action="#{perfilBean.guardarPerfil}" styleClass="btn btn-primary" />
+                    </div>
 
-                                    <div class="mb-3 text-start">
-                                        <label for="fileUpload" class="form-label small text-muted">Subir nueva imagen (JPG/PNG)</label>
-                                        <h:inputFile id="fileUpload" value="#{perfilBean.uploadedPhoto}" 
-                                                     styleClass="form-control form-control-sm">
-                                                    <!-- alidatorMessage="El archivo es obligatorio para actualizar la foto.">comment -->
-                                            </h:inputFile>
-                                        <h:message for="fileUpload" style="color:red; font-size: 0.8rem;"/>
-                                    </div>
-
-                                    <h:commandButton value="Actualizar Foto" 
-                                                     action="#{perfilBean.actualizarFoto}" 
-                                                     styleClass="btn btn-outline-primary btn-sm w-100">
-                                        </h:commandButton>
-                                    
-                                    <div class="mt-2 text-muted" style="font-size: 0.75rem;">
-                                        <i class="fas fa-info-circle"></i> Máximo 2MB. Formatos .jpg, .png
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="col-lg-8">
-                                <div class="card shadow border-0">
-                                    <div class="card-header bg-white py-3">
-                                        <h5 class="mb-0 text-primary"><i class="fas fa-user-edit me-2"></i>Datos Personales</h5>
-                                    </div>
-                                    <div class="card-body p-4">
-                                        
-                                        <div class="row g-3">
-                                            
-                                            <div class="col-md-6">
-                                                <label class="form-label fw-bold">Nombres</label>
-                                                <h:inputText id="nombre" value="#{perfilBean.usuario.nombreUsuario}" 
-                                                             styleClass="form-control" required="true" requiredMessage="El nombre es obligatorio"/>
-                                                <h:message for="nombre" styleClass="text-danger small"/>
-                                            </div>
-                                            
-                                            <div class="col-md-6">
-                                                <label class="form-label fw-bold">Apellidos</label>
-                                                <h:inputText id="apellido" value="#{perfilBean.usuario.apellidoUsuario}" 
-                                                             styleClass="form-control" required="true" requiredMessage="El apellido es obligatorio"/>
-                                                <h:message for="apellido" styleClass="text-danger small"/>
-                                            </div>
-
-                                            <div class="col-md-6">
-                                                <label class="form-label fw-bold text-muted">Tipo Documento</label>
-                                                <h:inputText value="#{perfilBean.usuario.tipoDocumentoId.siglaDoc}" 
-                                                             styleClass="form-control bg-light" readonly="true"/>
-                                            </div>
-                                            
-                                            <div class="col-md-6">
-                                                <label class="form-label fw-bold text-muted">Número Documento</label>
-                                                <h:inputText value="#{perfilBean.usuario.documentoUsuario}" 
-                                                             styleClass="form-control bg-light" readonly="true"/>
-                                                <small class="text-muted" style="font-size: 0.7rem;">* Para cambiar el documento contacte al administrador.</small>
-                                            </div>
-
-                                            <div class="col-md-6">
-                                                <label class="form-label fw-bold">Teléfono / Celular</label>
-                                                <h:inputText id="tel" value="#{perfilBean.usuario.telefonoUsuario}" styleClass="form-control"/>
-                                            </div>
-                                            
-                                            <div class="col-md-6">
-                                                <label class="form-label fw-bold">Dirección</label>
-                                                <h:inputText id="dir" value="#{perfilBean.usuario.direccionUsuario}" styleClass="form-control"/>
-                                            </div>
-
-                                            <div class="col-12">
-                                                <label class="form-label fw-bold text-muted">Correo Principal (Login)</label>
-                                                <div class="input-group">
-                                                    <span class="input-group-text bg-light"><i class="fas fa-envelope"></i></span>
-                                                    <h:inputText value="#{perfilBean.usuario.correoUsuario}" 
-                                                                 styleClass="form-control bg-light" readonly="true"/>
-                                                </div>
-                                            </div>
-
-                                            <div class="col-12">
-                                                <label class="form-label fw-bold">Correo Institucional (Secundario)</label>
-                                                <h:inputText id="secMail" value="#{perfilBean.usuario.correoInstitucional}" 
-                                                             styleClass="form-control" validatorMessage="Formato de correo inválido">
-                                                    <f:validateRegex pattern="^$|[\w\.-]*[a-zA-Z0-9_]@[\w\.-]*[a-zA-Z0-9]\.[a-zA-Z][a-zA-Z\.]*[a-zA-Z]" />
-                                                </h:inputText>
-                                                <h:message for="secMail" styleClass="text-danger small"/>
-                                            </div>
-
-                                        </div> <hr class="my-4"/>
-
-                                        <div class="d-flex justify-content-end gap-2">
-                                            <h:link outcome="index" styleClass="btn btn-secondary text-white">
-                                                <i class="fas fa-times me-2"></i>Cancelar
-                                            </h:link>
-                                            
-                                            <h:commandButton value="Guardar Cambios" action="#{perfilBean.guardarPerfil}" 
-                                                             styleClass="btn btn-success px-4">
-                                                </h:commandButton>
-                                        </div>
-
-                                    </div>
-                                </div>
-                            </div>
-                            
-                        </div>
-                    </h:form>
-
-                </div>
+                </h:form>
 
             </ui:define>
 

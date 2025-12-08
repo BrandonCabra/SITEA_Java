@@ -9,7 +9,7 @@
     <body>
         <ui:composition template="./../TemplateSitio.xhtml">
             <ui:define name="head">
-                <title>Valoración - Habilidades Intelectuales (D2)</title>
+                <title>Valoración - Contexto Familiar (D1)</title>
                 <style>
                     .dimension-form { max-width: 900px; margin: 20px auto; }
                     .dimension-header { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); 
@@ -27,11 +27,11 @@
                     .likert-option { flex: 1; text-align: center; }
                     .likert-radio { margin: 0; }
                     .likert-label { display: block; font-size: 12px; margin-top: 5px; color: #666; }
-                    .likert-1 { color: #f44336; }
-                    .likert-2 { color: #ff9800; }
-                    .likert-3 { color: #ffc107; }
-                    .likert-4 { color: #8bc34a; }
-                    .likert-5 { color: #4caf50; }
+                    .likert-1 { color: #f44336; } /* Rojo - Desacuerdo Total */
+                    .likert-2 { color: #ff9800; } /* Naranja - Desacuerdo */
+                    .likert-3 { color: #ffc107; } /* Amarillo - Neutral */
+                    .likert-4 { color: #8bc34a; } /* Verde Claro - Acuerdo */
+                    .likert-5 { color: #4caf50; } /* Verde - Acuerdo Total */
                     .textarea-field { width: 100%; min-height: 100px; padding: 10px; 
                         border: 1px solid #ddd; border-radius: 4px; font-family: Arial, sans-serif; }
                     .button-group { text-align: right; margin-top: 20px; gap: 10px; }
@@ -46,6 +46,7 @@
                     .score-display strong { font-size: 24px; color: #2e7d32; }
                     .legend { background: #fff3cd; border-left: 4px solid #ffc107; padding: 15px; 
                         margin-bottom: 20px; border-radius: 4px; font-size: 13px; }
+                    .legend-item { margin: 5px 0; }
                 </style>
             </ui:define>
 
@@ -53,13 +54,13 @@
                 <h:form>
                     <f:metadata>
                         <f:viewParam name="student" value="#{dimensionFormBean.studentId}" />
-                        <f:viewParam name="dim" value="D2" />
+                        <f:viewParam name="dim" value="D1" />
                     </f:metadata>
 
                     <div class="dimension-form">
                         <!-- ENCABEZADO -->
                         <div class="dimension-header">
-                            <h1>🧠 Dimensión 2: Habilidades Intelectuales</h1>
+                            <h1>🏠 Dimensión 1: Contexto Familiar</h1>
                             <p>Instrumento de Valoración Estandarizado - Escala Likert + Cuestionario Estructurado + Guía de Observación</p>
                             <p style="margin-top: 10px;">Estudiante: <strong>#{dimensionFormBean.studentId}</strong> | 
                                 Fecha: <strong>#{dimensionFormBean.evaluationDate}</strong></p>
@@ -68,7 +69,7 @@
                         <!-- LEYENDA -->
                         <div class="legend">
                             <strong>Leyenda de Escalas Likert:</strong>
-                            <div style="margin-top: 8px;"><span class="likert-1">■</span> 1 = Totalmente en Desacuerdo | 
+                            <div class="legend-item"><span class="likert-1">■</span> 1 = Totalmente en Desacuerdo | 
                                 <span class="likert-2">■</span> 2 = En Desacuerdo | 
                                 <span class="likert-3">■</span> 3 = Neutral | 
                                 <span class="likert-4">■</span> 4 = De Acuerdo | 
@@ -77,12 +78,12 @@
 
                         <!-- SECCIÓN 1: ESCALAS LIKERT -->
                         <div class="section-card">
-                            <div class="section-title">📋 Sección 1: Escalas Likert - Competencias Cognitivas</div>
+                            <div class="section-title">📋 Sección 1: Escalas Likert - Dinámica Familiar</div>
                             <div class="section-content">
                                 <p style="color: #666; margin-bottom: 20px;">Indique su nivel de acuerdo con cada afirmación:</p>
 
                                 <ui:repeat value="#{dimensionFormBean.likertQuestions}" var="question">
-                                    <ui:include src="../components/instrument_template.xhtml">
+                                    <ui:include src="instrument_template.xhtml">
                                         <ui:param name="questionText" value="#{question.text}" />
                                         <ui:param name="responseKey" value="#{question.id}" />
                                         <ui:param name="qid" value="q#{question.id}" />
@@ -103,7 +104,8 @@
                                                 Pregunta orientadora: #{section.guidingQuestion}
                                             </span>
                                         </label>
-                                        <h:inputTextarea value="#{section.answer}" styleClass="textarea-field" />
+                                        <h:inputTextarea value="#{section.answer}" styleClass="textarea-field" 
+                                            />
                                     </div>
                                 </ui:repeat>
                             </div>
@@ -123,7 +125,8 @@
                                         <p style="font-style: italic; color: #999; margin: 8px 0; font-size: 13px;">
                                             Guía: #{guide.guidanceText}
                                         </p>
-                                        <h:inputTextarea value="#{guide.observations}" styleClass="textarea-field" />
+                                        <h:inputTextarea value="#{guide.observations}" styleClass="textarea-field" 
+                                             />
                                     </div>
                                 </ui:repeat>
                             </div>
@@ -135,12 +138,14 @@
                             <div class="section-content">
                                 <div style="margin-bottom: 15px;">
                                     <label><strong>Observaciones Adicionales:</strong></label>
-                                    <h:inputTextarea value="#{dimensionFormBean.observaciones}" styleClass="textarea-field" />
+                                    <h:inputTextarea value="#{dimensionFormBean.observaciones}" styleClass="textarea-field" 
+                                        />
                                 </div>
 
                                 <div>
-                                    <label><strong>Recomendaciones Pedagógicas:</strong></label>
-                                    <h:inputTextarea value="#{dimensionFormBean.recomendaciones}" styleClass="textarea-field" />
+                                    <label><strong>Recomendaciones:</strong></label>
+                                    <h:inputTextarea value="#{dimensionFormBean.recomendaciones}" styleClass="textarea-field" 
+                                        />
                                 </div>
                             </div>
                         </div>
@@ -148,12 +153,21 @@
                         <!-- BOTONES DE ACCIÓN -->
                         <div class="button-group">
                             <h:commandButton value="Calcular Puntuación" action="#{dimensionFormBean.calculateLikertScore}" 
-                                styleClass="btn-save" style="background: #2196F3;" />
-                            <h:commandButton value="Guardar Valoración" action="#{dimensionFormBean.save('D2')}" 
+                                styleClass="btn-save" style="background: #2196F3;" 
+                                onclick="alert('Puntuación Likert calculada. Porcentaje: ' + #{dimensionFormBean.likertScore} + '%')" />
+                            <h:commandButton value="Guardar Valoración" action="#{dimensionFormBean.save('D1')}" 
                                 styleClass="btn-save" />
                             <h:commandButton value="Cancelar" action="#{dimensionFormBean.goBack}" 
                                 styleClass="btn-cancel" immediate="true" />
                         </div>
+
+                        <!-- MOSTRAR PUNTUACIÓN -->
+                        <h:panelGroup rendered="#{dimensionFormBean.likertScore gt 0}">
+                            <div class="score-display" style="margin-top: 20px;">
+                                <p>Puntuación Likert: <strong>#{dimensionFormBean.likertScore}%</strong></p>
+                                <p style="font-size: 13px; margin: 5px 0;">Total de puntos: #{dimensionFormBean.totalLikertPoints} / #{dimensionFormBean.maxLikertPoints}</p>
+                            </div>
+                        </h:panelGroup>
                     </div>
                 </h:form>
             </ui:define>

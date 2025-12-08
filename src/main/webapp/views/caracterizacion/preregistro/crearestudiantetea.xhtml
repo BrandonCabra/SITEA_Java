@@ -7,15 +7,15 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core">
     
     <body>
-        <ui:composition template="./../TemplateSitio.xhtml">
+        <ui:composition template="./../../TemplateSitio.xhtml">
             <ui:define name="content">
                 
                 <f:view>
                     <script src="../../resources/js/tipoRegistro.js" type="text/javascript"></script>
                      <div class="back-btn">
                         <h:form>
-                            <h:commandButton value="← Volver al Dashboard"
-                                             action= "index.xhtml?faces-redirect=true"
+                            <h:commandButton value="← Volver al Dashboard preregistro"
+                                             action= "dashboardRegistro.xhtml?faces-redirect=true"                                             
                                             type="submit" class="btn btn-primary btn-full mb-3"/> 
                         </h:form>
                     </div>
@@ -687,15 +687,16 @@
                                     <f:ajax execute="@this" render="@form" />
                                 </h:commandButton>
 
-                                <h:button value="Volver al Listado" 
-                                         outcome="/views/caracterizacion/registroestudiante.xhtml?faces-redirect=true" 
+                                <h:button value="Ir al listado de Preregistro" 
+                                         outcome="/views/caracterizacion/preregistro/registroestudiante.xhtml?faces-redirect=true" 
                                          styleClass="btn btn-success btn-full" />
                             </div>
                         </div>
                     </h:form>
                 </f:view>
                 
-              <script src="../../resources/js/tipoRegistro.js" type="text/javascript"></script>
+              <script src="../../../resources/js/tipoRegistro.js" type="text/javascript"></script>
+              
             </ui:define>
         </ui:composition>
 

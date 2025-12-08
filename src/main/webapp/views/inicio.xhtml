@@ -148,7 +148,7 @@
                         <li class="list-group-item" style="background-color: #304878;">
                             <ui:repeat value="#{login.listaPermisos}" var="permisos">
                                 <h:panelGroup rendered="#{permisos.descripcion eq 'perfil'}">
-                                    <h:link outcome="/views/#{permisos.descripcion}/index.xhtml">
+                                    <h:link outcome="/views/#{permisos.descripcion}/index_1.xhtml">
                                         <i class="fas fa-address-card" style="color: white; margin-right: 8px;"> </i>
                                         #{login.aplicarTildes(login.formatearDescripcion(permisos.descripcion)).toUpperCase()}
                                     </h:link>

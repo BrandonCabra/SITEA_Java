@@ -13,7 +13,7 @@ public class PerplexityAPIClient {
     
     private static final String API_URL = "https://api.perplexity.ai/chat/completions";
     // NOTA: En producción, nunca dejes la API KEY quemada en el código. Usa variables de entorno.
-    private static final String API_KEY = "clave_API"; 
+    private static final String API_KEY = "clave-API"; 
 
     // Configuración SSL (Mantenemos tu configuración actual para desarrollo)
     static {

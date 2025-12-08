@@ -144,7 +144,7 @@ public class EstudianteTeaController implements Serializable {
     cur = new Curso();
     td = new TipoDocumento();
     // Corregir la navegación - faltaba un "=" 
-    return "/views/caracterizacion/crearestudiantetea.xhtml?faces-redirect=true";
+    return "/views/caracterizacion/preregistro/crearestudiantetea.xhtml?faces-redirect=true";
 }
 
     
@@ -153,7 +153,7 @@ public class EstudianteTeaController implements Serializable {
         this.con = con2;
         this.cur.setIdCurso(con.getCursoIdCurso() .getIdCurso());
         this.td.setIdTipoDocumento(con.getTipoDocumentoIdTipoDocumento().getIdTipoDocumento());
-        return "/views/caracterizacion/crearestudiantetea.xhtml?faces-redirect?true";    
+        return "/views/caracterizacion/preregistro/crearestudiantetea.xhtml?faces-redirect?true";    
     }
     
 // ========== MÉTODOS PRINCIPALES DE REGISTRO ==========
@@ -473,7 +473,7 @@ public String irACaracterizacion() {
 
 public String irARutaDiagnostico() {
     // Aquí defines la ruta a la ruta de diagnóstico, por ejemplo:
-    return "/views/caracterizacion/rutadiagnostico.xhtml?faces-redirect=true";
+    return "/views/protocolosRutas/index.xhtml?faces-redirect=true";
 }
 
 public String nuevoRegistro() {

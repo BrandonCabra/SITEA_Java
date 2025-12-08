@@ -27,16 +27,13 @@ public class Filtro implements Filter {
         "/webpage.xhtml",
         "/login.xhtml",
         "/acerca.xhtml",
-        "/Servicios.xhtml",
-        "/Servicios2.xhtml",
+        "/servicios.xhtml",
         "/manuales.xhtml",
-        "/manuales2.xhtml",
-        "/Equipo.xhtml",
-        "/Equipo2.xhtml",
-        "/Contacto.xhtml",
-        "/Contacto2.xhtml",
+        "/equipo.xhtml",
+        "/contacto.xhtml",
         "/TemplateRegistro.xhtml",
-        "/registro.xhtml"
+        "/registro.xhtml",
+        "/home.xhtml"
     };
 
     @Override

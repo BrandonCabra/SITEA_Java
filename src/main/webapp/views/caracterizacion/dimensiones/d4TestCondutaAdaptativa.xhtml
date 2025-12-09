@@ -1,0 +1,198 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <body>
+        <ui:composition template="./../../TemplateSitio.xhtml">
+            <ui:define name="content">
+                
+                <h:form id="formAdaptativa">
+                    <p:growl id="msgs" showDetail="true"/>
+
+                    <div class="container mt-4 mb-5">
+                        
+                        <div class="d-flex justify-content-between align-items-center mb-4 p-3 bg-white rounded shadow-sm border-start border-5 border-warning">
+                            <div>
+                                <h4 class="fw-bold text-dark mb-0">
+                                    <i class="fas fa-child me-2"></i>Conducta Adaptativa y Desarrollo Personal
+                                </h4>
+                                <small class="text-muted">Valoración del nivel de independencia y autonomía en la vida diaria.</small>
+                            </div>
+                            <div class="text-end">
+                                <span class="badge bg-light text-dark border">Dimensión 4 de 8</span>
+                            </div>
+                        </div>
+
+                        <div class="alert alert-info border-0 shadow-sm mb-4">
+                            <i class="fas fa-info-circle me-2"></i> <strong>Escala de Valoración:</strong>
+                            <ul class="mb-0 mt-1 small">
+                                <li><strong>1 - Dependiente:</strong> No lo hace, necesita que otro lo haga por él.</li>
+                                <li><strong>2 - Ayuda Física:</strong> Requiere guía física o mucha supervisión.</li>
+                                <li><strong>3 - Ayuda Verbal:</strong> Lo hace con recordatorios o instrucciones verbales.</li>
+                                <li><strong>4 - Independiente:</strong> Lo realiza por sí mismo de forma habitual.</li>
+                            </ul>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-lg-12">
+                                
+                                <div class="accordion shadow-sm" id="accordionAdaptativa">
+                                    
+                                    <div class="accordion-item border-0 mb-3 rounded overflow-hidden shadow-sm">
+                                        <h2 class="accordion-header" id="headingPractica">
+                                            <button class="accordion-button fw-bold text-primary bg-light" type="button" data-bs-toggle="collapse" data-bs-target="#collapsePractica" aria-expanded="true">
+                                                <i class="fas fa-tshirt me-2"></i> 1. Habilidades Prácticas (Autocuidado y Vida Diaria)
+                                            </button>
+                                        </h2>
+                                        <div id="collapsePractica" class="accordion-collapse collapse show" data-bs-parent="#accordionAdaptativa">
+                                            <div class="accordion-body">
+                                                <table class="table table-borderless align-middle">
+                                                    <thead class="text-center text-muted small border-bottom">
+                                                        <tr>
+                                                            <th class="text-start" width="40%">Habilidad</th>
+                                                            <th>1<br/>Dependiente</th>
+                                                            <th>2<br/>Ayuda Física</th>
+                                                            <th>3<br/>Ayuda Verbal</th>
+                                                            <th>4<br/>Independiente</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr class="border-bottom">
+                                                            <td><strong>Alimentación:</strong> Come solo, usa cubiertos y bebe sin derramar.</td>
+                                                            <td colspan="4"><p:selectOneRadio value="#{caracterizacionControllerMejorado.conductaAdaptativaActual.alimentacion}" styleClass="w-100 radio-center"><f:selectItem itemValue="1"/><f:selectItem itemValue="2"/><f:selectItem itemValue="3"/><f:selectItem itemValue="4"/></p:selectOneRadio></td>
+                                                        </tr>
+                                                        <tr class="border-bottom">
+                                                            <td><strong>Higiene:</strong> Controla esfínteres, se lava manos/cara, usa el baño solo.</td>
+                                                            <td colspan="4"><p:selectOneRadio value="#{caracterizacionControllerMejorado.conductaAdaptativaActual.higiene}" styleClass="w-100 radio-center"><f:selectItem itemValue="1"/><f:selectItem itemValue="2"/><f:selectItem itemValue="3"/><f:selectItem itemValue="4"/></p:selectOneRadio></td>
+                                                        </tr>
+                                                        <tr class="border-bottom">
+                                                            <td><strong>Vestido:</strong> Se pone/quita ropa, maneja botones/cremalleras, calzado.</td>
+                                                            <td colspan="4"><p:selectOneRadio value="#{caracterizacionControllerMejorado.conductaAdaptativaActual.vestido}" styleClass="w-100 radio-center"><f:selectItem itemValue="1"/><f:selectItem itemValue="2"/><f:selectItem itemValue="3"/><f:selectItem itemValue="4"/></p:selectOneRadio></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td><strong>Seguridad:</strong> Identifica peligros (fuego, alturas, extraños) y evita accidentes.</td>
+                                                            <td colspan="4"><p:selectOneRadio value="#{caracterizacionControllerMejorado.conductaAdaptativaActual.seguridad}" styleClass="w-100 radio-center"><f:selectItem itemValue="1"/><f:selectItem itemValue="2"/><f:selectItem itemValue="3"/><f:selectItem itemValue="4"/></p:selectOneRadio></td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="accordion-item border-0 mb-3 rounded overflow-hidden shadow-sm">
+                                        <h2 class="accordion-header" id="headingConceptual">
+                                            <button class="accordion-button collapsed fw-bold text-success bg-light" type="button" data-bs-toggle="collapse" data-bs-target="#collapseConceptual">
+                                                <i class="fas fa-brain me-2"></i> 2. Habilidades Conceptuales (Comunicación y Funcional)
+                                            </button>
+                                        </h2>
+                                        <div id="collapseConceptual" class="accordion-collapse collapse" data-bs-parent="#accordionAdaptativa">
+                                            <div class="accordion-body">
+                                                <table class="table table-borderless align-middle">
+                                                    <thead class="text-center text-muted small border-bottom">
+                                                        <tr>
+                                                            <th class="text-start" width="40%">Habilidad</th>
+                                                            <th>1</th><th>2</th><th>3</th><th>4</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr class="border-bottom">
+                                                            <td><strong>Comunicación Expresiva:</strong> Pide lo que necesita, expresa dolor o deseos.</td>
+                                                            <td colspan="4"><p:selectOneRadio value="#{caracterizacionControllerMejorado.conductaAdaptativaActual.comunicacion}" styleClass="w-100 radio-center"><f:selectItem itemValue="1"/><f:selectItem itemValue="2"/><f:selectItem itemValue="3"/><f:selectItem itemValue="4"/></p:selectOneRadio></td>
+                                                        </tr>
+                                                        <tr class="border-bottom">
+                                                            <td><strong>Seguimiento de Instrucciones:</strong> Comprende y ejecuta órdenes (simples o complejas).</td>
+                                                            <td colspan="4"><p:selectOneRadio value="#{caracterizacionControllerMejorado.conductaAdaptativaActual.seguimientoInstrucciones}" styleClass="w-100 radio-center"><f:selectItem itemValue="1"/><f:selectItem itemValue="2"/><f:selectItem itemValue="3"/><f:selectItem itemValue="4"/></p:selectOneRadio></td>
+                                                        </tr>
+                                                        <tr class="border-bottom">
+                                                            <td><strong>Manejo Dinero/Tiempo:</strong> Noción de hora, rutina, valor de monedas.</td>
+                                                            <td colspan="4"><p:selectOneRadio value="#{caracterizacionControllerMejorado.conductaAdaptativaActual.manejoDineroTiempo}" styleClass="w-100 radio-center"><f:selectItem itemValue="1"/><f:selectItem itemValue="2"/><f:selectItem itemValue="3"/><f:selectItem itemValue="4"/></p:selectOneRadio></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td><strong>Lectura Funcional:</strong> Reconoce señales de tránsito, su nombre, letreros de peligro.</td>
+                                                            <td colspan="4"><p:selectOneRadio value="#{caracterizacionControllerMejorado.conductaAdaptativaActual.lecturaFuncional}" styleClass="w-100 radio-center"><f:selectItem itemValue="1"/><f:selectItem itemValue="2"/><f:selectItem itemValue="3"/><f:selectItem itemValue="4"/></p:selectOneRadio></td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="accordion-item border-0 mb-3 rounded overflow-hidden shadow-sm">
+                                        <h2 class="accordion-header" id="headingSocial">
+                                            <button class="accordion-button collapsed fw-bold text-warning bg-light" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSocial">
+                                                <i class="fas fa-users me-2"></i> 3. Habilidades Sociales (Interacción y Normas)
+                                            </button>
+                                        </h2>
+                                        <div id="collapseSocial" class="accordion-collapse collapse" data-bs-parent="#accordionAdaptativa">
+                                            <div class="accordion-body">
+                                                <table class="table table-borderless align-middle">
+                                                    <thead class="text-center text-muted small border-bottom">
+                                                        <tr>
+                                                            <th class="text-start" width="40%">Habilidad</th>
+                                                            <th>1</th><th>2</th><th>3</th><th>4</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr class="border-bottom">
+                                                            <td><strong>Interacción con Pares:</strong> Juega con otros, respeta turnos, comparte.</td>
+                                                            <td colspan="4"><p:selectOneRadio value="#{caracterizacionControllerMejorado.conductaAdaptativaActual.interaccionPares}" styleClass="w-100 radio-center"><f:selectItem itemValue="1"/><f:selectItem itemValue="2"/><f:selectItem itemValue="3"/><f:selectItem itemValue="4"/></p:selectOneRadio></td>
+                                                        </tr>
+                                                        <tr class="border-bottom">
+                                                            <td><strong>Respeto de Normas:</strong> Sigue reglas del aula, del hogar y de juegos.</td>
+                                                            <td colspan="4"><p:selectOneRadio value="#{caracterizacionControllerMejorado.conductaAdaptativaActual.respetoNormas}" styleClass="w-100 radio-center"><f:selectItem itemValue="1"/><f:selectItem itemValue="2"/><f:selectItem itemValue="3"/><f:selectItem itemValue="4"/></p:selectOneRadio></td>
+                                                        </tr>
+                                                        <tr class="border-bottom">
+                                                            <td><strong>Manejo de Cambios:</strong> Se adapta flexiblemente si cambia la rutina o actividad.</td>
+                                                            <td colspan="4"><p:selectOneRadio value="#{caracterizacionControllerMejorado.conductaAdaptativaActual.manejoCambios}" styleClass="w-100 radio-center"><f:selectItem itemValue="1"/><f:selectItem itemValue="2"/><f:selectItem itemValue="3"/><f:selectItem itemValue="4"/></p:selectOneRadio></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td><strong>Autocontrol en Público:</strong> Regula su comportamiento en espacios comunitarios.</td>
+                                                            <td colspan="4"><p:selectOneRadio value="#{caracterizacionControllerMejorado.conductaAdaptativaActual.autocontrol}" styleClass="w-100 radio-center"><f:selectItem itemValue="1"/><f:selectItem itemValue="2"/><f:selectItem itemValue="3"/><f:selectItem itemValue="4"/></p:selectOneRadio></td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div> <div class="card shadow-sm border-0 mt-4">
+                                    <div class="card-body bg-light">
+                                        <h6 class="fw-bold text-dark mb-3">Observaciones Generales</h6>
+                                        <p:inputTextarea value="#{caracterizacionControllerMejorado.conductaAdaptativaActual.observaciones}" 
+                                                         rows="3" styleClass="form-control" 
+                                                         placeholder="Describa el nivel de apoyo requerido (Intermitente, Limitado, Extenso, Generalizado)..."
+                                                         required="true" requiredMessage="La observación es obligatoria."/>
+                                        
+                                        <div class="d-flex justify-content-end gap-2 mt-3">
+                                            <h:button value="Cancelar" outcome="dashboard_dimensiones" styleClass="btn btn-outline-secondary"/>
+                                            <p:commandButton value="Guardar Dimensión" 
+                                                             action="#{caracterizacionControllerMejorado.guardarDimensionAdaptativa}" 
+                                                             styleClass="btn btn-primary fw-bold px-4" 
+                                                             icon="fas fa-save" update="@form"/>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </h:form>
+                
+                <style>
+                    /* Truco CSS para distribuir los radio buttons equitativamente en la celda de la tabla */
+                    .radio-center td { text-align: center; }
+                    .radio-center label { display: none; } /* Ocultar labels repetidos (1,2,3,4) dentro de la tabla */
+                    .accordion-button:not(.collapsed) {
+                        background-color: #e7f1ff;
+                        color: #0c63e4;
+                    }
+                </style>
+
+            </ui:define>
+        </ui:composition>
+    </body>
+</html>

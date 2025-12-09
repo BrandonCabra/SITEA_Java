@@ -1,0 +1,186 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <f:metadata>
+        <f:viewAction action="#{informeBean.cargarDatos}" />
+    </f:metadata>
+
+    <body>
+        <ui:composition template="./../TemplateSitio.xhtml">
+            <ui:define name="content">
+                
+                <h:form id="formInforme">
+                    <p:growl id="msg" showDetail="true"/>
+
+                    <div class="container mt-3 mb-3 d-print-none">
+                        <div class="card p-2 shadow-sm d-flex flex-row justify-content-between align-items-center">
+                            <div>
+                                <h5 class="mb-0 text-primary"><i class="fas fa-file-contract me-2"></i>Informe de Valoración Pedagógica</h5>
+                            </div>
+                            <div class="btn-group">
+                                <h:commandButton value="Generar Análisis con IA" 
+                                                 action="#{informeBean.generarAnalisisIA}" 
+                                                 styleClass="btn btn-warning fw-bold text-dark">
+                                    <f:ajax execute="@this" render="seccionConclusiones msg" />
+                                </h:commandButton>
+                                
+                                <button type="button" class="btn btn-secondary" onclick="window.print()">
+                                    <i class="fas fa-print me-2"></i>Imprimir / PDF
+                                </button>
+                                
+                                <h:commandButton value="Guardar Final" 
+                                                 action="#{informeBean.guardarInformeFinal}" 
+                                                 styleClass="btn btn-success" />
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="container bg-white shadow-lg p-5 mb-5 document-sheet" id="printArea">
+                        
+                        <div class="row border-bottom pb-3 mb-4 align-items-center">
+                            <div class="col-2 text-center">
+                                <h:graphicImage library="images" name="logositeasf 3.png" width="80" />
+                            </div>
+                            <div class="col-8 text-center">
+                                <h4 class="fw-bold mb-0">INFORME DE VALORACIÓN PEDAGÓGICA</h4>
+                                <h6 class="text-muted">ANEXO 2 - PIAR (Decreto 1421 de 2017)</h6>
+                                <p class="small mb-0">SECRETARÍA DE EDUCACIÓN - INSTITUCIÓN EDUCATIVA EJEMPLO</p>
+                            </div>
+                            <div class="col-2 text-end">
+                                <div class="border p-2 text-center bg-light rounded">
+                                    <small class="d-block fw-bold">FECHA</small>
+                                    <h:outputText value="#{informeBean.caracterizacion.fechaInicio}">
+                                        <f:convertDateTime pattern="dd/MM/yyyy"/>
+                                    </h:outputText>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="section-box mb-4">
+                            <h6 class="section-title bg-primary text-white p-2 ps-3 rounded-top mb-0">I. INFORMACIÓN GENERAL</h6>
+                            <div class="border border-top-0 p-3 rounded-bottom">
+                                <div class="row g-3">
+                                    <div class="col-md-6">
+                                        <strong>Nombre:</strong> #{informeBean.estudiante.primerNombreEstudiante} #{informeBean.estudiante.primerApellidoEstudiante}
+                                    </div>
+                                    <div class="col-md-3">
+                                        <strong>Documento:</strong> #{informeBean.estudiante.numeroDocumentoEstudiante}
+                                    </div>
+                                    <div class="col-md-3">
+                                        <strong>Edad:</strong> #{informeBean.edad} años
+                                    </div>
+                                    <div class="col-md-4">
+                                        <strong>Grado:</strong> #{informeBean.gradoLabel}
+                                    </div>
+                                    <div class="col-md-4">
+                                        <strong>Jornada:</strong> Mañana
+                                    </div>
+                                    <div class="col-md-4">
+                                        <strong>Diagnóstico:</strong> #{informeBean.caracterizacion.diagnostico}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="section-box mb-4">
+                            <h6 class="section-title bg-dark text-white p-2 ps-3 rounded-top mb-0">II. VALORACIÓN POR DIMENSIONES</h6>
+                            <div class="table-responsive">
+                                <table class="table table-bordered table-sm mb-0">
+                                    <thead class="bg-light text-center">
+                                        <tr>
+                                            <th width="25%">Dimensión</th>
+                                            <th width="40%">Fortalezas y Capacidades</th>
+                                            <th width="35%">Necesidades de Apoyo / Barreras</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <ui:repeat value="#{informeBean.dimensionesList}" var="dim">
+                                            <tr>
+                                                <td class="fw-bold bg-light">#{dim.nombreDimension}</td>
+                                                <td>#{dim.fortalezas}</td>
+                                                <td>#{dim.areasApoyo}</td>
+                                            </tr>
+                                        </ui:repeat>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <h:panelGroup id="seccionConclusiones">
+                            <div class="section-box mb-4">
+                                <h6 class="section-title bg-success text-white p-2 ps-3 rounded-top mb-0">III. CONCLUSIONES Y PERFIL PEDAGÓGICO</h6>
+                                <div class="border border-top-0 p-3 rounded-bottom bg-light">
+                                    
+                                    <h:panelGroup rendered="#{not empty informeBean.conclusionIA}">
+                                        <div class="ia-content">
+                                            <h:outputText value="#{informeBean.conclusionIA}" escape="false" />
+                                        </div>
+                                    </h:panelGroup>
+
+                                    <h:panelGroup rendered="#{empty informeBean.conclusionIA}">
+                                        <p class="text-muted text-center py-4">
+                                            <i class="fas fa-robot fa-2x mb-2"></i><br/>
+                                            Haga clic en <strong>"Generar Análisis con IA"</strong> para obtener una síntesis automática <br/>
+                                            o redacte manualmente las conclusiones aquí.
+                                        </p>
+                                    </h:panelGroup>
+                                    
+                                    <hr/>
+                                    <label class="small fw-bold text-muted">Observaciones Adicionales / Compromisos:</label>
+                                    <p:inputTextarea value="#{informeBean.caracterizacion.observacionesAdicionales}" 
+                                                     rows="3" styleClass="form-control d-print-none" 
+                                                     placeholder="Espacio para notas finales del docente..."/>
+                                    <div class="d-none d-print-block">
+                                        #{informeBean.caracterizacion.observacionesAdicionales}
+                                    </div>
+                                </div>
+                            </div>
+                        </h:panelGroup>
+
+                        <div class="row mt-5 pt-5">
+                            <div class="col-4 text-center">
+                                <div class="border-top border-dark pt-2">Docente de Aula</div>
+                            </div>
+                            <div class="col-4 text-center">
+                                <div class="border-top border-dark pt-2">Docente de Apoyo / Orientador</div>
+                            </div>
+                            <div class="col-4 text-center">
+                                <div class="border-top border-dark pt-2">Padre de Familia / Acudiente</div>
+                            </div>
+                        </div>
+
+                    </div>
+                </h:form>
+
+                <style>
+                    .document-sheet {
+                        min-height: 29.7cm; /* Altura A4 */
+                        padding: 2cm !important;
+                        font-family: 'Times New Roman', serif;
+                    }
+                    @media print {
+                        body { background-color: white; }
+                        .d-print-none { display: none !important; }
+                        .d-print-block { display: block !important; }
+                        .document-sheet { 
+                            box-shadow: none !important; 
+                            margin: 0 !important; 
+                            width: 100% !important;
+                        }
+                        .container { max-width: 100% !important; }
+                        /* Asegurar que los colores de fondo se impriman (Boostrap usually strips them) */
+                        .bg-primary { background-color: #0d6efd !important; -webkit-print-color-adjust: exact; }
+                        .bg-dark { background-color: #212529 !important; -webkit-print-color-adjust: exact; }
+                        .bg-success { background-color: #198754 !important; -webkit-print-color-adjust: exact; }
+                    }
+                </style>
+
+            </ui:define>
+        </ui:composition>
+    </body>
+</html>

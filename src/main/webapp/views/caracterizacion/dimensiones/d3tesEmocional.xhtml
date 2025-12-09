@@ -7,57 +7,196 @@
       xmlns:p="http://primefaces.org/ui">
 
     <body>
-        <ui:composition template="./../TemplateSitio.xhtml">
-            <ui:define name="head">
-                <title>Valoración - Contexto Familiar (D1)</title>
-                <style>
-                    .dimension-form { max-width: 900px; margin: 20px auto; }
-                    .dimension-header { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); 
-                        color: white; padding: 25px; border-radius: 8px 8px 0 0; margin-bottom: 20px; }
-                    .dimension-header h1 { margin: 0 0 5px 0; font-size: 28px; }
-                    .dimension-header p { margin: 5px 0; font-size: 14px; opacity: 0.9; }
-                    .section-card { border: 1px solid #ddd; border-radius: 8px; margin-bottom: 20px; 
-                        box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
-                    .section-title { background: #f5f5f5; border-left: 4px solid #667eea; padding: 15px; 
-                        font-weight: bold; font-size: 16px; }
-                    .section-content { padding: 20px; }
-                    .likert-group { margin-bottom: 20px; }
-                    .likert-question { font-weight: 600; margin-bottom: 10px; color: #333; font-size: 14px; }
-                    .likert-scale { display: flex; gap: 10px; justify-content: space-between; }
-                    .likert-option { flex: 1; text-align: center; }
-                    .likert-radio { margin: 0; }
-                    .likert-label { display: block; font-size: 12px; margin-top: 5px; color: #666; }
-                    .likert-1 { color: #f44336; } /* Rojo - Desacuerdo Total */
-                    .likert-2 { color: #ff9800; } /* Naranja - Desacuerdo */
-                    .likert-3 { color: #ffc107; } /* Amarillo - Neutral */
-                    .likert-4 { color: #8bc34a; } /* Verde Claro - Acuerdo */
-                    .likert-5 { color: #4caf50; } /* Verde - Acuerdo Total */
-                    .textarea-field { width: 100%; min-height: 100px; padding: 10px; 
-                        border: 1px solid #ddd; border-radius: 4px; font-family: Arial, sans-serif; }
-                    .button-group { text-align: right; margin-top: 20px; gap: 10px; }
-                    .btn-save { background: #4caf50; color: white; padding: 10px 25px; 
-                        border: none; border-radius: 4px; cursor: pointer; font-weight: bold; }
-                    .btn-save:hover { background: #45a049; }
-                    .btn-cancel { background: #f44336; color: white; padding: 10px 25px; 
-                        border: none; border-radius: 4px; cursor: pointer; font-weight: bold; }
-                    .btn-cancel:hover { background: #da190b; }
-                    .score-display { background: #e8f5e9; border-left: 4px solid #4caf50; 
-                        padding: 15px; margin-bottom: 20px; border-radius: 4px; }
-                    .score-display strong { font-size: 24px; color: #2e7d32; }
-                    .legend { background: #fff3cd; border-left: 4px solid #ffc107; padding: 15px; 
-                        margin-bottom: 20px; border-radius: 4px; font-size: 13px; }
-                    .legend-item { margin: 5px 0; }
-                </style>
-            </ui:define>
-
+        <ui:composition template="./../../TemplateSitio.xhtml">
             <ui:define name="content">
-                <h:form>
-                    
-                    
-                    
-                    
-                    
+                
+                <h:form id="formEmocional">
+                    <p:growl id="msgs" showDetail="true"/>
+
+                    <div class="container mt-4 mb-5">
+                        
+                        <div class="d-flex justify-content-between align-items-center mb-4 p-3 bg-white rounded shadow-sm border-start border-5 border-info">
+                            <div>
+                                <h4 class="fw-bold text-primary mb-0">
+                                    <i class="fas fa-brain me-2"></i>Bienestar Emocional y Competencias Socioemocionales
+                                </h4>
+                                <small class="text-muted">Valoración de habilidades intrapersonales e interpersonales.</small>
+                            </div>
+                            <div class="text-end">
+                                <span class="badge bg-light text-dark border">Estudiante: #{caracterizacionControllerMejorado.estudiante.primerNombreEstudiante}</span>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            
+                            <div class="col-lg-8">
+                                
+                                <div class="card shadow-sm border-0 mb-4">
+                                    <div class="card-header bg-info text-white fw-bold">
+                                        <i class="fas fa-user me-2"></i>1. Relación Consigo Mismo (Intrapersonal)
+                                    </div>
+                                    <div class="card-body">
+                                        <p class="small text-muted mb-3">Evalúe la frecuencia de las siguientes conductas observadas o reportadas.</p>
+                                        
+                                        <div class="table-responsive">
+                                            <table class="table table-hover align-middle">
+                                                <thead class="table-light small">
+                                                    <tr>
+                                                        <th style="width: 40%">Indicador</th>
+                                                        <th class="text-center">Nunca (1)</th>
+                                                        <th class="text-center">A veces (2)</th>
+                                                        <th class="text-center">Casi Siempre (3)</th>
+                                                        <th class="text-center">Siempre (4)</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <td><strong>Autoconciencia:</strong> Identifica y nombra sus emociones.</td>
+                                                        <td colspan="4">
+                                                            <p:selectOneRadio value="#{caracterizacionControllerMejorado.bienestarEmocionalActual.identificaEmociones}" unselectable="true">
+                                                                <f:selectItem itemLabel="" itemValue="1" />
+                                                                <f:selectItem itemLabel="" itemValue="2" />
+                                                                <f:selectItem itemLabel="" itemValue="3" />
+                                                                <f:selectItem itemLabel="" itemValue="4" />
+                                                            </p:selectOneRadio>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td><strong>Expresión:</strong> Expresa lo que siente de forma adecuada (sin agredir).</td>
+                                                        <td colspan="4">
+                                                            <p:selectOneRadio value="#{caracterizacionControllerMejorado.bienestarEmocionalActual.expresaEmociones}">
+                                                                <f:selectItem itemLabel="" itemValue="1" />
+                                                                <f:selectItem itemLabel="" itemValue="2" />
+                                                                <f:selectItem itemLabel="" itemValue="3" />
+                                                                <f:selectItem itemLabel="" itemValue="4" />
+                                                            </p:selectOneRadio>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td><strong>Regulación:</strong> Logra calmarse ante situaciones de ira o frustración.</td>
+                                                        <td colspan="4">
+                                                            <p:selectOneRadio value="#{caracterizacionControllerMejorado.bienestarEmocionalActual.regulaImpulsos}">
+                                                                <f:selectItem itemLabel="" itemValue="1" />
+                                                                <f:selectItem itemLabel="" itemValue="2" />
+                                                                <f:selectItem itemLabel="" itemValue="3" />
+                                                                <f:selectItem itemLabel="" itemValue="4" />
+                                                            </p:selectOneRadio>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td><strong>Autoestima:</strong> Se expresa positivamente sobre sí mismo/a.</td>
+                                                        <td colspan="4">
+                                                            <p:selectOneRadio value="#{caracterizacionControllerMejorado.bienestarEmocionalActual.autoestima}">
+                                                                <f:selectItem itemLabel="" itemValue="1" />
+                                                                <f:selectItem itemLabel="" itemValue="2" />
+                                                                <f:selectItem itemLabel="" itemValue="3" />
+                                                                <f:selectItem itemLabel="" itemValue="4" />
+                                                            </p:selectOneRadio>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="card shadow-sm border-0 mb-4">
+                                    <div class="card-header bg-success text-white fw-bold">
+                                        <i class="fas fa-users me-2"></i>2. Relación con los Demás (Interpersonal)
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="table-responsive">
+                                            <table class="table table-hover align-middle">
+                                                <thead class="table-light small">
+                                                    <tr>
+                                                        <th style="width: 40%">Indicador</th>
+                                                        <th class="text-center">Escala de Frecuencia (1-4)</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <td><strong>Empatía:</strong> Reconoce y comprende los sentimientos de otros.</td>
+                                                        <td>
+                                                            <p:rating value="#{caracterizacionControllerMejorado.bienestarEmocionalActual.empatia}" stars="4" cancel="false"/>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td><strong>Escucha Activa:</strong> Presta atención respetuosa cuando otros hablan.</td>
+                                                        <td>
+                                                            <p:rating value="#{caracterizacionControllerMejorado.bienestarEmocionalActual.escuchaActiva}" stars="4" cancel="false"/>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td><strong>Resolución de Conflictos:</strong> Busca acuerdos sin usar la violencia.</td>
+                                                        <td>
+                                                            <p:rating value="#{caracterizacionControllerMejorado.bienestarEmocionalActual.resuelveConflictos}" stars="4" cancel="false"/>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="card shadow-sm border-0">
+                                    <div class="card-body">
+                                        <label class="form-label fw-bold">Análisis Cualitativo del Profesional</label>
+                                        <p:inputTextarea value="#{caracterizacionControllerMejorado.bienestarEmocionalActual.observacionesPsico}" 
+                                                         rows="4" styleClass="form-control" 
+                                                         placeholder="Describa fortalezas emocionales y situaciones detonantes observadas..."/>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div class="col-lg-4">
+                                <div class="card shadow border-0 border-top border-3 border-danger">
+                                    <div class="card-header bg-white">
+                                        <h6 class="text-danger fw-bold mb-0"><i class="fas fa-exclamation-triangle me-2"></i>Signos de Alarma</h6>
+                                    </div>
+                                    <div class="card-body bg-light">
+                                        <p class="small text-muted">Seleccione si ha observado alguno de estos signos de riesgo psicosocial:</p>
+                                        
+                                        <p:selectManyCheckbox value="#{caracterizacionControllerMejorado.bienestarEmocionalActual.signosAlarma}" 
+                                                              layout="pageDirection" styleClass="w-100 checkbox-danger">
+                                            <f:selectItem itemLabel="Cambios bruscos de humor" itemValue="Cambios Humor" />
+                                            <f:selectItem itemLabel="Aislamiento social repentino" itemValue="Aislamiento" />
+                                            <f:selectItem itemLabel="Llanto frecuente sin causa aparente" itemValue="Llanto" />
+                                            <f:selectItem itemLabel="Conductas agresivas (físicas/verbales)" itemValue="Agresividad" />
+                                            <f:selectItem itemLabel="Expresión de desesperanza" itemValue="Desesperanza" />
+                                            <f:selectItem itemLabel="Autolesiones o conductas de riesgo" itemValue="Autolesiones" />
+                                            <f:selectItem itemLabel="Alteraciones de sueño/alimentación" itemValue="Sueño/Alimentación" />
+                                        </p:selectManyCheckbox>
+                                        
+                                        <div class="alert alert-warning mt-3 small">
+                                            <i class="fas fa-info-circle"></i> <strong>Nota:</strong> Si selecciona signos graves (como autolesiones), el sistema sugerirá activar la Ruta de Atención Integral.
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="d-grid gap-2 mt-4">
+                                    <p:commandButton value="Guardar Dimensión" 
+                                                     action="#{caracterizacionControllerMejorado.guardarDimensionEmocional}" 
+                                                     styleClass="btn btn-primary btn-lg shadow-sm"
+                                                     icon="fas fa-save" update="@form"/>
+                                                     
+                                    <h:button value="Cancelar" outcome="dashboard_dimensiones" styleClass="btn btn-outline-secondary"/>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
                 </h:form>
+                
+                <style>
+                    /* Ajuste para centrar radio buttons en la tabla */
+                    .ui-selectoneradio { display: flex; justify-content: space-around; width: 100%; }
+                    .ui-selectoneradio label { display: none; } /* Ocultar labels repetitivos en tabla */
+                    .checkbox-danger .ui-chkbox-box.ui-state-active {
+                        border-color: #dc3545; background: #dc3545;
+                    }
+                </style>
+
             </ui:define>
         </ui:composition>
     </body>

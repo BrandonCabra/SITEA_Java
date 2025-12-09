@@ -1,0 +1,160 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <body>
+        <ui:composition template="./../../TemplateSitio.xhtml">
+            <ui:define name="content">
+                
+                <h:form id="formControlEntorno">
+                    <p:growl id="msgs" showDetail="true"/>
+
+                    <div class="container mt-4 mb-5">
+                        
+                        <div class="d-flex justify-content-between align-items-center mb-4 p-3 bg-white rounded shadow-sm border-start border-5 border-secondary">
+                            <div>
+                                <h4 class="fw-bold text-secondary mb-0">
+                                    <i class="fas fa-compass me-2"></i>Control del Propio Entorno
+                                </h4>
+                                <small class="text-muted">Valoración de autodeterminación, toma de decisiones y proyección personal.</small>
+                            </div>
+                            <div class="text-end">
+                                <span class="badge bg-light text-dark border">Dimensión 7 de 8</span>
+                            </div>
+                        </div>
+
+                        <div class="alert alert-light border shadow-sm mb-4">
+                            <i class="fas fa-info-circle me-2"></i> <strong>Escala de Valoración:</strong>
+                            <div class="row text-center mt-2 small text-muted fw-bold">
+                                <div class="col">1 = Totalmente en Desacuerdo / Nunca</div>
+                                <div class="col">2 = En Desacuerdo / A Veces</div>
+                                <div class="col">3 = De Acuerdo / Casi Siempre</div>
+                                <div class="col">4 = Totalmente de Acuerdo / Siempre</div>
+                            </div>
+                        </div>
+
+                        <div class="card shadow-sm border-0 mb-4">
+                            <div class="card-header bg-secondary text-white fw-bold">
+                                <i class="fas fa-lightbulb me-2"></i>1. Reconocimiento de Intereses y Proyección Personal
+                            </div>
+                            <div class="card-body p-0">
+                                <table class="table table-hover align-middle mb-0">
+                                    <thead class="table-light text-center small">
+                                        <tr><th class="text-start ps-3" width="50%">Pregunta</th><th>1</th><th>2</th><th>3</th><th>4</th></tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td class="ps-3">¿Reconozco claramente cuáles son mis propios intereses y pasatiempos?</td>
+                                            <td colspan="4"><p:selectOneRadio value="#{caracterizacionControllerMejorado.controlEntornoActual.reconoceIntereses}" styleClass="w-100 radio-center"><f:selectItem itemValue="1"/><f:selectItem itemValue="2"/><f:selectItem itemValue="3"/><f:selectItem itemValue="4"/></p:selectOneRadio></td>
+                                        </tr>
+                                        <tr>
+                                            <td class="ps-3">¿Tengo metas personales a corto y largo plazo que me he propuesto alcanzar?</td>
+                                            <td colspan="4"><p:selectOneRadio value="#{caracterizacionControllerMejorado.controlEntornoActual.tieneMetas}" styleClass="w-100 radio-center"><f:selectItem itemValue="1"/><f:selectItem itemValue="2"/><f:selectItem itemValue="3"/><f:selectItem itemValue="4"/></p:selectOneRadio></td>
+                                        </tr>
+                                        <tr>
+                                            <td class="ps-3">¿Mis planes futuros reflejan mis propios deseos y no solo los de otros?</td>
+                                            <td colspan="4"><p:selectOneRadio value="#{caracterizacionControllerMejorado.controlEntornoActual.planesReflejanDeseos}" styleClass="w-100 radio-center"><f:selectItem itemValue="1"/><f:selectItem itemValue="2"/><f:selectItem itemValue="3"/><f:selectItem itemValue="4"/></p:selectOneRadio></td>
+                                        </tr>
+                                        <tr>
+                                            <td class="ps-3">¿Soy capaz de identificar mis puntos fuertes y débiles sin ayuda externa?</td>
+                                            <td colspan="4"><p:selectOneRadio value="#{caracterizacionControllerMejorado.controlEntornoActual.identificaFortalezas}" styleClass="w-100 radio-center"><f:selectItem itemValue="1"/><f:selectItem itemValue="2"/><f:selectItem itemValue="3"/><f:selectItem itemValue="4"/></p:selectOneRadio></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <div class="card shadow-sm border-0 mb-4">
+                            <div class="card-header bg-dark text-white fw-bold">
+                                <i class="fas fa-balance-scale me-2"></i>2. Toma de Decisiones y Autonomía
+                            </div>
+                            <div class="card-body p-0">
+                                <table class="table table-hover align-middle mb-0">
+                                    <thead class="table-light text-center small">
+                                        <tr><th class="text-start ps-3" width="50%">Pregunta</th><th>1</th><th>2</th><th>3</th><th>4</th></tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td class="ps-3">¿Me siento seguro/a al tomar decisiones sobre mis actividades diarias?</td>
+                                            <td colspan="4"><p:selectOneRadio value="#{caracterizacionControllerMejorado.controlEntornoActual.seguridadDecisiones}" styleClass="w-100 radio-center"><f:selectItem itemValue="1"/><f:selectItem itemValue="2"/><f:selectItem itemValue="3"/><f:selectItem itemValue="4"/></p:selectOneRadio></td>
+                                        </tr>
+                                        <tr>
+                                            <td class="ps-3">¿Decido por mi cuenta los lugares que quiero frecuentar en mi tiempo libre?</td>
+                                            <td colspan="4"><p:selectOneRadio value="#{caracterizacionControllerMejorado.controlEntornoActual.decideLugares}" styleClass="w-100 radio-center"><f:selectItem itemValue="1"/><f:selectItem itemValue="2"/><f:selectItem itemValue="3"/><f:selectItem itemValue="4"/></p:selectOneRadio></td>
+                                        </tr>
+                                        <tr>
+                                            <td class="ps-3">¿Requiero poco apoyo de adultos para decidir sobre mi vida personal?</td>
+                                            <td colspan="4"><p:selectOneRadio value="#{caracterizacionControllerMejorado.controlEntornoActual.requierePocoApoyo}" styleClass="w-100 radio-center"><f:selectItem itemValue="1"/><f:selectItem itemValue="2"/><f:selectItem itemValue="3"/><f:selectItem itemValue="4"/></p:selectOneRadio></td>
+                                        </tr>
+                                        <tr>
+                                            <td class="ps-3">¿Soy consciente de las consecuencias de mis decisiones antes de actuar?</td>
+                                            <td colspan="4"><p:selectOneRadio value="#{caracterizacionControllerMejorado.controlEntornoActual.conscienteConsecuencias}" styleClass="w-100 radio-center"><f:selectItem itemValue="1"/><f:selectItem itemValue="2"/><f:selectItem itemValue="3"/><f:selectItem itemValue="4"/></p:selectOneRadio></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <div class="card shadow-sm border-0 mb-4">
+                            <div class="card-header bg-info text-white fw-bold">
+                                <i class="fas fa-gavel me-2"></i>3. Ejercicio de Derechos y Apoyo Social
+                            </div>
+                            <div class="card-body p-0">
+                                <table class="table table-hover align-middle mb-0">
+                                    <thead class="table-light text-center small">
+                                        <tr><th class="text-start ps-3" width="50%">Pregunta</th><th>1</th><th>2</th><th>3</th><th>4</th></tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td class="ps-3">¿Siento libertad de expresar opiniones sin miedo a ser ignorado/a?</td>
+                                            <td colspan="4"><p:selectOneRadio value="#{caracterizacionControllerMejorado.controlEntornoActual.libertadExpresion}" styleClass="w-100 radio-center"><f:selectItem itemValue="1"/><f:selectItem itemValue="2"/><f:selectItem itemValue="3"/><f:selectItem itemValue="4"/></p:selectOneRadio></td>
+                                        </tr>
+                                        <tr>
+                                            <td class="ps-3">¿Mi familia/amigos respetan mis decisiones, aunque no estén de acuerdo?</td>
+                                            <td colspan="4"><p:selectOneRadio value="#{caracterizacionControllerMejorado.controlEntornoActual.familiaRespetaDecisiones}" styleClass="w-100 radio-center"><f:selectItem itemValue="1"/><f:selectItem itemValue="2"/><f:selectItem itemValue="3"/><f:selectItem itemValue="4"/></p:selectOneRadio></td>
+                                        </tr>
+                                        <tr>
+                                            <td class="ps-3">¿Conozco mis derechos como estudiante y ciudadano y sé ejercerlos?</td>
+                                            <td colspan="4"><p:selectOneRadio value="#{caracterizacionControllerMejorado.controlEntornoActual.conoceDerechos}" styleClass="w-100 radio-center"><f:selectItem itemValue="1"/><f:selectItem itemValue="2"/><f:selectItem itemValue="3"/><f:selectItem itemValue="4"/></p:selectOneRadio></td>
+                                        </tr>
+                                        <tr>
+                                            <td class="ps-3">¿Mi entorno social me anima a ser independiente y valerme por mí mismo?</td>
+                                            <td colspan="4"><p:selectOneRadio value="#{caracterizacionControllerMejorado.controlEntornoActual.entornoAnimaIndependencia}" styleClass="w-100 radio-center"><f:selectItem itemValue="1"/><f:selectItem itemValue="2"/><f:selectItem itemValue="3"/><f:selectItem itemValue="4"/></p:selectOneRadio></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <div class="card shadow-sm border-0 bg-light p-3">
+                            <label class="form-label fw-bold">Observaciones Generales sobre Autodeterminación</label>
+                            <p:inputTextarea value="#{caracterizacionControllerMejorado.controlEntornoActual.observaciones}" 
+                                             rows="3" styleClass="form-control" 
+                                             placeholder="Describa el nivel de iniciativa y autonomía observado..."
+                                             required="true" requiredMessage="La observación es obligatoria."/>
+                            
+                            <div class="d-flex justify-content-end gap-2 mt-3">
+                                <h:button value="Cancelar" outcome="dashboard_dimensiones" styleClass="btn btn-outline-secondary"/>
+                                <p:commandButton value="Guardar Dimensión" 
+                                                 action="#{caracterizacionControllerMejorado.guardarDimensionControlEntorno}" 
+                                                 styleClass="btn btn-primary fw-bold px-4" 
+                                                 icon="fas fa-save" update="@form"/>
+                            </div>
+                        </div>
+
+                    </div>
+                </h:form>
+                
+                <style>
+                    .radio-center td { text-align: center; }
+                    .radio-center label { display: none; }
+                </style>
+
+            </ui:define>
+        </ui:composition>
+    </body>
+</html>

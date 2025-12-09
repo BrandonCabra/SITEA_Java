@@ -41,18 +41,18 @@
                             <h:panelGroup rendered="#{login.rolActual eq 'ADMINISTRADOR' or login.rolActual eq 'PSICOORIENTADOR'}">
                             <h:link outcome="/views/caracterizacion/dashboardInicioCaracterizacion.xhtml?faces-redirect=true"
                                     styleClass="btn btn-outline-primary text-start">
-                                <i class="fa-solid fa-list-check me-2"></i> Iniciar Caracterización
+                                <i class="fa-solid fa-file-alt me-2"></i> Iniciar Caracterización
                             </h:link>
                                 </h:panelGroup>
                             
                             
-                            <h:link outcome="/views/caracterizacion/dashboard_dimensiones.xhtml?faces-redirect=true"
+                            <h:link outcome="/views/caracterizacion/dashboard_gestion_valoraciones.xhtml?faces-redirect=true"
                                     styleClass="btn btn-outline-primary text-start">
-                                <i class="fa-solid fa-star me-2"></i> Valoración Pedagógica
-                            </h:link>  
-                            <h:link outcome="/views/caracterizacion/gestionarcaracterizacion.xhtml?faces-redirect=true"
+                                <i class="fa-solid fa-clipboard-list me-2"></i> Valoracion Pedagogica
+                            </h:link>
+                            <h:link outcome="/views/caracterizacion/gestionarcaracterizacion.xhtml?f´aces-redirect=true"
                                     styleClass="btn btn-outline-primary text-start">
-                                <i class="fa-solid fa-folder-open me-2"></i> Gestionar Caracterizaciones 
+                                <i class="fa-solid fa-clipboard-list me-2"></i> Gestionar Caracterizaciones
                             </h:link>
                         </div>
                     </div>
@@ -72,14 +72,14 @@
                     <div class="col-md-8">
                         <h2 class="text-primary fs-4 fw-semibold mb-4">Reportes Caracterizaciones</h2>
                         <div class="d-grid gap-3">
-                            <h:link outcome="/views/caracterizacion/valorar_dimension.xhtml?faces-redirect=true"
+                            <h:link outcome="/views/caracterizacion/dashboard_dimensiones.xhtml?faces-redirect=true"
                                     styleClass="btn btn-outline-primary text-start">
                                 <i class="fa-solid fa-file-export me-2"></i> Informe de valoración
                             </h:link>
-                            <h:link outcome="/views/caracterizacion/reporte_general.xhtml?faces-redirect=true"
+                            <h:link outcome="/views/caracterizacion/informe_valoracion.xhtml?faces-redirect=true"
                                 
                                     styleClass="btn btn-outline-primary text-start">
-                                <i class="fa-solid fa-handshake me-2"></i> Acta de Compromiso
+                                <i class="fa-solid fa-chart-pie me-2"></i> Acta de Compromiso
                             </h:link>
                             
                             <h:panelGroup rendered="#{login.rolActual eq 'ADMINISTRADOR' or login.rolActual eq 'PSICOORIENTADOR'or login.rolActual eq 'PROFESOR'}">
@@ -110,7 +110,6 @@
 
         </div>
     </ui:define>
-
 
         </ui:composition>
 

@@ -1,10 +1,18 @@
 package com.sena.sitea.controller;
 
 import com.sena.sitea.entities.Caracterizacion;
+
 import com.sena.sitea.entities.DimensionValoracion;
 import com.sena.sitea.entities.Estudiante;
 import com.sena.sitea.entities.ObservacionSistematica;
 import com.sena.sitea.entities.ContextoEscolar;
+import com.sena.sitea.entities.DimBienestarEmocional;
+import com.sena.sitea.entities.DimSaludFisica;
+import com.sena.sitea.entities.DimConductaAdaptativa;
+import com.sena.sitea.entities.DimParticipacionSocial;
+import com.sena.sitea.entities.DimControlEntorno;
+import com.sena.sitea.entities.DimPedagogica;
+import com.sena.sitea.entities.DimHabilidadesIntelectuales;
 import com.sena.sitea.entities.Usuarios;
 import com.sena.sitea.entities.Rol;
 import com.sena.sitea.entities.TipoDocumento;
@@ -15,6 +23,11 @@ import com.sena.sitea.services.ObservacionSistematicaFacadeLocal;
 import com.sena.sitea.services.UsuariosFacadeLocal;
 import com.sena.sitea.services.RolFacadeLocal;
 import com.sena.sitea.services.EmailService;
+import com.sena.sitea.services.GradoFacadeLocal;
+import com.sena.sitea.entities.Grado;
+import org.primefaces.model.DefaultScheduleModel;
+import org.primefaces.model.ScheduleModel;
+import org.primefaces.model.DefaultScheduleEvent;
 import com.sena.sitea.security.PasswordUtil;
 import javax.inject.Named;
 import java.io.Serializable;
@@ -22,6 +35,8 @@ import javax.annotation.PostConstruct;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Comparator;
+import java.util.stream.Collectors;
 import java.util.Date;
 import java.util.List;
 import java.security.SecureRandom;
@@ -30,6 +45,9 @@ import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.faces.model.SelectItem;
+
+
+
 
 /**
  * Controlador mejorado para el módulo de caracterización
@@ -45,6 +63,8 @@ public class CaracterizacionControllerMejorado implements Serializable {
     private Estudiante estudiante = new Estudiante();
     private DimensionValoracion dimensionActual = new DimensionValoracion();
     private ObservacionSistematica observacionActual = new ObservacionSistematica();
+    private DimPedagogica pedagogicaActual = new DimPedagogica();
+    private DimHabilidadesIntelectuales habilidadesActual = new DimHabilidadesIntelectuales();
     
     // Propiedades para captura de contexto familiar
     private com.sena.sitea.entities.ContextoFamiliar contextoFamiliar = new com.sena.sitea.entities.ContextoFamiliar();
@@ -55,6 +75,15 @@ public class CaracterizacionControllerMejorado implements Serializable {
     private List<ObservacionSistematica> observaciones;
     private String filtroEstado;
     private String filtroBusqueda;
+    // Filtros y dashboard
+    private Integer filtroGradoId;
+    private List<Grado> listaGrados;
+    private ScheduleModel eventModel;
+
+    // Métricas
+    private long countCompletadas;
+    private long countEnProceso;
+    private long countSinIniciar;
     
     // Las 8 dimensiones según el MEN
     private static final String[] DIMENSIONES_MEN = {
@@ -87,6 +116,22 @@ public class CaracterizacionControllerMejorado implements Serializable {
     private com.sena.sitea.services.ExpedienteService expedienteService;
     @EJB
     private DimensionValoracionFacadeLocal dimensionFacade;
+    @EJB
+    private com.sena.sitea.services.DimSaludFisicaFacadeLocal dimSaludFacade;
+    @EJB
+    private com.sena.sitea.services.DimBienestarEmocionalFacadeLocal dimBienestarFacade;
+    @EJB
+    private com.sena.sitea.services.DimConductaAdaptativaFacadeLocal dimConductaFacade;
+    @EJB
+    private com.sena.sitea.services.DimParticipacionSocialFacadeLocal dimParticipacionFacade;
+    @EJB
+    private com.sena.sitea.services.DimControlEntornoFacadeLocal dimControlEntornoFacade;
+    @EJB
+    private com.sena.sitea.services.DimPedagogicaFacadeLocal dimPedagogicaFacade;
+    @EJB
+    private com.sena.sitea.services.DimHabilidadesIntelectualesFacadeLocal dimIntelectualFacade;
+    @EJB
+    private GradoFacadeLocal gradoFacade;
     @EJB
     private ObservacionSistematicaFacadeLocal observacionFacade;
     @EJB
@@ -132,6 +177,36 @@ public class CaracterizacionControllerMejorado implements Serializable {
         if (this.filtroEstado == null || this.filtroEstado.isEmpty()) {
             this.filtroEstado = "TODOS";
         }
+        // Inicializaciones adicionales para dimensiones
+        if (this.saludFisicaActual == null) {
+            this.saludFisicaActual = new DimSaludFisica();
+        }
+        if (this.bienestarEmocionalActual == null) {
+            this.bienestarEmocionalActual = new DimBienestarEmocional();
+        }
+        if (this.conductaAdaptativaActual == null) {
+            this.conductaAdaptativaActual = new DimConductaAdaptativa();
+        }
+        if (this.participacionSocialActual == null) {
+            this.participacionSocialActual = new DimParticipacionSocial();
+        }
+        if (this.controlEntornoActual == null) {
+            this.controlEntornoActual = new DimControlEntorno();
+        }
+        if (this.pedagogicaActual == null) {
+            this.pedagogicaActual = new DimPedagogica();
+        }
+        if (this.habilidadesActual == null) {
+            this.habilidadesActual = new DimHabilidadesIntelectuales();
+        }
+        try {
+            // Inicializar lista de grados y calendario
+            this.listaGrados = gradoFacade.findAll();
+        } catch (Exception e) {
+            this.listaGrados = new ArrayList<>();
+        }
+        inicializarCalendario();
+        calcularMetricasGlobales();
     }
 
 
@@ -765,6 +840,29 @@ public class CaracterizacionControllerMejorado implements Serializable {
     }
 
     /**
+     * Selecciona una caracterización y navega al detalle de dimensiones (avance individual)
+     */
+    public String seleccionarCaracterizacionYAvanzar(Integer idCaracterizacion) {
+        try {
+            if (idCaracterizacion != null) {
+                Caracterizacion car = caracterizacionFacade.find(idCaracterizacion);
+                if (car != null) {
+                    this.caracterizacion = car;
+                    this.estudiante = car.getEstudianteIdEstudiante();
+                    cargarDimensiones();
+                    return "/views/caracterizacion/dimensiones/dimensionesavance.xhtml?faces-redirect=true";
+                }
+            }
+            addMessage(FacesMessage.SEVERITY_ERROR, "Caracterización no encontrada");
+            return null;
+        } catch (Exception e) {
+            addMessage(FacesMessage.SEVERITY_ERROR, "Error al seleccionar caracterización: " + e.getMessage());
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    /**
      * Lista de objetos Estudiante que no tienen una caracterización activa (INICIADA/EN_PROCESO)
      */
     public List<Estudiante> listaEstudiantesParaIniciar() {
@@ -1278,6 +1376,332 @@ public class CaracterizacionControllerMejorado implements Serializable {
             new FacesMessage(severity, message, ""));
     }
 
+    // --- Variables y Métodos para Dimensión 8 (Pedagógica) ---
+    public DimPedagogica getPedagogicaActual() { return pedagogicaActual; }
+    public void setPedagogicaActual(DimPedagogica pedagogicaActual) { this.pedagogicaActual = pedagogicaActual; }
+
+    public String guardarDimensionPedagogica() {
+        try {
+            if (pedagogicaActual.getFactoresMotivacion() == null || pedagogicaActual.getFactoresMotivacion().trim().isEmpty()) {
+                addMessage(FacesMessage.SEVERITY_WARN, "Por favor describa los factores que motivan el aprendizaje.");
+                return null;
+            }
+
+            // Asociar a la caracterización actual
+            if (this.caracterizacion != null && this.caracterizacion.getIdCaracterizacion() != null) {
+                pedagogicaActual.setCaracterizacionId(this.caracterizacion);
+            }
+
+            if (pedagogicaActual.getIdDimPedagogica() == null) {
+                dimPedagogicaFacade.create(pedagogicaActual);
+            } else {
+                dimPedagogicaFacade.edit(pedagogicaActual);
+            }
+
+            // Actualizar dimensión genérica
+            if (dimensionActual != null) {
+                dimensionActual.setEstado("COMPLETADA");
+                dimensionActual.setFechaValoracion(new Date());
+
+                double v1 = (pedagogicaActual.getMotivacionAprender() != null) ? pedagogicaActual.getMotivacionAprender() : 0;
+                double v2 = (pedagogicaActual.getActividadesAprendeMejor() != null) ? pedagogicaActual.getActividadesAprendeMejor() : 0;
+                double v3 = (pedagogicaActual.getMetodosAdaptan() != null) ? pedagogicaActual.getMetodosAdaptan() : 0;
+                double promedio = (v1 + v2 + v3) / 3.0;
+
+                String nivel = promedio >= 3.5 ? "Alta Motivación" : (promedio >= 2.5 ? "Motivación Media" : "Baja Motivación / Riesgo Deserción");
+                dimensionActual.setFortalezas("Estilo de Aprendizaje: " + nivel);
+
+                String apoyo = "Motivadores: " + (pedagogicaActual.getFactoresMotivacion().length() > 50 ? 
+                        pedagogicaActual.getFactoresMotivacion().substring(0, 47) + "..." : pedagogicaActual.getFactoresMotivacion());
+                dimensionActual.setAreasApoyo(apoyo);
+
+                dimensionFacade.edit(dimensionActual);
+            }
+
+            addMessage(FacesMessage.SEVERITY_INFO, "Dimensión Pedagógica guardada. ¡Caracterización Finalizada!");
+            return "dashboard_dimensiones?faces-redirect=true";
+        } catch (Exception e) {
+            addMessage(FacesMessage.SEVERITY_ERROR, "Error: " + e.getMessage());
+            return null;
+        }
+    }
+
+    // --- Variables y Métodos para Dimensión 2 (Habilidades Intelectuales) ---
+    public DimHabilidadesIntelectuales getHabilidadesActual() { return habilidadesActual; }
+    public void setHabilidadesActual(DimHabilidadesIntelectuales habilidadesActual) { this.habilidadesActual = habilidadesActual; }
+
+    public void cargarDatosIntelectuales() {
+        try {
+            if (this.caracterizacion != null && this.caracterizacion.getIdCaracterizacion() != null) {
+                java.util.List<DimHabilidadesIntelectuales> lista = dimIntelectualFacade.findByCaracterizacion(this.caracterizacion.getIdCaracterizacion());
+                if (lista != null && !lista.isEmpty()) {
+                    this.habilidadesActual = lista.get(0);
+                } else {
+                    this.habilidadesActual = new DimHabilidadesIntelectuales();
+                    this.habilidadesActual.setCaracterizacionId(this.caracterizacion);
+                }
+            }
+        } catch (Exception e) {
+            addMessage(FacesMessage.SEVERITY_WARN, "No se pudieron cargar los datos intelectuales: " + e.getMessage());
+        }
+    }
+
+    public String guardarDimensionIntelectual() {
+        try {
+            if (this.caracterizacion != null && this.caracterizacion.getIdCaracterizacion() != null) {
+                habilidadesActual.setCaracterizacionId(this.caracterizacion);
+            }
+
+            if (habilidadesActual.getIdDimIntelectual() == null) {
+                dimIntelectualFacade.create(habilidadesActual);
+            } else {
+                dimIntelectualFacade.edit(habilidadesActual);
+            }
+
+            if (dimensionActual != null) {
+                dimensionActual.setEstado("COMPLETADA");
+                dimensionActual.setFechaValoracion(new Date());
+                String resumen = "Estilo: " + (habilidadesActual.getEstiloAprendizajeDominante()!=null ? habilidadesActual.getEstiloAprendizajeDominante() : "Pendiente") + 
+                                 ". Atención: " + (habilidadesActual.getAtencion()!=null?habilidadesActual.getAtencion():"");
+                dimensionActual.setFortalezas(resumen);
+                dimensionFacade.edit(dimensionActual);
+            }
+
+            addMessage(FacesMessage.SEVERITY_INFO, "Habilidades Intelectuales guardadas correctamente.");
+            return "dashboard_dimensiones?faces-redirect=true";
+        } catch (Exception e) {
+            addMessage(FacesMessage.SEVERITY_ERROR, "Error: " + e.getMessage());
+            return null;
+        }
+    }
+
+    // --- Dashboard: filtros, progreso y calendario ---
+    public List<Caracterizacion> obtenerCaracterizacionesDashboard() {
+        try {
+            List<Caracterizacion> todas = caracterizacionFacade.findAll();
+            List<Caracterizacion> filtradas = new ArrayList<>();
+
+            for (Caracterizacion car : todas) {
+                boolean match = true;
+
+                // 1. Filtro Texto (Nombre/Doc)
+                if (filtroBusqueda != null && !filtroBusqueda.isEmpty()) {
+                    String search = filtroBusqueda.toLowerCase();
+                    String nombre = (car.getEstudianteIdEstudiante().getPrimerNombreEstudiante() + " " + 
+                                   car.getEstudianteIdEstudiante().getPrimerApellidoEstudiante()).toLowerCase();
+                    String doc = car.getEstudianteIdEstudiante().getNumeroDocumentoEstudiante();
+                    
+                    if (!nombre.contains(search) && (doc == null || !doc.contains(search))) {
+                        match = false;
+                    }
+                }
+
+                // 2. Filtro Estado
+                if (filtroEstado != null && !"TODOS".equals(filtroEstado)) {
+                    if (!filtroEstado.equals(car.getEstadoCaracterizacion())) {
+                        match = false;
+                    }
+                }
+
+                // 3. Filtro Grado (NUEVO)
+                if (filtroGradoId != null && filtroGradoId != 0) {
+                    com.sena.sitea.entities.Curso curso = car.getEstudianteIdEstudiante().getCursoIdCurso();
+                    Grado gradoEst = null;
+                    if (curso != null) {
+                        gradoEst = curso.getGradoIdGrado();
+                    }
+                    if (gradoEst == null || !gradoEst.getIdGrado().equals(filtroGradoId)) {
+                        match = false;
+                    }
+                }
+
+                if (match) {
+                    filtradas.add(car);
+                }
+            }
+            return filtradas;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ArrayList<>();
+        }
+    }
+
+    public int getProgresoEstudiante(Caracterizacion car) {
+        try {
+            List<DimensionValoracion> dims = dimensionFacade.findByCaracterizacion(car.getIdCaracterizacion());
+            if (dims == null || dims.isEmpty()) return 0;
+            
+            long completadas = dims.stream().filter(d -> "COMPLETADA".equals(d.getEstado())).count();
+            return (int) ((completadas * 100) / dims.size());
+        } catch (Exception e) {
+            return 0;
+        }
+    }
+
+    public void calcularMetricasGlobales() {
+        List<Caracterizacion> list = caracterizacionFacade.findAll();
+        countCompletadas = list.stream().filter(c -> "COMPLETADA".equals(c.getEstadoCaracterizacion())).count();
+        countEnProceso = list.stream().filter(c -> "EN_PROCESO".equals(c.getEstadoCaracterizacion())).count();
+        countSinIniciar = list.stream().filter(c -> "INICIADA".equals(c.getEstadoCaracterizacion())).count();
+    }
+
+    // --- MÉTODOS PARA EL DASHBOARD DE DETALLE (dashboard_dimensiones.xhtml) ---
+
+    // 1. Navegación Inteligente: Decide qué formulario abrir según la dimensión
+    public String navegarAFormularioDimension(DimensionValoracion dim) {
+        if (dim == null) return null;
+
+        // 1. Establecer la dimensión actual en sesión para que el formulario la use
+        this.dimensionActual = dim;
+
+        // 2. Normalizar nombre (minúsculas y sin tildes) para comparaciones robustas
+        String nombre = dim.getNombreDimension() != null ? dim.getNombreDimension().toLowerCase() : "";
+        nombre = java.text.Normalizer.normalize(nombre, java.text.Normalizer.Form.NFD)
+                .replaceAll("\\p{InCombiningDiacriticalMarks}+", "");
+
+        // 3. Redirección según contenido del nombre (ajusta outcomes si tus vistas difieren)
+        if (nombre.contains("contexto") && nombre.contains("familiar")) {
+            return "dimension1_contexto_familiar?faces-redirect=true";
+        }
+        if (nombre.contains("intelectual") || nombre.contains("cognitiv")) {
+            if (habilidadesActual == null) habilidadesActual = new DimHabilidadesIntelectuales();
+            return "d2HabilidaesIntelectuales?faces-redirect=true";
+        }
+        if (nombre.contains("emocional")) {
+            if (bienestarEmocionalActual == null) bienestarEmocionalActual = new DimBienestarEmocional();
+            return "d3testEmocional?faces-redirect=true";
+        }
+        if (nombre.contains("adaptativa")) {
+            if (conductaAdaptativaActual == null) conductaAdaptativaActual = new DimConductaAdaptativa();
+            return "dt4TestConductaAdaptativa?faces-redirect=true";
+        }
+        if (nombre.contains("salud")) {
+            if (saludFisicaActual == null) saludFisicaActual = new DimSaludFisica();
+            return "dt5SaludGeneral?faces-redirect=true";
+        }
+        if (nombre.contains("particip") || nombre.contains("social")) {
+            if (participacionSocialActual == null) participacionSocialActual = new DimParticipacionSocial();
+            return "d6TestParticipacionSocial?faces-redirect=true";
+        }
+        if (nombre.contains("control") || nombre.contains("entorno")) {
+            if (controlEntornoActual == null) controlEntornoActual = new DimControlEntorno();
+            return "d7TestControlEntorno?faces-redirect=true";
+        }
+        if (nombre.contains("pedagog") || nombre.contains("metas")) {
+            if (pedagogicaActual == null) pedagogicaActual = new DimPedagogica();
+            return "d8TestPedagogica?faces-redirect=true";
+        }
+
+        // Fallback: no se encontró formulario
+        addMessage(FacesMessage.SEVERITY_ERROR, "No se encontró el formulario para: " + nombre);
+        return null;
+    }
+
+    // 2. Métodos de Progreso para la Vista
+    public int getPorcentajeGeneral() {
+        List<DimensionValoracion> dims = getDimensionesActuales();
+        if (dims == null || dims.isEmpty()) return 0;
+        long completadas = dims.stream().filter(d -> "COMPLETADA".equals(d.getEstado())).count();
+        return (int) ((completadas * 100) / dims.size());
+    }
+    
+    public long getDimensionesCompletadasCount() {
+        if (dimensiones == null) return 0;
+        return dimensiones.stream().filter(d -> "COMPLETADA".equals(d.getEstado())).count();
+    }
+    
+    // 3. Fechas para las tarjetas
+    public String getFechaInicioFormato() {
+        if (caracterizacion == null || caracterizacion.getFechaInicio() == null) return "N/A";
+        return new SimpleDateFormat("dd/MM/yyyy").format(caracterizacion.getFechaInicio());
+    }
+    
+    public String getFechaEstimadaFin() {
+        if (caracterizacion == null || caracterizacion.getFechaInicio() == null) return "N/A";
+        Calendar c = Calendar.getInstance();
+        c.setTime(caracterizacion.getFechaInicio());
+        c.add(Calendar.DATE, 30); 
+        return new SimpleDateFormat("dd/MM/yyyy").format(c.getTime());
+    }
+
+    // 4. Línea de Tiempo (Dimensiones ordenadas por fecha de valoración)
+    public List<DimensionValoracion> getHistorialDimensiones() {
+        if (dimensiones == null) return new ArrayList<>();
+        return dimensiones.stream()
+                .filter(d -> d.getFechaValoracion() != null)
+                .sorted(Comparator.comparing(DimensionValoracion::getFechaValoracion).reversed())
+                .collect(Collectors.toList());
+    }
+    
+    // 5. Helpers de Estilo para la Vista
+    public String getClaseEstado(String estado) {
+        if ("COMPLETADA".equals(estado)) return "completada";
+        if ("EN_PROCESO".equals(estado)) return "en-proceso";
+        return "pendiente";
+    }
+    
+    public String getIconoDimension(String nombre) {
+        if (nombre == null) return "fa-star";
+        String lower = nombre.toLowerCase();
+        if (lower.contains("contexto")) return "fa-home";
+        if (lower.contains("intelectual")) return "fa-brain";
+        if (lower.contains("emocional")) return "fa-heart";
+        if (lower.contains("adaptativa")) return "fa-hands";
+        if (lower.contains("salud")) return "fa-heartbeat";
+        if (lower.contains("particip")) return "fa-users";
+        if (lower.contains("control")) return "fa-compass";
+        if (lower.contains("pedagog")) return "fa-chalkboard-teacher";
+        return "fa-star";
+    }
+
+    public void inicializarCalendario() {
+        eventModel = new DefaultScheduleModel();
+        
+        List<Caracterizacion> list = caracterizacionFacade.findAll();
+        for (Caracterizacion c : list) {
+            if (c.getFechaInicio() != null) {
+                java.time.LocalDateTime startLdt = convertToLocalDateTime(c.getFechaInicio());
+                java.time.LocalDateTime endLdt = startLdt.plusHours(1);
+                DefaultScheduleEvent event = new DefaultScheduleEvent();
+                event.setTitle("Inicio: " + c.getEstudianteIdEstudiante().getPrimerNombreEstudiante());
+                event.setStartDate(startLdt);
+                event.setEndDate(endLdt);
+                event.setAllDay(false);
+                event.setDescription("Expediente: " + c.getExpedienteCaracterizacion());
+                event.setStyleClass("evento-inicio");
+                eventModel.addEvent(event);
+            }
+            if (c.getFechaFinalizacion() != null) {
+                java.time.LocalDateTime startLdt = convertToLocalDateTime(c.getFechaFinalizacion());
+                java.time.LocalDateTime endLdt = startLdt.plusHours(1);
+                DefaultScheduleEvent event = new DefaultScheduleEvent();
+                event.setTitle("Fin: " + c.getEstudianteIdEstudiante().getPrimerNombreEstudiante());
+                event.setStartDate(startLdt);
+                event.setEndDate(endLdt);
+                event.setAllDay(false);
+                event.setStyleClass("evento-fin");
+                eventModel.addEvent(event);
+            }
+        }
+    }
+
+    private java.time.LocalDateTime convertToLocalDateTime(Date dateToConvert) {
+        return dateToConvert.toInstant()
+            .atZone(java.time.ZoneId.systemDefault())
+          .toLocalDateTime();
+    }
+
+    // Se usa directamente java.util.Date para compatibilidad con Schedule de PrimeFaces 12
+
+    // Getters y Setters
+    public Integer getFiltroGradoId() { return filtroGradoId; }
+    public void setFiltroGradoId(Integer filtroGradoId) { this.filtroGradoId = filtroGradoId; }
+    public List<Grado> getListaGrados() { return listaGrados; }
+    public ScheduleModel getEventModel() { return eventModel; }
+    public long getCountCompletadas() { return countCompletadas; }
+    public long getCountEnProceso() { return countEnProceso; }
+    public long getCountSinIniciar() { return countSinIniciar; }
+
     // Getters y Setters para contexto familiar
     public com.sena.sitea.entities.ContextoFamiliar getContextoFamiliar() {
         return contextoFamiliar;
@@ -1357,4 +1781,347 @@ public class CaracterizacionControllerMejorado implements Serializable {
     public void setFiltroBusqueda(String filtroBusqueda) {
         this.filtroBusqueda = filtroBusqueda;
     }
+    
+   
+    // DIMENSION SALUD
+
+private DimSaludFisica saludFisicaActual;
+
+// Initialization moved to the primary @PostConstruct above
+
+// Getter y Setter para la vista
+public DimSaludFisica getSaludFisicaActual() { return saludFisicaActual; }
+public void setSaludFisicaActual(DimSaludFisica saludFisicaActual) { this.saludFisicaActual = saludFisicaActual; }
+
+// Método para guardar esta dimensión específica
+public String guardarDimensionSalud() {
+    try {
+        if (caracterizacion == null || caracterizacion.getIdCaracterizacion() == null) {
+            addMessage(FacesMessage.SEVERITY_ERROR, "Debe seleccionar una caracterización antes de guardar.");
+            return null;
+        }
+
+        // Asociar a la caracterización actual
+        saludFisicaActual.setCaracterizacionId(caracterizacion);
+
+        // Si ya existe un registro para esta caracterización, actualizar; si no, crear
+        java.util.List<DimSaludFisica> existentes = dimSaludFacade.findByCaracterizacion(caracterizacion.getIdCaracterizacion());
+        if (existentes != null && !existentes.isEmpty()) {
+            DimSaludFisica existente = existentes.get(0);
+            saludFisicaActual.setIdDimSalud(existente.getIdDimSalud());
+            dimSaludFacade.edit(saludFisicaActual);
+        } else {
+            dimSaludFacade.create(saludFisicaActual);
+        }
+
+        // Actualizar el estado de la dimensión en DimensionValoracion
+        java.util.List<DimensionValoracion> dims = dimensionFacade.findByCaracterizacion(caracterizacion.getIdCaracterizacion());
+        if (dims != null) {
+            for (DimensionValoracion d : dims) {
+                if (d.getNombreDimension() != null && d.getNombreDimension().toLowerCase().contains("salud")) {
+                    d.setEstado("COMPLETADA");
+                    d.setFechaValoracion(new Date());
+                    d.setUpdatedAt(new Date());
+                    String resumen = "Observaciones: " + (saludFisicaActual.getObservaciones() != null ? saludFisicaActual.getObservaciones() : "-");
+                    if (saludFisicaActual.getAlergiasConocidas() != null && !saludFisicaActual.getAlergiasConocidas().isEmpty()) {
+                        resumen += " | Alergias: " + saludFisicaActual.getAlergiasConocidas();
+                    }
+                    d.setFortalezas(resumen);
+                    dimensionFacade.edit(d);
+                    break;
+                }
+            }
+        }
+
+        addMessage(FacesMessage.SEVERITY_INFO, "Dimensión de Salud Física actualizada.");
+        return "/views/caracterizacion/dashboard_dimensiones.xhtml?faces-redirect=true";
+    } catch (Exception e) {
+        addMessage(FacesMessage.SEVERITY_ERROR, "No se pudo guardar: " + e.getMessage());
+        e.printStackTrace();
+        return null;
+    }
+}
+
+    // Agrega estas variables y métodos a tu clase existente
+
+private DimBienestarEmocional bienestarEmocionalActual;
+
+// Initialization moved to the primary @PostConstruct above
+
+// Getter y Setter
+public DimBienestarEmocional getBienestarEmocionalActual() { return bienestarEmocionalActual; }
+public void setBienestarEmocionalActual(DimBienestarEmocional bienestarEmocionalActual) { this.bienestarEmocionalActual = bienestarEmocionalActual; }
+
+// DIMENSION CONDUCTA ADAPTATIVA
+
+private DimConductaAdaptativa conductaAdaptativaActual;
+
+// Getter y Setter
+public DimConductaAdaptativa getConductaAdaptativaActual() { return conductaAdaptativaActual; }
+public void setConductaAdaptativaActual(DimConductaAdaptativa conductaAdaptativaActual) { this.conductaAdaptativaActual = conductaAdaptativaActual; }
+
+// Método Guardar para Conducta Adaptativa
+public String guardarDimensionAdaptativa() {
+    try {
+        if (caracterizacion == null || caracterizacion.getIdCaracterizacion() == null) {
+            addMessage(FacesMessage.SEVERITY_ERROR, "Debe seleccionar una caracterización antes de guardar.");
+            return null;
+        }
+
+        // Asociar a la caracterización actual
+        conductaAdaptativaActual.setCaracterizacionId(caracterizacion);
+
+        // Crear o actualizar registro
+        java.util.List<DimConductaAdaptativa> existentes = dimConductaFacade.findByCaracterizacion(caracterizacion.getIdCaracterizacion());
+        if (existentes != null && !existentes.isEmpty()) {
+            DimConductaAdaptativa existente = existentes.get(0);
+            conductaAdaptativaActual.setIdDimAdaptativa(existente.getIdDimAdaptativa());
+            dimConductaFacade.edit(conductaAdaptativaActual);
+        } else {
+            dimConductaFacade.create(conductaAdaptativaActual);
+        }
+
+        // Actualizar DimensionValoracion correspondiente
+        java.util.List<DimensionValoracion> dims = dimensionFacade.findByCaracterizacion(caracterizacion.getIdCaracterizacion());
+        if (dims != null) {
+            for (DimensionValoracion d : dims) {
+                if (d.getNombreDimension() != null && d.getNombreDimension().toLowerCase().contains("conducta")) {
+                    d.setEstado("COMPLETADA");
+                    d.setFechaValoracion(new Date());
+                    d.setUpdatedAt(new Date());
+                    double promedio = calcularPromedioAdaptativo();
+                    String nivel = promedio >= 3.5 ? "Alto (Independiente)" : (promedio >= 2.5 ? "Medio (Apoyo Intermitente)" : "Bajo (Apoyo Extenso)");
+                    String resumen = "Nivel de Independencia: " + nivel + ". Obs: " + (conductaAdaptativaActual.getObservaciones() != null ? conductaAdaptativaActual.getObservaciones() : "-");
+                    d.setFortalezas(resumen);
+                    dimensionFacade.edit(d);
+                    break;
+                }
+            }
+        }
+
+        addMessage(FacesMessage.SEVERITY_INFO, "Conducta Adaptativa guardada correctamente.");
+        return "/views/caracterizacion/dashboard_dimensiones.xhtml?faces-redirect=true";
+    } catch (Exception e) {
+        addMessage(FacesMessage.SEVERITY_ERROR, "Error al guardar: " + e.getMessage());
+        e.printStackTrace();
+        return null;
+    }
+}
+
+// Auxiliar para cálculo rápido
+private double calcularPromedioAdaptativo() {
+    try {
+        int suma = 0;
+        int count = 0;
+        Integer[] campos = new Integer[]{conductaAdaptativaActual.getAlimentacion(), conductaAdaptativaActual.getHigiene(), conductaAdaptativaActual.getVestido(), conductaAdaptativaActual.getSeguridad(),
+            conductaAdaptativaActual.getComunicacion(), conductaAdaptativaActual.getSeguimientoInstrucciones(), conductaAdaptativaActual.getManejoDineroTiempo(), conductaAdaptativaActual.getLecturaFuncional(),
+            conductaAdaptativaActual.getInteraccionPares(), conductaAdaptativaActual.getRespetoNormas(), conductaAdaptativaActual.getManejoCambios(), conductaAdaptativaActual.getAutocontrol()};
+        for (Integer v : campos) {
+            if (v != null) { suma += v; count++; }
+        }
+        if (count == 0) return 0.0;
+        return ((double) suma) / ((double) count);
+    } catch (Exception ex) {
+        return 0.0;
+    }
+}
+
+// DIMENSION PARTICIPACION E INCLUSION SOCIAL
+
+private DimParticipacionSocial participacionSocialActual;
+
+public DimParticipacionSocial getParticipacionSocialActual() { return participacionSocialActual; }
+public void setParticipacionSocialActual(DimParticipacionSocial participacionSocialActual) { this.participacionSocialActual = participacionSocialActual; }
+
+// Guardar Participación Social
+public String guardarDimensionParticipacion() {
+    try {
+        if (caracterizacion == null || caracterizacion.getIdCaracterizacion() == null) {
+            addMessage(FacesMessage.SEVERITY_ERROR, "Debe seleccionar una caracterización antes de guardar.");
+            return null;
+        }
+
+        // Validaciones simples: verificar seguridad y ruta de atención (preguntas críticas)
+        if (participacionSocialActual.getSeguridadEscolar() == null || participacionSocialActual.getSeguridadEscolar() == 0 ||
+            participacionSocialActual.getRutaAtencionExclusion() == null || participacionSocialActual.getRutaAtencionExclusion() == 0) {
+            addMessage(FacesMessage.SEVERITY_WARN, "Por favor responda las preguntas sobre Percepción del Entorno Escolar.");
+            return null;
+        }
+
+        // Asociar y crear/actualizar registro
+        participacionSocialActual.setCaracterizacionId(caracterizacion);
+        java.util.List<DimParticipacionSocial> existentes = dimParticipacionFacade.findByCaracterizacion(caracterizacion.getIdCaracterizacion());
+        if (existentes != null && !existentes.isEmpty()) {
+            DimParticipacionSocial existente = existentes.get(0);
+            participacionSocialActual.setIdDimParticipacion(existente.getIdDimParticipacion());
+            dimParticipacionFacade.edit(participacionSocialActual);
+        } else {
+            dimParticipacionFacade.create(participacionSocialActual);
+        }
+
+        double promedio = calcularPromedioParticipacion();
+        String nivel = "";
+        if (promedio >= 3.5) nivel = "Alta Inclusión (Se siente seguro y parte del grupo)";
+        else if (promedio >= 2.5) nivel = "Inclusión Media (Algunas barreras percibidas)";
+        else nivel = "Riesgo de Exclusión (Requiere intervención inmediata)";
+        // Alerta si percepción de inseguridad es baja
+        if (participacionSocialActual.getSeguridadEscolar() != null && participacionSocialActual.getSeguridadEscolar() <= 2) {
+            nivel += " [ALERTA: Percepción de Inseguridad]";
+        }
+
+        if (dimensionActual != null) {
+            dimensionActual.setEstado("COMPLETADA");
+            dimensionActual.setFechaValoracion(new Date());
+            dimensionActual.setFortalezas("Resumen: " + nivel);
+            dimensionActual.setAreasApoyo("Obs: " + (participacionSocialActual.getObservaciones() != null ? participacionSocialActual.getObservaciones() : "-"));
+            dimensionFacade.edit(dimensionActual);
+        }
+
+        addMessage(FacesMessage.SEVERITY_INFO, "Dimensión de Participación Social guardada correctamente.");
+        return "/views/caracterizacion/dashboard_dimensiones.xhtml?faces-redirect=true";
+    } catch (Exception e) {
+        addMessage(FacesMessage.SEVERITY_ERROR, "Error al guardar: " + e.getMessage());
+        e.printStackTrace();
+        return null;
+    }
+}
+
+private double calcularPromedioParticipacion() {
+    try {
+        int suma = 0; int count = 0;
+        Integer[] campos = new Integer[]{participacionSocialActual.getAceptacionCompaneros(), participacionSocialActual.getSeguridadEscolar(), participacionSocialActual.getRespetoDiversidad(), participacionSocialActual.getPromocionInclusion()};
+        for (Integer v : campos) { if (v != null) { suma += v; count++; } }
+        if (count == 0) return 0.0;
+        return ((double) suma) / ((double) count);
+    } catch (Exception ex) {
+        return 0.0;
+    }
+}
+
+// DIMENSION CONTROL DEL PROPIO ENTORNO
+
+private DimControlEntorno controlEntornoActual;
+
+public DimControlEntorno getControlEntornoActual() { return controlEntornoActual; }
+public void setControlEntornoActual(DimControlEntorno controlEntornoActual) { this.controlEntornoActual = controlEntornoActual; }
+
+public String guardarDimensionControlEntorno() {
+    try {
+        if (caracterizacion == null || caracterizacion.getIdCaracterizacion() == null) {
+            addMessage(FacesMessage.SEVERITY_ERROR, "Debe seleccionar una caracterización antes de guardar.");
+            return null;
+        }
+
+        // Validaciones mínimas
+        if (controlEntornoActual.getTieneMetas() == null || controlEntornoActual.getTieneMetas() == 0 ||
+            controlEntornoActual.getSeguridadDecisiones() == null || controlEntornoActual.getSeguridadDecisiones() == 0) {
+            addMessage(FacesMessage.SEVERITY_WARN, "Por favor complete las preguntas clave de Autonomía.");
+            return null;
+        }
+
+        // Asociar y crear/actualizar
+        controlEntornoActual.setCaracterizacionId(caracterizacion);
+        java.util.List<DimControlEntorno> existentes = dimControlEntornoFacade.findByCaracterizacion(caracterizacion.getIdCaracterizacion());
+        if (existentes != null && !existentes.isEmpty()) {
+            DimControlEntorno existente = existentes.get(0);
+            controlEntornoActual.setIdDimControl(existente.getIdDimControl());
+            dimControlEntornoFacade.edit(controlEntornoActual);
+        } else {
+            dimControlEntornoFacade.create(controlEntornoActual);
+        }
+
+        // Actualizar DimensionValoracion correspondiente
+        java.util.List<DimensionValoracion> dims = dimensionFacade.findByCaracterizacion(caracterizacion.getIdCaracterizacion());
+        if (dims != null) {
+            for (DimensionValoracion d : dims) {
+                if (d.getNombreDimension() != null && d.getNombreDimension().toLowerCase().contains("control")) {
+                    d.setEstado("COMPLETADA");
+                    d.setFechaValoracion(new Date());
+                    d.setUpdatedAt(new Date());
+                    double promedio = ( (controlEntornoActual.getRequierePocoApoyo()!=null?controlEntornoActual.getRequierePocoApoyo():0) +
+                                       (controlEntornoActual.getSeguridadDecisiones()!=null?controlEntornoActual.getSeguridadDecisiones():0) +
+                                       (controlEntornoActual.getTieneMetas()!=null?controlEntornoActual.getTieneMetas():0) ) / 3.0;
+                    String nivel = promedio >= 3.5 ? "Autonomía Alta" : (promedio >= 2.5 ? "Autonomía en Desarrollo" : "Dependencia Significativa");
+                    d.setFortalezas("Nivel de Autodeterminación: " + nivel);
+                    d.setAreasApoyo("Obs: " + (controlEntornoActual.getObservaciones() != null ? controlEntornoActual.getObservaciones() : "-"));
+                    dimensionFacade.edit(d);
+                    break;
+                }
+            }
+        }
+
+        addMessage(FacesMessage.SEVERITY_INFO, "Dimensión 'Control del Propio Entorno' guardada correctamente.");
+        return "/views/caracterizacion/dashboard_dimensiones.xhtml?faces-redirect=true";
+    } catch (Exception e) {
+        addMessage(FacesMessage.SEVERITY_ERROR, "Error: " + e.getMessage());
+        e.printStackTrace();
+        return null;
+    }
+}
+
+// Método de Guardado
+public String guardarDimensionEmocional() {
+    try {
+        if (caracterizacion == null || caracterizacion.getIdCaracterizacion() == null) {
+            addMessage(FacesMessage.SEVERITY_ERROR, "Debe seleccionar una caracterización antes de guardar.");
+            return null;
+        }
+
+        // Asociar entidad con la caracterización actual
+        bienestarEmocionalActual.setCaracterizacionId(caracterizacion);
+
+        // Crear o actualizar registro
+        java.util.List<DimBienestarEmocional> existentes = dimBienestarFacade.findByCaracterizacion(caracterizacion.getIdCaracterizacion());
+        if (existentes != null && !existentes.isEmpty()) {
+            DimBienestarEmocional existente = existentes.get(0);
+            bienestarEmocionalActual.setIdDimEmocional(existente.getIdDimEmocional());
+            dimBienestarFacade.edit(bienestarEmocionalActual);
+        } else {
+            dimBienestarFacade.create(bienestarEmocionalActual);
+        }
+
+        // Actualizar DimensionValoracion correspondiente
+        java.util.List<DimensionValoracion> dims = dimensionFacade.findByCaracterizacion(caracterizacion.getIdCaracterizacion());
+        if (dims != null) {
+            for (DimensionValoracion d : dims) {
+                if (d.getNombreDimension() != null && d.getNombreDimension().toLowerCase().contains("emocional")) {
+                    d.setEstado("COMPLETADA");
+                    d.setFechaValoracion(new Date());
+                    d.setUpdatedAt(new Date());
+                    String resumen = "Autoestima: " + getNivelTexto(bienestarEmocionalActual.getAutoestima()) + 
+                                     ". Regulación: " + getNivelTexto(bienestarEmocionalActual.getRegulaImpulsos());
+                    java.util.List<String> signos = bienestarEmocionalActual.getSignosAlarmaList();
+                    if (signos != null && !signos.isEmpty()) {
+                        resumen += ". ALERTA: " + String.join(", ", signos);
+                    }
+                    d.setFortalezas(resumen);
+                    dimensionFacade.edit(d);
+                    break;
+                }
+            }
+        }
+
+        addMessage(FacesMessage.SEVERITY_INFO, "Valoración Emocional guardada exitosamente.");
+        return "/views/caracterizacion/dashboard_dimensiones.xhtml?faces-redirect=true";
+    } catch (Exception e) {
+        addMessage(FacesMessage.SEVERITY_ERROR, "Error al guardar: " + e.getMessage());
+        e.printStackTrace();
+        return null;
+    }
+}
+
+// Auxiliar para convertir número a texto
+private String getNivelTexto(Integer valor) {
+    if(valor == null) return "N/A";
+    switch(valor) {
+        case 1: return "Bajo";
+        case 2: return "Medio-Bajo";
+        case 3: return "Medio-Alto";
+        case 4: return "Alto";
+        default: return "N/A";
+    }
+}
+    
+    
+    
 }

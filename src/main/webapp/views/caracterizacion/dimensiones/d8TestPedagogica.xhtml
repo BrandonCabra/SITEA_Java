@@ -1,0 +1,150 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <body>
+        <ui:composition template="./../../TemplateSitio.xhtml">
+            <ui:define name="content">
+                
+                <h:form id="formPedagogica">
+                    <p:growl id="msgs" showDetail="true"/>
+
+                    <div class="container mt-4 mb-5">
+                        
+                        <div class="d-flex justify-content-between align-items-center mb-4 p-3 bg-white rounded shadow-sm border-start border-5 border-primary">
+                            <div>
+                                <h4 class="fw-bold text-primary mb-0">
+                                    <i class="fas fa-chalkboard-teacher me-2"></i>Dimensión Pedagógica y Metas de Aprendizaje
+                                </h4>
+                                <small class="text-muted">Identificación de motivaciones, estilos de aprendizaje y proyección académica.</small>
+                            </div>
+                            <div class="text-end">
+                                <span class="badge bg-primary text-white border">Dimensión 8 de 8</span>
+                            </div>
+                        </div>
+
+                        <div class="card shadow-sm border-0 mb-4">
+                            <div class="card-header bg-light fw-bold text-dark">
+                                <i class="fas fa-search me-2"></i>Análisis Cualitativo del Aprendizaje
+                            </div>
+                            <div class="card-body">
+                                <div class="row g-3">
+                                    <div class="col-md-6">
+                                        <label class="form-label fw-bold">1. ¿Cuáles son los factores que motivan y potencian el aprendizaje?</label>
+                                        <p class="small text-muted mb-1">Describa intereses, tipos de refuerzo positivo o metodologías que funcionan.</p>
+                                        <p:inputTextarea value="#{caracterizacionControllerMejorado.pedagogicaActual.factoresMotivacion}" 
+                                                         rows="4" styleClass="form-control" required="true" 
+                                                         placeholder="Ej: Le motiva el uso de tecnología, el trabajo colaborativo, temas de dinosaurios..."/>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="form-label fw-bold">2. ¿En qué experiencias educativas se destacan sus habilidades?</label>
+                                        <p class="small text-muted mb-1">Mencione asignaturas, proyectos o actividades específicas donde sobresale.</p>
+                                        <p:inputTextarea value="#{caracterizacionControllerMejorado.pedagogicaActual.experienciasDestacadas}" 
+                                                         rows="4" styleClass="form-control"
+                                                         placeholder="Ej: Destaca en educación física y artes, lidera grupos en ciencias..."/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card shadow-sm border-0 mb-4">
+                            <div class="card-header bg-primary text-white fw-bold">
+                                <i class="fas fa-list-ol me-2"></i>Autoevaluación de Procesos de Aprendizaje
+                            </div>
+                            <div class="card-body p-0">
+                                
+                                <div class="p-3 bg-light border-bottom text-center small text-muted">
+                                    <strong>Escala:</strong> 1 = Nunca/No · 2 = A veces · 3 = Casi Siempre · 4 = Siempre/Sí
+                                </div>
+
+                                <table class="table table-hover align-middle mb-0">
+                                    <thead class="table-light text-primary">
+                                        <tr><th colspan="5" class="ps-3"><i class="fas fa-book-reader me-2"></i>A. Saberes Previos e Intereses</th></tr>
+                                    </thead>
+                                    <tbody class="border-bottom">
+                                        <tr>
+                                            <td class="ps-3" width="50%">¿Siento que los temas de clase se conectan con lo que ya sabía?</td>
+                                            <td colspan="4"><p:selectOneRadio value="#{caracterizacionControllerMejorado.pedagogicaActual.saberesConectan}" styleClass="w-100 radio-center"><f:selectItem itemValue="1"/><f:selectItem itemValue="2"/><f:selectItem itemValue="3"/><f:selectItem itemValue="4"/></p:selectOneRadio></td>
+                                        </tr>
+                                        <tr>
+                                            <td class="ps-3">¿Encuentro interesantes los temas de las asignaturas escolares?</td>
+                                            <td colspan="4"><p:selectOneRadio value="#{caracterizacionControllerMejorado.pedagogicaActual.interesTemas}" styleClass="w-100 radio-center"><f:selectItem itemValue="1"/><f:selectItem itemValue="2"/><f:selectItem itemValue="3"/><f:selectItem itemValue="4"/></p:selectOneRadio></td>
+                                        </tr>
+                                        <tr>
+                                            <td class="ps-3">¿Los profesores tienen en cuenta mis intereses personales?</td>
+                                            <td colspan="4"><p:selectOneRadio value="#{caracterizacionControllerMejorado.pedagogicaActual.profesoresConsideranIntereses}" styleClass="w-100 radio-center"><f:selectItem itemValue="1"/><f:selectItem itemValue="2"/><f:selectItem itemValue="3"/><f:selectItem itemValue="4"/></p:selectOneRadio></td>
+                                        </tr>
+                                    </tbody>
+
+                                    <thead class="table-light text-primary">
+                                        <tr><th colspan="5" class="ps-3"><i class="fas fa-tools me-2"></i>B. Condiciones que Favorecen el Aprendizaje</th></tr>
+                                    </thead>
+                                    <tbody class="border-bottom">
+                                        <tr>
+                                            <td class="ps-3">¿Identifico las actividades con las que aprendo mejor (ej. visual, práctico)?</td>
+                                            <td colspan="4"><p:selectOneRadio value="#{caracterizacionControllerMejorado.pedagogicaActual.actividadesAprendeMejor}" styleClass="w-100 radio-center"><f:selectItem itemValue="1"/><f:selectItem itemValue="2"/><f:selectItem itemValue="3"/><f:selectItem itemValue="4"/></p:selectOneRadio></td>
+                                        </tr>
+                                        <tr>
+                                            <td class="ps-3">¿El ambiente del aula (ruido, luz) me ayuda a concentrarme?</td>
+                                            <td colspan="4"><p:selectOneRadio value="#{caracterizacionControllerMejorado.pedagogicaActual.ambienteAulaAyuda}" styleClass="w-100 radio-center"><f:selectItem itemValue="1"/><f:selectItem itemValue="2"/><f:selectItem itemValue="3"/><f:selectItem itemValue="4"/></p:selectOneRadio></td>
+                                        </tr>
+                                        <tr>
+                                            <td class="ps-3">¿Los métodos de enseñanza se adaptan a mi estilo de aprendizaje?</td>
+                                            <td colspan="4"><p:selectOneRadio value="#{caracterizacionControllerMejorado.pedagogicaActual.metodosAdaptan}" styleClass="w-100 radio-center"><f:selectItem itemValue="1"/><f:selectItem itemValue="2"/><f:selectItem itemValue="3"/><f:selectItem itemValue="4"/></p:selectOneRadio></td>
+                                        </tr>
+                                        <tr>
+                                            <td class="ps-3 fw-bold">¿Me siento motivado/a para aprender cosas nuevas en la escuela?</td>
+                                            <td colspan="4"><p:selectOneRadio value="#{caracterizacionControllerMejorado.pedagogicaActual.motivacionAprender}" styleClass="w-100 radio-center"><f:selectItem itemValue="1"/><f:selectItem itemValue="2"/><f:selectItem itemValue="3"/><f:selectItem itemValue="4"/></p:selectOneRadio></td>
+                                        </tr>
+                                    </tbody>
+
+                                    <thead class="table-light text-primary">
+                                        <tr><th colspan="5" class="ps-3"><i class="fas fa-bullseye me-2"></i>C. Habilidades Destacadas y Metas</th></tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td class="ps-3">¿Tengo claras mis metas académicas para este año escolar?</td>
+                                            <td colspan="4"><p:selectOneRadio value="#{caracterizacionControllerMejorado.pedagogicaActual.metasClaras}" styleClass="w-100 radio-center"><f:selectItem itemValue="1"/><f:selectItem itemValue="2"/><f:selectItem itemValue="3"/><f:selectItem itemValue="4"/></p:selectOneRadio></td>
+                                        </tr>
+                                        <tr>
+                                            <td class="ps-3">¿Mis profesores me ayudan a identificar mis fortalezas?</td>
+                                            <td colspan="4"><p:selectOneRadio value="#{caracterizacionControllerMejorado.pedagogicaActual.ayudaIdentificarFortalezas}" styleClass="w-100 radio-center"><f:selectItem itemValue="1"/><f:selectItem itemValue="2"/><f:selectItem itemValue="3"/><f:selectItem itemValue="4"/></p:selectOneRadio></td>
+                                        </tr>
+                                        <tr>
+                                            <td class="ps-3">¿Me siento capaz de alcanzar las metas propuestas en cada materia?</td>
+                                            <td colspan="4"><p:selectOneRadio value="#{caracterizacionControllerMejorado.pedagogicaActual.capazAlcanzarMetas}" styleClass="w-100 radio-center"><f:selectItem itemValue="1"/><f:selectItem itemValue="2"/><f:selectItem itemValue="3"/><f:selectItem itemValue="4"/></p:selectOneRadio></td>
+                                        </tr>
+                                        <tr>
+                                            <td class="ps-3">¿Soy consciente de mis habilidades específicas (creatividad, lógica)?</td>
+                                            <td colspan="4"><p:selectOneRadio value="#{caracterizacionControllerMejorado.pedagogicaActual.conscienteHabilidades}" styleClass="w-100 radio-center"><f:selectItem itemValue="1"/><f:selectItem itemValue="2"/><f:selectItem itemValue="3"/><f:selectItem itemValue="4"/></p:selectOneRadio></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <div class="d-flex justify-content-end gap-3 mt-4">
+                            <h:button value="Cancelar" outcome="dashboard_dimensiones" styleClass="btn btn-outline-secondary"/>
+                            
+                            <p:commandButton value="Finalizar Caracterización" 
+                                             action="#{caracterizacionControllerMejorado.guardarDimensionPedagogica}" 
+                                             styleClass="btn btn-primary btn-lg shadow fw-bold px-5" 
+                                             icon="fas fa-check-circle" update="@form"/>
+                        </div>
+
+                    </div>
+                </h:form>
+                
+                <style>
+                    .radio-center td { text-align: center; }
+                    .radio-center label { display: none; }
+                </style>
+
+            </ui:define>
+        </ui:composition>
+    </body>
+</html>

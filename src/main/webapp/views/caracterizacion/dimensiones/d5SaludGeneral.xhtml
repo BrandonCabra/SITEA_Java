@@ -1,0 +1,167 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <body>
+
+        <ui:composition template="./../../TemplateSitio.xhtml">
+
+            <ui:define name="content">
+                
+                <h:form id="formSalud">
+                    <p:growl id="msgs" showDetail="true"/>
+
+                    <div class="container mt-4 mb-5">
+                        
+                        <div class="alert alert-light border shadow-sm d-flex justify-content-between align-items-center mb-4">
+                            <div>
+                                <h5 class="fw-bold text-primary mb-0">Valoración Pedagógica - Salud Física</h5>
+                                <small class="text-muted">Estudiante: 
+                                    <strong>
+                                        #{caracterizacionControllerMejorado.estudianteSeleccionado.primerNombre} 
+                                        #{caracterizacionControllerMejorado.estudianteSeleccionado.primerApellido}
+                                    </strong>
+                                </small>
+                            </div>
+                            <span class="badge bg-info text-dark fs-6">Dimensión 2 de 8</span>
+                        </div>
+
+                        <div class="card shadow-sm border-0">
+                            <div class="card-header bg-primary text-white fw-bold">
+                                <i class="fas fa-heartbeat me-2"></i>Información de Salud y Atención Médica
+                            </div>
+                            
+                            <div class="card-body p-4">
+                                <div class="row g-4">
+                                    
+                                    <div class="col-md-12"><h6 class="text-muted border-bottom pb-2 mb-3 fw-bold">Seguridad Social</h6></div>
+
+                                    <div class="col-md-4">
+                                        <label class="form-label fw-bold">¿Presenta afiliación al sistema de salud?</label>
+                                        <p:selectOneRadio value="#{caracterizacionControllerMejorado.saludFisicaActual.afiliadoSistemaSalud}" required="true">
+                                            <f:selectItem itemLabel="Sí" itemValue="#{true}" />
+                                            <f:selectItem itemLabel="No" itemValue="#{false}" />
+                                            <p:ajax update="panelEPS panelRegimen" />
+                                        </p:selectOneRadio>
+                                    </div>
+
+                                    <h:panelGroup id="panelEPS" layout="block" styleClass="col-md-4">
+                                        <h:panelGroup rendered="#{caracterizacionControllerMejorado.saludFisicaActual.afiliadoSistemaSalud}">
+                                            <label class="form-label fw-bold text-primary">Nombre EPS / ARS</label>
+                                            <h:inputText value="#{caracterizacionControllerMejorado.saludFisicaActual.nombreEpsArs}" 
+                                                         styleClass="form-control" required="true" requiredMessage="Indique el nombre de la EPS"/>
+                                        </h:panelGroup>
+                                    </h:panelGroup>
+
+                                    <h:panelGroup id="panelRegimen" layout="block" styleClass="col-md-4">
+                                        <h:panelGroup rendered="#{caracterizacionControllerMejorado.saludFisicaActual.afiliadoSistemaSalud}">
+                                            <label class="form-label fw-bold text-primary">Régimen</label>
+                                            <h:selectOneMenu value="#{caracterizacionControllerMejorado.saludFisicaActual.regimenSalud}" styleClass="form-select">
+                                                <f:selectItem itemLabel="Seleccione..." itemValue=""/>
+                                                <f:selectItem itemLabel="Contributivo" itemValue="CONTRIBUTIVO"/>
+                                                <f:selectItem itemLabel="Subsidiado" itemValue="SUBSIDIADO"/>
+                                                <f:selectItem itemLabel="Especial/Excepción" itemValue="ESPECIAL"/>
+                                            </h:selectOneMenu>
+                                        </h:panelGroup>
+                                    </h:panelGroup>
+
+                                    <div class="col-12">
+                                        <label class="form-label fw-bold">Lugar de atención de urgencias</label>
+                                        <h:inputText value="#{caracterizacionControllerMejorado.saludFisicaActual.lugarAtencionUrgencias}" styleClass="form-control" 
+                                                     p:placeholder="Ej: Hospital San Rafael, Clínica del Norte..."/>
+                                    </div>
+
+                                    <div class="col-md-12 mt-4"><h6 class="text-muted border-bottom pb-2 mb-3 fw-bold">Estado de Salud Actual</h6></div>
+
+                                    <div class="col-md-4">
+                                        <label class="form-label fw-bold d-block">¿Tiene diagnóstico médico?</label>
+                                        <p:selectOneRadio value="#{caracterizacionControllerMejorado.saludFisicaActual.tieneDiagnosticoMedico}">
+                                            <f:selectItem itemLabel="Sí" itemValue="#{true}" />
+                                            <f:selectItem itemLabel="No" itemValue="#{false}" />
+                                            <p:ajax update="panelDetalleDiagnostico" />
+                                        </p:selectOneRadio>
+                                    </div>
+
+                                    <h:panelGroup id="panelDetalleDiagnostico" layout="block" styleClass="col-md-8">
+                                        <h:panelGroup rendered="#{caracterizacionControllerMejorado.saludFisicaActual.tieneDiagnosticoMedico}">
+                                            <label class="form-label fw-bold text-primary">¿Cuál? (Especifique)</label>
+                                            <p:inputTextarea value="#{caracterizacionControllerMejorado.saludFisicaActual.detalleDiagnostico}" 
+                                                             rows="2" styleClass="form-control" required="true" autoResize="false"/>
+                                        </h:panelGroup>
+                                    </h:panelGroup>
+
+                                    <div class="col-md-4 mt-3">
+                                        <label class="form-label fw-bold d-block">¿Toma medicamentos actualmente?</label>
+                                        <p:selectOneRadio value="#{caracterizacionControllerMejorado.saludFisicaActual.tomaMedicamentos}">
+                                            <f:selectItem itemLabel="Sí" itemValue="#{true}" />
+                                            <f:selectItem itemLabel="No" itemValue="#{false}" />
+                                            <p:ajax update="panelDetalleMeds" />
+                                        </p:selectOneRadio>
+                                    </div>
+
+                                    <h:panelGroup id="panelDetalleMeds" layout="block" styleClass="col-md-8 mt-3">
+                                        <h:panelGroup rendered="#{caracterizacionControllerMejorado.saludFisicaActual.tomaMedicamentos}">
+                                            <label class="form-label fw-bold text-primary">¿Cuál y dosis? (Especifique)</label>
+                                            <p:inputTextarea value="#{caracterizacionControllerMejorado.saludFisicaActual.detalleMedicamentosDosis}" 
+                                                             rows="2" styleClass="form-control" required="true" autoResize="false"
+                                                             placeholder="Ej: Risperidona 1mg cada 12 horas"/>
+                                        </h:panelGroup>
+                                    </h:panelGroup>
+
+                                    <div class="col-md-12 mt-4"><h6 class="text-muted border-bottom pb-2 mb-3 fw-bold">Otros Apoyos y Observaciones</h6></div>
+
+                                    <div class="col-md-5">
+                                        <label class="form-label fw-bold d-block">¿Cuenta con apoyos terapéuticos externos?</label>
+                                        <small class="text-muted d-block mb-2">(Fonoaudiología, T. Ocupacional, Psicología externa, etc.)</small>
+                                        <p:selectOneRadio value="#{caracterizacionControllerMejorado.saludFisicaActual.tieneApoyosTerapeuticos}">
+                                            <f:selectItem itemLabel="Sí" itemValue="#{true}" />
+                                            <f:selectItem itemLabel="No" itemValue="#{false}" />
+                                            <p:ajax update="panelDetalleApoyos" />
+                                        </p:selectOneRadio>
+                                    </div>
+
+                                    <h:panelGroup id="panelDetalleApoyos" layout="block" styleClass="col-md-7">
+                                        <h:panelGroup rendered="#{caracterizacionControllerMejorado.saludFisicaActual.tieneApoyosTerapeuticos}">
+                                            <label class="form-label fw-bold text-primary">¿Cuáles? (Liste los apoyos)</label>
+                                            <p:inputTextarea value="#{caracterizacionControllerMejorado.saludFisicaActual.detalleApoyosExternos}" 
+                                                             rows="3" styleClass="form-control" required="true" autoResize="false"/>
+                                        </h:panelGroup>
+                                    </h:panelGroup>
+
+                                    <div class="col-12 mt-3">
+                                        <label class="form-label fw-bold text-danger"><i class="fas fa-allergies me-2"></i>Alergias conocidas</label>
+                                        <p:inputTextarea value="#{caracterizacionControllerMejorado.saludFisicaActual.alergiasConocidas}" 
+                                                         rows="2" styleClass="form-control bg-light" autoResize="false"
+                                                         placeholder="Medicamentos, alimentos, picaduras, etc. Si ninguna, escribir 'Ninguna'."/>
+                                    </div>
+
+                                </div> </div> <div class="card-footer bg-white py-3 d-flex justify-content-end gap-2">
+                                <h:button value="Cancelar / Volver" outcome="dashboard_dimensiones" styleClass="btn btn-outline-secondary"/>
+                                
+                                <p:commandButton value="Guardar y Continuar" 
+                                                 action="#{caracterizacionControllerMejorado.guardarDimensionSalud}" 
+                                                 styleClass="btn btn-primary fw-bold px-4" icon="fas fa-save"
+                                                 update="formSalud" validateClient="true"/>
+                            </div>
+                        </div>
+
+                    </div>
+                </h:form>
+                
+                <style>
+                    .ui-selectoneradio label {
+                        margin-right: 15px;
+                        margin-left: 5px;
+                    }
+                    /* Resalta los labels de los campos condicionales */
+                    .text-primary { color: #0d6efd !important; }
+                </style>
+
+            </ui:define>
+        </ui:composition>
+    </body>
+</html>

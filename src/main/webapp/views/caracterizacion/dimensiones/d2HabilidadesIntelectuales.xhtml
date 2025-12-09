@@ -1,0 +1,133 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <body>
+        <ui:composition template="./../../TemplateSitio.xhtml">
+            <ui:define name="content">
+                
+                <h:form id="formIntelectual">
+                    <p:growl id="msgs" showDetail="true"/>
+
+                    <div class="container mt-4 mb-5">
+                        
+                        <div class="d-flex justify-content-between align-items-center mb-4 p-3 bg-white rounded shadow-sm border-start border-5 border-info">
+                            <div>
+                                <h4 class="fw-bold text-info mb-0">
+                                    <i class="fas fa-brain me-2"></i>Habilidades Intelectuales y Cognitivas
+                                </h4>
+                                <small class="text-muted">Valoración de dispositivos básicos, procesamiento y competencias académicas.</small>
+                            </div>
+                            <div class="text-end">
+                                <span class="badge bg-light text-dark border">Dimensión 2 de 8</span>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            
+                            <div class="col-lg-8">
+                                
+                                <div class="card shadow-sm border-0 mb-4">
+                                    <div class="card-header bg-light fw-bold text-primary">
+                                        <i class="fas fa-microchip me-2"></i>1. Dispositivos Básicos del Aprendizaje
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="row g-3">
+                                            <div class="col-md-6">
+                                                <label class="form-label fw-bold small">Atención</label>
+                                                <p:inputTextarea value="#{caracterizacionControllerMejorado.habilidadesActual.atencion}" rows="2" styleClass="form-control" placeholder="Ej: Dispersa, periodos cortos, requiere apoyo visual..."/>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label class="form-label fw-bold small">Memoria</label>
+                                                <p:inputTextarea value="#{caracterizacionControllerMejorado.habilidadesActual.memoria}" rows="2" styleClass="form-control" placeholder="Ej: Visual buena, auditiva a corto plazo débil..."/>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label class="form-label fw-bold small">Sensopercepción</label>
+                                                <p:inputTextarea value="#{caracterizacionControllerMejorado.habilidadesActual.sensopercepcion}" rows="2" styleClass="form-control" placeholder="Ej: Discriminación visual adecuada..."/>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label class="form-label fw-bold small">Razonamiento Lógico</label>
+                                                <p:inputTextarea value="#{caracterizacionControllerMejorado.habilidadesActual.razonamiento}" rows="2" styleClass="form-control" placeholder="Ej: Concreto, dificultad en abstracción..."/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="card shadow-sm border-0 mb-4">
+                                    <div class="card-header bg-light fw-bold text-success">
+                                        <i class="fas fa-book-reader me-2"></i>2. Habilidades Académicas Funcionales
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="mb-3">
+                                            <label class="form-label fw-bold small">Lectura (Comprensión y Fluidez)</label>
+                                            <p:inputTextarea value="#{caracterizacionControllerMejorado.habilidadesActual.lectura}" rows="2" styleClass="form-control" placeholder="Describe nivel de lectura..."/>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label fw-bold small">Escritura (Grafía y Producción)</label>
+                                            <p:inputTextarea value="#{caracterizacionControllerMejorado.habilidadesActual.escritura}" rows="2" styleClass="form-control" placeholder="Describe proceso escritor..."/>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label fw-bold small">Matemáticas (Cálculo y Resolución)</label>
+                                            <p:inputTextarea value="#{caracterizacionControllerMejorado.habilidadesActual.matematicas}" rows="2" styleClass="form-control" placeholder="Describe pensamiento numérico..."/>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div class="col-lg-4">
+                                <div class="card shadow border-0 border-top border-3 border-warning h-100">
+                                    <div class="card-header bg-white">
+                                        <h6 class="text-warning fw-bold mb-0"><i class="fas fa-puzzle-piece me-2"></i>3. Tests Estandarizados</h6>
+                                    </div>
+                                    <div class="card-body bg-light">
+                                        <p class="small text-muted">Ejecute los tests complementarios y registre el resultado predominante.</p>
+                                        
+                                        <div class="mb-4 border-bottom pb-3">
+                                            <label class="form-label fw-bold d-block">Estilos de Aprendizaje (VAK)</label>
+                                            <div class="input-group mb-2">
+                                                <h:selectOneMenu value="#{caracterizacionControllerMejorado.habilidadesActual.estiloAprendizajeDominante}" styleClass="form-select">
+                                                    <f:selectItem itemLabel="-- Seleccione --" itemValue=""/>
+                                                    <f:selectItem itemLabel="VISUAL" itemValue="VISUAL"/>
+                                                    <f:selectItem itemLabel="AUDITIVO" itemValue="AUDITIVO"/>
+                                                    <f:selectItem itemLabel="KINESTÉSICO" itemValue="KINESTESICO"/>
+                                                </h:selectOneMenu>
+                                            </div>
+                                            <h:link outcome="d2testEstilos.xhtml" styleClass="btn btn-outline-warning btn-sm w-100" target="_blank">
+                                                <i class="fas fa-external-link-alt me-2"></i>Realizar Test VAK
+                                            </h:link>
+                                        </div>
+
+                                        <div class="mb-4">
+                                            <label class="form-label fw-bold d-block">Inteligencias Múltiples</label>
+                                            <div class="input-group mb-2">
+                                                <h:inputText value="#{caracterizacionControllerMejorado.habilidadesActual.inteligenciaMultipleDominante}" 
+                                                             styleClass="form-control" p:placeholder="Ej: Musical, Lógica..."/>
+                                            </div>
+                                            <h:link outcome="d2inteligenciaMultiple.xhtml" styleClass="btn btn-outline-success btn-sm w-100" target="_blank">
+                                                <i class="fas fa-external-link-alt me-2"></i>Realizar Test Inteligencias
+                                            </h:link>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="card-footer bg-white border-0">
+                                        <p:commandButton value="Guardar Dimensión" 
+                                                         action="#{caracterizacionControllerMejorado.guardarDimensionIntelectual}" 
+                                                         styleClass="btn btn-primary btn-lg w-100 shadow-sm"
+                                                         icon="fas fa-save" update="@form"/>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </h:form>
+
+            </ui:define>
+        </ui:composition>
+    </body>
+</html>

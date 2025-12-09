@@ -1,0 +1,179 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <body>
+        <ui:composition template="./../../TemplateSitio.xhtml">
+            <ui:define name="content">
+                
+                <h:form id="formParticipacion">
+                    <p:growl id="msgs" showDetail="true"/>
+
+                    <div class="container mt-4 mb-5">
+                        
+                        <div class="d-flex justify-content-between align-items-center mb-4 p-3 bg-white rounded shadow-sm border-start border-5 border-success">
+                            <div>
+                                <h4 class="fw-bold text-success mb-0">
+                                    <i class="fas fa-hands-helping me-2"></i>Participación e Inclusión Social
+                                </h4>
+                                <small class="text-muted">Valoración de la interacción, acceso y sentido de pertenencia en la escuela.</small>
+                            </div>
+                            <div class="text-end">
+                                <span class="badge bg-light text-dark border">Dimensión 6 de 8</span>
+                            </div>
+                        </div>
+
+                        <div class="alert alert-light border shadow-sm mb-4">
+                            <i class="fas fa-info-circle me-2 text-info"></i> Responda utilizando la siguiente escala de frecuencia/acuerdo:
+                            <div class="d-flex justify-content-around mt-2 small fw-bold text-muted">
+                                <span>1 = Nunca / En Desacuerdo</span>
+                                <span>2 = A Veces</span>
+                                <span>3 = Casi Siempre</span>
+                                <span>4 = Siempre / De Acuerdo</span>
+                            </div>
+                        </div>
+
+                        <div class="card shadow-sm border-0 mb-4">
+                            <div class="card-header bg-success text-white fw-bold">
+                                <i class="fas fa-users me-2"></i>1. Interacción y Relaciones Sociales
+                            </div>
+                            <div class="card-body p-0">
+                                <table class="table table-hover align-middle mb-0">
+                                    <thead class="table-light text-center small">
+                                        <tr><th class="text-start ps-3">Pregunta</th><th width="10%">1</th><th width="10%">2</th><th width="10%">3</th><th width="10%">4</th></tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td class="ps-3">¿Sientes que tus compañeros te aceptan tal como eres en el aula?</td>
+                                            <td colspan="4"><p:selectOneRadio value="#{caracterizacionControllerMejorado.participacionSocialActual.aceptacionCompaneros}" styleClass="w-100 radio-center"><f:selectItem itemValue="1"/><f:selectItem itemValue="2"/><f:selectItem itemValue="3"/><f:selectItem itemValue="4"/></p:selectOneRadio></td>
+                                        </tr>
+                                        <tr>
+                                            <td class="ps-3">¿Tienes un grupo de amigos cercano con el que interactúas regularmente?</td>
+                                            <td colspan="4"><p:selectOneRadio value="#{caracterizacionControllerMejorado.participacionSocialActual.grupoAmigos}" styleClass="w-100 radio-center"><f:selectItem itemValue="1"/><f:selectItem itemValue="2"/><f:selectItem itemValue="3"/><f:selectItem itemValue="4"/></p:selectOneRadio></td>
+                                        </tr>
+                                        <tr>
+                                            <td class="ps-3">¿Participas en conversaciones y debates en clase sin sentirte juzgado/a?</td>
+                                            <td colspan="4"><p:selectOneRadio value="#{caracterizacionControllerMejorado.participacionSocialActual.participacionDebates}" styleClass="w-100 radio-center"><f:selectItem itemValue="1"/><f:selectItem itemValue="2"/><f:selectItem itemValue="3"/><f:selectItem itemValue="4"/></p:selectOneRadio></td>
+                                        </tr>
+                                        <tr>
+                                            <td class="ps-3">¿Te sientes cómodo/a pidiendo ayuda a tus compañeros o profesores?</td>
+                                            <td colspan="4"><p:selectOneRadio value="#{caracterizacionControllerMejorado.participacionSocialActual.pedirAyuda}" styleClass="w-100 radio-center"><f:selectItem itemValue="1"/><f:selectItem itemValue="2"/><f:selectItem itemValue="3"/><f:selectItem itemValue="4"/></p:selectOneRadio></td>
+                                        </tr>
+                                        <tr>
+                                            <td class="ps-3">¿Crees que se respeta a los estudiantes de diferentes orígenes o capacidades?</td>
+                                            <td colspan="4"><p:selectOneRadio value="#{caracterizacionControllerMejorado.participacionSocialActual.respetoDiversidad}" styleClass="w-100 radio-center"><f:selectItem itemValue="1"/><f:selectItem itemValue="2"/><f:selectItem itemValue="3"/><f:selectItem itemValue="4"/></p:selectOneRadio></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <div class="card shadow-sm border-0 mb-4">
+                            <div class="card-header bg-primary text-white fw-bold">
+                                <i class="fas fa-futbol me-2"></i>2. Acceso y Participación en Actividades
+                            </div>
+                            <div class="card-body p-0">
+                                <table class="table table-hover align-middle mb-0">
+                                    <thead class="table-light text-center small">
+                                        <tr><th class="text-start ps-3">Pregunta</th><th width="10%">1</th><th width="10%">2</th><th width="10%">3</th><th width="10%">4</th></tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td class="ps-3">¿Participas activamente en actividades extracurriculares (deportes, clubes)?</td>
+                                            <td colspan="4"><p:selectOneRadio value="#{caracterizacionControllerMejorado.participacionSocialActual.actividadesExtracurriculares}" styleClass="w-100 radio-center"><f:selectItem itemValue="1"/><f:selectItem itemValue="2"/><f:selectItem itemValue="3"/><f:selectItem itemValue="4"/></p:selectOneRadio></td>
+                                        </tr>
+                                        <tr>
+                                            <td class="ps-3">¿Sientes que tienes las mismas oportunidades para participar en proyectos?</td>
+                                            <td colspan="4"><p:selectOneRadio value="#{caracterizacionControllerMejorado.participacionSocialActual.oportunidadesParticipacion}" styleClass="w-100 radio-center"><f:selectItem itemValue="1"/><f:selectItem itemValue="2"/><f:selectItem itemValue="3"/><f:selectItem itemValue="4"/></p:selectOneRadio></td>
+                                        </tr>
+                                        <tr>
+                                            <td class="ps-3">¿Consideras que las instalaciones (baños, aulas) son accesibles para todos?</td>
+                                            <td colspan="4"><p:selectOneRadio value="#{caracterizacionControllerMejorado.participacionSocialActual.accesibilidadInstalaciones}" styleClass="w-100 radio-center"><f:selectItem itemValue="1"/><f:selectItem itemValue="2"/><f:selectItem itemValue="3"/><f:selectItem itemValue="4"/></p:selectOneRadio></td>
+                                        </tr>
+                                        <tr>
+                                            <td class="ps-3">¿Utilizas los recursos comunitarios (bibliotecas, parques) con tus compañeros?</td>
+                                            <td colspan="4"><p:selectOneRadio value="#{caracterizacionControllerMejorado.participacionSocialActual.recursosComunitarios}" styleClass="w-100 radio-center"><f:selectItem itemValue="1"/><f:selectItem itemValue="2"/><f:selectItem itemValue="3"/><f:selectItem itemValue="4"/></p:selectOneRadio></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-lg-6 mb-4">
+                                <div class="card shadow-sm border-0 h-100">
+                                    <div class="card-header bg-warning text-dark fw-bold">
+                                        <i class="fas fa-eye me-2"></i>3. Percepción del Entorno
+                                    </div>
+                                    <div class="card-body p-3">
+                                        <div class="mb-3">
+                                            <label class="form-label small fw-bold">¿Sientes que tu opinión es valorada por profesores?</label>
+                                            <p:rating value="#{caracterizacionControllerMejorado.participacionSocialActual.valoracionOpinion}" stars="4" cancel="false"/>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label small fw-bold">¿La escuela promueve la diversidad activamente?</label>
+                                            <p:rating value="#{caracterizacionControllerMejorado.participacionSocialActual.promocionInclusion}" stars="4" cancel="false"/>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label small fw-bold">¿Sabes a quién acudir en caso de discriminación?</label>
+                                            <p:rating value="#{caracterizacionControllerMejorado.participacionSocialActual.rutaAtencionExclusion}" stars="4" cancel="false"/>
+                                        </div>
+                                        <div>
+                                            <label class="form-label small fw-bold text-primary">¿Te sientes seguro/a y bienvenido/a diariamente?</label>
+                                            <p:rating value="#{caracterizacionControllerMejorado.participacionSocialActual.seguridadEscolar}" stars="4" cancel="false"/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-6 mb-4">
+                                <div class="card shadow-sm border-0 h-100">
+                                    <div class="card-header bg-secondary text-white fw-bold">
+                                        <i class="fas fa-star me-2"></i>4. Habilidades Personales
+                                    </div>
+                                    <div class="card-body p-3">
+                                        <div class="mb-4">
+                                            <label class="form-label small fw-bold">Asertividad (Expresar opinión sin ofender)</label>
+                                            <p:rating value="#{caracterizacionControllerMejorado.participacionSocialActual.asertividad}" stars="4" cancel="false"/>
+                                        </div>
+                                        <div class="mb-4">
+                                            <label class="form-label small fw-bold">Empatía (Comprender sentimientos ajenos)</label>
+                                            <p:rating value="#{caracterizacionControllerMejorado.participacionSocialActual.empatia}" stars="4" cancel="false"/>
+                                        </div>
+                                        
+                                        <hr/>
+                                        <label class="form-label fw-bold">Observaciones Generales</label>
+                                        <p:inputTextarea value="#{caracterizacionControllerMejorado.participacionSocialActual.observaciones}" 
+                                                         rows="3" styleClass="form-control" 
+                                                         placeholder="Describa barreras específicas o fortalezas sociales..."
+                                                         required="true" requiredMessage="La observación es obligatoria."/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="d-flex justify-content-end gap-2">
+                            <h:button value="Cancelar" outcome="dashboard_dimensiones" styleClass="btn btn-outline-secondary"/>
+                            <p:commandButton value="Guardar Dimensión" 
+                                             action="#{caracterizacionControllerMejorado.guardarDimensionParticipacion}" 
+                                             styleClass="btn btn-success fw-bold px-4" 
+                                             icon="fas fa-save" update="@form"/>
+                        </div>
+
+                    </div>
+                </h:form>
+                
+                <style>
+                    .radio-center td { text-align: center; }
+                    .radio-center label { display: none; }
+                    .ui-rating-star a { display: block; width: 100%; height: 100%; }
+                </style>
+
+            </ui:define>
+        </ui:composition>
+    </body>
+</html>

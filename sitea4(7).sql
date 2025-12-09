@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: localhost
--- Tiempo de generación: 07-12-2025 a las 17:16:27
+-- Tiempo de generación: 09-12-2025 a las 00:26:07
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -143,10 +143,11 @@ CREATE TABLE `caracterizacion` (
   `BARRA_DE_APRENDIZAJE` varchar(200) NOT NULL,
   `RECOMENDACIONES` varchar(500) NOT NULL,
   `CORRESPONSABILIDAD` varchar(255) NOT NULL,
+  `RECOMENDACIONES_IA` longtext DEFAULT NULL,
   `expediente_caracterizacion` varchar(30) DEFAULT NULL COMMENT 'Expediente único formato CHAR-TEA-YYYY-####',
   `estado_caracterizacion` varchar(20) DEFAULT 'INICIADA' COMMENT 'Estados: INICIADA, EN_PROCESO, COMPLETADA, ARCHIVADA',
   `fecha_inicio` timestamp NOT NULL DEFAULT current_timestamp() COMMENT 'Fecha de inicio del proceso',
-  `fecha_finalizacion` timestamp NULL DEFAULT NULL COMMENT 'Fecha de finalización del proceso',
+  `FECHA_FINALIZACION` datetime DEFAULT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp() COMMENT 'Fecha de creación del registro',
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp() COMMENT 'Fecha de última actualización',
   `created_by` int(11) DEFAULT NULL COMMENT 'ID del usuario que creó el registro',
@@ -157,25 +158,26 @@ CREATE TABLE `caracterizacion` (
 -- Volcado de datos para la tabla `caracterizacion`
 --
 
-INSERT INTO `caracterizacion` (`ID_CARACTERIZACION`, `CODIGO_CARACTERIZACION`, `ESTUDIANTE_ID_ESTUDIANTE`, `CONTEXTO_ACADEMICO`, `CONTEXTO_FAMILIAR`, `CONTEXTO_ESCOLAR`, `DIAGNOSTICO`, `VALORACION_PEDAGOGICA`, `BARRA_DE_APRENDIZAJE`, `RECOMENDACIONES`, `CORRESPONSABILIDAD`, `expediente_caracterizacion`, `estado_caracterizacion`, `fecha_inicio`, `fecha_finalizacion`, `created_at`, `updated_at`, `created_by`, `updated_by`) VALUES
-(2, '20251145328856', 1, 'BAJO NIVEL', 'APOYO FAMILIAR', 'DIFICULTAD LECTURA', 'DISLEXIA', 'REALIZAR PIAR', 'CONTEXTUAL Y SOCIAL', 'APOYO VISUALES', 'OPORTUNA', NULL, 'INICIADA', '2025-12-02 04:59:47', NULL, '2025-12-02 04:59:47', '2025-12-02 04:59:47', NULL, NULL),
-(3, '987654321-2025', 21, 'estudiante con asignaturas perdidas', 'poco apoyo familiar', 'sufre de bulling', 'Dislexia', 'necesita fortalecer procesos de diferenciacion de b y d', 'contextual', 'profesores reforzar tareas y tener flexibilidad en la escritura', 'padres firman', NULL, 'EN_PROCESO', '2025-12-02 05:43:47', NULL, '2025-12-02 05:43:47', '2025-12-02 05:43:47', NULL, NULL),
-(4, '1053450788_2025', 2, 'presenta dificultades para llegar a la institución, además de presentar riesgo de deserción escolar', 'Poco apoyo, familia disfuncional', 'presenta dificultades en las áreas de matemáticas y lenguaje', 'se detecta además inicios de TDAH y depresión', 'realizar flexibilizacion en las tareas', 'contextual\r\neconomicas', 'dar apoyo grupal y fortalecer relaciones con los padres', 'estan dispuestos a firmar y apoyar', NULL, 'EN_PROCESO', '2025-12-02 20:16:53', NULL, '2025-12-02 20:16:53', '2025-12-02 20:16:53', NULL, NULL),
-(5, 'CHAR-TEA-2025-0033', 10, 'PENDIENTE', 'PENDIENTE', 'PENDIENTE', 'PENDIENTE', 'PENDIENTE', 'PENDIENTE', 'PENDIENTE', 'PENDIENTE', 'CHAR-TEA-2025-0033', 'INICIADA', '2025-12-05 00:40:43', NULL, '2025-12-05 00:40:43', '2025-12-05 00:40:43', NULL, NULL),
-(6, 'CHAR-TEA-2025-0034', 3, 'PENDIENTE', 'PENDIENTE', 'PENDIENTE', 'PENDIENTE', 'PENDIENTE', 'PENDIENTE', 'PENDIENTE', 'PENDIENTE', 'CHAR-TEA-2025-0034', 'INICIADA', '2025-12-05 01:50:03', NULL, '2025-12-05 01:50:03', '2025-12-05 01:50:03', NULL, NULL),
-(7, 'CHAR-TEA-2025-0035', 4, 'PENDIENTE', 'PENDIENTE', 'PENDIENTE', 'PENDIENTE', 'PENDIENTE', 'PENDIENTE', 'PENDIENTE', 'PENDIENTE', 'CHAR-TEA-2025-0035', 'INICIADA', '2025-12-05 04:20:58', NULL, '2025-12-05 04:20:58', '2025-12-05 04:20:58', NULL, NULL),
-(8, 'CHAR-TEA-2025-0036', 4, 'PENDIENTE', 'PENDIENTE', 'PENDIENTE', 'PENDIENTE', 'PENDIENTE', 'PENDIENTE', 'PENDIENTE', 'PENDIENTE', 'CHAR-TEA-2025-0036', 'INICIADA', '2025-12-05 04:25:00', NULL, '2025-12-05 04:25:00', '2025-12-05 04:25:00', NULL, NULL),
-(9, 'CHAR-TEA-2025-0037', 5, 'PENDIENTE', 'PENDIENTE', 'PENDIENTE', 'PENDIENTE', 'PENDIENTE', 'PENDIENTE', 'PENDIENTE', 'PENDIENTE', 'CHAR-TEA-2025-0037', 'INICIADA', '2025-12-05 04:38:24', NULL, '2025-12-05 04:38:24', '2025-12-05 04:38:24', NULL, NULL),
-(10, 'CHAR-TEA-2025-0038', 15, 'PENDIENTE', 'PENDIENTE', 'PENDIENTE', 'PENDIENTE', 'PENDIENTE', 'PENDIENTE', 'PENDIENTE', 'PENDIENTE', 'CHAR-TEA-2025-0038', 'INICIADA', '2025-12-05 04:49:35', NULL, '2025-12-05 04:49:35', '2025-12-05 04:49:35', NULL, NULL),
-(11, 'CHAR-TEA-2025-0039', 6, 'PENDIENTE', 'PENDIENTE', 'PENDIENTE', 'PENDIENTE', 'PENDIENTE', 'PENDIENTE', 'PENDIENTE', 'PENDIENTE', 'CHAR-TEA-2025-0039', 'INICIADA', '2025-12-05 05:04:15', NULL, '2025-12-05 05:04:15', '2025-12-05 05:04:15', NULL, NULL),
-(12, 'CHAR-TEA-2025-0040', 8, 'PENDIENTE', 'PENDIENTE', 'PENDIENTE', 'PENDIENTE', 'PENDIENTE', 'PENDIENTE', 'PENDIENTE', 'PENDIENTE', 'CHAR-TEA-2025-0040', 'INICIADA', '2025-12-05 05:50:11', NULL, '2025-12-05 05:50:11', '2025-12-05 05:50:11', NULL, NULL),
-(13, 'CHAR-TEA-2025-0041', 8, 'PENDIENTE', 'PENDIENTE', 'PENDIENTE', 'PENDIENTE', 'PENDIENTE', 'PENDIENTE', 'PENDIENTE', 'PENDIENTE', 'CHAR-TEA-2025-0041', 'INICIADA', '2025-12-05 06:05:18', NULL, '2025-12-05 06:05:18', '2025-12-05 06:05:18', NULL, NULL),
-(14, 'CHAR-TEA-2025-0042', 9, 'PENDIENTE', 'PENDIENTE', 'PENDIENTE', 'PENDIENTE', 'PENDIENTE', 'PENDIENTE', 'PENDIENTE', 'PENDIENTE', 'CHAR-TEA-2025-0042', 'INICIADA', '2025-12-05 06:17:55', NULL, '2025-12-05 06:17:55', '2025-12-05 06:17:55', NULL, NULL),
-(15, 'CHAR-TEA-2025-0043', 12, 'PENDIENTE', 'PENDIENTE', 'PENDIENTE', 'PENDIENTE', 'PENDIENTE', 'PENDIENTE', 'PENDIENTE', 'PENDIENTE', 'CHAR-TEA-2025-0043', 'INICIADA', '2025-12-05 09:39:05', NULL, '2025-12-05 09:39:05', '2025-12-05 09:39:05', NULL, NULL),
-(16, 'CHAR-TEA-2025-0044', 12, 'PENDIENTE', 'PENDIENTE', 'PENDIENTE', 'PENDIENTE', 'PENDIENTE', 'PENDIENTE', 'PENDIENTE', 'PENDIENTE', 'CHAR-TEA-2025-0044', 'INICIADA', '2025-12-05 09:46:02', NULL, '2025-12-05 09:46:02', '2025-12-05 09:46:02', NULL, NULL),
-(17, 'CHAR-TEA-2025-0045', 14, 'PENDIENTE', 'PENDIENTE', 'PENDIENTE', 'PENDIENTE', 'PENDIENTE', 'PENDIENTE', 'PENDIENTE', 'PENDIENTE', 'CHAR-TEA-2025-0045', 'INICIADA', '2025-12-05 09:48:29', NULL, '2025-12-05 09:48:29', '2025-12-05 09:48:29', NULL, NULL),
-(18, 'CHAR-TEA-2025-0046', 13, 'PENDIENTE', 'PENDIENTE', 'PENDIENTE', 'PENDIENTE', 'PENDIENTE', 'PENDIENTE', 'PENDIENTE', 'PENDIENTE', 'CHAR-TEA-2025-0046', 'INICIADA', '2025-12-06 03:48:01', NULL, '2025-12-06 03:48:01', '2025-12-06 03:48:01', NULL, NULL),
-(19, 'CHAR-TEA-2025-0047', 16, 'PENDIENTE', 'PENDIENTE', 'PENDIENTE', 'PENDIENTE', 'PENDIENTE', 'PENDIENTE', 'PENDIENTE', 'PENDIENTE', 'CHAR-TEA-2025-0047', 'INICIADA', '2025-12-06 16:28:02', NULL, '2025-12-06 16:28:02', '2025-12-06 16:28:02', NULL, NULL);
+INSERT INTO `caracterizacion` (`ID_CARACTERIZACION`, `CODIGO_CARACTERIZACION`, `ESTUDIANTE_ID_ESTUDIANTE`, `CONTEXTO_ACADEMICO`, `CONTEXTO_FAMILIAR`, `CONTEXTO_ESCOLAR`, `DIAGNOSTICO`, `VALORACION_PEDAGOGICA`, `BARRA_DE_APRENDIZAJE`, `RECOMENDACIONES`, `CORRESPONSABILIDAD`, `RECOMENDACIONES_IA`, `expediente_caracterizacion`, `estado_caracterizacion`, `fecha_inicio`, `FECHA_FINALIZACION`, `created_at`, `updated_at`, `created_by`, `updated_by`) VALUES
+(2, '20251145328856', 1, 'BAJO NIVEL', 'APOYO FAMILIAR', 'DIFICULTAD LECTURA', 'DISLEXIA', 'REALIZAR PIAR', 'CONTEXTUAL Y SOCIAL', 'APOYO VISUALES', 'OPORTUNA', NULL, NULL, 'INICIADA', '2025-12-02 04:59:47', NULL, '2025-12-02 04:59:47', '2025-12-02 04:59:47', NULL, NULL),
+(3, '987654321-2025', 21, 'estudiante con asignaturas perdidas', 'poco apoyo familiar', 'sufre de bulling', 'Dislexia', 'necesita fortalecer procesos de diferenciacion de b y d', 'contextual', 'profesores reforzar tareas y tener flexibilidad en la escritura', 'padres firman', NULL, NULL, 'EN_PROCESO', '2025-12-02 05:43:47', NULL, '2025-12-02 05:43:47', '2025-12-02 05:43:47', NULL, NULL),
+(4, '1053450788_2025', 2, 'presenta dificultades para llegar a la institución, además de presentar riesgo de deserción escolar', 'Poco apoyo, familia disfuncional', 'presenta dificultades en las áreas de matemáticas y lenguaje', 'se detecta además inicios de TDAH y depresión', 'realizar flexibilizacion en las tareas', 'contextual\r\neconomicas', 'dar apoyo grupal y fortalecer relaciones con los padres', 'estan dispuestos a firmar y apoyar', NULL, NULL, 'EN_PROCESO', '2025-12-02 20:16:53', NULL, '2025-12-02 20:16:53', '2025-12-02 20:16:53', NULL, NULL),
+(5, 'CHAR-TEA-2025-0033', 10, 'PENDIENTE', 'PENDIENTE', 'PENDIENTE', 'PENDIENTE', 'PENDIENTE', 'PENDIENTE', 'PENDIENTE', 'PENDIENTE', NULL, 'CHAR-TEA-2025-0033', 'INICIADA', '2025-12-05 00:40:43', NULL, '2025-12-05 00:40:43', '2025-12-05 00:40:43', NULL, NULL),
+(6, 'CHAR-TEA-2025-0034', 3, 'PENDIENTE', 'PENDIENTE', 'PENDIENTE', 'PENDIENTE', 'PENDIENTE', 'PENDIENTE', 'PENDIENTE', 'PENDIENTE', NULL, 'CHAR-TEA-2025-0034', 'INICIADA', '2025-12-05 01:50:03', NULL, '2025-12-05 01:50:03', '2025-12-05 01:50:03', NULL, NULL),
+(7, 'CHAR-TEA-2025-0035', 4, 'PENDIENTE', 'PENDIENTE', 'PENDIENTE', 'PENDIENTE', 'PENDIENTE', 'PENDIENTE', 'PENDIENTE', 'PENDIENTE', NULL, 'CHAR-TEA-2025-0035', 'INICIADA', '2025-12-05 04:20:58', NULL, '2025-12-05 04:20:58', '2025-12-05 04:20:58', NULL, NULL),
+(8, 'CHAR-TEA-2025-0036', 4, 'PENDIENTE', 'PENDIENTE', 'PENDIENTE', 'PENDIENTE', 'PENDIENTE', 'PENDIENTE', 'PENDIENTE', 'PENDIENTE', NULL, 'CHAR-TEA-2025-0036', 'INICIADA', '2025-12-05 04:25:00', NULL, '2025-12-05 04:25:00', '2025-12-05 04:25:00', NULL, NULL),
+(9, 'CHAR-TEA-2025-0037', 5, 'PENDIENTE', 'PENDIENTE', 'PENDIENTE', 'PENDIENTE', 'PENDIENTE', 'PENDIENTE', 'PENDIENTE', 'PENDIENTE', NULL, 'CHAR-TEA-2025-0037', 'INICIADA', '2025-12-05 04:38:24', NULL, '2025-12-05 04:38:24', '2025-12-05 04:38:24', NULL, NULL),
+(10, 'CHAR-TEA-2025-0038', 15, 'PENDIENTE', 'PENDIENTE', 'PENDIENTE', 'PENDIENTE', 'PENDIENTE', 'PENDIENTE', 'PENDIENTE', 'PENDIENTE', NULL, 'CHAR-TEA-2025-0038', 'INICIADA', '2025-12-05 04:49:35', NULL, '2025-12-05 04:49:35', '2025-12-05 04:49:35', NULL, NULL),
+(11, 'CHAR-TEA-2025-0039', 6, 'PENDIENTE', 'PENDIENTE', 'PENDIENTE', 'PENDIENTE', 'PENDIENTE', 'PENDIENTE', 'PENDIENTE', 'PENDIENTE', NULL, 'CHAR-TEA-2025-0039', 'INICIADA', '2025-12-05 05:04:15', NULL, '2025-12-05 05:04:15', '2025-12-05 05:04:15', NULL, NULL),
+(12, 'CHAR-TEA-2025-0040', 8, 'PENDIENTE', 'PENDIENTE', 'PENDIENTE', 'PENDIENTE', 'PENDIENTE', 'PENDIENTE', 'PENDIENTE', 'PENDIENTE', NULL, 'CHAR-TEA-2025-0040', 'INICIADA', '2025-12-05 05:50:11', NULL, '2025-12-05 05:50:11', '2025-12-05 05:50:11', NULL, NULL),
+(13, 'CHAR-TEA-2025-0041', 8, 'PENDIENTE', 'PENDIENTE', 'PENDIENTE', 'PENDIENTE', 'PENDIENTE', 'PENDIENTE', 'PENDIENTE', 'PENDIENTE', NULL, 'CHAR-TEA-2025-0041', 'INICIADA', '2025-12-05 06:05:18', NULL, '2025-12-05 06:05:18', '2025-12-05 06:05:18', NULL, NULL),
+(14, 'CHAR-TEA-2025-0042', 9, 'PENDIENTE', 'PENDIENTE', 'PENDIENTE', 'PENDIENTE', 'PENDIENTE', 'PENDIENTE', 'PENDIENTE', 'PENDIENTE', NULL, 'CHAR-TEA-2025-0042', 'INICIADA', '2025-12-05 06:17:55', NULL, '2025-12-05 06:17:55', '2025-12-05 06:17:55', NULL, NULL),
+(17, 'CHAR-TEA-2025-0045', 14, 'PENDIENTE', 'PENDIENTE', 'PENDIENTE', 'PENDIENTE', 'PENDIENTE', 'PENDIENTE', 'PENDIENTE', 'PENDIENTE', NULL, 'CHAR-TEA-2025-0045', 'INICIADA', '2025-12-05 09:48:29', NULL, '2025-12-05 09:48:29', '2025-12-05 09:48:29', NULL, NULL),
+(18, 'CHAR-TEA-2025-0046', 13, 'PENDIENTE', 'PENDIENTE', 'PENDIENTE', 'PENDIENTE', 'PENDIENTE', 'PENDIENTE', 'PENDIENTE', 'PENDIENTE', NULL, 'CHAR-TEA-2025-0046', 'INICIADA', '2025-12-06 03:48:01', NULL, '2025-12-06 03:48:01', '2025-12-06 03:48:01', NULL, NULL),
+(19, 'CHAR-TEA-2025-0047', 16, 'PENDIENTE', 'PENDIENTE', 'PENDIENTE', 'PENDIENTE', 'PENDIENTE', 'PENDIENTE', 'PENDIENTE', 'PENDIENTE', NULL, 'CHAR-TEA-2025-0047', 'INICIADA', '2025-12-06 16:28:02', NULL, '2025-12-06 16:28:02', '2025-12-06 16:28:02', NULL, NULL),
+(20, 'CHAR-TEA-2025-0048', 17, 'PENDIENTE', 'PENDIENTE', 'PENDIENTE', 'PENDIENTE', 'PENDIENTE', 'PENDIENTE', 'PENDIENTE', 'PENDIENTE', NULL, 'CHAR-TEA-2025-0048', 'INICIADA', '2025-12-07 17:16:17', NULL, '2025-12-07 17:16:17', '2025-12-07 17:16:17', NULL, NULL),
+(21, 'CHAR-TEA-2025-0049', 19, 'PENDIENTE', 'PENDIENTE', 'PENDIENTE', 'PENDIENTE', 'PENDIENTE', 'PENDIENTE', 'PENDIENTE', 'PENDIENTE', NULL, 'CHAR-TEA-2025-0049', 'INICIADA', '2025-12-08 06:38:03', NULL, '2025-12-08 06:38:03', '2025-12-08 06:38:03', NULL, NULL),
+(22, 'CHAR-TEA-2025-0050', 25, 'PENDIENTE', 'PENDIENTE', 'PENDIENTE', 'PENDIENTE', 'PENDIENTE', 'PENDIENTE', 'PENDIENTE', 'PENDIENTE', NULL, 'CHAR-TEA-2025-0050', 'INICIADA', '2025-12-08 22:57:51', NULL, '2025-12-08 22:57:51', '2025-12-08 22:57:51', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -214,7 +216,6 @@ INSERT INTO `contexto_escolar` (`id_contexto_escolar`, `id_caracterizacion`, `in
 (7, 12, 'COMPLETA', 'CUMPLE CON ESTANDARES', 'TIENE MATERIALES ADAPTABLES AMBIENTE APROPIADO', 'presentes para cada área', 'CADA SALON CUENTA CON DOCENTE DE APOYO', 'CULTURALES', 'MANTENER CONDICIONES', NULL, '2025-12-05 06:02:00', '2025-12-05 06:02:00', NULL, NULL),
 (8, 13, 'COMPLETA', 'CUMPLE CON ESTANDARES', 'TIENE MATERIALES ADAPTABLES AMBIENTE APROPIADO', 'presentes para cada área', 'CADA SALON CUENTA CON DOCENTE DE APOYO', 'CULTURALES', 'MANTENER CONDICIONES', NULL, '2025-12-05 06:05:25', '2025-12-05 06:05:25', NULL, NULL),
 (9, 14, 'correcta', 'poca', 'basicos', 'no aplica', 'falta apoyo', 'contextual', 'mejorar', NULL, '2025-12-05 06:18:34', '2025-12-05 06:18:34', NULL, NULL),
-(10, 16, 'aceptable', 'inclusiva', 'apropiada', 'pocos', 'bien apropiada', 'contextual', 'flexibilizacion', NULL, '2025-12-05 09:46:52', '2025-12-05 09:46:52', NULL, NULL),
 (11, 17, 'aceptable', 'inclusiva', 'apropiada', 'pocos', 'bien apropiada', 'contextual', 'flexibilizacion', NULL, '2025-12-05 09:48:43', '2025-12-05 09:48:43', NULL, NULL);
 
 -- --------------------------------------------------------
@@ -483,22 +484,6 @@ INSERT INTO `dimension_valoracion` (`ID_DIMENSION`, `CARACTERIZACION_ID`, `NOMBR
 (78, 14, 'Participación e inclusión social', NULL, NULL, NULL, NULL, 'PENDIENTE', NULL, '2025-12-05 06:17:55', '2025-12-05 06:17:55'),
 (79, 14, 'Control del propio entorno', NULL, NULL, NULL, NULL, 'PENDIENTE', NULL, '2025-12-05 06:17:55', '2025-12-05 06:17:55'),
 (80, 14, 'Dimensión pedagógica', NULL, NULL, NULL, NULL, 'PENDIENTE', NULL, '2025-12-05 06:17:55', '2025-12-05 06:17:55'),
-(81, 15, 'Contexto y vida familiar', NULL, NULL, NULL, NULL, 'PENDIENTE', NULL, '2025-12-05 09:39:05', '2025-12-05 09:39:05'),
-(82, 15, 'Habilidades intelectuales', NULL, NULL, NULL, NULL, 'PENDIENTE', NULL, '2025-12-05 09:39:05', '2025-12-05 09:39:05'),
-(83, 15, 'Bienestar emocional', NULL, NULL, NULL, NULL, 'PENDIENTE', NULL, '2025-12-05 09:39:05', '2025-12-05 09:39:05'),
-(84, 15, 'Conducta adaptativa y desarrollo personal', NULL, NULL, NULL, NULL, 'PENDIENTE', NULL, '2025-12-05 09:39:05', '2025-12-05 09:39:05'),
-(85, 15, 'Salud y bienestar físico', NULL, NULL, NULL, NULL, 'PENDIENTE', NULL, '2025-12-05 09:39:05', '2025-12-05 09:39:05'),
-(86, 15, 'Participación e inclusión social', NULL, NULL, NULL, NULL, 'PENDIENTE', NULL, '2025-12-05 09:39:05', '2025-12-05 09:39:05'),
-(87, 15, 'Control del propio entorno', NULL, NULL, NULL, NULL, 'PENDIENTE', NULL, '2025-12-05 09:39:05', '2025-12-05 09:39:05'),
-(88, 15, 'Dimensión pedagógica', NULL, NULL, NULL, NULL, 'PENDIENTE', NULL, '2025-12-05 09:39:05', '2025-12-05 09:39:05'),
-(89, 16, 'Contexto y vida familiar', NULL, NULL, NULL, NULL, 'PENDIENTE', NULL, '2025-12-05 09:46:02', '2025-12-05 09:46:02'),
-(90, 16, 'Habilidades intelectuales', NULL, NULL, NULL, NULL, 'PENDIENTE', NULL, '2025-12-05 09:46:02', '2025-12-05 09:46:02'),
-(91, 16, 'Bienestar emocional', NULL, NULL, NULL, NULL, 'PENDIENTE', NULL, '2025-12-05 09:46:02', '2025-12-05 09:46:02'),
-(92, 16, 'Conducta adaptativa y desarrollo personal', NULL, NULL, NULL, NULL, 'PENDIENTE', NULL, '2025-12-05 09:46:02', '2025-12-05 09:46:02'),
-(93, 16, 'Salud y bienestar físico', NULL, NULL, NULL, NULL, 'PENDIENTE', NULL, '2025-12-05 09:46:02', '2025-12-05 09:46:02'),
-(94, 16, 'Participación e inclusión social', NULL, NULL, NULL, NULL, 'PENDIENTE', NULL, '2025-12-05 09:46:02', '2025-12-05 09:46:02'),
-(95, 16, 'Control del propio entorno', NULL, NULL, NULL, NULL, 'PENDIENTE', NULL, '2025-12-05 09:46:02', '2025-12-05 09:46:02'),
-(96, 16, 'Dimensión pedagógica', NULL, NULL, NULL, NULL, 'PENDIENTE', NULL, '2025-12-05 09:46:02', '2025-12-05 09:46:02'),
 (97, 17, 'Contexto y vida familiar', NULL, NULL, NULL, NULL, 'PENDIENTE', NULL, '2025-12-05 09:48:29', '2025-12-05 09:48:29'),
 (98, 17, 'Habilidades intelectuales', NULL, NULL, NULL, NULL, 'PENDIENTE', NULL, '2025-12-05 09:48:29', '2025-12-05 09:48:29'),
 (99, 17, 'Bienestar emocional', NULL, NULL, NULL, NULL, 'PENDIENTE', NULL, '2025-12-05 09:48:29', '2025-12-05 09:48:29'),
@@ -522,7 +507,197 @@ INSERT INTO `dimension_valoracion` (`ID_DIMENSION`, `CARACTERIZACION_ID`, `NOMBR
 (117, 19, 'Salud y bienestar físico', NULL, NULL, NULL, NULL, 'PENDIENTE', NULL, '2025-12-06 16:28:02', '2025-12-06 16:28:02'),
 (118, 19, 'Participación e inclusión social', NULL, NULL, NULL, NULL, 'PENDIENTE', NULL, '2025-12-06 16:28:02', '2025-12-06 16:28:02'),
 (119, 19, 'Control del propio entorno', NULL, NULL, NULL, NULL, 'PENDIENTE', NULL, '2025-12-06 16:28:02', '2025-12-06 16:28:02'),
-(120, 19, 'Dimensión pedagógica', NULL, NULL, NULL, NULL, 'PENDIENTE', NULL, '2025-12-06 16:28:02', '2025-12-06 16:28:02');
+(120, 19, 'Dimensión pedagógica', NULL, NULL, NULL, NULL, 'PENDIENTE', NULL, '2025-12-06 16:28:02', '2025-12-06 16:28:02'),
+(121, 20, 'Contexto y vida familiar', NULL, NULL, NULL, NULL, 'PENDIENTE', NULL, '2025-12-07 17:16:17', '2025-12-07 17:16:17'),
+(122, 20, 'Habilidades intelectuales', NULL, NULL, NULL, NULL, 'PENDIENTE', NULL, '2025-12-07 17:16:17', '2025-12-07 17:16:17'),
+(123, 20, 'Bienestar emocional', NULL, NULL, NULL, NULL, 'PENDIENTE', NULL, '2025-12-07 17:16:17', '2025-12-07 17:16:17'),
+(124, 20, 'Conducta adaptativa y desarrollo personal', NULL, NULL, NULL, NULL, 'PENDIENTE', NULL, '2025-12-07 17:16:17', '2025-12-07 17:16:17'),
+(125, 20, 'Salud y bienestar físico', NULL, NULL, NULL, NULL, 'PENDIENTE', NULL, '2025-12-07 17:16:17', '2025-12-07 17:16:17'),
+(126, 20, 'Participación e inclusión social', NULL, NULL, NULL, NULL, 'PENDIENTE', NULL, '2025-12-07 17:16:17', '2025-12-07 17:16:17'),
+(127, 20, 'Control del propio entorno', NULL, NULL, NULL, NULL, 'PENDIENTE', NULL, '2025-12-07 17:16:17', '2025-12-07 17:16:17'),
+(128, 20, 'Dimensión pedagógica', NULL, NULL, NULL, NULL, 'PENDIENTE', NULL, '2025-12-07 17:16:17', '2025-12-07 17:16:17'),
+(129, 21, 'Contexto y vida familiar', NULL, NULL, NULL, NULL, 'PENDIENTE', NULL, '2025-12-08 06:38:03', '2025-12-08 06:38:03'),
+(130, 21, 'Habilidades intelectuales', NULL, NULL, NULL, NULL, 'PENDIENTE', NULL, '2025-12-08 06:38:03', '2025-12-08 06:38:03'),
+(131, 21, 'Bienestar emocional', NULL, NULL, NULL, NULL, 'PENDIENTE', NULL, '2025-12-08 06:38:03', '2025-12-08 06:38:03'),
+(132, 21, 'Conducta adaptativa y desarrollo personal', NULL, NULL, NULL, NULL, 'PENDIENTE', NULL, '2025-12-08 06:38:03', '2025-12-08 06:38:03'),
+(133, 21, 'Salud y bienestar físico', NULL, NULL, NULL, NULL, 'PENDIENTE', NULL, '2025-12-08 06:38:03', '2025-12-08 06:38:03'),
+(134, 21, 'Participación e inclusión social', NULL, NULL, NULL, NULL, 'PENDIENTE', NULL, '2025-12-08 06:38:03', '2025-12-08 06:38:03'),
+(135, 21, 'Control del propio entorno', NULL, NULL, NULL, NULL, 'PENDIENTE', NULL, '2025-12-08 06:38:03', '2025-12-08 06:38:03'),
+(136, 21, 'Dimensión pedagógica', NULL, NULL, NULL, NULL, 'PENDIENTE', NULL, '2025-12-08 06:38:03', '2025-12-08 06:38:03'),
+(137, 22, 'Contexto y vida familiar', NULL, NULL, NULL, NULL, 'PENDIENTE', NULL, '2025-12-08 22:57:51', '2025-12-08 22:57:51'),
+(138, 22, 'Habilidades intelectuales', NULL, NULL, NULL, NULL, 'PENDIENTE', NULL, '2025-12-08 22:57:51', '2025-12-08 22:57:51'),
+(139, 22, 'Bienestar emocional', NULL, NULL, NULL, NULL, 'PENDIENTE', NULL, '2025-12-08 22:57:51', '2025-12-08 22:57:51'),
+(140, 22, 'Conducta adaptativa y desarrollo personal', NULL, NULL, NULL, NULL, 'PENDIENTE', NULL, '2025-12-08 22:57:51', '2025-12-08 22:57:51'),
+(141, 22, 'Salud y bienestar físico', NULL, NULL, NULL, NULL, 'PENDIENTE', NULL, '2025-12-08 22:57:51', '2025-12-08 22:57:51'),
+(142, 22, 'Participación e inclusión social', NULL, NULL, NULL, NULL, 'PENDIENTE', NULL, '2025-12-08 22:57:51', '2025-12-08 22:57:51'),
+(143, 22, 'Control del propio entorno', NULL, NULL, NULL, NULL, 'PENDIENTE', NULL, '2025-12-08 22:57:51', '2025-12-08 22:57:51'),
+(144, 22, 'Dimensión pedagógica', NULL, NULL, NULL, NULL, 'PENDIENTE', NULL, '2025-12-08 22:57:51', '2025-12-08 22:57:51');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `dim_bienestar_emocional`
+--
+
+CREATE TABLE `dim_bienestar_emocional` (
+  `ID_DIM_EMOCIONAL` int(11) NOT NULL,
+  `CARACTERIZACION_ID` int(11) NOT NULL,
+  `IDENTIFICA_EMOCIONES` int(1) DEFAULT 0,
+  `EXPRESA_EMOCIONES` int(1) DEFAULT 0,
+  `REGULA_IMPULSOS` int(1) DEFAULT 0,
+  `AUTOESTIMA` int(1) DEFAULT 0,
+  `MANEJO_ESTRES` int(1) DEFAULT 0,
+  `EMPATIA` int(1) DEFAULT 0,
+  `ESCUCHA_ACTIVA` int(1) DEFAULT 0,
+  `RESUELVE_CONFLICTOS` int(1) DEFAULT 0,
+  `TRABAJO_EQUIPO` int(1) DEFAULT 0,
+  `SIGNOS_ALARMA` text DEFAULT NULL,
+  `OBSERVACIONES_PSICO` text DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `dim_conducta_adaptativa`
+--
+
+CREATE TABLE `dim_conducta_adaptativa` (
+  `ID_DIM_ADAPTATIVA` int(11) NOT NULL,
+  `CARACTERIZACION_ID` int(11) NOT NULL,
+  `ALIMENTACION` int(1) DEFAULT 0,
+  `HIGIENE` int(1) DEFAULT 0,
+  `VESTIDO` int(1) DEFAULT 0,
+  `SEGURIDAD` int(1) DEFAULT 0,
+  `COMUNICACION` int(1) DEFAULT 0,
+  `SEGUIMIENTO_INSTRUCCIONES` int(1) DEFAULT 0,
+  `MANEJO_DINERO_TIEMPO` int(1) DEFAULT 0,
+  `LECTURA_FUNCIONAL` int(1) DEFAULT 0,
+  `INTERACCION_PARES` int(1) DEFAULT 0,
+  `RESPETO_NORMAS` int(1) DEFAULT 0,
+  `MANEJO_CAMBIOS` int(1) DEFAULT 0,
+  `AUTOCONTROL` int(1) DEFAULT 0,
+  `OBSERVACIONES` text DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `dim_control_entorno`
+--
+
+CREATE TABLE `dim_control_entorno` (
+  `ID_DIM_CONTROL` int(11) NOT NULL,
+  `CARACTERIZACION_ID` int(11) NOT NULL,
+  `RECONOCE_INTERESES` int(1) DEFAULT 0,
+  `TIENE_METAS` int(1) DEFAULT 0,
+  `PLANES_REFLEJAN_DESEOS` int(1) DEFAULT 0,
+  `IDENTIFICA_FORTALEZAS` int(1) DEFAULT 0,
+  `SEGURIDAD_DECISIONES` int(1) DEFAULT 0,
+  `DECIDE_LUGARES` int(1) DEFAULT 0,
+  `REQUIERE_POCO_APOYO` int(1) DEFAULT 0,
+  `CONSCIENTE_CONSECUENCIAS` int(1) DEFAULT 0,
+  `LIBERTAD_EXPRESION` int(1) DEFAULT 0,
+  `FAMILIA_RESPETA_DECISIONES` int(1) DEFAULT 0,
+  `CONOCE_DERECHOS` int(1) DEFAULT 0,
+  `ENTORNO_ANIMA_INDEPENDENCIA` int(1) DEFAULT 0,
+  `OBSERVACIONES` text DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `dim_habilidades_intelectuales`
+--
+
+CREATE TABLE `dim_habilidades_intelectuales` (
+  `ID_DIM_INTELECTUAL` int(11) NOT NULL,
+  `CARACTERIZACION_ID` int(11) NOT NULL,
+  `ATENCION` text DEFAULT NULL,
+  `MEMORIA` text DEFAULT NULL,
+  `SENSOPERCEPCION` text DEFAULT NULL,
+  `RAZONAMIENTO` text DEFAULT NULL,
+  `MOTIVACION` text DEFAULT NULL,
+  `LECTURA` text DEFAULT NULL,
+  `ESCRITURA` text DEFAULT NULL,
+  `MATEMATICAS` text DEFAULT NULL,
+  `ESTILO_APRENDIZAJE_DOMINANTE` varchar(50) DEFAULT NULL,
+  `INTELIGENCIA_MULTIPLE_DOMINANTE` varchar(100) DEFAULT NULL,
+  `OBSERVACIONES` text DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `dim_participacion_social`
+--
+
+CREATE TABLE `dim_participacion_social` (
+  `ID_DIM_PARTICIPACION` int(11) NOT NULL,
+  `CARACTERIZACION_ID` int(11) NOT NULL,
+  `ACEPTACION_COMPANEROS` int(1) DEFAULT 0,
+  `GRUPO_AMIGOS` int(1) DEFAULT 0,
+  `PARTICIPACION_DEBATES` int(1) DEFAULT 0,
+  `PEDIR_AYUDA` int(1) DEFAULT 0,
+  `RESPETO_DIVERSIDAD` int(1) DEFAULT 0,
+  `ACTIVIDADES_EXTRACURRICULARES` int(1) DEFAULT 0,
+  `OPORTUNIDADES_PARTICIPACION` int(1) DEFAULT 0,
+  `ACCESIBILIDAD_INSTALACIONES` int(1) DEFAULT 0,
+  `RECURSOS_COMUNITARIOS` int(1) DEFAULT 0,
+  `VALORACION_OPINION` int(1) DEFAULT 0,
+  `PROMOCION_INCLUSION` int(1) DEFAULT 0,
+  `RUTA_ATENCION_EXCLUSION` int(1) DEFAULT 0,
+  `SEGURIDAD_ESCOLAR` int(1) DEFAULT 0,
+  `ASERTIVIDAD` int(1) DEFAULT 0,
+  `EMPATIA` int(1) DEFAULT 0,
+  `OBSERVACIONES` text DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `dim_pedagogica`
+--
+
+CREATE TABLE `dim_pedagogica` (
+  `ID_DIM_PEDAGOGICA` int(11) NOT NULL,
+  `CARACTERIZACION_ID` int(11) NOT NULL,
+  `FACTORES_MOTIVACION` text DEFAULT NULL,
+  `EXPERIENCIAS_DESTACADAS` text DEFAULT NULL,
+  `SABERES_CONECTAN` int(1) DEFAULT 0,
+  `INTERES_TEMAS` int(1) DEFAULT 0,
+  `PROFESORES_CONSIDERAN_INTERESES` int(1) DEFAULT 0,
+  `OPORTUNIDAD_ELEGIR` int(1) DEFAULT 0,
+  `ACTIVIDADES_APRENDE_MEJOR` int(1) DEFAULT 0,
+  `AMBIENTE_AULA_AYUDA` int(1) DEFAULT 0,
+  `METODOS_ADAPTAN` int(1) DEFAULT 0,
+  `MOTIVACION_APRENDER` int(1) DEFAULT 0,
+  `METAS_CLARAS` int(1) DEFAULT 0,
+  `AYUDA_IDENTIFICAR_FORTALEZAS` int(1) DEFAULT 0,
+  `CAPAZ_ALCANZAR_METAS` int(1) DEFAULT 0,
+  `CONSCIENTE_HABILIDADES` int(1) DEFAULT 0
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `dim_salud_fisica`
+--
+
+CREATE TABLE `dim_salud_fisica` (
+  `ID_DIM_SALUD` int(11) NOT NULL,
+  `CARACTERIZACION_ID` int(11) NOT NULL,
+  `AFILIADO_SISTEMA_SALUD` tinyint(1) DEFAULT 0,
+  `NOMBRE_EPS_ARS` varchar(100) DEFAULT NULL,
+  `REGIMEN_SALUD` varchar(45) DEFAULT NULL,
+  `LUGAR_ATENCION_URGENCIAS` varchar(150) DEFAULT NULL,
+  `TIENE_DIAGNOSTICO_MEDICO` tinyint(1) DEFAULT 0,
+  `DETALLE_DIAGNOSTICO` text DEFAULT NULL,
+  `TOMA_MEDICAMENTOS` tinyint(1) DEFAULT 0,
+  `DETALLE_MEDICAMENTOS_DOSIS` text DEFAULT NULL,
+  `TIENE_APOYOS_TERAPEUTICOS` tinyint(1) DEFAULT 0,
+  `DETALLE_APOYOS_EXTERNOS` text DEFAULT NULL,
+  `ALERGIAS_CONOCIDAS` text DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -640,7 +815,6 @@ INSERT INTO `estudiante` (`ID_ESTUDIANTE`, `TIPO_DOCUMENTO_ID_TIPO_DOCUMENTO`, `
 (8, 4, '1234668752', 'JUAN', 'CARLOS', 'PERALTA', 'RAMIREZ', 16, '2017-07-04', '3158405762', 'barrios unidos', 'juancarlosperalta@gmail.com', NULL, NULL, 'EXP-TEA-2025-0001', 1, 'DISCALCULIA', '2023-01-30', 'EMILIANO TORRES', 'Confunde escritura y conteo de numeros', '', 'MARIA RAMIREZ', 'MADRE', '3114587985', 'mariaramirez@gmail.com', 'la florida', 'CONFIRMADO', '2025-09-26 07:19:06', '2025-09-26 07:19:06', '2025-09-26 07:19:06', 1, NULL),
 (9, 4, '7854226942', 'FELIPE', '', 'CAMARGO', 'CASTAÑEDA', 8, '2019-11-04', '3178945296', 'san fernando', 'felipecamargo@itirr.edu.co', NULL, NULL, 'TEMP-TEA-2025-0001', 0, 'OTRO', NULL, '', 'Posible TDAH', 'CLASE', 'Cristian Camargo', 'PADRE', '3205487925', 'cristianca@gmail.com', 'jorge eliecer gaitan ', 'TEMPORAL', '2025-09-26 15:26:59', '2025-09-26 15:26:59', '2025-09-26 15:26:59', 1, NULL),
 (10, 4, '1234568890', 'santiago', 'fernando', 'niño', 'garcia', 7, '2020-11-04', '3158741587', 'las lajas', 'santinino@itirr.edu.co', '', '12345782001', NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'TEMPORAL', '2025-09-30 10:32:18', '2025-09-30 10:32:18', '2025-09-30 10:32:18', NULL, NULL),
-(12, 4, '1052395145', 'brandon', 'jahir', 'cabra', 'bulla', 48, '2009-11-10', '31587999824', 'las lajas', 'bjcabrab@gmail.com', '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'ACTIVO', '2025-10-01 04:37:15', '2025-10-01 04:37:15', '2025-10-01 04:37:15', NULL, NULL),
 (13, 4, '105239515', 'brandon', 'jahir', 'cabra', 'bula', 29, '2009-11-20', '3187941218', 'bjcabrajsf', 'bjcbarab@gmial.com', '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'ACTIVO', '2025-10-01 04:42:35', '2025-10-01 04:42:35', '2025-10-01 04:42:35', NULL, NULL),
 (14, 4, '105239878514', 'RICARDO', 'JORGE', 'RUIZ', '', 2, '2021-01-14', '3158210445', '7AGOS', 'RICAR@GMAIL.COM', '', NULL, NULL, 1, 'DISLEXIA', '2000-11-23', 'JOSE', 'TEA', NULL, NULL, NULL, NULL, NULL, NULL, 'ACTIVO', '2025-10-01 06:02:36', '2025-10-01 06:02:36', '2025-10-01 06:02:36', NULL, NULL),
 (15, 4, '1052395178', 'JORGE', '', 'PIRAGUA', '', 48, '2011-02-26', '135487456456', 'espinal', 'jorpi@gmal.com', '', 'Dificultades para leer palabras simples; Escritura ilegible o con muchos errores; Problemas de atención y concentración; Confunde letras o números similares; Dificultad para expresarse oralmente; OTRA: tda', NULL, 0, NULL, NULL, NULL, NULL, 'clase', NULL, NULL, NULL, NULL, NULL, 'ACTIVO', '2025-10-01 06:05:40', '2025-10-01 06:05:40', '2025-10-01 06:20:47', NULL, NULL),
@@ -736,7 +910,7 @@ CREATE TABLE `expediente_counters` (
 --
 
 INSERT INTO `expediente_counters` (`year`, `last_counter`) VALUES
-(2025, 47);
+(2025, 50);
 
 -- --------------------------------------------------------
 
@@ -961,15 +1135,16 @@ CREATE TABLE `novedades_reportes` (
   `DESCRIPCION_NOVEDADES_REPORTES` varchar(200) DEFAULT NULL,
   `ESTADO_NOVEDADES_REPORTES` enum('Para reportar','Pendiente','En proceso','Resuelto') NOT NULL DEFAULT 'Pendiente',
   `PRIORIDAD` enum('Alta','Media','Baja') NOT NULL,
-  `USUARIOS_ID_USUARIO` int(11) NOT NULL
+  `USUARIOS_ID_USUARIO` int(11) NOT NULL,
+  `ESTUDIANTE_ID` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Volcado de datos para la tabla `novedades_reportes`
 --
 
-INSERT INTO `novedades_reportes` (`ID_NOVEDADES_REPORTES`, `FECHA_NOVEDADES_REPORTES`, `NUMERO_DOCUMENTO_ESTUDIANTE`, `ACCIONES_NOVEDADES_REPORTES`, `TIPO_NOVEDADES_REPORTES`, `DESCRIPCION_NOVEDADES_REPORTES`, `ESTADO_NOVEDADES_REPORTES`, `PRIORIDAD`, `USUARIOS_ID_USUARIO`) VALUES
-(1, '2025-05-05', '1145328856', 'ENFERMEDAD', 'Médica', 'NO SE PRESENTA AL COLEGIO', 'En proceso', 'Baja', 9);
+INSERT INTO `novedades_reportes` (`ID_NOVEDADES_REPORTES`, `FECHA_NOVEDADES_REPORTES`, `NUMERO_DOCUMENTO_ESTUDIANTE`, `ACCIONES_NOVEDADES_REPORTES`, `TIPO_NOVEDADES_REPORTES`, `DESCRIPCION_NOVEDADES_REPORTES`, `ESTADO_NOVEDADES_REPORTES`, `PRIORIDAD`, `USUARIOS_ID_USUARIO`, `ESTUDIANTE_ID`) VALUES
+(1, '2025-05-05', '1145328856', 'ENFERMEDAD', 'Médica', 'NO SE PRESENTA AL COLEGIO', 'En proceso', 'Baja', 9, NULL);
 
 -- --------------------------------------------------------
 
@@ -1452,7 +1627,7 @@ CREATE TABLE `v_resumen_caracterizaciones` (
 ,`CODIGO_CARACTERIZACION` varchar(100)
 ,`ESTADO_CARACTERIZACION` varchar(20)
 ,`FECHA_INICIO` timestamp
-,`FECHA_FINALIZACION` timestamp
+,`FECHA_FINALIZACION` datetime
 ,`NUMERO_DOCUMENTO_ESTUDIANTE` varchar(20)
 ,`NOMBRE_COMPLETO` varchar(183)
 ,`TIPO_TEA` varchar(30)
@@ -1478,7 +1653,7 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW 
 --
 DROP TABLE IF EXISTS `v_resumen_caracterizaciones`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `v_resumen_caracterizaciones`  AS SELECT `c`.`ID_CARACTERIZACION` AS `ID_CARACTERIZACION`, `c`.`expediente_caracterizacion` AS `EXPEDIENTE_CARACTERIZACION`, `c`.`CODIGO_CARACTERIZACION` AS `CODIGO_CARACTERIZACION`, `c`.`estado_caracterizacion` AS `ESTADO_CARACTERIZACION`, `c`.`fecha_inicio` AS `FECHA_INICIO`, `c`.`fecha_finalizacion` AS `FECHA_FINALIZACION`, `e`.`NUMERO_DOCUMENTO_ESTUDIANTE` AS `NUMERO_DOCUMENTO_ESTUDIANTE`, concat(`e`.`PRIMER_NOMBRE_ESTUDIANTE`,' ',ifnull(`e`.`SEGUNDO_NOMBRE_ESTUDIANTE`,''),' ',`e`.`PRIMER_APELLIDO_ESTUDIANTE`,' ',ifnull(`e`.`SEGUNDO_APELLIDO_ESTUDIANTE`,'')) AS `NOMBRE_COMPLETO`, `e`.`tipo_tea` AS `TIPO_TEA`, `e`.`diagnostico_certificado` AS `DIAGNOSTICO_CERTIFICADO`, (select count(0) from `dimension_valoracion` `dv` where `dv`.`CARACTERIZACION_ID` = `c`.`ID_CARACTERIZACION` and `dv`.`ESTADO` = 'COMPLETADA') AS `DIMENSIONES_COMPLETADAS`, (select count(0) from `dimension_valoracion` `dv` where `dv`.`CARACTERIZACION_ID` = `c`.`ID_CARACTERIZACION`) AS `TOTAL_DIMENSIONES`, (select count(0) from `observacion_sistematica` `os` where `os`.`CARACTERIZACION_ID` = `c`.`ID_CARACTERIZACION`) AS `TOTAL_OBSERVACIONES` FROM (`caracterizacion` `c` join `estudiante` `e` on(`c`.`ESTUDIANTE_ID_ESTUDIANTE` = `e`.`ID_ESTUDIANTE`)) ;
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `v_resumen_caracterizaciones`  AS SELECT `c`.`ID_CARACTERIZACION` AS `ID_CARACTERIZACION`, `c`.`expediente_caracterizacion` AS `EXPEDIENTE_CARACTERIZACION`, `c`.`CODIGO_CARACTERIZACION` AS `CODIGO_CARACTERIZACION`, `c`.`estado_caracterizacion` AS `ESTADO_CARACTERIZACION`, `c`.`fecha_inicio` AS `FECHA_INICIO`, `c`.`FECHA_FINALIZACION` AS `FECHA_FINALIZACION`, `e`.`NUMERO_DOCUMENTO_ESTUDIANTE` AS `NUMERO_DOCUMENTO_ESTUDIANTE`, concat(`e`.`PRIMER_NOMBRE_ESTUDIANTE`,' ',ifnull(`e`.`SEGUNDO_NOMBRE_ESTUDIANTE`,''),' ',`e`.`PRIMER_APELLIDO_ESTUDIANTE`,' ',ifnull(`e`.`SEGUNDO_APELLIDO_ESTUDIANTE`,'')) AS `NOMBRE_COMPLETO`, `e`.`tipo_tea` AS `TIPO_TEA`, `e`.`diagnostico_certificado` AS `DIAGNOSTICO_CERTIFICADO`, (select count(0) from `dimension_valoracion` `dv` where `dv`.`CARACTERIZACION_ID` = `c`.`ID_CARACTERIZACION` and `dv`.`ESTADO` = 'COMPLETADA') AS `DIMENSIONES_COMPLETADAS`, (select count(0) from `dimension_valoracion` `dv` where `dv`.`CARACTERIZACION_ID` = `c`.`ID_CARACTERIZACION`) AS `TOTAL_DIMENSIONES`, (select count(0) from `observacion_sistematica` `os` where `os`.`CARACTERIZACION_ID` = `c`.`ID_CARACTERIZACION`) AS `TOTAL_OBSERVACIONES` FROM (`caracterizacion` `c` join `estudiante` `e` on(`c`.`ESTUDIANTE_ID_ESTUDIANTE` = `e`.`ID_ESTUDIANTE`)) ;
 
 --
 -- Índices para tablas volcadas
@@ -1573,6 +1748,55 @@ ALTER TABLE `dimension_valoracion`
   ADD KEY `idx_dimension_caracterizacion` (`CARACTERIZACION_ID`),
   ADD KEY `idx_dimension_estado` (`ESTADO`),
   ADD KEY `idx_dimension_nombre` (`NOMBRE_DIMENSION`);
+
+--
+-- Indices de la tabla `dim_bienestar_emocional`
+--
+ALTER TABLE `dim_bienestar_emocional`
+  ADD PRIMARY KEY (`ID_DIM_EMOCIONAL`),
+  ADD KEY `fk_dim_emo_car_idx` (`CARACTERIZACION_ID`);
+
+--
+-- Indices de la tabla `dim_conducta_adaptativa`
+--
+ALTER TABLE `dim_conducta_adaptativa`
+  ADD PRIMARY KEY (`ID_DIM_ADAPTATIVA`),
+  ADD KEY `fk_dim_adap_car_idx` (`CARACTERIZACION_ID`);
+
+--
+-- Indices de la tabla `dim_control_entorno`
+--
+ALTER TABLE `dim_control_entorno`
+  ADD PRIMARY KEY (`ID_DIM_CONTROL`),
+  ADD KEY `fk_dim_ctrl_car_idx` (`CARACTERIZACION_ID`);
+
+--
+-- Indices de la tabla `dim_habilidades_intelectuales`
+--
+ALTER TABLE `dim_habilidades_intelectuales`
+  ADD PRIMARY KEY (`ID_DIM_INTELECTUAL`),
+  ADD KEY `fk_dim_inte_car_idx` (`CARACTERIZACION_ID`);
+
+--
+-- Indices de la tabla `dim_participacion_social`
+--
+ALTER TABLE `dim_participacion_social`
+  ADD PRIMARY KEY (`ID_DIM_PARTICIPACION`),
+  ADD KEY `fk_dim_part_car_idx` (`CARACTERIZACION_ID`);
+
+--
+-- Indices de la tabla `dim_pedagogica`
+--
+ALTER TABLE `dim_pedagogica`
+  ADD PRIMARY KEY (`ID_DIM_PEDAGOGICA`),
+  ADD KEY `fk_dim_peda_car_idx` (`CARACTERIZACION_ID`);
+
+--
+-- Indices de la tabla `dim_salud_fisica`
+--
+ALTER TABLE `dim_salud_fisica`
+  ADD PRIMARY KEY (`ID_DIM_SALUD`),
+  ADD KEY `fk_dim_salud_car_idx` (`CARACTERIZACION_ID`);
 
 --
 -- Indices de la tabla `entidades`
@@ -1688,7 +1912,8 @@ ALTER TABLE `matricula`
 --
 ALTER TABLE `novedades_reportes`
   ADD PRIMARY KEY (`ID_NOVEDADES_REPORTES`),
-  ADD KEY `USUARIOS_ID_USUARIO` (`USUARIOS_ID_USUARIO`);
+  ADD KEY `USUARIOS_ID_USUARIO` (`USUARIOS_ID_USUARIO`),
+  ADD KEY `fk_novedades_estudiante` (`ESTUDIANTE_ID`);
 
 --
 -- Indices de la tabla `observacion_sistematica`
@@ -1795,7 +2020,8 @@ ALTER TABLE `usuarioprof_has_materia`
 ALTER TABLE `usuarios`
   ADD PRIMARY KEY (`ID_USUARIO`),
   ADD KEY `TIPO_DOCUMENTO_ID_TIPO_DOCUMENTO` (`TIPO_DOCUMENTO_ID_TIPO_DOCUMENTO`),
-  ADD KEY `FECHA_REGISTRO_ID_FECHA_REGISTRO` (`FECHA_REGISTRO_ID_FECHA_REGISTRO`);
+  ADD KEY `FECHA_REGISTRO_ID_FECHA_REGISTRO` (`FECHA_REGISTRO_ID_FECHA_REGISTRO`),
+  ADD KEY `fk_usuarios_rol_final` (`ROL_ID_ROL`);
 
 --
 -- Indices de la tabla `usuario_rol`
@@ -1860,7 +2086,7 @@ ALTER TABLE `boletin_academico`
 -- AUTO_INCREMENT de la tabla `caracterizacion`
 --
 ALTER TABLE `caracterizacion`
-  MODIFY `ID_CARACTERIZACION` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+  MODIFY `ID_CARACTERIZACION` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 
 --
 -- AUTO_INCREMENT de la tabla `contexto_escolar`
@@ -1890,7 +2116,49 @@ ALTER TABLE `dba`
 -- AUTO_INCREMENT de la tabla `dimension_valoracion`
 --
 ALTER TABLE `dimension_valoracion`
-  MODIFY `ID_DIMENSION` int(11) NOT NULL AUTO_INCREMENT COMMENT 'ID único de la dimensión', AUTO_INCREMENT=121;
+  MODIFY `ID_DIMENSION` int(11) NOT NULL AUTO_INCREMENT COMMENT 'ID único de la dimensión', AUTO_INCREMENT=145;
+
+--
+-- AUTO_INCREMENT de la tabla `dim_bienestar_emocional`
+--
+ALTER TABLE `dim_bienestar_emocional`
+  MODIFY `ID_DIM_EMOCIONAL` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de la tabla `dim_conducta_adaptativa`
+--
+ALTER TABLE `dim_conducta_adaptativa`
+  MODIFY `ID_DIM_ADAPTATIVA` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de la tabla `dim_control_entorno`
+--
+ALTER TABLE `dim_control_entorno`
+  MODIFY `ID_DIM_CONTROL` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de la tabla `dim_habilidades_intelectuales`
+--
+ALTER TABLE `dim_habilidades_intelectuales`
+  MODIFY `ID_DIM_INTELECTUAL` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de la tabla `dim_participacion_social`
+--
+ALTER TABLE `dim_participacion_social`
+  MODIFY `ID_DIM_PARTICIPACION` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de la tabla `dim_pedagogica`
+--
+ALTER TABLE `dim_pedagogica`
+  MODIFY `ID_DIM_PEDAGOGICA` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de la tabla `dim_salud_fisica`
+--
+ALTER TABLE `dim_salud_fisica`
+  MODIFY `ID_DIM_SALUD` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `entidades`
@@ -2143,6 +2411,48 @@ ALTER TABLE `dimension_valoracion`
   ADD CONSTRAINT `fk_dimension_caracterizacion` FOREIGN KEY (`CARACTERIZACION_ID`) REFERENCES `caracterizacion` (`ID_CARACTERIZACION`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
+-- Filtros para la tabla `dim_bienestar_emocional`
+--
+ALTER TABLE `dim_bienestar_emocional`
+  ADD CONSTRAINT `fk_dim_emo_car` FOREIGN KEY (`CARACTERIZACION_ID`) REFERENCES `caracterizacion` (`ID_CARACTERIZACION`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Filtros para la tabla `dim_conducta_adaptativa`
+--
+ALTER TABLE `dim_conducta_adaptativa`
+  ADD CONSTRAINT `fk_dim_adap_car` FOREIGN KEY (`CARACTERIZACION_ID`) REFERENCES `caracterizacion` (`ID_CARACTERIZACION`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Filtros para la tabla `dim_control_entorno`
+--
+ALTER TABLE `dim_control_entorno`
+  ADD CONSTRAINT `fk_dim_ctrl_car` FOREIGN KEY (`CARACTERIZACION_ID`) REFERENCES `caracterizacion` (`ID_CARACTERIZACION`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Filtros para la tabla `dim_habilidades_intelectuales`
+--
+ALTER TABLE `dim_habilidades_intelectuales`
+  ADD CONSTRAINT `fk_dim_inte_car` FOREIGN KEY (`CARACTERIZACION_ID`) REFERENCES `caracterizacion` (`ID_CARACTERIZACION`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Filtros para la tabla `dim_participacion_social`
+--
+ALTER TABLE `dim_participacion_social`
+  ADD CONSTRAINT `fk_dim_part_car` FOREIGN KEY (`CARACTERIZACION_ID`) REFERENCES `caracterizacion` (`ID_CARACTERIZACION`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Filtros para la tabla `dim_pedagogica`
+--
+ALTER TABLE `dim_pedagogica`
+  ADD CONSTRAINT `fk_dim_peda_car` FOREIGN KEY (`CARACTERIZACION_ID`) REFERENCES `caracterizacion` (`ID_CARACTERIZACION`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Filtros para la tabla `dim_salud_fisica`
+--
+ALTER TABLE `dim_salud_fisica`
+  ADD CONSTRAINT `fk_dim_salud_car` FOREIGN KEY (`CARACTERIZACION_ID`) REFERENCES `caracterizacion` (`ID_CARACTERIZACION`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
 -- Filtros para la tabla `estudiante`
 --
 ALTER TABLE `estudiante`
@@ -2206,7 +2516,8 @@ ALTER TABLE `matricula`
 -- Filtros para la tabla `novedades_reportes`
 --
 ALTER TABLE `novedades_reportes`
-  ADD CONSTRAINT `NOVEDADES_REPORTES_ibfk_1` FOREIGN KEY (`USUARIOS_ID_USUARIO`) REFERENCES `usuarios` (`ID_USUARIO`);
+  ADD CONSTRAINT `NOVEDADES_REPORTES_ibfk_1` FOREIGN KEY (`USUARIOS_ID_USUARIO`) REFERENCES `usuarios` (`ID_USUARIO`),
+  ADD CONSTRAINT `fk_novedades_estudiante` FOREIGN KEY (`ESTUDIANTE_ID`) REFERENCES `estudiante` (`ID_ESTUDIANTE`) ON DELETE SET NULL ON UPDATE CASCADE;
 
 --
 -- Filtros para la tabla `observacion_sistematica`
@@ -2272,7 +2583,9 @@ ALTER TABLE `usuarioprof_has_materia`
 -- Filtros para la tabla `usuarios`
 --
 ALTER TABLE `usuarios`
-  ADD CONSTRAINT `FK_TIPO_DOCUMENTO_USUARIO` FOREIGN KEY (`TIPO_DOCUMENTO_ID_TIPO_DOCUMENTO`) REFERENCES `tipo_documento` (`ID_TIPO_DOCUMENTO`);
+  ADD CONSTRAINT `FK_TIPO_DOCUMENTO_USUARIO` FOREIGN KEY (`TIPO_DOCUMENTO_ID_TIPO_DOCUMENTO`) REFERENCES `tipo_documento` (`ID_TIPO_DOCUMENTO`),
+  ADD CONSTRAINT `fk_usuarios_rol_final` FOREIGN KEY (`ROL_ID_ROL`) REFERENCES `rol` (`ID_ROL`) ON UPDATE CASCADE,
+  ADD CONSTRAINT `fk_usuarios_rol_principal` FOREIGN KEY (`ROL_ID_ROL`) REFERENCES `rol` (`ID_ROL`) ON UPDATE CASCADE;
 
 --
 -- Filtros para la tabla `usuario_rol`

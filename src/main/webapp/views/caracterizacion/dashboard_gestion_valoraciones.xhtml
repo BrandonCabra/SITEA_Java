@@ -1,0 +1,232 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <body>
+        <ui:composition template="./../TemplateSitio.xhtml">
+            <ui:define name="content">
+                
+                <h:form id="formDashboard">
+                    <p:growl id="msgs" showDetail="true"/>
+
+                    <div class="container-fluid mt-4">
+                        
+                        <div class="row mb-4">
+                            <div class="col-md-8">
+                                <h2 class="text-primary fw-bold"><i class="fas fa-tachometer-alt me-2"></i>Tablero de Control de Valoraciones</h2>
+                                <p class="text-muted">Gestión integral del proceso de caracterización pedagógica por estudiante y grado.</p>
+                            </div>
+                            <div class="col-md-4 text-end align-self-center">
+                                <h:link outcome="dimensiones/dimensionesavance.xhtml" styleClass="btn btn-success shadow-sm">
+                                    <i class="fas fa-plus me-2"></i> Iniciar Nueva Caracterización
+                                </h:link>
+                            </div>
+                        </div>
+                       
+
+                        <div class="row g-3 mb-4">
+                            <div class="col-md-3">
+                                <div class="card border-0 shadow-sm border-start border-4 border-success">
+                                    <div class="card-body">
+                                        <div class="d-flex justify-content-between">
+                                            <div>
+                                                <h6 class="text-muted text-uppercase small fw-bold">Completadas</h6>
+                                                <h3 class="fw-bold text-success mb-0">#{caracterizacionControllerMejorado.countCompletadas}</h3>
+                                            </div>
+                                            <i class="fas fa-check-circle fa-2x text-success opacity-25"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="card border-0 shadow-sm border-start border-4 border-warning">
+                                    <div class="card-body">
+                                        <div class="d-flex justify-content-between">
+                                            <div>
+                                                <h6 class="text-muted text-uppercase small fw-bold">En Proceso</h6>
+                                                <h3 class="fw-bold text-warning mb-0">#{caracterizacionControllerMejorado.countEnProceso}</h3>
+                                            </div>
+                                            <i class="fas fa-spinner fa-2x text-warning opacity-25"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="card border-0 shadow-sm border-start border-4 border-secondary">
+                                    <div class="card-body">
+                                        <div class="d-flex justify-content-between">
+                                            <div>
+                                                <h6 class="text-muted text-uppercase small fw-bold">Pendientes</h6>
+                                                <h3 class="fw-bold text-secondary mb-0">#{caracterizacionControllerMejorado.countSinIniciar}</h3>
+                                            </div>
+                                            <i class="fas fa-clock fa-2x text-secondary opacity-25"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="card border-0 shadow-sm bg-primary text-white">
+                                    <div class="card-body text-center">
+                                        <h6>Total Estudiantes</h6>
+                                        <h2 class="mb-0">#{caracterizacionControllerMejorado.countCompletadas + caracterizacionControllerMejorado.countEnProceso + caracterizacionControllerMejorado.countSinIniciar}</h2>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-lg-8">
+                                <div class="card shadow border-0">
+                                    <div class="card-header bg-white py-3">
+                                        <h5 class="mb-0 text-primary fw-bold"><i class="fas fa-list me-2"></i>Listado de Estudiantes</h5>
+                                    </div>
+                                    
+                                    <div class="card-body bg-light border-bottom">
+                                        <div class="row g-2">
+                                            <div class="col-md-4">
+                                                <h:outputLabel value="Buscar (Nombre/Doc)" styleClass="form-label small fw-bold"/>
+                                                <div class="input-group">
+                                                    <span class="input-group-text bg-white"><i class="fas fa-search"></i></span>
+                                                    <h:inputText value="#{caracterizacionControllerMejorado.filtroBusqueda}" styleClass="form-control" 
+                                                                 p:placeholder="Escriba aquí...">
+                                                        <f:ajax event="keyup" execute="@this" render="tablaEstudiantes" delay="500"/>
+                                                    </h:inputText>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <h:outputLabel value="Grado Escolar" styleClass="form-label small fw-bold"/>
+                                                <h:selectOneMenu value="#{caracterizacionControllerMejorado.filtroGradoId}" styleClass="form-select">
+                                                    <f:selectItem itemLabel="Todos los Grados" itemValue="#{null}"/>
+                                                    <f:selectItems value="#{caracterizacionControllerMejorado.listaGrados}" var="g" 
+                                                                       itemLabel="#{g.nivelGrado} #{g.cicloGrado}" itemValue="#{g.idGrado}"/>
+                                                    <f:ajax event="change" execute="@this" render="tablaEstudiantes"/>
+                                                </h:selectOneMenu>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <h:outputLabel value="Estado Proceso" styleClass="form-label small fw-bold"/>
+                                                <h:selectOneMenu value="#{caracterizacionControllerMejorado.filtroEstado}" styleClass="form-select">
+                                                    <f:selectItem itemLabel="Todos" itemValue="TODOS"/>
+                                                    <f:selectItem itemLabel="En Proceso" itemValue="EN_PROCESO"/>
+                                                    <f:selectItem itemLabel="Completado" itemValue="COMPLETADA"/>
+                                                    <f:ajax event="change" execute="@this" render="tablaEstudiantes"/>
+                                                </h:selectOneMenu>
+                                            </div>
+                                            <div class="col-md-2 align-self-end">
+                                                <h:commandButton value="Actualizar" action="#{caracterizacionControllerMejorado.calcularMetricasGlobales}" 
+                                                                 styleClass="btn btn-outline-secondary w-100">
+                                                    <f:ajax render="@form"/>
+                                                </h:commandButton>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="card-body p-0">
+                                        <p:dataTable id="tablaEstudiantes" value="#{caracterizacionControllerMejorado.obtenerCaracterizacionesDashboard()}" 
+                                                     var="car" paginator="true" rows="8" 
+                                                     styleClass="fs-6" rowHover="true" emptyMessage="No se encontraron estudiantes con los filtros aplicados.">
+                                            
+                                            <p:column headerText="Estudiante" width="25%">
+                                                <div class="d-flex align-items-center">
+                                                    <div class="avatar-circle me-2 bg-primary text-white text-center rounded-circle" style="width:35px; height:35px; line-height:35px;">
+                                                        #{car.estudianteIdEstudiante.primerNombreEstudiante.substring(0,1)}
+                                                    </div>
+                                                    <div>
+                                                        <span class="fw-bold d-block">#{car.estudianteIdEstudiante.primerNombreEstudiante} #{car.estudianteIdEstudiante.primerApellidoEstudiante}</span>
+                                                        <small class="text-muted">Doc: #{car.estudianteIdEstudiante.numeroDocumentoEstudiante}</small>
+                                                    </div>
+                                                </div>
+                                            </p:column>
+
+                                            <p:column headerText="Grado" width="10%" styleClass="text-center">
+                                                <span class="badge bg-light text-dark border">
+                                                    #{car.estudianteIdEstudiante.cursoIdCurso.gradoIdGrado.nivelGrado} #{car.estudianteIdEstudiante.cursoIdCurso.gradoIdGrado.cicloGrado}
+                                                </span>
+                                            </p:column>
+
+                                            <p:column headerText="Avance Valoración" width="30%">
+                                                <div class="d-flex align-items-center">
+                                                    <div class="flex-grow-1 me-2">
+                                                        <div class="progress" style="height: 10px;">
+                                                            <div class="progress-bar #{car.estadoCaracterizacion == 'COMPLETADA' ? 'bg-success' : 'bg-info'}" 
+                                                                 role="progressbar" 
+                                                                 style="width: #{caracterizacionControllerMejorado.getProgresoEstudiante(car)}%;">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <small class="fw-bold">#{caracterizacionControllerMejorado.getProgresoEstudiante(car)}%</small>
+                                                </div>
+                                                <small class="text-muted" style="font-size: 10px;">8 Dimensiones</small>
+                                            </p:column>
+
+                                            <p:column headerText="Acciones" width="15%" styleClass="text-center">
+                                                <h:commandLink action="#{caracterizacionControllerMejorado.seleccionarCaracterizacionYAvanzar(car.idCaracterizacion)}" 
+                                                               styleClass="btn btn-sm btn-primary" title="Gestionar Dimensiones">
+                                                    <i class="fas fa-edit"></i> Valorar
+                                                </h:commandLink>
+                                            </p:column>
+
+                                        </p:dataTable>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-4">
+                                <div class="card shadow border-0 h-100">
+                                    <div class="card-header bg-white py-3">
+                                        <h5 class="mb-0 text-dark fw-bold"><i class="far fa-calendar-alt me-2"></i>Agenda de Valoraciones</h5>
+                                    </div>
+                                    <div class="card-body">
+                                        <p:schedule id="schedule" value="#{caracterizacionControllerMejorado.eventModel}" 
+                                                    height="400" view="dayGridMonth" locale="es"
+                                                    timeZone="America/Bogota" clientTimeZone="local">
+                                        </p:schedule>
+                                        
+                                        <div class="mt-3 small">
+                                            <span class="badge bg-primary me-1"> </span> Inicio de Proceso
+                                            <span class="badge bg-success ms-2"> </span> Finalización
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </h:form>
+                
+                <script>
+                    PrimeFaces.locales['es'] = {
+                        closeText: 'Cerrar',
+                        prevText: 'Anterior',
+                        nextText: 'Siguiente',
+                        monthNames: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+                        monthNamesShort: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'],
+                        dayNames: ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'],
+                        dayNamesShort: ['Dom', 'Lun', 'Mar', 'Mie', 'Jue', 'Vie', 'Sab'],
+                        dayNamesMin: ['D', 'L', 'M', 'X', 'J', 'V', 'S'],
+                        weekHeader: 'Semana',
+                        firstDay: 1,
+                        isRTL: false,
+                        showMonthAfterYear: false,
+                        yearSuffix: '',
+                        timeOnlyTitle: 'Sólo hora',
+                        timeText: 'Tiempo',
+                        hourText: 'Hora',
+                        minuteText: 'Minuto',
+                        secondText: 'Segundo',
+                        currentText: 'Fecha actual',
+                        ampm: false,
+                        month: 'Mes',
+                        week: 'Semana',
+                        day: 'Día',
+                        allDayText: 'Todo el día'
+                    };
+                </script>
+
+            </ui:define>
+        </ui:composition>
+    </body>
+</html>

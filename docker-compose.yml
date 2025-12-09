@@ -1,0 +1,39 @@
+version: '3.8'
+
+services:
+  # Servicio 1: Tu aplicación Java (GlassFish)
+  webapp:
+    build: .  # Busca el Dockerfile en la carpeta actual
+    container_name: sitea_java_app
+    ports:
+      - "8080:8080" # Puerto externo : Puerto interno
+      - "4848:4848" # Consola de administración (opcional)
+    depends_on:
+      - db
+      - python-service
+    links:
+      - db
+      - python-service
+
+  # Servicio 2: Tu módulo de Python
+  python-service:
+    build: ./python_upload_service # Busca el Dockerfile en la subcarpeta
+    container_name: sitea_python_api
+    ports:
+      - "5000:5000"
+
+  # Servicio 3: Base de datos MySQL
+  db:
+    image: mysql:8.0
+    container_name: sitea_mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: admin # CAMBIA ESTO por una contraseña segura
+      MYSQL_DATABASE: sitea_db
+    ports:
+      - "3306:3306"
+    volumes:
+      - db_data:/var/lib/mysql
+
+volumes:
+  db_data:

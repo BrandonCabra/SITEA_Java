@@ -10,18 +10,18 @@ import com.sena.sitea.entities.TipoDocumento;
 import com.sena.sitea.services.CursoFacadeLocal;
 import com.sena.sitea.services.EstudianteFacadeLocal;
 import com.sena.sitea.services.TipoDocumentoFacadeLocal;
-import javax.inject.Named;
+import jakarta.inject.Named;
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import javax.annotation.PostConstruct;
-import javax.ejb.EJB;
-import javax.enterprise.context.SessionScoped;
-import javax.faces.application.FacesMessage;
-import javax.faces.context.FacesContext;
-import javax.faces.model.SelectItem;
+import jakarta.annotation.PostConstruct;
+import jakarta.ejb.EJB;
+import jakarta.enterprise.context.SessionScoped;
+import jakarta.faces.application.FacesMessage;
+import jakarta.faces.context.FacesContext;
+import jakarta.faces.model.SelectItem;
 
 /**
  *

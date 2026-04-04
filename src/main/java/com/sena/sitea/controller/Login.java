@@ -9,16 +9,16 @@ import com.sena.sitea.entities.Usuarios;
 import com.sena.sitea.security.PasswordUtil;
 import com.sena.sitea.services.PermisosFacadeLocal;
 import com.sena.sitea.services.UsuariosFacadeLocal;
-import javax.inject.Named;
-import javax.enterprise.context.SessionScoped;
+import jakarta.inject.Named;
+import jakarta.enterprise.context.SessionScoped;
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import javax.ejb.EJB;
-import javax.faces.application.FacesMessage;
-import javax.faces.context.FacesContext;
-import javax.servlet.http.HttpSession;
+import jakarta.ejb.EJB;
+import jakarta.faces.application.FacesMessage;
+import jakarta.faces.context.FacesContext;
+import jakarta.servlet.http.HttpSession;
 
 /**
  *

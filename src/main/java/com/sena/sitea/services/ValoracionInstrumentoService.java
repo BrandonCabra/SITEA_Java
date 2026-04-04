@@ -6,8 +6,8 @@ import com.sena.sitea.entities.Caracterizacion;
 import com.sena.sitea.services.CaracterizacionFacadeLocal;
 import java.util.Date;
 import java.util.Map;
-import javax.ejb.EJB;
-import javax.ejb.Stateless;
+import jakarta.ejb.EJB;
+import jakarta.ejb.Stateless;
 
 @Stateless
 public class ValoracionInstrumentoService {

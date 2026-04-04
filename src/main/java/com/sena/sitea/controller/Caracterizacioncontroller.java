@@ -8,16 +8,16 @@ import com.sena.sitea.entities.Caracterizacion;
 import com.sena.sitea.entities.Estudiante;
 import com.sena.sitea.services.CaracterizacionFacadeLocal;
 import com.sena.sitea.services.EstudianteFacadeLocal;
-import javax.inject.Named;
+import jakarta.inject.Named;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import javax.ejb.EJB;
-import javax.enterprise.context.SessionScoped;
-import javax.faces.application.FacesMessage;
-import javax.faces.context.FacesContext;
-import javax.faces.model.SelectItem;
+import jakarta.ejb.EJB;
+import jakarta.enterprise.context.SessionScoped;
+import jakarta.faces.application.FacesMessage;
+import jakarta.faces.context.FacesContext;
+import jakarta.faces.model.SelectItem;
 
 /**
  *

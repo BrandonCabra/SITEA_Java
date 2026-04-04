@@ -4,7 +4,7 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.util.Base64;
-import javax.ejb.Stateless;
+import jakarta.ejb.Stateless;
 
 /**
  * Servicio para hashing de contraseñas y generación de credenciales temporales.

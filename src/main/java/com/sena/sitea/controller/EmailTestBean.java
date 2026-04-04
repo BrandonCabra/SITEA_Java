@@ -1,15 +1,18 @@
  package com.sena.sitea.controller;
 
 import com.sena.sitea.services.EmailService;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
+import java.io.Serializable;
 import java.io.IOException;
-import javax.faces.application.FacesMessage;
-import javax.faces.context.FacesContext;
+import jakarta.faces.application.FacesMessage;
+import jakarta.faces.context.FacesContext;
+import jakarta.faces.view.ViewScoped;
+import jakarta.inject.Named;
 
-@ManagedBean
+@Named
 @ViewScoped
-public class EmailTestBean {
+public class EmailTestBean implements Serializable {
+
+    private static final long serialVersionUID = 1L;
     
     private String destinatario = "tu-email@gmail.com";
     private String asunto = "Prueba SendGrid desde JSF";

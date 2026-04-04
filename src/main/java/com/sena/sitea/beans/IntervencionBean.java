@@ -2,12 +2,12 @@ package com.sena.sitea.beans;
 
 import com.mycompany.webserviceconsumer.PerplexityAPIClient;
 import java.io.Serializable;
-import javax.faces.application.FacesMessage;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
-import javax.faces.context.FacesContext;
+import jakarta.faces.application.FacesMessage;
+import jakarta.faces.context.FacesContext;
+import jakarta.faces.view.ViewScoped;
+import jakarta.inject.Named;
 
-@ManagedBean(name = "intervencionBean")
+@Named("intervencionBean")
 @ViewScoped
 public class IntervencionBean implements Serializable {
 

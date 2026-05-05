@@ -4,7 +4,7 @@ import com.sendgrid.*;
 import com.sendgrid.helpers.mail.*;
 import com.sendgrid.helpers.mail.objects.*;
 import java.io.IOException;
-import javax.ejb.Stateless;
+import jakarta.ejb.Stateless;
 
 /**
  * Servicio especializado para envío de credenciales a padres/acudientes

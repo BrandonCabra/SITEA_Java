@@ -1,10 +1,10 @@
 package com.sena.sitea.controller;
 
-import javax.annotation.PostConstruct;
-import javax.faces.application.FacesMessage;
-import javax.faces.context.FacesContext;
-import javax.inject.Named;
-import javax.faces.view.ViewScoped;
+import jakarta.annotation.PostConstruct;
+import jakarta.faces.application.FacesMessage;
+import jakarta.faces.context.FacesContext;
+import jakarta.inject.Named;
+import jakarta.faces.view.ViewScoped;
 
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
@@ -14,7 +14,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import javax.ejb.EJB;
+import jakarta.ejb.EJB;
 
 @Named("dimensionFormBean")
 @ViewScoped
@@ -92,7 +92,7 @@ public class DimensionFormBean implements Serializable {
 
         // Intentar obtener caracterizacion actual desde el controlador de sesión si está disponible
         try {
-            javax.faces.context.FacesContext fc = javax.faces.context.FacesContext.getCurrentInstance();
+            jakarta.faces.context.FacesContext fc = jakarta.faces.context.FacesContext.getCurrentInstance();
             if (fc != null) {
                 com.sena.sitea.controller.Caracterizacioncontroller ctrl = fc.getApplication().evaluateExpressionGet(fc, "#{caracterizacioncontroller}", com.sena.sitea.controller.Caracterizacioncontroller.class);
                 if (ctrl != null && ctrl.getCar() != null && ctrl.getCar().getIdCaracterizacion() != null) {

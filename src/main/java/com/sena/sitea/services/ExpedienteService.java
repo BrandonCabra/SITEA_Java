@@ -2,10 +2,10 @@ package com.sena.sitea.services;
 
 import com.sena.sitea.entities.ExpedienteCounter;
 import java.time.LocalDate;
-import javax.ejb.Stateless;
-import javax.persistence.EntityManager;
-import javax.persistence.LockModeType;
-import javax.persistence.PersistenceContext;
+import jakarta.ejb.Stateless;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.LockModeType;
+import jakarta.persistence.PersistenceContext;
 
 /**
  * Servicio para generación transaccional de códigos de expediente.

@@ -4,8 +4,8 @@
  */
 package com.sena.sitea.controller;
 
-import javax.inject.Named;
-import javax.enterprise.context.SessionScoped;
+import jakarta.inject.Named;
+import jakarta.enterprise.context.SessionScoped;
 import java.io.Serializable;
 
 /**

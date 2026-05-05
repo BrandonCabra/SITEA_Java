@@ -2,7 +2,8 @@ name: Despliegue a AWS
 
 on:
   push:
-    branches: [ "master" ]
+    branches: [ "main", "master" ]
+  workflow_dispatch:
 
 jobs:
   deploy:
@@ -15,14 +16,21 @@ jobs:
           username: ${{ secrets.EC2_USER }}
           key: ${{ secrets.EC2_SSH_KEY }}
           script: |
+            set -e
+
+            REPO_URL="https://github.com/${{ github.repository }}.git"
+            BRANCH="${{ github.ref_name }}"
+
             # 1. Verificar si ya existe la carpeta, si no, clonar
             if [ ! -d "sitea_java" ]; then
-              git clone https://github.com/brandoncabra/sitea_java.git
+              git clone "$REPO_URL" sitea_java
             fi
             
             # 2. Entrar y actualizar código
             cd sitea_java
-            git pull origin main
+            git fetch origin "$BRANCH"
+            git checkout -B "$BRANCH" "origin/$BRANCH"
+            git pull origin "$BRANCH"
             
             # 3. Reiniciar contenedores (Esto reconstruye con los cambios)
             # El --build asegura que se compile el nuevo WAR y se instale lo nuevo de Python

@@ -2,9 +2,9 @@ package com.sena.sitea.services;
 
 import com.sena.sitea.entities.DimHabilidadesIntelectuales;
 import java.util.List;
-import javax.ejb.Stateless;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
+import jakarta.ejb.Stateless;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
 
 @Stateless
 public class DimHabilidadesIntelectualesFacade extends AbstractFacade<DimHabilidadesIntelectuales> implements DimHabilidadesIntelectualesFacadeLocal {

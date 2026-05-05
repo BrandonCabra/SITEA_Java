@@ -29,9 +29,9 @@ import org.primefaces.model.DefaultScheduleModel;
 import org.primefaces.model.ScheduleModel;
 import org.primefaces.model.DefaultScheduleEvent;
 import com.sena.sitea.security.PasswordUtil;
-import javax.inject.Named;
+import jakarta.inject.Named;
 import java.io.Serializable;
-import javax.annotation.PostConstruct;
+import jakarta.annotation.PostConstruct;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -40,11 +40,11 @@ import java.util.stream.Collectors;
 import java.util.Date;
 import java.util.List;
 import java.security.SecureRandom;
-import javax.ejb.EJB;
-import javax.enterprise.context.SessionScoped;
-import javax.faces.application.FacesMessage;
-import javax.faces.context.FacesContext;
-import javax.faces.model.SelectItem;
+import jakarta.ejb.EJB;
+import jakarta.enterprise.context.SessionScoped;
+import jakarta.faces.application.FacesMessage;
+import jakarta.faces.context.FacesContext;
+import jakarta.faces.model.SelectItem;
 
 
 

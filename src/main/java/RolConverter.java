@@ -1,11 +1,11 @@
 import com.sena.sitea.entities.Rol;
 import com.sena.sitea.services.RolFacadeLocal;
-import javax.ejb.EJB;
-import javax.enterprise.context.RequestScoped;
-import javax.faces.component.UIComponent;
-import javax.faces.context.FacesContext;
-import javax.faces.convert.Converter;
-import javax.inject.Named;
+import jakarta.ejb.EJB;
+import jakarta.enterprise.context.RequestScoped;
+import jakarta.faces.component.UIComponent;
+import jakarta.faces.context.FacesContext;
+import jakarta.faces.convert.Converter;
+import jakarta.inject.Named;
 
 @Named("rolConverter")
 @RequestScoped

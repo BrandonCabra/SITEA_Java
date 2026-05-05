@@ -7,7 +7,7 @@ package com.sena.sitea.services;
 import com.sena.sitea.entities.Permisos;
 import com.sena.sitea.entities.Usuarios;
 import java.util.List;
-import javax.ejb.Local;
+import jakarta.ejb.Local;
 
 /**
  *

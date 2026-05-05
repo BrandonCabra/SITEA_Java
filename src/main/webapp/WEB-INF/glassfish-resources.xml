@@ -39,7 +39,7 @@
         
         <property name="Password" value="admin"/>
         
-        <property name="URL" value="jdbc:mysql://db:3306/sitea_db?zeroDateTimeBehavior=CONVERT_TO_NULL&amp;useSSL=false"/>
+        <property name="URL" value="jdbc:mysql://db:3306/sitea_db?zeroDateTimeBehavior=CONVERT_TO_NULL&amp;useSSL=false&amp;allowPublicKeyRetrieval=true"/>
         
         <property name="driverClass" value="com.mysql.cj.jdbc.Driver"/>
     </jdbc-connection-pool>

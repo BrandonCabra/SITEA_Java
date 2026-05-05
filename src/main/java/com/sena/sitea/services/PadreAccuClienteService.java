@@ -6,11 +6,11 @@ import com.sena.sitea.entities.TipoDocumento;
 import com.sena.sitea.entities.Usuarios;
 import java.util.Date;
 import java.util.List;
-import javax.ejb.EJB;
-import javax.ejb.Stateless;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import javax.validation.ConstraintViolation;
+import jakarta.ejb.EJB;
+import jakarta.ejb.Stateless;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
+import jakarta.validation.ConstraintViolation;
 
 /**
  * Servicio para crear automáticamente cuentas de padres/acudientes
@@ -104,10 +104,10 @@ public class PadreAccuClienteService {
             // Log detallado de validaciones violadas
             Throwable cause = e;
             while (cause != null) {
-                if (cause instanceof javax.validation.ConstraintViolationException) {
-                    javax.validation.ConstraintViolationException cve = (javax.validation.ConstraintViolationException) cause;
+                if (cause instanceof jakarta.validation.ConstraintViolationException) {
+                    jakarta.validation.ConstraintViolationException cve = (jakarta.validation.ConstraintViolationException) cause;
                     System.err.println("\n   ⚠️  CONSTRAINT VIOLATIONS:");
-                    for (javax.validation.ConstraintViolation<?> cv : cve.getConstraintViolations()) {
+                    for (jakarta.validation.ConstraintViolation<?> cv : cve.getConstraintViolations()) {
                         System.err.println("      • Campo: " + cv.getPropertyPath());
                         System.err.println("        Valor: " + cv.getInvalidValue());
                         System.err.println("        Mensaje: " + cv.getMessage());

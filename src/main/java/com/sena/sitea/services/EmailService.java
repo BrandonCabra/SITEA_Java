@@ -13,7 +13,7 @@ import com.sendgrid.helpers.mail.*;
 import com.sendgrid.helpers.mail.objects.*;
 import java.io.IOException;
 import java.util.List;
-import javax.ejb.Stateless;
+import jakarta.ejb.Stateless;
 
 /**
  *

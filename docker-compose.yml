@@ -1,9 +1,9 @@
-version: '3.8'
-
 services:
   # Servicio 1: Tu aplicación Java (GlassFish)
   webapp:
-    build: .  # Busca el Dockerfile en la carpeta actual
+    build:
+      context: .
+      dockerfile: src/main/Dockerfile
     container_name: sitea_java_app
     ports:
       - "8080:8080" # Puerto externo : Puerto interno

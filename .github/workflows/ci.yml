@@ -1,0 +1,70 @@
+name: CI SITEA
+
+on:
+  push:
+    branches: [ "main", "master" ]
+  pull_request:
+    branches: [ "main", "master" ]
+  workflow_dispatch:
+
+jobs:
+  java-build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 21
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 21
+          cache: maven
+
+      - name: Build Java WAR
+        run: mvn -B clean package
+
+  python-service:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: python_upload_service
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+          cache-dependency-path: python_upload_service/requirements.txt
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Syntax check
+        run: python -m py_compile app.py test_service.py verificar_servicio.py
+
+      - name: Start service
+        run: |
+          nohup python app.py > service.log 2>&1 &
+
+      - name: Wait for service and run smoke test
+        run: |
+          python - <<'PY'
+          import time
+          import requests
+
+          for _ in range(30):
+              try:
+                  response = requests.get("http://127.0.0.1:5000/health", timeout=2)
+                  if response.status_code == 200:
+                      break
+              except Exception:
+                  pass
+              time.sleep(1)
+          else:
+              raise SystemExit("Python service did not become ready")
+          PY
+          python test_service.py

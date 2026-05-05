@@ -2,7 +2,7 @@ package com.sena.sitea.services;
 
 import com.sena.sitea.entities.ContextoEscolar;
 import java.util.List;
-import javax.ejb.Local;
+import jakarta.ejb.Local;
 
 @Local
 public interface ContextoEscolarFacadeLocal {

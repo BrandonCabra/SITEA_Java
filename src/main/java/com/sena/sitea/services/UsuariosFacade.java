@@ -6,10 +6,10 @@ package com.sena.sitea.services;
 
 import com.sena.sitea.entities.Usuarios;
 import com.sena.sitea.security.PasswordUtil;
-import javax.ejb.Stateless;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
+import jakarta.ejb.Stateless;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
+import jakarta.persistence.Query;
 
 /**
  *

@@ -3,12 +3,12 @@ package com.sena.sitea.converters;
 import com.sena.sitea.controller.AdminController;
 import com.sena.sitea.entities.TipoDocumento;
 import com.sena.sitea.services.TipoDocumentoFacadeLocal;
-import javax.ejb.EJB;
-import javax.enterprise.context.RequestScoped;
-import javax.faces.component.UIComponent;
-import javax.faces.context.FacesContext;
-import javax.faces.convert.Converter;
-import javax.inject.Named;
+import jakarta.ejb.EJB;
+import jakarta.enterprise.context.RequestScoped;
+import jakarta.faces.component.UIComponent;
+import jakarta.faces.context.FacesContext;
+import jakarta.faces.convert.Converter;
+import jakarta.inject.Named;
 
 // Usamos @Named para permitir la inyección del EJB (funciona mejor en Glassfish 5 que @FacesConverter plano)
 @Named("tipoDocumentoConverter")

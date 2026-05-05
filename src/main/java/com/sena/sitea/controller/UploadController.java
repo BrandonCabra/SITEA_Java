@@ -3,10 +3,10 @@ package com.sena.sitea.controller;
 import com.sena.sitea.util.UploadServiceClient;
 import com.sena.sitea.util.UploadServiceClient.FileInfo;
 import com.sena.sitea.util.UploadServiceClient.UploadResponse;
-import javax.faces.application.FacesMessage;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
-import javax.faces.context.FacesContext;
+import jakarta.faces.application.FacesMessage;
+import jakarta.faces.context.FacesContext;
+import jakarta.faces.view.ViewScoped;
+import jakarta.inject.Named;
 import org.primefaces.event.FileUploadEvent;
 import org.primefaces.model.file.UploadedFile;
 import java.io.Serializable;
@@ -15,7 +15,7 @@ import java.util.List;
 /**
  * Controlador para la gestión de carga de archivos usando el servicio Python
  */
-@ManagedBean(name = "uploadController")
+@Named("uploadController")
 @ViewScoped
 public class UploadController implements Serializable {
     

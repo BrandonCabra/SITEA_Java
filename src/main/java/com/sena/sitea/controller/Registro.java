@@ -8,16 +8,16 @@ import com.sena.sitea.services.TipoDocumentoFacadeLocal;
 import com.sena.sitea.services.UsuariosFacadeLocal;
 import java.io.Serializable;
 import java.util.List;
-import javax.ejb.EJB;
-import javax.faces.application.FacesMessage;
-import javax.faces.context.FacesContext;
-import javax.faces.view.ViewScoped;
-import javax.inject.Named;
+import jakarta.ejb.EJB;
+import jakarta.faces.application.FacesMessage;
+import jakarta.faces.context.FacesContext;
+import jakarta.faces.view.ViewScoped;
+import jakarta.inject.Named;
 import org.mindrot.jbcrypt.BCrypt;
-import javax.validation.ConstraintViolation;
-/*import javax.enterprise.context.ViewScoped;*/
-import javax.inject.Named;
-import javax.servlet.http.HttpSession;
+import jakarta.validation.ConstraintViolation;
+/*import jakarta.enterprise.context.ViewScoped;*/
+import jakarta.inject.Named;
+import jakarta.servlet.http.HttpSession;
 
 @Named(value = "registro")
 @ViewScoped
@@ -89,7 +89,7 @@ public class Registro implements Serializable {
 
             return null;
 
-        } catch (javax.validation.ConstraintViolationException ex) {
+        } catch (jakarta.validation.ConstraintViolationException ex) {
             for (ConstraintViolation<?> cv : ex.getConstraintViolations()) {
                 System.err.println("⚠️ Campo: " + cv.getPropertyPath());
                 System.err.println("💬 Mensaje: " + cv.getMessage());

@@ -6,9 +6,9 @@ import com.sena.sitea.services.EstudianteFacadeLocal;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import javax.ejb.EJB;
-import javax.inject.Named;
-import javax.faces.view.ViewScoped; // Cambiamos a ViewScoped para mejor manejo de la tabla
+import jakarta.ejb.EJB;
+import jakarta.inject.Named;
+import jakarta.faces.view.ViewScoped; // Cambiamos a ViewScoped para mejor manejo de la tabla
 
 @Named(value = "reporteBean1")
 @ViewScoped // Recomendado para mantener los datos de la tabla al paginar/filtrar

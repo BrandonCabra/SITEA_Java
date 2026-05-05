@@ -1,7 +1,7 @@
 package com.mycompany.webserviceconsumer;
 
-import javax.inject.Named;
-import javax.enterprise.context.RequestScoped;
+import jakarta.inject.Named;
+import jakarta.enterprise.context.RequestScoped;
 import java.io.Serializable;
 import java.net.HttpURLConnection;
 import java.net.URL;

@@ -5,9 +5,11 @@ on:
 
 jobs:
   deploy:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
 
     env:
+      EC2_DEPLOY_DIR: /home/ubuntu/sitea-deploy
+      PAYARA_MICRO_JAR: /home/ubuntu/payara-micro-6.2024.3.jar
       WAR_SOURCE: target/sitea.war
 
     steps:
@@ -31,48 +33,20 @@ jobs:
             -Dsitea.db.password="${{ secrets.RDS_PASSWORD }}"
           cp target/sitea-1.0-SNAPSHOT.war "$WAR_SOURCE"
 
-      - name: Prepare deploy directory on EC2
-        uses: appleboy/ssh-action@v1.2.0
-        with:
-          host: ${{ secrets.EC2_HOST }}
-          username: ${{ secrets.EC2_USER }}
-          key: ${{ secrets.EC2_SSH_KEY }}
-          port: ${{ secrets.EC2_PORT || 22 }}
-          script: |
-            set -e
-            mkdir -p /home/ubuntu/sitea-deploy
-
-      - name: Upload WAR to EC2
-        uses: appleboy/scp-action@v0.1.7
-        with:
-          host: ${{ secrets.EC2_HOST }}
-          username: ${{ secrets.EC2_USER }}
-          key: ${{ secrets.EC2_SSH_KEY }}
-          port: ${{ secrets.EC2_PORT || 22 }}
-          source: ${{ env.WAR_SOURCE }}
-          target: /home/ubuntu/sitea-deploy/
-
       - name: Restart Payara Micro on EC2
-        uses: appleboy/ssh-action@v1.2.0
-        with:
-          host: ${{ secrets.EC2_HOST }}
-          username: ${{ secrets.EC2_USER }}
-          key: ${{ secrets.EC2_SSH_KEY }}
-          port: ${{ secrets.EC2_PORT || 22 }}
-          script: |
-            set -e
-            DEPLOY_DIR="/home/ubuntu/sitea-deploy"
-            WAR_FILE="$DEPLOY_DIR/sitea.war"
-            LOG_FILE="$DEPLOY_DIR/payara.log"
+        run: |
+          set -e
+          mkdir -p "$EC2_DEPLOY_DIR"
+          cp "$WAR_SOURCE" "$EC2_DEPLOY_DIR/sitea.war"
 
-            pkill -f "payara-micro-6.2024.3.jar" || true
-            nohup java -jar /home/ubuntu/payara-micro-6.2024.3.jar --deploy "$WAR_FILE" --port 8080 > "$LOG_FILE" 2>&1 &
+          pkill -f "payara-micro-6.2024.3.jar" || true
+          nohup java -jar "$PAYARA_MICRO_JAR" --deploy "$EC2_DEPLOY_DIR/sitea.war" --port 8080 > "$EC2_DEPLOY_DIR/payara.log" 2>&1 &
 
-            for _ in $(seq 1 30); do
-              if curl -fsS http://127.0.0.1:8080/sitea/ >/dev/null; then
-                break
-              fi
-              sleep 2
-            done
+          for _ in $(seq 1 30); do
+            if curl -fsS http://127.0.0.1:8080/sitea/ >/dev/null; then
+              break
+            fi
+            sleep 2
+          done
 
-            tail -n 60 "$LOG_FILE"
+          tail -n 60 "$EC2_DEPLOY_DIR/payara.log"

@@ -66,14 +66,11 @@
         </div>
 
         <div class="mb-3">
-            <label class="form-label">Rol</label>
-            <h:selectOneMenu id="rol" value="#{registro.con.rolIdRol}"
-                             converter="#{rolConverter}" required="true"
-                             styleClass="form-select">
-                <f:selectItem itemLabel="Seleccione..." itemValue="#{null}" />
+            <label class="form-label">Roles (puedes seleccionar varios)</label>
+            <h:selectManyListbox id="roles" value="#{registro.selectedRoleIds}" size="4" styleClass="form-select">
                 <f:selectItems value="#{registro.listaRoles}" var="r"
-                               itemValue="#{r}" itemLabel="#{r.nombreRol}" />
-            </h:selectOneMenu>
+                               itemValue="#{r.idRol}" itemLabel="#{r.nombreRol}" />
+            </h:selectManyListbox>
         </div>
 
         <div class="mb-3">
@@ -97,13 +94,19 @@
     <!-- JavaScript para validación básica -->
     <h:outputScript target="body">
         function validarFormulario() {
-            const campos = ["nombres", "apellidos", "tipoDocumento", "numeroDocumento", "direccion", "rol", "password"];
+            const campos = ["nombres", "apellidos", "tipoDocumento", "numeroDocumento", "direccion", "password"];
             for (let id of campos) {
                 const input = document.getElementById(id);
                 if (!input || input.value.trim() === "") {
                     alert("⚠️ Por favor, completa todos los campos obligatorios.");
                     return false;
                 }
+            }
+            // Check roles selection
+            const roles = document.getElementById('roles');
+            if (roles && roles.selectedOptions.length === 0) {
+                alert('⚠️ Selecciona al menos un rol.');
+                return false;
             }
             return true;
         }

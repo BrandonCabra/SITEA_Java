@@ -76,7 +76,13 @@ public class PadreAccuClienteService {
             usuarioPadre.setFechaRegistroIdFechaRegistro(new Date());
             usuarioPadre.setEstatus("ACTIVO");
             usuarioPadre.setTipoDocumentoIdTipoDocumento(tipoDocumento);
-            usuarioPadre.setRolIdRol(rolPadre);
+            // Asignar rol mediante la tabla intermedia usuario_rol
+            java.util.List<com.sena.sitea.entities.UsuarioRol> urs = new java.util.ArrayList<>();
+            com.sena.sitea.entities.UsuarioRol ur = new com.sena.sitea.entities.UsuarioRol();
+            ur.setRolIdRol(rolPadre);
+            ur.setUsuarioIdUsuario(usuarioPadre);
+            urs.add(ur);
+            usuarioPadre.setUsuarioRolList(urs);
             System.out.println("  ✓ Objeto Usuarios construido correctamente");
 
             // PASO 7: Persistir usuario

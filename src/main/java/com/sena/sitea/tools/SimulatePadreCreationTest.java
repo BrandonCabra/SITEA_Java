@@ -66,11 +66,16 @@ public class SimulatePadreCreationTest {
         td.setNombreTipoDocumento("CEDULA");
         usuarioPadre.setTipoDocumentoIdTipoDocumento(td);
         
-        // Asignar Rol PADRE DE FAMILIA
+        // Asignar Rol PADRE DE FAMILIA (vía usuario_rol)
         Rol rol = new Rol();
         rol.setIdRol(3);
         rol.setNombreRol("PADRE DE FAMILIA");
-        usuarioPadre.setRolIdRol(rol);
+        java.util.List<com.sena.sitea.entities.UsuarioRol> urs = new java.util.ArrayList<>();
+        com.sena.sitea.entities.UsuarioRol ur = new com.sena.sitea.entities.UsuarioRol();
+        ur.setRolIdRol(rol);
+        ur.setUsuarioIdUsuario(usuarioPadre);
+        urs.add(ur);
+        usuarioPadre.setUsuarioRolList(urs);
         
         System.out.println("\n✓ Usuarios construido:");
         System.out.println("  Nombre: " + usuarioPadre.getPrimerNombre() + " " + usuarioPadre.getPrimerApellido());

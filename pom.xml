@@ -13,12 +13,24 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.release>21</maven.compiler.release>
         <jackson.version>2.19.4</jackson.version>
+        <sitea.db.host>db</sitea.db.host>
+        <sitea.db.port>3306</sitea.db.port>
+        <sitea.db.name>sitea_db</sitea.db.name>
+        <sitea.db.user>root</sitea.db.user>
+        <sitea.db.password>admin</sitea.db.password>
     </properties>
     
     <dependencies>
         
     <!-- API GOOGLE DRIVE -->    
      
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>8.0.28</version>
+            <scope>runtime</scope>
+        </dependency>
+
         <dependency>
             <groupId>com.google.code.gson</groupId>
             <artifactId>gson</artifactId>
@@ -164,6 +176,7 @@
                 <version>3.3.2</version>
                 <configuration>
                     <failOnMissingWebXml>false</failOnMissingWebXml>
+                    <filteringDeploymentDescriptors>true</filteringDeploymentDescriptors>
                 </configuration>
             </plugin>
         </plugins>

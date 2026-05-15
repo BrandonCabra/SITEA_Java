@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: localhost
--- Tiempo de generación: 09-12-2025 a las 00:26:07
+-- Tiempo de generación: 11-02-2026 a las 06:09:54
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -177,7 +177,13 @@ INSERT INTO `caracterizacion` (`ID_CARACTERIZACION`, `CODIGO_CARACTERIZACION`, `
 (19, 'CHAR-TEA-2025-0047', 16, 'PENDIENTE', 'PENDIENTE', 'PENDIENTE', 'PENDIENTE', 'PENDIENTE', 'PENDIENTE', 'PENDIENTE', 'PENDIENTE', NULL, 'CHAR-TEA-2025-0047', 'INICIADA', '2025-12-06 16:28:02', NULL, '2025-12-06 16:28:02', '2025-12-06 16:28:02', NULL, NULL),
 (20, 'CHAR-TEA-2025-0048', 17, 'PENDIENTE', 'PENDIENTE', 'PENDIENTE', 'PENDIENTE', 'PENDIENTE', 'PENDIENTE', 'PENDIENTE', 'PENDIENTE', NULL, 'CHAR-TEA-2025-0048', 'INICIADA', '2025-12-07 17:16:17', NULL, '2025-12-07 17:16:17', '2025-12-07 17:16:17', NULL, NULL),
 (21, 'CHAR-TEA-2025-0049', 19, 'PENDIENTE', 'PENDIENTE', 'PENDIENTE', 'PENDIENTE', 'PENDIENTE', 'PENDIENTE', 'PENDIENTE', 'PENDIENTE', NULL, 'CHAR-TEA-2025-0049', 'INICIADA', '2025-12-08 06:38:03', NULL, '2025-12-08 06:38:03', '2025-12-08 06:38:03', NULL, NULL),
-(22, 'CHAR-TEA-2025-0050', 25, 'PENDIENTE', 'PENDIENTE', 'PENDIENTE', 'PENDIENTE', 'PENDIENTE', 'PENDIENTE', 'PENDIENTE', 'PENDIENTE', NULL, 'CHAR-TEA-2025-0050', 'INICIADA', '2025-12-08 22:57:51', NULL, '2025-12-08 22:57:51', '2025-12-08 22:57:51', NULL, NULL);
+(22, 'CHAR-TEA-2025-0050', 25, 'PENDIENTE', 'PENDIENTE', 'PENDIENTE', 'PENDIENTE', 'PENDIENTE', 'PENDIENTE', 'PENDIENTE', 'PENDIENTE', NULL, 'CHAR-TEA-2025-0050', 'INICIADA', '2025-12-08 22:57:51', NULL, '2025-12-08 22:57:51', '2025-12-08 22:57:51', NULL, NULL),
+(24, 'CHAR-TEA-2025-0052', 23, 'PENDIENTE', 'PENDIENTE', 'PENDIENTE', 'PENDIENTE', 'PENDIENTE', 'PENDIENTE', 'PENDIENTE', 'PENDIENTE', NULL, 'CHAR-TEA-2025-0052', 'INICIADA', '2025-12-09 17:51:19', NULL, '2025-12-09 17:51:19', '2025-12-09 17:51:19', NULL, NULL),
+(25, 'CHAR-TEA-2025-0056', 33, 'PENDIENTE', 'PENDIENTE', 'PENDIENTE', 'PENDIENTE', 'PENDIENTE', 'PENDIENTE', 'PENDIENTE', 'PENDIENTE', NULL, 'CHAR-TEA-2025-0056', 'INICIADA', '2025-12-09 19:41:30', NULL, '2025-12-09 19:41:30', '2025-12-09 19:41:30', NULL, NULL),
+(26, 'CHAR-TEA-2025-0057', 33, 'PENDIENTE', 'PENDIENTE', 'PENDIENTE', 'PENDIENTE', 'PENDIENTE', 'PENDIENTE', 'PENDIENTE', 'PENDIENTE', NULL, 'CHAR-TEA-2025-0057', 'INICIADA', '2025-12-09 19:41:34', NULL, '2025-12-09 19:41:34', '2025-12-09 19:41:34', NULL, NULL),
+(27, 'CHAR-TEA-2025-0058', 24, 'PENDIENTE', 'PENDIENTE', 'PENDIENTE', 'PENDIENTE', 'PENDIENTE', 'PENDIENTE', 'PENDIENTE', 'PENDIENTE', NULL, 'CHAR-TEA-2025-0058', 'INICIADA', '2025-12-09 19:44:37', NULL, '2025-12-09 19:44:37', '2025-12-09 19:44:37', NULL, NULL),
+(28, 'CHAR-TEA-2025-0059', 26, 'PENDIENTE', 'PENDIENTE', 'PENDIENTE', 'PENDIENTE', 'PENDIENTE', 'PENDIENTE', 'PENDIENTE', 'PENDIENTE', NULL, 'CHAR-TEA-2025-0059', 'INICIADA', '2025-12-09 19:47:06', NULL, '2025-12-09 19:47:06', '2025-12-09 19:47:06', NULL, NULL),
+(29, 'CHAR-TEA-2025-0060', 27, 'PENDIENTE', 'PENDIENTE', 'PENDIENTE', 'PENDIENTE', 'PENDIENTE', 'PENDIENTE', 'PENDIENTE', 'PENDIENTE', NULL, 'CHAR-TEA-2025-0060', 'INICIADA', '2025-12-09 20:07:41', NULL, '2025-12-09 20:07:41', '2025-12-09 20:07:41', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -216,7 +222,9 @@ INSERT INTO `contexto_escolar` (`id_contexto_escolar`, `id_caracterizacion`, `in
 (7, 12, 'COMPLETA', 'CUMPLE CON ESTANDARES', 'TIENE MATERIALES ADAPTABLES AMBIENTE APROPIADO', 'presentes para cada área', 'CADA SALON CUENTA CON DOCENTE DE APOYO', 'CULTURALES', 'MANTENER CONDICIONES', NULL, '2025-12-05 06:02:00', '2025-12-05 06:02:00', NULL, NULL),
 (8, 13, 'COMPLETA', 'CUMPLE CON ESTANDARES', 'TIENE MATERIALES ADAPTABLES AMBIENTE APROPIADO', 'presentes para cada área', 'CADA SALON CUENTA CON DOCENTE DE APOYO', 'CULTURALES', 'MANTENER CONDICIONES', NULL, '2025-12-05 06:05:25', '2025-12-05 06:05:25', NULL, NULL),
 (9, 14, 'correcta', 'poca', 'basicos', 'no aplica', 'falta apoyo', 'contextual', 'mejorar', NULL, '2025-12-05 06:18:34', '2025-12-05 06:18:34', NULL, NULL),
-(11, 17, 'aceptable', 'inclusiva', 'apropiada', 'pocos', 'bien apropiada', 'contextual', 'flexibilizacion', NULL, '2025-12-05 09:48:43', '2025-12-05 09:48:43', NULL, NULL);
+(11, 17, 'aceptable', 'inclusiva', 'apropiada', 'pocos', 'bien apropiada', 'contextual', 'flexibilizacion', NULL, '2025-12-05 09:48:43', '2025-12-05 09:48:43', NULL, NULL),
+(12, 28, 'Poco accesible', 'Ninguno', 'bajo', 'no tienen internet', 'apropiado, falta docente de apoyo', 'contextuales y economicas', 'solicitar apoyos', NULL, '2025-12-09 19:56:52', '2025-12-09 20:04:24', NULL, NULL),
+(13, 29, 'accesible', 'aportuna', 'adecuados', 'en construccion', 'apropiado y completo', 'social', 'continuar con mejoras', NULL, '2025-12-09 20:08:29', '2025-12-09 20:08:29', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -263,7 +271,8 @@ CREATE TABLE `contexto_familiar` (
 --
 
 INSERT INTO `contexto_familiar` (`ID_CONTEXTO_FAMILIAR`, `CARACTERIZACION_ID`, `ACUDIENTE_NOMBRE`, `ACUDIENTE_DOCUMENTO`, `ACUDIENTE_TELEFONO`, `ACUDIENTE_EMAIL`, `ACUDIENTE_PARENTESCO`, `MADRE_NOMBRE`, `MADRE_DOCUMENTO`, `MADRE_TELEFONO`, `MADRE_EMAIL`, `MADRE_OCUPACION`, `MADRE_ESCOLARIDAD`, `PADRE_NOMBRE`, `PADRE_DOCUMENTO`, `PADRE_TELEFONO`, `PADRE_EMAIL`, `PADRE_OCUPACION`, `PADRE_ESCOLARIDAD`, `OTROS_FAMILIARES`, `RELACIONES_FAMILIARES`, `COMUNICACION_FAMILIAR`, `TIPO_VIVIENDA`, `TENENCIA_VIVIENDA`, `CONDICIONES_VIVIENDA`, `SITUACION_ECONOMICA`, `OBSERVACIONES_FAMILIA`, `CREATED_AT`, `UPDATED_AT`, `CREATED_BY`, `UPDATED_BY`) VALUES
-(1, 11, 'CLARA MARTINEZ', '1052395000', '3158102820', 'bjcabrab@gmail.com', 'Padre', 'CLARA MARTINEZ', '1052395000', '3158102820', 'bjcabrab@gmail.com', 'ama de casa', 'Técnica', 'Rafael Duarte', '1052395100', '3158102820', 'sitea.edu@gmail.com', 'independiente', 'Técnica', 'abuelitos', 'presenta disfunción familiar', 'con la mamá quien es la que esta pendiente de la estudiante', 'Apartamento', 'Arrendada', 'con lo necesario', 'media baja', 'en la casa ayuda en el negocio del papá', '2025-12-05 05:21:59', '2025-12-05 05:21:59', NULL, NULL);
+(1, 11, 'CLARA MARTINEZ', '1052395000', '3158102820', 'bjcabrab@gmail.com', 'Padre', 'CLARA MARTINEZ', '1052395000', '3158102820', 'bjcabrab@gmail.com', 'ama de casa', 'Técnica', 'Rafael Duarte', '1052395100', '3158102820', 'sitea.edu@gmail.com', 'independiente', 'Técnica', 'abuelitos', 'presenta disfunción familiar', 'con la mamá quien es la que esta pendiente de la estudiante', 'Apartamento', 'Arrendada', 'con lo necesario', 'media baja', 'en la casa ayuda en el negocio del papá', '2025-12-05 05:21:59', '2025-12-05 05:21:59', NULL, NULL),
+(2, 29, 'Julian Moreno', '1053693458', '3158102820', 'bjcabrab@gmail.com', 'Padre', '', '', '', '', '', NULL, 'Julian Moreno', '1053693458', '3158102820', 'bjcabrab@gmail.com', 'Futbolista', 'Tecnológica', 'Solo', 'buena', 'apropiada', 'Apartamento', 'Propia', 'cuenta con todo', 'estable', '', '2025-12-09 20:30:58', '2025-12-09 20:30:58', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -531,7 +540,55 @@ INSERT INTO `dimension_valoracion` (`ID_DIMENSION`, `CARACTERIZACION_ID`, `NOMBR
 (141, 22, 'Salud y bienestar físico', NULL, NULL, NULL, NULL, 'PENDIENTE', NULL, '2025-12-08 22:57:51', '2025-12-08 22:57:51'),
 (142, 22, 'Participación e inclusión social', NULL, NULL, NULL, NULL, 'PENDIENTE', NULL, '2025-12-08 22:57:51', '2025-12-08 22:57:51'),
 (143, 22, 'Control del propio entorno', NULL, NULL, NULL, NULL, 'PENDIENTE', NULL, '2025-12-08 22:57:51', '2025-12-08 22:57:51'),
-(144, 22, 'Dimensión pedagógica', NULL, NULL, NULL, NULL, 'PENDIENTE', NULL, '2025-12-08 22:57:51', '2025-12-08 22:57:51');
+(144, 22, 'Dimensión pedagógica', NULL, NULL, NULL, NULL, 'PENDIENTE', NULL, '2025-12-08 22:57:51', '2025-12-08 22:57:51'),
+(153, 24, 'Contexto y vida familiar', NULL, NULL, NULL, NULL, 'PENDIENTE', NULL, '2025-12-09 17:51:19', '2025-12-09 17:51:19'),
+(154, 24, 'Habilidades intelectuales', NULL, NULL, NULL, NULL, 'PENDIENTE', NULL, '2025-12-09 17:51:19', '2025-12-09 17:51:19'),
+(155, 24, 'Bienestar emocional', NULL, NULL, NULL, NULL, 'PENDIENTE', NULL, '2025-12-09 17:51:19', '2025-12-09 17:51:19'),
+(156, 24, 'Conducta adaptativa y desarrollo personal', NULL, NULL, NULL, NULL, 'PENDIENTE', NULL, '2025-12-09 17:51:19', '2025-12-09 17:51:19'),
+(157, 24, 'Salud y bienestar físico', NULL, NULL, NULL, NULL, 'PENDIENTE', NULL, '2025-12-09 17:51:19', '2025-12-09 17:51:19'),
+(158, 24, 'Participación e inclusión social', NULL, NULL, NULL, NULL, 'PENDIENTE', NULL, '2025-12-09 17:51:19', '2025-12-09 17:51:19'),
+(159, 24, 'Control del propio entorno', NULL, NULL, NULL, NULL, 'PENDIENTE', NULL, '2025-12-09 17:51:19', '2025-12-09 17:51:19'),
+(160, 24, 'Dimensión pedagógica', NULL, NULL, NULL, NULL, 'PENDIENTE', NULL, '2025-12-09 17:51:19', '2025-12-09 17:51:19'),
+(161, 25, 'Contexto y vida familiar', NULL, NULL, NULL, NULL, 'PENDIENTE', NULL, '2025-12-09 19:41:30', '2025-12-09 19:41:30'),
+(162, 25, 'Habilidades intelectuales', NULL, NULL, NULL, NULL, 'PENDIENTE', NULL, '2025-12-09 19:41:30', '2025-12-09 19:41:30'),
+(163, 25, 'Bienestar emocional', NULL, NULL, NULL, NULL, 'PENDIENTE', NULL, '2025-12-09 19:41:30', '2025-12-09 19:41:30'),
+(164, 25, 'Conducta adaptativa y desarrollo personal', NULL, NULL, NULL, NULL, 'PENDIENTE', NULL, '2025-12-09 19:41:30', '2025-12-09 19:41:30'),
+(165, 25, 'Salud y bienestar físico', NULL, NULL, NULL, NULL, 'PENDIENTE', NULL, '2025-12-09 19:41:30', '2025-12-09 19:41:30'),
+(166, 25, 'Participación e inclusión social', NULL, NULL, NULL, NULL, 'PENDIENTE', NULL, '2025-12-09 19:41:30', '2025-12-09 19:41:30'),
+(167, 25, 'Control del propio entorno', NULL, NULL, NULL, NULL, 'PENDIENTE', NULL, '2025-12-09 19:41:30', '2025-12-09 19:41:30'),
+(168, 25, 'Dimensión pedagógica', NULL, NULL, NULL, NULL, 'PENDIENTE', NULL, '2025-12-09 19:41:30', '2025-12-09 19:41:30'),
+(169, 26, 'Contexto y vida familiar', NULL, NULL, NULL, NULL, 'PENDIENTE', NULL, '2025-12-09 19:41:34', '2025-12-09 19:41:34'),
+(170, 26, 'Habilidades intelectuales', NULL, NULL, NULL, NULL, 'PENDIENTE', NULL, '2025-12-09 19:41:34', '2025-12-09 19:41:34'),
+(171, 26, 'Bienestar emocional', NULL, NULL, NULL, NULL, 'PENDIENTE', NULL, '2025-12-09 19:41:34', '2025-12-09 19:41:34'),
+(172, 26, 'Conducta adaptativa y desarrollo personal', NULL, NULL, NULL, NULL, 'PENDIENTE', NULL, '2025-12-09 19:41:34', '2025-12-09 19:41:34'),
+(173, 26, 'Salud y bienestar físico', NULL, NULL, NULL, NULL, 'PENDIENTE', NULL, '2025-12-09 19:41:34', '2025-12-09 19:41:34'),
+(174, 26, 'Participación e inclusión social', NULL, NULL, NULL, NULL, 'PENDIENTE', NULL, '2025-12-09 19:41:34', '2025-12-09 19:41:34'),
+(175, 26, 'Control del propio entorno', NULL, NULL, NULL, NULL, 'PENDIENTE', NULL, '2025-12-09 19:41:34', '2025-12-09 19:41:34'),
+(176, 26, 'Dimensión pedagógica', NULL, NULL, NULL, NULL, 'PENDIENTE', NULL, '2025-12-09 19:41:34', '2025-12-09 19:41:34'),
+(177, 27, 'Contexto y vida familiar', NULL, NULL, NULL, NULL, 'PENDIENTE', NULL, '2025-12-09 19:44:37', '2025-12-09 19:44:37'),
+(178, 27, 'Habilidades intelectuales', NULL, NULL, NULL, NULL, 'PENDIENTE', NULL, '2025-12-09 19:44:37', '2025-12-09 19:44:37'),
+(179, 27, 'Bienestar emocional', NULL, NULL, NULL, NULL, 'PENDIENTE', NULL, '2025-12-09 19:44:37', '2025-12-09 19:44:37'),
+(180, 27, 'Conducta adaptativa y desarrollo personal', NULL, NULL, NULL, NULL, 'PENDIENTE', NULL, '2025-12-09 19:44:37', '2025-12-09 19:44:37'),
+(181, 27, 'Salud y bienestar físico', NULL, NULL, NULL, NULL, 'PENDIENTE', NULL, '2025-12-09 19:44:37', '2025-12-09 19:44:37'),
+(182, 27, 'Participación e inclusión social', NULL, NULL, NULL, NULL, 'PENDIENTE', NULL, '2025-12-09 19:44:37', '2025-12-09 19:44:37'),
+(183, 27, 'Control del propio entorno', NULL, NULL, NULL, NULL, 'PENDIENTE', NULL, '2025-12-09 19:44:37', '2025-12-09 19:44:37'),
+(184, 27, 'Dimensión pedagógica', NULL, NULL, NULL, NULL, 'PENDIENTE', NULL, '2025-12-09 19:44:37', '2025-12-09 19:44:37'),
+(185, 28, 'Contexto y vida familiar', NULL, NULL, NULL, NULL, 'PENDIENTE', NULL, '2025-12-09 19:47:06', '2025-12-09 19:47:06'),
+(186, 28, 'Habilidades intelectuales', NULL, NULL, NULL, NULL, 'PENDIENTE', NULL, '2025-12-09 19:47:06', '2025-12-09 19:47:06'),
+(187, 28, 'Bienestar emocional', NULL, NULL, NULL, NULL, 'PENDIENTE', NULL, '2025-12-09 19:47:06', '2025-12-09 19:47:06'),
+(188, 28, 'Conducta adaptativa y desarrollo personal', NULL, NULL, NULL, NULL, 'PENDIENTE', NULL, '2025-12-09 19:47:06', '2025-12-09 19:47:06'),
+(189, 28, 'Salud y bienestar físico', NULL, NULL, NULL, NULL, 'PENDIENTE', NULL, '2025-12-09 19:47:06', '2025-12-09 19:47:06'),
+(190, 28, 'Participación e inclusión social', NULL, NULL, NULL, NULL, 'PENDIENTE', NULL, '2025-12-09 19:47:06', '2025-12-09 19:47:06'),
+(191, 28, 'Control del propio entorno', NULL, NULL, NULL, NULL, 'PENDIENTE', NULL, '2025-12-09 19:47:06', '2025-12-09 19:47:06'),
+(192, 28, 'Dimensión pedagógica', NULL, NULL, NULL, NULL, 'PENDIENTE', NULL, '2025-12-09 19:47:06', '2025-12-09 19:47:06'),
+(193, 29, 'Contexto y vida familiar', NULL, NULL, NULL, NULL, 'PENDIENTE', NULL, '2025-12-09 20:07:41', '2025-12-09 20:07:41'),
+(194, 29, 'Habilidades intelectuales', NULL, 'Estilo: VISUAL. Atención: dispersa', NULL, NULL, 'COMPLETADA', '2025-12-09 21:25:00', '2025-12-09 20:07:41', '2025-12-09 21:25:00'),
+(195, 29, 'Bienestar emocional', NULL, NULL, NULL, NULL, 'PENDIENTE', NULL, '2025-12-09 20:07:41', '2025-12-09 20:07:41'),
+(196, 29, 'Conducta adaptativa y desarrollo personal', NULL, NULL, NULL, NULL, 'PENDIENTE', NULL, '2025-12-09 20:07:41', '2025-12-09 20:07:41'),
+(197, 29, 'Salud y bienestar físico', NULL, NULL, NULL, NULL, 'PENDIENTE', NULL, '2025-12-09 20:07:41', '2025-12-09 20:07:41'),
+(198, 29, 'Participación e inclusión social', NULL, NULL, NULL, NULL, 'PENDIENTE', NULL, '2025-12-09 20:07:41', '2025-12-09 20:07:41'),
+(199, 29, 'Control del propio entorno', NULL, NULL, NULL, NULL, 'PENDIENTE', NULL, '2025-12-09 20:07:41', '2025-12-09 20:07:41'),
+(200, 29, 'Dimensión pedagógica', NULL, NULL, NULL, NULL, 'PENDIENTE', NULL, '2025-12-09 20:07:41', '2025-12-09 20:07:41');
 
 -- --------------------------------------------------------
 
@@ -624,6 +681,13 @@ CREATE TABLE `dim_habilidades_intelectuales` (
   `INTELIGENCIA_MULTIPLE_DOMINANTE` varchar(100) DEFAULT NULL,
   `OBSERVACIONES` text DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `dim_habilidades_intelectuales`
+--
+
+INSERT INTO `dim_habilidades_intelectuales` (`ID_DIM_INTELECTUAL`, `CARACTERIZACION_ID`, `ATENCION`, `MEMORIA`, `SENSOPERCEPCION`, `RAZONAMIENTO`, `MOTIVACION`, `LECTURA`, `ESCRITURA`, `MATEMATICAS`, `ESTILO_APRENDIZAJE_DOMINANTE`, `INTELIGENCIA_MULTIPLE_DOMINANTE`, `OBSERVACIONES`) VALUES
+(1, 29, 'dispersa', 'visual', 'adecuada', 'dificultad abstrato', NULL, 'aceptable', 'apropiada', 'bajo', 'VISUAL', 'Naturalista', NULL);
 
 -- --------------------------------------------------------
 
@@ -815,13 +879,12 @@ INSERT INTO `estudiante` (`ID_ESTUDIANTE`, `TIPO_DOCUMENTO_ID_TIPO_DOCUMENTO`, `
 (8, 4, '1234668752', 'JUAN', 'CARLOS', 'PERALTA', 'RAMIREZ', 16, '2017-07-04', '3158405762', 'barrios unidos', 'juancarlosperalta@gmail.com', NULL, NULL, 'EXP-TEA-2025-0001', 1, 'DISCALCULIA', '2023-01-30', 'EMILIANO TORRES', 'Confunde escritura y conteo de numeros', '', 'MARIA RAMIREZ', 'MADRE', '3114587985', 'mariaramirez@gmail.com', 'la florida', 'CONFIRMADO', '2025-09-26 07:19:06', '2025-09-26 07:19:06', '2025-09-26 07:19:06', 1, NULL),
 (9, 4, '7854226942', 'FELIPE', '', 'CAMARGO', 'CASTAÑEDA', 8, '2019-11-04', '3178945296', 'san fernando', 'felipecamargo@itirr.edu.co', NULL, NULL, 'TEMP-TEA-2025-0001', 0, 'OTRO', NULL, '', 'Posible TDAH', 'CLASE', 'Cristian Camargo', 'PADRE', '3205487925', 'cristianca@gmail.com', 'jorge eliecer gaitan ', 'TEMPORAL', '2025-09-26 15:26:59', '2025-09-26 15:26:59', '2025-09-26 15:26:59', 1, NULL),
 (10, 4, '1234568890', 'santiago', 'fernando', 'niño', 'garcia', 7, '2020-11-04', '3158741587', 'las lajas', 'santinino@itirr.edu.co', '', '12345782001', NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'TEMPORAL', '2025-09-30 10:32:18', '2025-09-30 10:32:18', '2025-09-30 10:32:18', NULL, NULL),
-(13, 4, '105239515', 'brandon', 'jahir', 'cabra', 'bula', 29, '2009-11-20', '3187941218', 'bjcabrajsf', 'bjcbarab@gmial.com', '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'ACTIVO', '2025-10-01 04:42:35', '2025-10-01 04:42:35', '2025-10-01 04:42:35', NULL, NULL),
+(13, 4, '105239500', 'Brandon', '', 'Perea', 'Ramirez', 29, '2009-11-19', '3187941218', 'La paz', 'bjcbarab@gmial.com', '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Marcos Perea', 'PADRE', '3158102820', 'bjcabrab@gmail.com', '', 'ACTIVO', '2025-10-01 04:42:35', '2025-10-01 04:42:35', '2025-12-09 18:35:21', NULL, NULL),
 (14, 4, '105239878514', 'RICARDO', 'JORGE', 'RUIZ', '', 2, '2021-01-14', '3158210445', '7AGOS', 'RICAR@GMAIL.COM', '', NULL, NULL, 1, 'DISLEXIA', '2000-11-23', 'JOSE', 'TEA', NULL, NULL, NULL, NULL, NULL, NULL, 'ACTIVO', '2025-10-01 06:02:36', '2025-10-01 06:02:36', '2025-10-01 06:02:36', NULL, NULL),
 (15, 4, '1052395178', 'JORGE', '', 'PIRAGUA', '', 48, '2011-02-26', '135487456456', 'espinal', 'jorpi@gmal.com', '', 'Dificultades para leer palabras simples; Escritura ilegible o con muchos errores; Problemas de atención y concentración; Confunde letras o números similares; Dificultad para expresarse oralmente; OTRA: tda', NULL, 0, NULL, NULL, NULL, NULL, 'clase', NULL, NULL, NULL, NULL, NULL, 'ACTIVO', '2025-10-01 06:05:40', '2025-10-01 06:05:40', '2025-10-01 06:20:47', NULL, NULL),
 (16, 5, '12378954625', 'MARIA', '', 'LOPEZ', 'QUIROGA', 5, '2020-09-07', '123454899815', 'AMERICAS', 'LOPE@GMAIL.COM', '', NULL, NULL, 1, 'tdah', '2024-02-10', 'brandon c', '', NULL, NULL, NULL, NULL, NULL, NULL, 'ACTIVO', '2025-10-01 06:18:51', '2025-10-01 06:18:51', '2025-10-01 06:18:51', NULL, NULL),
 (17, 4, '105239514567', 'LUISA', 'FERANDA', 'RICO', '', 22, '2018-03-31', '3215648542', 'LAS LAJAS VIS', 'LUISM@GMAIL.COM', '', NULL, NULL, 1, 'MIXTO', '2019-05-19', 'PATRICIA R', '', NULL, 'PATRICIA f', 'MADRE', '3215782564', 'PATO@GMAIL.COM', 'SAN FERNANDO', 'ACTIVO', '2025-10-01 08:12:46', '2025-10-01 08:12:46', '2025-10-01 08:12:46', NULL, NULL),
-(19, 4, '1356851681153', 'sdfasdf', 'sdfas', 'asdfasdfas', 'sdfasdfas', 16, '2025-08-05', '114577537', 'dfsadfsd', 'sdfasdf@asdfads.com', '', NULL, NULL, 1, 'TDA', '2025-09-30', 'SDAFASDF', '', NULL, 'DSAFASDFA', 'PADRE', '32552148228', 'SDFASFC@SDFSADF.COM', 'DFSGAD', 'ACTIVO', '2025-10-01 15:56:45', '2025-10-01 15:56:45', '2025-10-01 15:56:45', NULL, NULL),
-(20, 4, '1235151025', 'sdfaasdf', 'sdfsdaf', 'asdfasdf', '', 7, '2020-08-10', '315885245', 'las lajas', 'bjcabrab@gmail.com', '', NULL, NULL, 1, 'Dislexia', '2024-02-07', 'juan', '', NULL, 'maria', 'MADRE', '352858225', 'bjcabrab@gmail.com', 'jorge eliecer gaitan', 'ACTIVO', '2025-10-01 23:52:11', '2025-10-01 23:52:11', '2025-10-01 23:52:11', NULL, NULL),
+(19, 4, '1356851681153', 'Juan', 'Esteban', 'Caceres', 'Ortiz', 34, '2012-06-12', '114577537', '7 de agosto', 'juancaceres@itirr.com', '', NULL, NULL, 1, 'TDA', '2025-09-30', 'SDAFASDF', '', NULL, 'Maria Ortiz', 'MADRE', '32552148228', 'bjcabrab@gmail.com', 'San Jose', 'ACTIVO', '2025-10-01 15:56:45', '2025-10-01 15:56:45', '2025-12-09 17:48:03', NULL, NULL),
 (21, 4, '9876543210', 'JUAN', 'PABLO', 'MURILLO', 'GARCIA', 11, '2018-06-12', '3158102820', 'la paz', 'juanmurillo@itirr.edu.co', '', NULL, NULL, 1, 'Dislexia', '2024-06-03', 'RICARDO ORTIZ', 'Apoyos con las letras b y d', NULL, 'JUAN MURILLO', 'PADRE', '3158102820', 'bjcabrab@gmail.com', 'san antonio norte', 'ACTIVO', '2025-12-02 05:39:06', '2025-12-02 05:39:06', '2025-12-02 05:39:06', NULL, NULL),
 (23, 4, '9874563214', 'Juliana', 'Maria', 'Rios', 'Cardenas', 16, '2018-11-13', '3158662563', 'las lajas', 'julianamrios@itirr.edu.co', '', NULL, 'EXP-TEA-2025-0002', 1, 'disgrafia', '2025-12-01', 'Jorge Cabrera', '', NULL, 'Esperanza Cardenas', 'MADRE', '31578825452', 'bjcabrab@gmail.com', 'rafael reyes', 'ACTIVO', '2025-12-02 09:11:29', '2025-12-02 09:11:29', '2025-12-02 09:11:29', NULL, NULL),
 (24, 4, '1053954785', 'DAVID', '', 'LÓPEZ', 'LÓPEZ', 24, '2015-05-04', '3154275212', 'las lajas', 'lopedavid@itirr.edu.co', '', NULL, 'EXP-TEA-2025-0003', 1, 'TDAH', '2025-02-04', 'JORGE CABRERA', 'Hiperactividad detonada por el estres', NULL, 'jorge López', 'PADRE', '3158102820', 'bjcabrab@gmail.com', 'itirr', 'ACTIVO', '2025-12-02 09:40:48', '2025-12-02 09:40:48', '2025-12-02 09:40:48', NULL, NULL),
@@ -830,7 +893,10 @@ INSERT INTO `estudiante` (`ID_ESTUDIANTE`, `TIPO_DOCUMENTO_ID_TIPO_DOCUMENTO`, `
 (27, 4, '12378965487', 'DAYRON', '', 'MORENO', '', 42, '2009-11-24', '3158102820', 'las lajas', 'bjcabrab@gmail.com', '', 'Dificultades para leer palabras simples; Problemas con operaciones matemáticas básicas; Escritura ilegible o con muchos errores; Dificultad para seguir instrucciones secuenciales; Problemas de atención y concentración; Evita actividades que requieren lectura; Confunde letras o números similares', 'TEMP-TEA-2025-0006', 0, NULL, NULL, NULL, NULL, '', 'Julian Moreno', 'PADRE', '3158102820', 'bjcabrab@gmail.com', 'Alemania solidaria', 'ACTIVO', '2025-12-02 18:35:47', '2025-12-02 18:35:47', '2025-12-02 18:35:47', NULL, NULL),
 (28, 4, '1025887844', 'Luis', '', 'Fernandez', '', 48, '2008-07-06', '3158102820', 'las lajas', 'bjcabrab@gmail.com', '', NULL, 'EXP-TEA-2025-0007', 1, 'Dislexia', '2022-07-06', 'RICARDO ORTIZ', '', NULL, 'Vicente Fernandez', 'PADRE', '3158102820', 'bjcabrab@gmail.com', '', 'ACTIVO', '2025-12-02 19:07:11', '2025-12-02 19:07:11', '2025-12-02 19:07:11', NULL, NULL),
 (29, 4, '2126578459', 'Lautaro', '', 'Del Campo', '', 11, '2016-03-27', '3157895421', 'las lajas', 'bjcabrab@gmail.com', '', 'Escritura ilegible o con muchos errores; Problemas de atención y concentración; Dificultad para expresarse oralmente; Lentitud excesiva en tareas académicas', 'TEMP-TEA-2025-0008', 0, NULL, NULL, NULL, NULL, '', 'Carlos Del Campo', 'PADRE', '3158102820', 'bjcabrab@gmail.com', '', 'ACTIVO', '2025-12-02 19:31:09', '2025-12-02 19:31:09', '2025-12-02 19:31:09', NULL, NULL),
-(30, 4, '6848879865', 'Lennin', '', 'Marx', '', 20, '2010-04-14', '3158102820', 'las lajas', 'bjcabrab@gmail.com', '', NULL, 'EXP-TEA-2025-0009', 1, 'TDAH', '2020-02-14', 'RICARDO ORTIZ', '', NULL, 'Carlos Marx', 'PADRE', '3158102820', 'bjcabrab@gmail.com', '', 'ACTIVO', '2025-12-02 19:35:13', '2025-12-02 19:35:13', '2025-12-02 19:35:13', NULL, NULL);
+(30, 4, '6848879865', 'Lennin', '', 'Marx', '', 20, '2010-04-14', '3158102820', 'las lajas', 'bjcabrab@gmail.com', '', NULL, 'EXP-TEA-2025-0009', 1, 'TDAH', '2020-02-14', 'RICARDO ORTIZ', '', NULL, 'Carlos Marx', 'PADRE', '3158102820', 'bjcabrab@gmail.com', '', 'ACTIVO', '2025-12-02 19:35:13', '2025-12-02 19:35:13', '2025-12-02 19:35:13', NULL, NULL),
+(31, 4, '1036897231', 'Angela', '', 'Castillo', 'Puertas', 43, '2009-11-10', '315821010', 'Chapinero', 'angecastillo@itirr.edu.co', '', NULL, 'EXP-TEA-2025-0053', 1, 'Discalculia', '2020-02-09', 'RICARDO ORTIZ', '', NULL, 'Rosa Puertas', 'MADRE', '3158102820', 'bjcabrab@gmail.com', '', 'ACTIVO', '2025-12-09 18:41:20', '2025-12-09 18:41:20', '2025-12-09 18:41:20', NULL, NULL),
+(32, 2, '1089895784', 'Nelson', '', 'Duarte', 'Estupiñan', 38, '2010-08-05', '3158102820', 'carrera 33 # 20-43', 'nelsonduarte@itirr.edu.co', '', NULL, 'EXP-TEA-2025-0054', 1, 'Dislexia', '2023-09-11', 'RICARDO ORTIZ', '', NULL, 'Jairo Duarte', 'PADRE', '3158201058', 'bjcabrab@gmail.com', '', 'ACTIVO', '2025-12-09 19:05:12', '2025-12-09 19:05:12', '2025-12-09 19:05:12', NULL, NULL),
+(33, 4, '1099358456', 'Santiago', '', 'Gomez', 'Puertas', 23, '2015-02-27', '3158102820', 'las lajas', 'santgomez@itirr.edu.co', '', NULL, 'EXP-TEA-2025-0055', 1, 'TDAH', '2025-02-27', 'RICARDO ORTIZ', '', NULL, 'Fernando Gomez', 'PADRE', '3158102820', 'bjcabrab@gmail.com', '', 'ACTIVO', '2025-12-09 19:31:52', '2025-12-09 19:31:52', '2025-12-09 19:31:52', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -910,7 +976,7 @@ CREATE TABLE `expediente_counters` (
 --
 
 INSERT INTO `expediente_counters` (`year`, `last_counter`) VALUES
-(2025, 50);
+(2025, 60);
 
 -- --------------------------------------------------------
 
@@ -1539,7 +1605,10 @@ INSERT INTO `usuarios` (`ID_USUARIO`, `NUMERO_DOCUMENTO`, `PRIMER_NOMBRE`, `PRIM
 (9, '123456789', 'JOSE', 'DELGADO', '3157895175', 'CHAPINERO', 'jdelgado@gmail.com', NULL, '$2a$10$X.6osM6f7UAuR9NKJ7HGAe.DwJ6jhp/ptO6zT9IOKXCJMwtbPmSRC', 'ACTIVO', 1, '2025-01-13', NULL),
 (17, 'PADRE1764702431147', 'Vicente', 'Fernandez', '3158102820', 'las lajas', 'bjcabrab@gmail.com', NULL, 'ThHt/2RteiF/I2VTdcqxIA==:fPRhqRcaeHjEWlxwlOJqiUOguNmucAYAgDoF+LXZhc4=', 'ACTIVO', 1, '2025-12-02', NULL),
 (18, 'PADRE1764704113433', 'Carlos', 'Marx', '3158102820', 'las lajas', 'bjcabrab@gmail.com', NULL, 'kZGzdBHSM27ePwvbqa8wZw==:OIx1IjjHXyDEhKFL8AvKRnX3luOTTm4fdIHBnXexQTs=', 'ACTIVO', 1, '2025-12-02', NULL),
-(19, '1052395000', 'CLARA', 'MARTINEZ', NULL, 'NO_ESPECIFICADO', 'bjcabrab@gmail.com', NULL, '$2a$10$gbps0ljMVQdCh2BFEiOthOylsuVIvLSUvvffAXOlHxUyVh943r40u', 'ACTIVO', 1, '2025-12-05', NULL);
+(19, '1052395000', 'CLARA', 'MARTINEZ', NULL, 'NO_ESPECIFICADO', 'bjcabrab@gmail.com', NULL, '$2a$10$gbps0ljMVQdCh2BFEiOthOylsuVIvLSUvvffAXOlHxUyVh943r40u', 'ACTIVO', 1, '2025-12-05', NULL),
+(20, 'PADRE1765305680608', 'Rosa', 'Puertas', '3158102820', 'Chapinero', 'bjcabrab@gmail.com', NULL, 'vTTCMKhcK59GTzZCT7F4wA==:ugq0ZUrXj9SbKIsZNEDP2yrPEjdaST/lA2xowlL66yk=', 'ACTIVO', 1, '2025-12-09', NULL),
+(21, 'PADRE1765308712430', 'Fernando', 'Gomez', '3158102820', 'las lajas', 'bjcabrab@gmail.com', NULL, 'bWIQtUQKkkM/yssYe7ntoQ==:XF3orAwSY2TwQEsA83y74GDPdEBWS1BzWbCDm0lQlDo=', 'ACTIVO', 1, '2025-12-09', NULL),
+(22, '1053693458', 'Julian', 'Moreno', NULL, 'NO_ESPECIFICADO', 'bjcabrab@gmail.com', NULL, '$2a$10$t4YEk.W2dF.P5P/xyheps.I5WGTGrWgfbO.D5WfE3hVT/qHE30kvG', 'ACTIVO', 1, '2025-12-09', NULL);
 
 -- --------------------------------------------------------
 
@@ -1591,6 +1660,14 @@ CREATE TABLE `valoracion_instrumento` (
   `UPDATED_AT` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+--
+-- Volcado de datos para la tabla `valoracion_instrumento`
+--
+
+INSERT INTO `valoracion_instrumento` (`ID_VALORACION_INSTRUMENTO`, `CARACTERIZACION_ID`, `DIMENSION`, `ESTUDIANTE_IDENTIFICACION`, `FECHA_VALORACION`, `PUNTUACION_TOTAL`, `OBSERVACIONES`, `RECOMENDACIONES`, `CREATED_AT`, `UPDATED_AT`) VALUES
+(1, NULL, 'IM', NULL, '2025-12-09 21:16:21', 62, NULL, NULL, '2025-12-09 21:16:21', '2025-12-09 21:16:21'),
+(2, NULL, 'IM', NULL, '2025-12-09 21:21:29', 62, NULL, NULL, '2025-12-09 21:21:29', '2025-12-09 21:21:29');
+
 -- --------------------------------------------------------
 
 --
@@ -1605,6 +1682,30 @@ CREATE TABLE `valoracion_respuesta` (
   `COMENTARIO` text DEFAULT NULL,
   `CREATED_AT` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Volcado de datos para la tabla `valoracion_respuesta`
+--
+
+INSERT INTO `valoracion_respuesta` (`ID_RESPUESTA`, `ID_VALORACION_INSTRUMENTO`, `PREGUNTA_KEY`, `VALOR`, `COMENTARIO`, `CREATED_AT`) VALUES
+(1, 1, 'IM_q7', 3, NULL, '2025-12-09 21:16:21'),
+(2, 1, 'IM_q4', 3, NULL, '2025-12-09 21:16:21'),
+(3, 1, 'IM_q9', 4, NULL, '2025-12-09 21:16:21'),
+(4, 1, 'IM_q1', 2, NULL, '2025-12-09 21:16:21'),
+(5, 1, 'IM_q6', 4, NULL, '2025-12-09 21:16:21'),
+(6, 1, 'IM_q2', 2, NULL, '2025-12-09 21:16:21'),
+(7, 1, 'IM_q5', 3, NULL, '2025-12-09 21:16:21'),
+(8, 1, 'IM_q3', 4, NULL, '2025-12-09 21:16:21'),
+(9, 1, 'IM_q8', 3, NULL, '2025-12-09 21:16:21'),
+(10, 2, 'IM_q1', 2, NULL, '2025-12-09 21:21:29'),
+(11, 2, 'IM_q8', 3, NULL, '2025-12-09 21:21:29'),
+(12, 2, 'IM_q5', 3, NULL, '2025-12-09 21:21:29'),
+(13, 2, 'IM_q2', 2, NULL, '2025-12-09 21:21:29'),
+(14, 2, 'IM_q6', 4, NULL, '2025-12-09 21:21:29'),
+(15, 2, 'IM_q9', 4, NULL, '2025-12-09 21:21:29'),
+(16, 2, 'IM_q7', 3, NULL, '2025-12-09 21:21:29'),
+(17, 2, 'IM_q4', 3, NULL, '2025-12-09 21:21:29'),
+(18, 2, 'IM_q3', 4, NULL, '2025-12-09 21:21:29');
 
 -- --------------------------------------------------------
 
@@ -2093,19 +2194,19 @@ ALTER TABLE `boletin_academico`
 -- AUTO_INCREMENT de la tabla `caracterizacion`
 --
 ALTER TABLE `caracterizacion`
-  MODIFY `ID_CARACTERIZACION` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
+  MODIFY `ID_CARACTERIZACION` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
 
 --
 -- AUTO_INCREMENT de la tabla `contexto_escolar`
 --
 ALTER TABLE `contexto_escolar`
-  MODIFY `id_contexto_escolar` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id_contexto_escolar` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT de la tabla `contexto_familiar`
 --
 ALTER TABLE `contexto_familiar`
-  MODIFY `ID_CONTEXTO_FAMILIAR` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `ID_CONTEXTO_FAMILIAR` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de la tabla `curso`
@@ -2123,7 +2224,7 @@ ALTER TABLE `dba`
 -- AUTO_INCREMENT de la tabla `dimension_valoracion`
 --
 ALTER TABLE `dimension_valoracion`
-  MODIFY `ID_DIMENSION` int(11) NOT NULL AUTO_INCREMENT COMMENT 'ID único de la dimensión', AUTO_INCREMENT=145;
+  MODIFY `ID_DIMENSION` int(11) NOT NULL AUTO_INCREMENT COMMENT 'ID único de la dimensión', AUTO_INCREMENT=201;
 
 --
 -- AUTO_INCREMENT de la tabla `dim_bienestar_emocional`
@@ -2147,7 +2248,7 @@ ALTER TABLE `dim_control_entorno`
 -- AUTO_INCREMENT de la tabla `dim_habilidades_intelectuales`
 --
 ALTER TABLE `dim_habilidades_intelectuales`
-  MODIFY `ID_DIM_INTELECTUAL` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `ID_DIM_INTELECTUAL` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT de la tabla `dim_participacion_social`
@@ -2183,7 +2284,7 @@ ALTER TABLE `estrategias_educativas`
 -- AUTO_INCREMENT de la tabla `estudiante`
 --
 ALTER TABLE `estudiante`
-  MODIFY `ID_ESTUDIANTE` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
+  MODIFY `ID_ESTUDIANTE` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
 
 --
 -- AUTO_INCREMENT de la tabla `estudiante_contacto`
@@ -2339,7 +2440,7 @@ ALTER TABLE `usuarioprof_has_materia`
 -- AUTO_INCREMENT de la tabla `usuarios`
 --
 ALTER TABLE `usuarios`
-  MODIFY `ID_USUARIO` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+  MODIFY `ID_USUARIO` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 
 --
 -- AUTO_INCREMENT de la tabla `usuario_rol`
@@ -2351,13 +2452,13 @@ ALTER TABLE `usuario_rol`
 -- AUTO_INCREMENT de la tabla `valoracion_instrumento`
 --
 ALTER TABLE `valoracion_instrumento`
-  MODIFY `ID_VALORACION_INSTRUMENTO` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `ID_VALORACION_INSTRUMENTO` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de la tabla `valoracion_respuesta`
 --
 ALTER TABLE `valoracion_respuesta`
-  MODIFY `ID_RESPUESTA` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `ID_RESPUESTA` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- Restricciones para tablas volcadas
@@ -2489,7 +2590,7 @@ ALTER TABLE `estudiante_senal_alerta`
 -- Filtros para la tabla `evaluacion`
 --
 ALTER TABLE `evaluacion`
-  ADD CONSTRAINT `evaluacion_ibfk_1` FOREIGN KEY (`PIAR_SEGUIMIENTO_EVALUATIVO`) REFERENCES `piar` (`SEGUIMIENTO_EVALUATIVO`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `evaluacion_ibfk_1` FOREIGN KEY (`PIAR_SEGUIMIENTO_EVALUATIVO`) REFERENCES `piar` (`ID_PIAR`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `evaluacion_ibfk_2` FOREIGN KEY (`BOLETIN_ACADEMICO_ID_BOLETIN_ACADEMICO`) REFERENCES `boletin_academico` (`ID_BOLETIN_ACADEMICO`);
 
 --

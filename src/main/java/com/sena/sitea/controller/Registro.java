@@ -3,6 +3,7 @@ package com.sena.sitea.controller;
 import com.sena.sitea.entities.Rol;
 import com.sena.sitea.entities.TipoDocumento;
 import com.sena.sitea.entities.Usuarios;
+import com.sena.sitea.entities.UsuarioRol;
 import com.sena.sitea.services.RolFacadeLocal;
 import com.sena.sitea.services.TipoDocumentoFacadeLocal;
 import com.sena.sitea.services.UsuariosFacadeLocal;
@@ -34,6 +35,8 @@ public class Registro implements Serializable {
     @EJB
     private RolFacadeLocal rolFacade;
 
+    private List<Integer> selectedRoleIds;
+
     public Registro() {
     }
 
@@ -57,6 +60,14 @@ public class Registro implements Serializable {
                 .collect(java.util.stream.Collectors.toList());
     }
 
+    public List<Integer> getSelectedRoleIds() {
+        return selectedRoleIds;
+    }
+
+    public void setSelectedRoleIds(List<Integer> selectedRoleIds) {
+        this.selectedRoleIds = selectedRoleIds;
+    }
+
     public String crearP1() {
         this.con = new Usuarios();
         return "/TemplateRegistro.xhtml";
@@ -68,9 +79,9 @@ public class Registro implements Serializable {
         System.out.println("📦 Sesión activa: " + (session != null));
 
         try {
-            if (con.getPassword() == null || con.getPassword().isEmpty()
+                if (con.getPassword() == null || con.getPassword().isEmpty()
                     || con.getPrimerNombre() == null || con.getPrimerApellido() == null
-                    || con.getRolIdRol() == null || con.getTipoDocumentoIdTipoDocumento() == null) {
+                    || selectedRoleIds == null || selectedRoleIds.isEmpty() || con.getTipoDocumentoIdTipoDocumento() == null) {
 
                 FacesContext.getCurrentInstance().addMessage(null,
                         new FacesMessage(FacesMessage.SEVERITY_WARN, "Faltan campos obligatorios", "Completa todos los campos antes de registrar."));
@@ -79,6 +90,20 @@ public class Registro implements Serializable {
 
             String hashed = BCrypt.hashpw(con.getPassword(), BCrypt.gensalt());
             con.setPassword(hashed);
+
+            // Construir entradas de usuario_rol para persistir en cascada
+            if (selectedRoleIds != null && !selectedRoleIds.isEmpty()) {
+                List<UsuarioRol> urs = new java.util.ArrayList<>();
+                for (Integer rid : selectedRoleIds) {
+                    Rol r = new Rol();
+                    r.setIdRol(rid);
+                    UsuarioRol ur = new UsuarioRol();
+                    ur.setRolIdRol(r);
+                    ur.setUsuarioIdUsuario(con);
+                    urs.add(ur);
+                }
+                con.setUsuarioRolList(urs);
+            }
 
             rfl.create(con);
             System.out.println("✅ Usuario registrado correctamente: " + con.getPrimerNombre());

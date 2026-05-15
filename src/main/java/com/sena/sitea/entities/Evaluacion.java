@@ -63,7 +63,7 @@ public class Evaluacion implements Serializable {
     @Size(min = 1, max = 45)
     @Column(name = "EVALUACION_ESTRATEGIA")
     private String evaluacionEstrategia;
-    @JoinColumn(name = "PIAR_SEGUIMIENTO_EVALUATIVO", referencedColumnName = "SEGUIMIENTO_EVALUATIVO")
+    @JoinColumn(name = "PIAR_SEGUIMIENTO_EVALUATIVO", referencedColumnName = "ID_PIAR")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Piar piarSeguimientoEvaluativo;
     @JoinColumn(name = "BOLETIN_ACADEMICO_ID_BOLETIN_ACADEMICO", referencedColumnName = "ID_BOLETIN_ACADEMICO")

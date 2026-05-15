@@ -1,0 +1,145 @@
+deploy	Set up job	﻿2026-05-05T04:01:20.5729965Z Current runner version: '2.334.0'
+deploy	Set up job	2026-05-05T04:01:20.5759866Z ##[group]Runner Image Provisioner
+deploy	Set up job	2026-05-05T04:01:20.5761271Z Hosted Compute Agent
+deploy	Set up job	2026-05-05T04:01:20.5762205Z Version: 20260213.493
+deploy	Set up job	2026-05-05T04:01:20.5763207Z Commit: 5c115507f6dd24b8de37d8bbe0bb4509d0cc0fa3
+deploy	Set up job	2026-05-05T04:01:20.5764338Z Build Date: 2026-02-13T00:28:41Z
+deploy	Set up job	2026-05-05T04:01:20.5765456Z Worker ID: {7106c925-1d02-428b-97cc-f39656f53601}
+deploy	Set up job	2026-05-05T04:01:20.5766582Z Azure Region: westcentralus
+deploy	Set up job	2026-05-05T04:01:20.5767519Z ##[endgroup]
+deploy	Set up job	2026-05-05T04:01:20.5769609Z ##[group]Operating System
+deploy	Set up job	2026-05-05T04:01:20.5770570Z Ubuntu
+deploy	Set up job	2026-05-05T04:01:20.5771422Z 24.04.4
+deploy	Set up job	2026-05-05T04:01:20.5772272Z LTS
+deploy	Set up job	2026-05-05T04:01:20.5773070Z ##[endgroup]
+deploy	Set up job	2026-05-05T04:01:20.5773903Z ##[group]Runner Image
+deploy	Set up job	2026-05-05T04:01:20.5774916Z Image: ***-24.04
+deploy	Set up job	2026-05-05T04:01:20.5775796Z Version: 20260413.86.1
+deploy	Set up job	2026-05-05T04:01:20.5777247Z Included Software: https://github.com/actions/runner-images/blob/***24/20260413.86/images/***/Ubuntu2404-Readme.md
+deploy	Set up job	2026-05-05T04:01:20.5779713Z Image Release: https://github.com/actions/runner-images/releases/tag/***24%2F20260413.86
+deploy	Set up job	2026-05-05T04:01:20.5780937Z ##[endgroup]
+deploy	Set up job	2026-05-05T04:01:20.5782672Z ##[group]GITHUB_TOKEN Permissions
+deploy	Set up job	2026-05-05T04:01:20.5784998Z Contents: read
+deploy	Set up job	2026-05-05T04:01:20.5785870Z Metadata: read
+deploy	Set up job	2026-05-05T04:01:20.5786779Z Packages: read
+deploy	Set up job	2026-05-05T04:01:20.5787632Z ##[endgroup]
+deploy	Set up job	2026-05-05T04:01:20.5790340Z Secret source: Actions
+deploy	Set up job	2026-05-05T04:01:20.5791568Z Prepare workflow directory
+deploy	Set up job	2026-05-05T04:01:20.6186757Z Prepare all required actions
+deploy	Set up job	2026-05-05T04:01:20.6225276Z Getting action download info
+deploy	Set up job	2026-05-05T04:01:20.9730826Z Download action repository 'appleboy/ssh-action@master' (SHA:1530429296e979861824d74fb800013190b5dee0)
+deploy	Set up job	2026-05-05T04:01:21.7828115Z Complete job name: deploy
+deploy	Desplegando en AWS	﻿2026-05-05T04:01:21.8731180Z ##[group]Run appleboy/ssh-action@master
+deploy	Desplegando en AWS	2026-05-05T04:01:21.8732372Z with:
+deploy	Desplegando en AWS	2026-05-05T04:01:21.8733227Z   host: ***
+deploy	Desplegando en AWS	2026-05-05T04:01:21.8733902Z   username: ***
+deploy	Desplegando en AWS	2026-05-05T04:01:21.8747470Z   key: ***
+deploy	Desplegando en AWS	2026-05-05T04:01:21.8751683Z   script: set -e
+deploy	Desplegando en AWS	
+deploy	Desplegando en AWS	REPO_URL="https://github.com/BrandonCabra/SITEA_Java.git"
+deploy	Desplegando en AWS	BRANCH="master"
+deploy	Desplegando en AWS	
+deploy	Desplegando en AWS	# 1. Verificar si ya existe la carpeta, si no, clonar
+deploy	Desplegando en AWS	if [ ! -d "sitea_java" ]; then
+deploy	Desplegando en AWS	  git clone "$REPO_URL" sitea_java
+deploy	Desplegando en AWS	fi
+deploy	Desplegando en AWS	
+deploy	Desplegando en AWS	# 2. Entrar y actualizar código
+deploy	Desplegando en AWS	cd sitea_java
+deploy	Desplegando en AWS	git fetch origin "$BRANCH"
+deploy	Desplegando en AWS	git checkout -B "$BRANCH" "origin/$BRANCH"
+deploy	Desplegando en AWS	git pull origin "$BRANCH"
+deploy	Desplegando en AWS	
+deploy	Desplegando en AWS	# 3. Reiniciar contenedores (Esto reconstruye con los cambios)
+deploy	Desplegando en AWS	# El --build asegura que se compile el nuevo WAR y se instale lo nuevo de Python
+deploy	Desplegando en AWS	sudo docker-compose up -d --build --remove-orphans
+deploy	Desplegando en AWS	
+deploy	Desplegando en AWS	# 4. Limpieza (Opcional)
+deploy	Desplegando en AWS	sudo docker image prune -f
+deploy	Desplegando en AWS	
+deploy	Desplegando en AWS	2026-05-05T04:01:21.8755856Z   port: 22
+deploy	Desplegando en AWS	2026-05-05T04:01:21.8756504Z   protocol: tcp
+deploy	Desplegando en AWS	2026-05-05T04:01:21.8757152Z   timeout: 30s
+deploy	Desplegando en AWS	2026-05-05T04:01:21.8757807Z   command_timeout: 10m
+deploy	Desplegando en AWS	2026-05-05T04:01:21.8758559Z   proxy_port: 22
+deploy	Desplegando en AWS	2026-05-05T04:01:21.8759317Z   proxy_protocol: tcp
+deploy	Desplegando en AWS	2026-05-05T04:01:21.8760055Z   proxy_timeout: 30s
+deploy	Desplegando en AWS	2026-05-05T04:01:21.8760743Z   curl_insecure: false
+deploy	Desplegando en AWS	2026-05-05T04:01:21.8761480Z   capture_stdout: false
+deploy	Desplegando en AWS	2026-05-05T04:01:21.8762474Z ##[endgroup]
+deploy	Desplegando en AWS	2026-05-05T04:01:21.8877117Z ##[group]Run echo "$GITHUB_ACTION_PATH" >> $GITHUB_PATH
+deploy	Desplegando en AWS	2026-05-05T04:01:21.8878258Z ^[[36;1mecho "$GITHUB_ACTION_PATH" >> $GITHUB_PATH^[[0m
+deploy	Desplegando en AWS	2026-05-05T04:01:21.8906805Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+deploy	Desplegando en AWS	2026-05-05T04:01:21.8907796Z env:
+deploy	Desplegando en AWS	2026-05-05T04:01:21.8908671Z   GITHUB_ACTION_PATH: /home/runner/work/_actions/appleboy/ssh-action/master
+deploy	Desplegando en AWS	2026-05-05T04:01:21.8909964Z ##[endgroup]
+deploy	Desplegando en AWS	2026-05-05T04:01:21.9116205Z ##[group]Run entrypoint.sh
+deploy	Desplegando en AWS	2026-05-05T04:01:21.9116994Z ^[[36;1mentrypoint.sh^[[0m
+deploy	Desplegando en AWS	2026-05-05T04:01:21.9142391Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+deploy	Desplegando en AWS	2026-05-05T04:01:21.9143351Z env:
+deploy	Desplegando en AWS	2026-05-05T04:01:21.9144223Z   GITHUB_ACTION_PATH: /home/runner/work/_actions/appleboy/ssh-action/master
+deploy	Desplegando en AWS	2026-05-05T04:01:21.9145379Z   INPUT_HOST: ***
+deploy	Desplegando en AWS	2026-05-05T04:01:21.9146076Z   INPUT_PORT: 22
+deploy	Desplegando en AWS	2026-05-05T04:01:21.9146770Z   INPUT_PROTOCOL: tcp
+deploy	Desplegando en AWS	2026-05-05T04:01:21.9147744Z   INPUT_USERNAME: ***
+deploy	Desplegando en AWS	2026-05-05T04:01:21.9148418Z   INPUT_PASSWORD: 
+deploy	Desplegando en AWS	2026-05-05T04:01:21.9149234Z   INPUT_PASSPHRASE: 
+deploy	Desplegando en AWS	2026-05-05T04:01:21.9163010Z   INPUT_KEY: ***
+deploy	Desplegando en AWS	2026-05-05T04:01:21.9163741Z   INPUT_KEY_PATH: 
+deploy	Desplegando en AWS	2026-05-05T04:01:21.9164429Z   INPUT_FINGERPRINT: 
+deploy	Desplegando en AWS	2026-05-05T04:01:21.9165126Z   INPUT_PROXY_HOST: 
+deploy	Desplegando en AWS	2026-05-05T04:01:21.9165813Z   INPUT_PROXY_PORT: 22
+deploy	Desplegando en AWS	2026-05-05T04:01:21.9166516Z   INPUT_PROXY_USERNAME: 
+deploy	Desplegando en AWS	2026-05-05T04:01:21.9167228Z   INPUT_PROXY_PASSWORD: 
+deploy	Desplegando en AWS	2026-05-05T04:01:21.9167937Z   INPUT_PROXY_PASSPHRASE: 
+deploy	Desplegando en AWS	2026-05-05T04:01:21.9168648Z   INPUT_PROXY_KEY: 
+deploy	Desplegando en AWS	2026-05-05T04:01:21.9169465Z   INPUT_PROXY_KEY_PATH: 
+deploy	Desplegando en AWS	2026-05-05T04:01:21.9170190Z   INPUT_PROXY_FINGERPRINT: 
+deploy	Desplegando en AWS	2026-05-05T04:01:21.9170913Z   INPUT_TIMEOUT: 30s
+deploy	Desplegando en AWS	2026-05-05T04:01:21.9171590Z   INPUT_PROXY_TIMEOUT: 30s
+deploy	Desplegando en AWS	2026-05-05T04:01:21.9172327Z   INPUT_COMMAND_TIMEOUT: 10m
+deploy	Desplegando en AWS	2026-05-05T04:01:21.9176407Z   INPUT_SCRIPT: set -e
+deploy	Desplegando en AWS	
+deploy	Desplegando en AWS	REPO_URL="https://github.com/BrandonCabra/SITEA_Java.git"
+deploy	Desplegando en AWS	BRANCH="master"
+deploy	Desplegando en AWS	
+deploy	Desplegando en AWS	# 1. Verificar si ya existe la carpeta, si no, clonar
+deploy	Desplegando en AWS	if [ ! -d "sitea_java" ]; then
+deploy	Desplegando en AWS	  git clone "$REPO_URL" sitea_java
+deploy	Desplegando en AWS	fi
+deploy	Desplegando en AWS	
+deploy	Desplegando en AWS	# 2. Entrar y actualizar código
+deploy	Desplegando en AWS	cd sitea_java
+deploy	Desplegando en AWS	git fetch origin "$BRANCH"
+deploy	Desplegando en AWS	git checkout -B "$BRANCH" "origin/$BRANCH"
+deploy	Desplegando en AWS	git pull origin "$BRANCH"
+deploy	Desplegando en AWS	
+deploy	Desplegando en AWS	# 3. Reiniciar contenedores (Esto reconstruye con los cambios)
+deploy	Desplegando en AWS	# El --build asegura que se compile el nuevo WAR y se instale lo nuevo de Python
+deploy	Desplegando en AWS	sudo docker-compose up -d --build --remove-orphans
+deploy	Desplegando en AWS	
+deploy	Desplegando en AWS	# 4. Limpieza (Opcional)
+deploy	Desplegando en AWS	sudo docker image prune -f
+deploy	Desplegando en AWS	
+deploy	Desplegando en AWS	2026-05-05T04:01:21.9180727Z   INPUT_SCRIPT_FILE: 
+deploy	Desplegando en AWS	2026-05-05T04:01:21.9181422Z   INPUT_ENVS: 
+deploy	Desplegando en AWS	2026-05-05T04:01:21.9250890Z   INPUT_ENVS_FORMAT: 
+deploy	Desplegando en AWS	2026-05-05T04:01:21.9252358Z   INPUT_DEBUG: 
+deploy	Desplegando en AWS	2026-05-05T04:01:21.9253434Z   INPUT_ALL_ENVS: 
+deploy	Desplegando en AWS	2026-05-05T04:01:21.9254537Z   INPUT_REQUEST_PTY: 
+deploy	Desplegando en AWS	2026-05-05T04:01:21.9255271Z   INPUT_USE_INSECURE_CIPHER: 
+deploy	Desplegando en AWS	2026-05-05T04:01:21.9256329Z   INPUT_CIPHER: 
+deploy	Desplegando en AWS	2026-05-05T04:01:21.9257003Z   INPUT_PROXY_USE_INSECURE_CIPHER: 
+deploy	Desplegando en AWS	2026-05-05T04:01:21.9257769Z   INPUT_PROXY_CIPHER: 
+deploy	Desplegando en AWS	2026-05-05T04:01:21.9258461Z   INPUT_SYNC: 
+deploy	Desplegando en AWS	2026-05-05T04:01:21.9259334Z   INPUT_CAPTURE_STDOUT: false
+deploy	Desplegando en AWS	2026-05-05T04:01:21.9260087Z   INPUT_CURL_INSECURE: false
+deploy	Desplegando en AWS	2026-05-05T04:01:21.9260813Z   DRONE_SSH_VERSION: 
+deploy	Desplegando en AWS	2026-05-05T04:01:21.9261485Z ##[endgroup]
+deploy	Desplegando en AWS	2026-05-05T04:01:21.9391949Z Downloading drone-ssh-1.8.2-linux-amd64 from https://github.com/appleboy/drone-ssh/releases/download/v1.8.2
+deploy	Desplegando en AWS	2026-05-05T04:01:22.3846557Z ======= CLI Version Information =======
+deploy	Desplegando en AWS	2026-05-05T04:01:22.3867439Z Drone SSH version 1.8.2
+deploy	Desplegando en AWS	2026-05-05T04:01:22.3870721Z =======================================
+deploy	Desplegando en AWS	2026-05-05T04:01:52.4191490Z 2026/05/05 04:01:52 dial tcp ***:22: i/o timeout
+deploy	Desplegando en AWS	2026-05-05T04:01:52.4211269Z ##[error]Process completed with exit code 1.
+deploy	Complete job	﻿2026-05-05T04:01:52.4327583Z Cleaning up orphan processes

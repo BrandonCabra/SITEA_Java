@@ -1294,7 +1294,12 @@ public class CaracterizacionControllerMejorado implements Serializable {
             }
             
             if (rolAcudiente != null) {
-                usuarioAcudiente.setRolIdRol(rolAcudiente);
+                java.util.List<com.sena.sitea.entities.UsuarioRol> urs = new java.util.ArrayList<>();
+                com.sena.sitea.entities.UsuarioRol ur = new com.sena.sitea.entities.UsuarioRol();
+                ur.setRolIdRol(rolAcudiente);
+                ur.setUsuarioIdUsuario(usuarioAcudiente);
+                urs.add(ur);
+                usuarioAcudiente.setUsuarioRolList(urs);
             } else {
                 addMessage(FacesMessage.SEVERITY_WARN, 
                     "No se encontró rol 'acudiente' en el sistema. Contacte al administrador.");

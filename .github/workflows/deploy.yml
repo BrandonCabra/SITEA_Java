@@ -1,0 +1,78 @@
+name: Deploy SITEA to AWS EC2
+
+on:
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    env:
+      WAR_SOURCE: target/sitea.war
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 21
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 21
+          cache: maven
+
+      - name: Build WAR for production
+        run: |
+          mvn -B clean package \
+            -Dsitea.db.host="${{ secrets.RDS_HOST }}" \
+            -Dsitea.db.port="${{ secrets.RDS_PORT }}" \
+            -Dsitea.db.name="${{ secrets.RDS_DB_NAME }}" \
+            -Dsitea.db.user="${{ secrets.RDS_USER }}" \
+            -Dsitea.db.password="${{ secrets.RDS_PASSWORD }}"
+          cp target/sitea-1.0-SNAPSHOT.war "$WAR_SOURCE"
+
+      - name: Prepare deploy directory on EC2
+        uses: appleboy/ssh-action@v1.2.0
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ${{ secrets.EC2_USER }}
+          key: ${{ secrets.EC2_SSH_KEY }}
+          port: ${{ secrets.EC2_PORT || 22 }}
+          script: |
+            set -e
+            mkdir -p /home/ubuntu/sitea-deploy
+
+      - name: Upload WAR to EC2
+        uses: appleboy/scp-action@v0.1.7
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ${{ secrets.EC2_USER }}
+          key: ${{ secrets.EC2_SSH_KEY }}
+          port: ${{ secrets.EC2_PORT || 22 }}
+          source: ${{ env.WAR_SOURCE }}
+          target: /home/ubuntu/sitea-deploy/
+
+      - name: Restart Payara Micro on EC2
+        uses: appleboy/ssh-action@v1.2.0
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ${{ secrets.EC2_USER }}
+          key: ${{ secrets.EC2_SSH_KEY }}
+          port: ${{ secrets.EC2_PORT || 22 }}
+          script: |
+            set -e
+            DEPLOY_DIR="/home/ubuntu/sitea-deploy"
+            WAR_FILE="$DEPLOY_DIR/sitea.war"
+            LOG_FILE="$DEPLOY_DIR/payara.log"
+
+            pkill -f "payara-micro-6.2024.3.jar" || true
+            nohup java -jar /home/ubuntu/payara-micro-6.2024.3.jar --deploy "$WAR_FILE" --port 8080 > "$LOG_FILE" 2>&1 &
+
+            for _ in $(seq 1 30); do
+              if curl -fsS http://127.0.0.1:8080/sitea/ >/dev/null; then
+                break
+              fi
+              sleep 2
+            done
+
+            tail -n 60 "$LOG_FILE"

@@ -116,17 +116,13 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/XHtml.xhtml to edit t
                                 <h:message for="direccion" styleClass="text-danger small" />
                             </div>
 
-                            <h:selectOneMenu id="rol"
-                                             value="#{registro.con.rolIdRol}"
-                                             converter="#{rolConverter}"
-                                             required="true"
-                                             styleClass="form-select">
-                                <f:selectItem itemLabel="Seleccione..." itemValue="#{null}" />
-                                <f:selectItems value="#{registro.listaRoles}"
-                                               var="r"
-                                               itemValue="#{r}"
-                                               itemLabel="#{r.nombreRol}" />
-                            </h:selectOneMenu>
+                            <div class="mb-3">
+                                <label for="roles" class="form-label">Roles (puedes seleccionar varios)</label>
+                                <h:selectManyListbox id="roles" value="#{registro.selectedRoleIds}" size="4" styleClass="form-select">
+                                    <f:selectItems value="#{registro.listaRoles}" var="r"
+                                                   itemValue="#{r.idRol}" itemLabel="#{r.nombreRol}" />
+                                </h:selectManyListbox>
+                            </div>
 
 
                             <div class="mb-3">
@@ -178,7 +174,8 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/XHtml.xhtml to edit t
             const tipoDocumento = document.getElementById("registroForm:tipoDocumento").value;
             const numeroDocumento = document.getElementById("registroForm:numeroDocumento").value.trim();
             const direccion = document.getElementById("registroForm:direccion").value.trim();
-            const rol = document.getElementById("registroForm:rol").value;
+            const rolesSelect = document.getElementById("registroForm:roles");
+            const rol = rolesSelect ? rolesSelect.selectedOptions.length : 0;
             const password = document.getElementById("registroForm:password").value.trim();
 
             if (!nombres || !apellidos || !tipoDocumento || !numeroDocumento || !direccion || !rol || !password) {

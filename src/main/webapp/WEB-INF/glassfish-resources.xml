@@ -29,17 +29,17 @@
         validate-atmost-once-period-in-seconds="0" 
         wrap-jdbc-objects="false">
         
-        <property name="serverName" value="db"/>
+        <property name="serverName" value="${sitea.db.host}"/>
+
+        <property name="portNumber" value="${sitea.db.port}"/>
         
-        <property name="portNumber" value="3306"/>
+        <property name="databaseName" value="${sitea.db.name}"/>
         
-        <property name="databaseName" value="sitea_db"/>
+        <property name="User" value="${sitea.db.user}"/>
         
-        <property name="User" value="root"/>
+        <property name="Password" value="${sitea.db.password}"/>
         
-        <property name="Password" value="admin"/>
-        
-        <property name="URL" value="jdbc:mysql://db:3306/sitea_db?zeroDateTimeBehavior=CONVERT_TO_NULL&amp;useSSL=false&amp;allowPublicKeyRetrieval=true"/>
+        <property name="URL" value="jdbc:mysql://${sitea.db.host}:${sitea.db.port}/${sitea.db.name}?zeroDateTimeBehavior=CONVERT_TO_NULL&amp;useSSL=false&amp;allowPublicKeyRetrieval=true"/>
         
         <property name="driverClass" value="com.mysql.cj.jdbc.Driver"/>
     </jdbc-connection-pool>

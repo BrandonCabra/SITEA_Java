@@ -47,7 +47,7 @@ public class Permisos implements Serializable {
     private String descripcion;
     @OneToMany(mappedBy = "permisoIdPermiso", fetch = FetchType.LAZY)
     private List<RolPermiso> rolPermisoList;
-    @JoinColumn(name = "ACCION_ID_ACCION", referencedColumnName = "ID_ACCION")
+    @JoinColumn(name = "ACCION_ID_ACCION", referencedColumnName = "ID_ACCIONES")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Acciones accionIdAccion;
     @JoinColumn(name = "ENTIDAD_ID_ENTIDAD", referencedColumnName = "ID_ENTIDAD")

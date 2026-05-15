@@ -48,8 +48,10 @@
                                         <h:outputText value="#{u.primerNombre} #{u.primerApellido}" />
                                     </p:column>
 
-                                    <p:column headerText="Rol" sortBy="#{u.rolIdRol.nombreRol}">
-                                        <span class="badge bg-info text-dark">#{u.rolIdRol.nombreRol}</span>
+                                    <p:column headerText="Roles">
+                                        <ui:repeat value="#{u.usuarioRolList}" var="ur">
+                                            <span class="badge bg-info text-dark me-1">#{ur.rolIdRol.nombreRol}</span>
+                                        </ui:repeat>
                                     </p:column>
 
                                     <p:column headerText="Correo">
@@ -172,12 +174,11 @@
                                         </div>
 
                                         <div class="mb-3">
-                                            <label class="form-label">Rol</label>
-                                            <h:selectOneMenu value="#{adminController.usuarioSeleccionado.rolIdRol}" 
-                                                             styleClass="form-select" converter="#{rolConverter}">
-                                                <f:selectItems value="#{adminController.listaRoles}" var="r" 
-                                                               itemLabel="#{r.nombreRol}" itemValue="#{r}"/>
-                                            </h:selectOneMenu>
+                                            <label class="form-label">Roles</label>
+                                            <h:selectManyListbox id="adminRoles" value="#{adminController.selectedRoleIds}" size="4" styleClass="form-select">
+                                                <f:selectItems value="#{adminController.listaRoles}" var="r"
+                                                               itemValue="#{r.idRol}" itemLabel="#{r.nombreRol}" />
+                                            </h:selectManyListbox>
                                         </div>
 
                                     </div>

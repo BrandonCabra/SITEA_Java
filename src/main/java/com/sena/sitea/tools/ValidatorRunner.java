@@ -54,7 +54,12 @@ public class ValidatorRunner {
         Rol rol = new Rol();
         rol.setIdRol(3);
         rol.setNombreRol("PADRE DE FAMILIA");
-        u.setRolIdRol(rol);
+        java.util.List<com.sena.sitea.entities.UsuarioRol> urs = new java.util.ArrayList<>();
+        com.sena.sitea.entities.UsuarioRol ur = new com.sena.sitea.entities.UsuarioRol();
+        ur.setRolIdRol(rol);
+        ur.setUsuarioIdUsuario(u);
+        urs.add(ur);
+        u.setUsuarioRolList(urs);
 
         // Ejecutar validación
         ValidatorFactory factory = Validation.buildDefaultValidatorFactory();

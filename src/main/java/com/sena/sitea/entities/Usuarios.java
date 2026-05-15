@@ -5,8 +5,10 @@
 package com.sena.sitea.entities;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 import jakarta.persistence.Basic;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -110,9 +112,6 @@ public class Usuarios implements Serializable {
     private List<NovedadesReportes> novedadesReportesList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "usuarioIdUsuario", fetch = FetchType.LAZY)
     private List<UsuarioRol> usuarioRolList;
-    @JoinColumn(name = "ROL_ID_ROL", referencedColumnName = "ID_ROL")
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
-    private Rol rolIdRol;
 
     public Usuarios() {
     }
@@ -219,11 +218,43 @@ public class Usuarios implements Serializable {
     }
 
     public Rol getRolIdRol() {
-        return rolIdRol;
+        if (usuarioRolList != null) {
+            for (UsuarioRol usuarioRol : usuarioRolList) {
+                if (usuarioRol != null && usuarioRol.getRolIdRol() != null) {
+                    return usuarioRol.getRolIdRol();
+                }
+            }
+        }
+        return null;
     }
 
     public void setRolIdRol(Rol rolIdRol) {
-        this.rolIdRol = rolIdRol;
+        if (rolIdRol == null) {
+            return;
+        }
+        if (usuarioRolList == null) {
+            usuarioRolList = new ArrayList<>();
+        }
+        for (UsuarioRol usuarioRol : usuarioRolList) {
+            if (usuarioRol != null && usuarioRol.getRolIdRol() != null
+                    && Objects.equals(usuarioRol.getRolIdRol().getIdRol(), rolIdRol.getIdRol())) {
+                return;
+            }
+        }
+        UsuarioRol usuarioRol = new UsuarioRol();
+        usuarioRol.setUsuarioIdUsuario(this);
+        usuarioRol.setRolIdRol(rolIdRol);
+        usuarioRolList.add(usuarioRol);
+    }
+
+    public void agregarRol(Rol rol) {
+        setRolIdRol(rol);
+    }
+
+    public void limpiarRoles() {
+        if (usuarioRolList != null) {
+            usuarioRolList.clear();
+        }
     }
 
     @XmlTransient

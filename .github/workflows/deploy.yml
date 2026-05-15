@@ -53,7 +53,7 @@ jobs:
           JAVA_TOOL_OPTIONS="-Djava.io.tmpdir=$PAYARA_TMP_DIR" nohup java -jar "$PAYARA_MICRO_JAR" --nocluster --deploy "$EC2_DEPLOY_DIR/sitea.war" --port 8080 > "$EC2_DEPLOY_DIR/payara.log" 2>&1 &
 
           for _ in $(seq 1 30); do
-            if curl -fsS http://127.0.0.1:8080/sitea/ >/dev/null; then
+            if curl -fsS http://127.0.0.1:8080/sitea/index.xhtml >/dev/null; then
               break
             fi
             sleep 2

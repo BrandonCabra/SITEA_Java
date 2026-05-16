@@ -9,7 +9,6 @@ jobs:
 
     env:
       EC2_DEPLOY_DIR: /home/ubuntu/sitea_java
-      REPO_URL: https://github.com/BrandonCabra/SITEA_Java.git
       WAR_GLOB: target/*.war
 
     steps:
@@ -66,20 +65,9 @@ jobs:
           port: ${{ secrets.EC2_PORT }}
           script: |
             set -e
-            cd ${EC2_DEPLOY_DIR} || exit 0
-            # If the repository is present, update it and rebuild containers; else fallback to running Payara Micro directly
-            if [ -d .git ]; then
-              git fetch --all || true
-              git reset --hard origin/HEAD || true
-              sudo docker-compose up -d --build --remove-orphans || true
-              sudo docker image prune -f || true
-            else
-              # Try starting Payara Micro if payara-micro jar exists
-              if [ -f /home/ubuntu/payara-micro-6.2024.3.jar ]; then
-                pkill -f "payara-micro-6.2024.3.jar" || true
-                nohup java -jar /home/ubuntu/payara-micro-6.2024.3.jar --nocluster --deploy ${EC2_DEPLOY_DIR}/sitea.war --port 8080 > ${EC2_DEPLOY_DIR}/payara.log 2>&1 &
-              fi
-            fi
+            cd ${EC2_DEPLOY_DIR}
+            sudo docker compose up -d --build --remove-orphans
+            sudo docker image prune -f
 
       - name: Show remote logs (last 60 lines)
         uses: appleboy/ssh-action@master
@@ -90,6 +78,5 @@ jobs:
           port: ${{ secrets.EC2_PORT }}
           script: |
             set -e
-            if [ -f ${EC2_DEPLOY_DIR}/payara.log ]; then
-              tail -n 60 ${EC2_DEPLOY_DIR}/payara.log || true
-            fi
+            cd ${EC2_DEPLOY_DIR}
+            sudo docker compose logs --tail=60

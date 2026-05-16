@@ -49,6 +49,12 @@
           <artifactId>google-api-services-drive</artifactId>
           <version>v3-rev20250910-2.0.0</version>
         </dependency>
+                <!-- Explicit protobuf override to mitigate known CVEs (CVE-2024-7254, etc.) -->
+                <dependency>
+                        <groupId>com.google.protobuf</groupId>
+                        <artifactId>protobuf-java</artifactId>
+                        <version>4.28.2</version>
+                </dependency>
         
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>

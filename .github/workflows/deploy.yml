@@ -51,10 +51,10 @@ jobs:
           chmod 600 id_rsa
 
           echo "Ensuring remote deploy directory exists"
-          ssh -o StrictHostKeyChecking=no -i id_rsa -p ${EC2_PORT:-22} ${EC2_USER}@${EC2_HOST} "mkdir -p ${EC2_DEPLOY_DIR}"
+          ssh -o StrictHostKeyChecking=no -i id_rsa -p ${EC2_PORT:-22} ${EC2_USER}@${EC2_HOST} "mkdir -p ${EC2_DEPLOY_DIR}/target"
 
           echo "Copying WAR to remote host"
-          scp -o StrictHostKeyChecking=no -i id_rsa -P ${EC2_PORT:-22} $WAR_GLOB ${EC2_USER}@${EC2_HOST}:${EC2_DEPLOY_DIR}/sitea.war
+          scp -o StrictHostKeyChecking=no -i id_rsa -P ${EC2_PORT:-22} $WAR_GLOB ${EC2_USER}@${EC2_HOST}:${EC2_DEPLOY_DIR}/target/sitea.war
 
       - name: Run remote deploy commands on EC2
         uses: appleboy/ssh-action@master
@@ -63,6 +63,7 @@ jobs:
           username: ${{ secrets.EC2_USER }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: ${{ secrets.EC2_PORT }}
+          command_timeout: 30m
           script: |
             set -e
             cd /home/ubuntu/sitea_java

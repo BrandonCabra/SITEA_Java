@@ -5,13 +5,12 @@ on:
 
 jobs:
   deploy:
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
 
     env:
-      EC2_DEPLOY_DIR: /home/ubuntu/sitea-deploy
-      PAYARA_TMP_DIR: /home/ubuntu/sitea-deploy/tmp
-      PAYARA_MICRO_JAR: /home/ubuntu/payara-micro-6.2024.3.jar
-      WAR_SOURCE: target/sitea.war
+      EC2_DEPLOY_DIR: /home/ubuntu/sitea_java
+      REPO_URL: https://github.com/BrandonCabra/SITEA_Java.git
+      WAR_GLOB: target/*.war
 
     steps:
       - name: Checkout repository
@@ -40,23 +39,57 @@ jobs:
             -Dsitea.db.name="${{ secrets.RDS_DB_NAME }}" \
             -Dsitea.db.user="${{ secrets.RDS_USER }}" \
             -Dsitea.db.password="${{ secrets.RDS_PASSWORD }}"
-          cp target/sitea-1.0-SNAPSHOT.war "$WAR_SOURCE"
 
-      - name: Restart Payara Micro on EC2
+      - name: Ensure SSH key and copy WAR to EC2
+        env:
+          EC2_HOST: ${{ secrets.EC2_HOST }}
+          EC2_USER: ${{ secrets.EC2_USER }}
+          EC2_PORT: ${{ secrets.EC2_PORT }}
         run: |
           set -e
-          mkdir -p "$EC2_DEPLOY_DIR"
-          mkdir -p "$PAYARA_TMP_DIR"
-          cp "$WAR_SOURCE" "$EC2_DEPLOY_DIR/sitea.war"
+          echo "Preparing SSH key"
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > id_rsa
+          chmod 600 id_rsa
 
-          pkill -f "payara-micro-6.2024.3.jar" || true
-          JAVA_TOOL_OPTIONS="-Djava.io.tmpdir=$PAYARA_TMP_DIR" nohup java -jar "$PAYARA_MICRO_JAR" --nocluster --deploy "$EC2_DEPLOY_DIR/sitea.war" --port 8080 > "$EC2_DEPLOY_DIR/payara.log" 2>&1 &
+          echo "Ensuring remote deploy directory exists"
+          ssh -o StrictHostKeyChecking=no -i id_rsa -p ${EC2_PORT:-22} ${EC2_USER}@${EC2_HOST} "mkdir -p ${EC2_DEPLOY_DIR}"
 
-          for _ in $(seq 1 30); do
-            if curl -fsS http://127.0.0.1:8080/sitea/index.xhtml >/dev/null; then
-              break
+          echo "Copying WAR to remote host"
+          scp -o StrictHostKeyChecking=no -i id_rsa -P ${EC2_PORT:-22} $WAR_GLOB ${EC2_USER}@${EC2_HOST}:${EC2_DEPLOY_DIR}/sitea.war
+
+      - name: Run remote deploy commands on EC2
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ${{ secrets.EC2_USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          port: ${{ secrets.EC2_PORT }}
+          script: |
+            set -e
+            cd ${EC2_DEPLOY_DIR} || exit 0
+            # If the repository is present, update it and rebuild containers; else fallback to running Payara Micro directly
+            if [ -d .git ]; then
+              git fetch --all || true
+              git reset --hard origin/HEAD || true
+              sudo docker-compose up -d --build --remove-orphans || true
+              sudo docker image prune -f || true
+            else
+              # Try starting Payara Micro if payara-micro jar exists
+              if [ -f /home/ubuntu/payara-micro-6.2024.3.jar ]; then
+                pkill -f "payara-micro-6.2024.3.jar" || true
+                nohup java -jar /home/ubuntu/payara-micro-6.2024.3.jar --nocluster --deploy ${EC2_DEPLOY_DIR}/sitea.war --port 8080 > ${EC2_DEPLOY_DIR}/payara.log 2>&1 &
+              fi
             fi
-            sleep 2
-          done
 
-          tail -n 60 "$EC2_DEPLOY_DIR/payara.log"
+      - name: Show remote logs (last 60 lines)
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ${{ secrets.EC2_USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          port: ${{ secrets.EC2_PORT }}
+          script: |
+            set -e
+            if [ -f ${EC2_DEPLOY_DIR}/payara.log ]; then
+              tail -n 60 ${EC2_DEPLOY_DIR}/payara.log || true
+            fi

@@ -65,7 +65,7 @@ jobs:
           port: ${{ secrets.EC2_PORT }}
           script: |
             set -e
-            cd ${EC2_DEPLOY_DIR}
+            cd /home/ubuntu/sitea_java
             sudo docker compose up -d --build --remove-orphans
             sudo docker image prune -f
 
@@ -78,5 +78,5 @@ jobs:
           port: ${{ secrets.EC2_PORT }}
           script: |
             set -e
-            cd ${EC2_DEPLOY_DIR}
+            cd /home/ubuntu/sitea_java
             sudo docker compose logs --tail=60
